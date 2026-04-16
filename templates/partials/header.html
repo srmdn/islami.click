@@ -1,13 +1,21 @@
-{{define "partials/header.html"}}
-<header class="border-b border-stone-200 dark:border-stone-700">
-    <nav class="max-w-2xl mx-auto px-4 py-4 flex items-center justify-between">
-        <a href="/" class="text-xl font-bold text-emerald-700 dark:text-emerald-400">
-            islami.click
+{{define "header"}}
+<header class="sticky top-0 z-50 bg-white/80 dark:bg-stone-950/80 backdrop-blur-md border-b border-stone-200/60 dark:border-stone-800/60">
+    <nav class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-2 group">
+            <svg class="w-7 h-7" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="32" height="32" rx="7" class="fill-emerald-700 dark:fill-emerald-600"/>
+                <g transform="translate(16,16)">
+                    <rect x="-6" y="-6" width="12" height="12" rx="1" class="fill-white" opacity="0.95"/>
+                    <rect x="-6" y="-6" width="12" height="12" rx="1" class="fill-white" opacity="0.95" transform="rotate(45)"/>
+                </g>
+                <circle cx="16" cy="16" r="2.5" class="fill-emerald-700 dark:fill-emerald-600"/>
+            </svg>
+            <span class="text-lg font-semibold text-stone-800 dark:text-stone-100 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors">islami.click</span>
         </a>
-        <div class="flex gap-4 text-sm">
-            <a href="/almatsurat" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Al-Ma'tsurat</a>
-            <a href="/doa" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Doa</a>
-            <a href="/shalat" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Shalat</a>
+        <div class="flex items-center gap-1">
+            <a href="/almatsurat" class="px-3 py-1.5 text-sm rounded-lg hover:bg-emerald-50 hover:text-emerald-700 dark:hover:bg-emerald-950 dark:hover:text-emerald-400 transition-all">Al-Ma'tsurat</a>
+            <a href="/doa" class="px-3 py-1.5 text-sm rounded-lg hover:bg-emerald-50 hover:text-emerald-700 dark:hover:bg-emerald-950 dark:hover:text-emerald-400 transition-all">Doa</a>
+            <a href="/shalat" class="px-3 py-1.5 text-sm rounded-lg hover:bg-emerald-50 hover:text-emerald-700 dark:hover:bg-emerald-950 dark:hover:text-emerald-400 transition-all">Shalat</a>
         </div>
     </nav>
 </header>

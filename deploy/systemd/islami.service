@@ -6,7 +6,7 @@ After=network.target
 Type=simple
 User=www-data
 WorkingDirectory=/var/www/islami.click
-ExecStart=/var/www/islami.click/islami
+ExecStart=/var/www/islami.click/islami.click
 Restart=on-failure
 Environment=PORT=8080
 Environment=DB_PATH=/var/www/islami.click/data/islami.db

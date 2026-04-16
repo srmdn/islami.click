@@ -1,26 +1,29 @@
+{{define "base"}}
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{template "title" .}}</title>
+    <title>{{template "title" .}} — islami.click</title>
     <meta name="description" content="{{template "description" .}}">
+    <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="/static/css/out.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-    {{template "head" .}}
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    {{block "head" .}}{{end}}
 </head>
-<body class="bg-stone-50 text-stone-800 dark:bg-stone-900 dark:text-stone-100 min-h-screen antialiased">
-    {{template "partials/header.html" .}}
+<body class="bg-stone-50 text-stone-800 dark:bg-stone-950 dark:text-stone-100 min-h-screen antialiased flex flex-col font-sans">
+    {{template "header" .}}
 
-    <main class="max-w-2xl mx-auto px-4 py-8">
+    <main class="flex-1">
         {{template "content" .}}
     </main>
 
-    {{template "partials/footer.html" .}}
+    {{template "footer" .}}
 
     <script src="/static/js/htmx.min.js"></script>
     <script src="/static/js/alpine.min.js" defer></script>
-    {{template "scripts" .}}
+    {{block "scripts" .}}{{end}}
 </body>
 </html>
+{{end}}

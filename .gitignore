@@ -1,6 +1,7 @@
 *.db
 .env
 static/css/out.css
+islami.click
 islami
 tailwindcss
 .DS_Store

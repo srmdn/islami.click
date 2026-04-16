@@ -1,20 +1,14 @@
 package main
 
 import (
-	"embed"
 	"html/template"
 	"log"
 	"net/http"
 	"os"
 
+	islamiclick "github.com/srmdn/islami.click"
 	"github.com/srmdn/islami.click/internal/handler"
 )
-
-//go:embed templates
-var templateFS embed.FS
-
-//go:embed content
-var contentFS embed.FS
 
 func main() {
 	port := os.Getenv("PORT")
@@ -22,19 +16,30 @@ func main() {
 		port = "8080"
 	}
 
-	tmpl, err := template.ParseFS(templateFS,
-		"templates/layouts/*.html",
-		"templates/pages/*.html",
-		"templates/partials/*.html",
-	)
-	if err != nil {
-		log.Fatal("failed to parse templates:", err)
-	}
-	if err != nil {
-		log.Fatal("failed to parse templates:", err)
+	pages := []string{
+		"home.html",
+		"almatsurat.html",
+		"almatsurat-sugro.html",
+		"almatsurat-kubro.html",
+		"doa.html",
+		"shalat.html",
 	}
 
-	h := handler.New(tmpl, contentFS)
+	tmpls := make(map[string]*template.Template)
+	for _, page := range pages {
+		t, err := template.ParseFS(islamiclick.TemplateFS,
+			"templates/layouts/base.html",
+			"templates/partials/header.html",
+			"templates/partials/footer.html",
+			"templates/pages/"+page,
+		)
+		if err != nil {
+			log.Fatalf("parse %s: %v", page, err)
+		}
+		tmpls[page] = t
+	}
+
+	h := handler.New(tmpls, islamiclick.ContentFS)
 
 	fs := http.Dir("static")
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(fs)))

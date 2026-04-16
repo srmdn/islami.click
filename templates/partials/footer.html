@@ -1,7 +1,19 @@
-{{define "partials/footer.html"}}
-<footer class="border-t border-stone-200 dark:border-stone-700 mt-16">
-    <div class="max-w-2xl mx-auto px-4 py-6 text-center text-sm text-stone-500 dark:text-stone-400">
-        islami.click
+{{define "footer"}}
+<footer class="mt-auto border-t border-stone-200/60 dark:border-stone-800/60 bg-stone-100/50 dark:bg-stone-900/50">
+    <div class="max-w-3xl mx-auto px-4 py-8">
+        <div class="flex flex-col items-center gap-3">
+            <div class="flex items-center gap-2">
+                <svg class="w-5 h-5" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="7" class="fill-emerald-700/20 dark:fill-emerald-400/20"/>
+                    <g transform="translate(16,16)">
+                        <rect x="-6" y="-6" width="12" height="12" rx="1" class="fill-emerald-700/40 dark:fill-emerald-400/40"/>
+                        <rect x="-6" y="-6" width="12" height="12" rx="1" class="fill-emerald-700/40 dark:fill-emerald-400/40" transform="rotate(45)"/>
+                    </g>
+                </svg>
+                <span class="text-sm font-medium text-stone-500 dark:text-stone-400">islami.click</span>
+            </div>
+            <p class="text-xs text-stone-400 dark:text-stone-500">Kumpulan konten Islami untuk ibadah harian</p>
+        </div>
     </div>
 </footer>
 {{end}}

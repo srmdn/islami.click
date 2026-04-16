@@ -1,66 +1,80 @@
-<!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>islami.click — Islam Hub</title>
-    <meta name="description" content="Kumpulan konten Islami — Al-Ma'tsurat, Doa, Waktu Shalat, dan lainnya">
-    <link rel="stylesheet" href="/static/css/out.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-</head>
-<body class="bg-stone-50 text-stone-800 dark:bg-stone-900 dark:text-stone-100 min-h-screen antialiased">
-    <header class="border-b border-stone-200 dark:border-stone-700">
-        <nav class="max-w-2xl mx-auto px-4 py-4 flex items-center justify-between">
-            <a href="/" class="text-xl font-bold text-emerald-700 dark:text-emerald-400">islami.click</a>
-            <div class="flex gap-4 text-sm">
-                <a href="/almatsurat" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Al-Ma'tsurat</a>
-                <a href="/doa" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Doa</a>
-                <a href="/shalat" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Shalat</a>
-            </div>
-        </nav>
-    </header>
+{{define "title"}}Islam Hub{{end}}
+{{define "description"}}Kumpulan konten Islami — Al-Ma'tsurat, Doa, Waktu Shalat, dan lainnya{{end}}
 
-    <main class="max-w-2xl mx-auto px-4 py-8">
-        <div class="text-center py-12">
-            <h1 class="text-3xl font-bold text-emerald-700 dark:text-emerald-400 mb-4">islami.click</h1>
-            <p class="text-stone-600 dark:text-stone-300 mb-12">Kumpulan konten Islami</p>
-
-            <div class="grid gap-4 sm:grid-cols-2">
-                <a href="/almatsurat"
-                   class="block p-6 bg-white dark:bg-stone-800 rounded-xl shadow-sm border border-stone-200 dark:border-stone-700 hover:shadow-md hover:border-emerald-300 dark:hover:border-emerald-600 transition-all">
-                    <h2 class="text-lg font-semibold mb-2">Al-Ma'tsurat</h2>
-                    <p class="text-sm text-stone-500 dark:text-stone-400">Dzikir pagi dan petang</p>
-                </a>
-
-                <a href="/doa"
-                   class="block p-6 bg-white dark:bg-stone-800 rounded-xl shadow-sm border border-stone-200 dark:border-stone-700 hover:shadow-md hover:border-emerald-300 dark:hover:border-emerald-600 transition-all">
-                    <h2 class="text-lg font-semibold mb-2">Doa</h2>
-                    <p class="text-sm text-stone-500 dark:text-stone-400">Kumpulan doa harian</p>
-                </a>
-
-                <a href="/shalat"
-                   class="block p-6 bg-white dark:bg-stone-800 rounded-xl shadow-sm border border-stone-200 dark:border-stone-700 hover:shadow-md hover:border-emerald-300 dark:hover:border-emerald-600 transition-all">
-                    <h2 class="text-lg font-semibold mb-2">Waktu Shalat</h2>
-                    <p class="text-sm text-stone-500 dark:text-stone-400">Jadwal shalat berdasarkan lokasi</p>
-                </a>
-
-                <a href="/asmaul-husna"
-                   class="block p-6 bg-white dark:bg-stone-800 rounded-xl shadow-sm border border-stone-200 dark:border-stone-700 hover:shadow-md hover:border-emerald-300 dark:hover:border-emerald-600 transition-all opacity-50 pointer-events-none">
-                    <h2 class="text-lg font-semibold mb-2">Asmaul Husna</h2>
-                    <p class="text-sm text-stone-500 dark:text-stone-400">Segera hadir</p>
-                </a>
-            </div>
+{{define "content"}}
+<section class="relative overflow-hidden bg-gradient-to-br from-emerald-800 via-emerald-700 to-teal-800 dark:from-emerald-950 dark:via-emerald-900 dark:to-teal-950 text-white">
+    <div class="absolute inset-0 islamic-pattern opacity-[0.07]"></div>
+    <div class="relative max-w-3xl mx-auto px-4 py-16 sm:py-24 text-center">
+        <div class="inline-flex items-center justify-center w-16 h-16 mb-6 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20">
+            <svg class="w-8 h-8" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g transform="translate(16,16)">
+                    <rect x="-7" y="-7" width="14" height="14" rx="1.5" fill="white" opacity="0.9"/>
+                    <rect x="-7" y="-7" width="14" height="14" rx="1.5" fill="white" opacity="0.9" transform="rotate(45)"/>
+                </g>
+                <circle cx="16" cy="16" r="3" fill="currentColor" class="text-emerald-700"/>
+            </svg>
         </div>
-    </main>
+        <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4">islami.click</h1>
+        <p class="text-lg text-emerald-100/80 max-w-md mx-auto">Kumpulan konten Islami untuk ibadah harian Anda</p>
+    </div>
+    <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-stone-50 dark:from-stone-950"></div>
+</section>
 
-    <footer class="border-t border-stone-200 dark:border-stone-700 mt-16">
-        <div class="max-w-2xl mx-auto px-4 py-6 text-center text-sm text-stone-500 dark:text-stone-400">
-            islami.click
+<section class="max-w-3xl mx-auto px-4 -mt-8 relative z-10 pb-16">
+    <div class="grid gap-4 sm:grid-cols-3">
+        <a href="/almatsurat" class="group block bg-white dark:bg-stone-900 rounded-2xl shadow-sm shadow-stone-200/50 dark:shadow-stone-900/50 border border-stone-200/80 dark:border-stone-800/80 hover:shadow-lg hover:shadow-emerald-500/10 hover:border-emerald-300 dark:hover:border-emerald-700 transition-all duration-300 overflow-hidden">
+            <div class="h-1.5 bg-gradient-to-r from-emerald-500 to-teal-500"></div>
+            <div class="p-6">
+                <div class="w-12 h-12 mb-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <svg class="w-6 h-6 text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="12" cy="6" r="3"/>
+                        <circle cx="12" cy="12" r="3"/>
+                        <circle cx="12" cy="18" r="3"/>
+                        <line x1="12" y1="3" x2="12" y2="9"/>
+                        <line x1="12" y1="9" x2="12" y2="15"/>
+                    </svg>
+                </div>
+                <h2 class="text-lg font-semibold mb-1.5 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors">Al-Ma'tsurat</h2>
+                <p class="text-sm text-stone-500 dark:text-stone-400 leading-relaxed">Dzikir pagi dan petang dengan penghitung otomatis</p>
+            </div>
+        </a>
+
+        <a href="/doa" class="group block bg-white dark:bg-stone-900 rounded-2xl shadow-sm shadow-stone-200/50 dark:shadow-stone-900/50 border border-stone-200/80 dark:border-stone-800/80 hover:shadow-lg hover:shadow-amber-500/10 hover:border-amber-300 dark:hover:border-amber-700 transition-all duration-300 overflow-hidden">
+            <div class="h-1.5 bg-gradient-to-r from-amber-500 to-orange-500"></div>
+            <div class="p-6">
+                <div class="w-12 h-12 mb-4 rounded-xl bg-amber-50 dark:bg-amber-950/50 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <svg class="w-6 h-6 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M7 20.5C7 18 5.5 16 3.5 14.5M17 20.5C17 18 18.5 16 20.5 14.5M12 20.5V13M12 13C12 13 9 11 9 8C9 5 12 3.5 12 3.5C12 3.5 15 5 15 8C15 11 12 13 12 13Z"/>
+                    </svg>
+                </div>
+                <h2 class="text-lg font-semibold mb-1.5 group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors">Doa</h2>
+                <p class="text-sm text-stone-500 dark:text-stone-400 leading-relaxed">Kumpulan doa harian lengkap dengan terjemah</p>
+            </div>
+        </a>
+
+        <a href="/shalat" class="group block bg-white dark:bg-stone-900 rounded-2xl shadow-sm shadow-stone-200/50 dark:shadow-stone-900/50 border border-stone-200/80 dark:border-stone-800/80 hover:shadow-lg hover:shadow-sky-500/10 hover:border-sky-300 dark:hover:border-sky-700 transition-all duration-300 overflow-hidden">
+            <div class="h-1.5 bg-gradient-to-r from-sky-500 to-indigo-500"></div>
+            <div class="p-6">
+                <div class="w-12 h-12 mb-4 rounded-xl bg-sky-50 dark:bg-sky-950/50 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <svg class="w-6 h-6 text-sky-600 dark:text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M12 3C12 3 8 6 8 10V20H16V10C16 6 12 3 12 3Z"/>
+                        <line x1="12" y1="3" x2="12" y2="1"/>
+                        <line x1="8" y1="20" x2="16" y2="20"/>
+                        <line x1="6" y1="20" x2="18" y2="20"/>
+                    </svg>
+                </div>
+                <h2 class="text-lg font-semibold mb-1.5 group-hover:text-sky-700 dark:group-hover:text-sky-400 transition-colors">Waktu Shalat</h2>
+                <p class="text-sm text-stone-500 dark:text-stone-400 leading-relaxed">Jadwal shalat berdasarkan lokasi Anda</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="mt-6">
+        <div class="group block bg-stone-100/50 dark:bg-stone-900/50 rounded-2xl border border-dashed border-stone-300 dark:border-stone-700 p-6 text-center">
+            <p class="text-sm text-stone-400 dark:text-stone-500">
+                <span class="font-medium">Segera hadir:</span> Asmaul Husna, Arah Kiblat, Quran Reader
+            </p>
         </div>
-    </footer>
-
-    <script src="/static/js/htmx.min.js"></script>
-    <script src="/static/js/alpine.min.js" defer></script>
-</body>
-</html>
+    </div>
+</section>
+{{end}}

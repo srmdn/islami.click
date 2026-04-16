@@ -12,17 +12,19 @@ Islam hub — Islamic content collection site.
 ## Project structure
 
 ```
-cmd/server/main.go       — Entrypoint, router, server
+assets.go                — Embed declarations (templates + content FS)
+cmd/server/main.go       — Entrypoint, router, per-page template parsing
 internal/handler/         — HTTP handlers per feature
 internal/model/           — Domain types (dhikr, doa, user)
 internal/store/           — SQLite queries
 migrations/               — SQL migration files
-templates/layouts/        — Base HTML layouts
-templates/pages/          — Full page templates
-templates/partials/       — Reusable fragments (htmx targets)
+templates/layouts/        — Base HTML layout (shared via {{define "base"}})
+templates/pages/          — Page templates (define title/description/content blocks)
+templates/partials/       — Reusable fragments (header, footer)
 static/css/               — Tailwind input + compiled output
 static/js/                — Vendored JS (htmx, Alpine.js)
 static/fonts/             — Arabic fonts (self-hosted)
+static/favicon.svg        — SVG favicon (Rub el Hizb / 8-pointed star)
 content/                  — JSON data (almatsurat, doa, asmaul-husna)
 deploy/                   — nginx + systemd configs
 ```
