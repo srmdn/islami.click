@@ -1,0 +1,13 @@
+{
+  "category": "harian",
+  "title": "Doa Harian",
+  "items": [
+    {
+      "id": "bangun-tidur",
+      "title": "Doa Bangun Tidur",
+      "arabic": "TODO: add accurate Arabic text",
+      "translation": "TODO: add Indonesian translation",
+      "source": "HR. Bukhari"
+    }
+  ]
+}

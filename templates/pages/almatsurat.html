@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Al-Ma'tsurat — islami.click</title>
+    <meta name="description" content="Dzikir pagi dan petang Al-Ma'tsurat">
+    <link rel="stylesheet" href="/static/css/out.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-stone-50 text-stone-800 dark:bg-stone-900 dark:text-stone-100 min-h-screen antialiased">
+    <header class="border-b border-stone-200 dark:border-stone-700">
+        <nav class="max-w-2xl mx-auto px-4 py-4 flex items-center justify-between">
+            <a href="/" class="text-xl font-bold text-emerald-700 dark:text-emerald-400">islami.click</a>
+            <div class="flex gap-4 text-sm">
+                <a href="/almatsurat" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Al-Ma'tsurat</a>
+                <a href="/doa" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Doa</a>
+                <a href="/shalat" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Shalat</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="max-w-2xl mx-auto px-4 py-8">
+        <div class="py-4">
+            <h1 class="text-2xl font-bold mb-6">Al-Ma'tsurat</h1>
+            <p class="text-stone-600 dark:text-stone-300 mb-8">Pilih versi bacaan dzikir pagi dan petang.</p>
+
+            <div class="grid gap-4 sm:grid-cols-2">
+                <a href="/almatsurat/sugro"
+                   class="block p-6 bg-white dark:bg-stone-800 rounded-xl shadow-sm border border-stone-200 dark:border-stone-700 hover:shadow-md hover:border-emerald-300 dark:hover:border-emerald-600 transition-all">
+                    <h2 class="text-lg font-semibold mb-2">Wazifah Sugro</h2>
+                    <p class="text-sm text-stone-500 dark:text-stone-400">Versi ringkas</p>
+                </a>
+
+                <a href="/almatsurat/kubro"
+                   class="block p-6 bg-white dark:bg-stone-800 rounded-xl shadow-sm border border-stone-200 dark:border-stone-700 hover:shadow-md hover:border-emerald-300 dark:hover:border-emerald-600 transition-all">
+                    <h2 class="text-lg font-semibold mb-2">Wazifah Kubro</h2>
+                    <p class="text-sm text-stone-500 dark:text-stone-400">Versi lengkap</p>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="border-t border-stone-200 dark:border-stone-700 mt-16">
+        <div class="max-w-2xl mx-auto px-4 py-6 text-center text-sm text-stone-500 dark:text-stone-400">
+            islami.click
+        </div>
+    </footer>
+
+    <script src="/static/js/htmx.min.js"></script>
+    <script src="/static/js/alpine.min.js" defer></script>
+</body>
+</html>

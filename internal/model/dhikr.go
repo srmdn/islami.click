@@ -1,0 +1,35 @@
+package model
+
+// DhikrEntry represents a single dhikr/doa item.
+type DhikrEntry struct {
+	ID          string `json:"id"`
+	Type        string `json:"type"` // quran, hadith, doa
+	Title       string `json:"title"`
+	Arabic      string `json:"arabic"`
+	Translation string `json:"translation"`
+	Repeat      int    `json:"repeat"`
+	Source      string `json:"source,omitempty"`
+}
+
+// AlMatsurat represents a collection of dhikr (sugro or kubro).
+type AlMatsurat struct {
+	Title       string       `json:"title"`
+	Description string       `json:"description"`
+	Sections    []DhikrEntry `json:"sections"`
+}
+
+// DoaCategory represents a categorized collection of doa.
+type DoaCategory struct {
+	Category string     `json:"category"`
+	Title    string     `json:"title"`
+	Items    []DoaEntry `json:"items"`
+}
+
+// DoaEntry represents a single doa item.
+type DoaEntry struct {
+	ID          string `json:"id"`
+	Title       string `json:"title"`
+	Arabic      string `json:"arabic"`
+	Translation string `json:"translation"`
+	Source      string `json:"source,omitempty"`
+}

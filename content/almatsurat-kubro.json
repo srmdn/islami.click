@@ -1,0 +1,15 @@
+{
+  "title": "Wazifah Kubro",
+  "description": "Al-Ma'tsurat versi lengkap (bacaan panjang)",
+  "sections": [
+    {
+      "id": "isti-adzah",
+      "type": "quran",
+      "title": "Isti'adzah",
+      "arabic": "TODO: add accurate Arabic text",
+      "translation": "TODO: add Indonesian translation",
+      "repeat": 1,
+      "source": ""
+    }
+  ]
+}

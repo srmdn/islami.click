@@ -1,0 +1,6 @@
+*.db
+.env
+static/css/out.css
+islami
+tailwindcss
+.DS_Store
