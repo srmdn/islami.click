@@ -18,7 +18,8 @@
 
     <div class="space-y-4" x-data="{counts: JSON.parse(localStorage.getItem('sugro-counts') || '{}')}">
         {{range .Sections}}
-        <div class="bg-white dark:bg-stone-900 rounded-2xl border border-stone-200/80 dark:border-stone-800/80 overflow-hidden"
+        <div class="rounded-2xl border overflow-hidden transition-colors duration-500"
+             :class="done ? 'bg-emerald-50 dark:bg-emerald-950/30 border-emerald-200 dark:border-emerald-800/60' : 'bg-white dark:bg-stone-900 border-stone-200/80 dark:border-stone-800/80'"
              x-data="{
                 get count() { return parseInt($root.counts['{{.ID}}'] || 0) },
                 target: {{.Repeat}},
@@ -33,18 +34,22 @@
             <div class="h-1 bg-stone-100 dark:bg-stone-800">
                 <div class="h-full bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-300" :style="'width:' + Math.min(100, (count/target)*100) + '%'"></div>
             </div>
-            <div class="p-6 cursor-pointer select-none" @click="tap()">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-sm font-medium text-emerald-700 dark:text-emerald-400">{{.Title}}</h3>
-                    <div class="flex items-center gap-2">
-                        <span class="text-xs font-medium px-2 py-0.5 rounded-full transition-colors"
-                              :class="done ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400' : 'bg-stone-100 dark:bg-stone-800 text-stone-500'"
-                              x-text="done ? 'Selesai' : count + '/{{.Repeat}}'"></span>
+            <div class="p-6 cursor-pointer select-none active:scale-[0.99] transition-transform duration-75"
+                 @click="tap()">
+                <div class="flex items-start justify-between mb-5">
+                    <div>
+                        <h3 class="text-sm font-semibold text-emerald-700 dark:text-emerald-400">{{.Title}}</h3>
+                        {{if gt .Repeat 1}}<p class="text-xs text-stone-400 dark:text-stone-500 mt-0.5">Dibaca {{.Repeat}}x</p>{{end}}
                     </div>
+                    <span class="text-xs font-medium px-2.5 py-1 rounded-full transition-colors shrink-0 ml-3"
+                          :class="done ? 'bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300' : 'bg-stone-100 dark:bg-stone-800 text-stone-500 dark:text-stone-400'"
+                          x-text="done ? '✓ Selesai' : count + ' / {{.Repeat}}'"></span>
                 </div>
-                <div class="arabic text-2xl leading-[2.2] mb-4 text-stone-900 dark:text-stone-50">{{.Arabic}}</div>
+                <div class="arabic text-3xl leading-[2.4] mb-5 text-stone-900 dark:text-stone-50" dir="rtl">{{.Arabic}}</div>
                 <div class="text-sm text-stone-600 dark:text-stone-300 leading-relaxed">{{.Translation}}</div>
                 {{if .Source}}<div class="text-xs text-stone-400 dark:text-stone-500 mt-3">{{.Source}}</div>{{end}}
+                <div class="text-xs text-stone-400 dark:text-stone-500 text-center mt-5 transition-opacity duration-300"
+                     :class="done ? 'opacity-0' : 'opacity-100'">Ketuk untuk menghitung</div>
             </div>
         </div>
         {{end}}
