@@ -9,6 +9,14 @@ Islam hub — Islamic content collection site.
 - SQLite via modernc.org/sqlite
 - Deploy: Ubuntu 24.04 VPS, nginx, systemd, no Docker
 
+## Commands
+
+```bash
+go run ./cmd/server                          # Dev server (port 8080)
+./tailwindcss -i static/css/input.css -o static/css/out.css --watch  # CSS dev
+go build -o islami.click ./cmd/server        # Production build
+```
+
 ## Project structure
 
 ```
