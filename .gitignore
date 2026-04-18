@@ -1,7 +1,31 @@
-*.db
-.env
-static/css/out.css
+# Binaries
 islami.click
 islami
+server
 tailwindcss
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+
+# Generated CSS
+static/css/out.css
+
+# Reference docs (local only)
+docs/ref/
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
