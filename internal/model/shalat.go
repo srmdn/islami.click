@@ -26,3 +26,15 @@ type ShalatPageData struct {
 	MasehiDate  string
 	Error       string
 }
+
+type PrayerMiniRow struct {
+	Name   string
+	Time   string
+	IsNext bool
+	IsPast bool
+}
+
+type ShalatMiniData struct {
+	Prayers []PrayerMiniRow
+	Error   string
+}

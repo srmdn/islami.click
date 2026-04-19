@@ -42,12 +42,25 @@ var indonesianCities = []string{
 var aladhanClient = &http.Client{Timeout: 10 * time.Second}
 
 type Handler struct {
-	tmpls     map[string]*template.Template
-	contentFS embed.FS
+	tmpls        map[string]*template.Template
+	partialTmpls map[string]*template.Template
+	contentFS    embed.FS
 }
 
-func New(tmpls map[string]*template.Template, contentFS embed.FS) *Handler {
-	return &Handler{tmpls: tmpls, contentFS: contentFS}
+func New(tmpls map[string]*template.Template, partialTmpls map[string]*template.Template, contentFS embed.FS) *Handler {
+	return &Handler{tmpls: tmpls, partialTmpls: partialTmpls, contentFS: contentFS}
+}
+
+func (h *Handler) renderPartial(w http.ResponseWriter, name string, data any) {
+	t, ok := h.partialTmpls[name]
+	if !ok {
+		http.Error(w, "Partial not found", http.StatusNotFound)
+		return
+	}
+	if err := t.ExecuteTemplate(w, name, data); err != nil {
+		log.Printf("renderPartial %s: %v", name, err)
+		http.Error(w, "Internal error", http.StatusInternalServerError)
+	}
 }
 
 func (h *Handler) render(w http.ResponseWriter, page string, data any) {
@@ -230,6 +243,85 @@ func (h *Handler) Shalat(w http.ResponseWriter, r *http.Request) {
 	)
 
 	h.render(w, "shalat.html", page)
+}
+
+func (h *Handler) ShalatMini(w http.ResponseWriter, r *http.Request) {
+	h.renderPartial(w, "shalat-mini", h.fetchShalatMini())
+}
+
+func (h *Handler) fetchShalatMini() model.ShalatMiniData {
+	resp, err := aladhanClient.Get("https://api.aladhan.com/v1/timingsByCity?city=Jakarta&country=Indonesia&method=20")
+	if err != nil {
+		return model.ShalatMiniData{Error: "Gagal memuat waktu shalat."}
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return model.ShalatMiniData{Error: "Gagal memuat waktu shalat."}
+	}
+
+	var result struct {
+		Code int `json:"code"`
+		Data struct {
+			Timings struct {
+				Fajr    string `json:"Fajr"`
+				Dhuhr   string `json:"Dhuhr"`
+				Asr     string `json:"Asr"`
+				Maghrib string `json:"Maghrib"`
+				Isha    string `json:"Isha"`
+			} `json:"timings"`
+		} `json:"data"`
+	}
+
+	if err := json.Unmarshal(body, &result); err != nil || result.Code != 200 {
+		return model.ShalatMiniData{Error: "Data tidak tersedia."}
+	}
+
+	t := result.Data.Timings
+	prayers := []struct{ Name, Time string }{
+		{"Subuh", stripSeconds(t.Fajr)},
+		{"Dzuhur", stripSeconds(t.Dhuhr)},
+		{"Ashr", stripSeconds(t.Asr)},
+		{"Maghrib", stripSeconds(t.Maghrib)},
+		{"Isya", stripSeconds(t.Isha)},
+	}
+
+	wib := time.FixedZone("WIB", 7*3600)
+	now := time.Now().In(wib)
+	nowMins := now.Hour()*60 + now.Minute()
+
+	parseMins := func(s string) int {
+		parts := strings.Split(s, ":")
+		if len(parts) < 2 {
+			return 0
+		}
+		hr, _ := strconv.Atoi(parts[0])
+		mn, _ := strconv.Atoi(parts[1])
+		return hr*60 + mn
+	}
+
+	nextIdx := -1
+	for i, p := range prayers {
+		if parseMins(p.Time) > nowMins {
+			nextIdx = i
+			break
+		}
+	}
+
+	rows := make([]model.PrayerMiniRow, len(prayers))
+	if nextIdx == -1 {
+		// All prayers passed — Subuh is next (tomorrow)
+		for i, p := range prayers {
+			rows[i] = model.PrayerMiniRow{Name: p.Name, Time: p.Time, IsNext: i == 0, IsPast: i != 0}
+		}
+	} else {
+		for i, p := range prayers {
+			rows[i] = model.PrayerMiniRow{Name: p.Name, Time: p.Time, IsNext: i == nextIdx, IsPast: i < nextIdx}
+		}
+	}
+
+	return model.ShalatMiniData{Prayers: rows}
 }
 
 func stripSeconds(t string) string {

@@ -39,7 +39,16 @@ func main() {
 		tmpls[page] = t
 	}
 
-	h := handler.New(tmpls, islamiclick.ContentFS)
+	partialTmpls := make(map[string]*template.Template)
+	{
+		t, err := template.ParseFS(islamiclick.TemplateFS, "templates/partials/shalat-mini.html")
+		if err != nil {
+			log.Fatalf("parse shalat-mini: %v", err)
+		}
+		partialTmpls["shalat-mini"] = t
+	}
+
+	h := handler.New(tmpls, partialTmpls, islamiclick.ContentFS)
 
 	fs := http.Dir("static")
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(fs)))
@@ -50,6 +59,7 @@ func main() {
 	http.HandleFunc("/almatsurat/kubro", h.AlMatsuratKubro)
 	http.HandleFunc("/doa", h.Doa)
 	http.HandleFunc("/shalat", h.Shalat)
+	http.HandleFunc("/shalat/mini", h.ShalatMini)
 
 	log.Printf("islami.click listening on :%s", port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
