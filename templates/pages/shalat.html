@@ -1,5 +1,5 @@
-{{define "title"}}Waktu Shalat{{end}}
-{{define "description"}}Jadwal waktu shalat berdasarkan lokasi{{end}}
+{{define "title"}}Waktu Shalat — {{.City}}{{end}}
+{{define "description"}}Jadwal waktu shalat hari ini untuk {{.City}}{{end}}
 
 {{define "content"}}
 <div class="max-w-3xl mx-auto px-4 py-8">
@@ -9,20 +9,101 @@
         <span class="text-stone-800 dark:text-stone-200">Waktu Shalat</span>
     </nav>
 
-    <h1 class="text-2xl font-bold mb-2">Waktu Shalat</h1>
-    <p class="text-stone-500 dark:text-stone-400 mb-8">Jadwal shalat berdasarkan lokasi Anda.</p>
-
-    <div class="bg-sky-50/50 dark:bg-sky-950/20 border border-sky-200/60 dark:border-sky-800/40 rounded-2xl p-6 text-center">
-        <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-sky-100 dark:bg-sky-950/50 flex items-center justify-center">
-            <svg class="w-6 h-6 text-sky-600 dark:text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M12 3C12 3 8 6 8 10V20H16V10C16 6 12 3 12 3Z"/>
-                <line x1="12" y1="3" x2="12" y2="1"/>
-                <line x1="8" y1="20" x2="16" y2="20"/>
-                <line x1="6" y1="20" x2="18" y2="20"/>
-            </svg>
+    {{/* City picker */}}
+    <form method="GET" action="/shalat" class="mb-8">
+        <div class="flex gap-2">
+            <select name="city"
+                    class="flex-1 px-4 py-2.5 rounded-xl border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-800 dark:text-stone-100 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400">
+                {{range .Cities}}
+                <option value="{{.}}" {{if eq . $.City}}selected{{end}}>{{.}}</option>
+                {{end}}
+            </select>
+            <button type="submit"
+                    class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white text-sm font-medium transition-colors">
+                Cari
+            </button>
         </div>
-        <p class="text-sm text-sky-700 dark:text-sky-300 font-medium">Sedang dalam pengembangan</p>
-        <p class="text-xs text-sky-600/70 dark:text-sky-400/70 mt-1">Jadwal shalat via Aladhan API untuk seluruh kota di Indonesia</p>
+    </form>
+
+    {{if .Error}}
+    <div class="rounded-2xl border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-950/30 px-5 py-4 text-sm text-red-700 dark:text-red-400 mb-6">
+        {{.Error}}
     </div>
+    {{else}}
+
+    {{/* Hijri date header */}}
+    <div class="mb-6 text-center">
+        <div class="text-2xl font-bold text-stone-900 dark:text-stone-50">{{.City}}</div>
+        <div class="mt-1 text-sm text-stone-500 dark:text-stone-400">
+            {{.Hijri.Weekday}}, {{.Hijri.Day}} {{.Hijri.Month}} {{.Hijri.Year}} H
+        </div>
+        {{if .Hijri.MonthAr}}
+        <div class="mt-0.5 text-base text-stone-400 dark:text-stone-500 arabic" dir="rtl">
+            {{.Hijri.Day}} {{.Hijri.MonthAr}} {{.Hijri.Year}}
+        </div>
+        {{end}}
+    </div>
+
+    {{/* Prayer times */}}
+    <div x-data="{
+        now: new Date(),
+        prayers: [
+            {name: 'Imsyak',  time: '{{.Times.Imsyak}}'},
+            {name: 'Subuh',   time: '{{.Times.Subuh}}'},
+            {name: 'Terbit',  time: '{{.Times.Terbit}}'},
+            {name: 'Dhuha',   time: '{{.Times.Dhuha}}'},
+            {name: 'Dzuhur',  time: '{{.Times.Dzuhur}}'},
+            {name: 'Ashr',    time: '{{.Times.Ashr}}'},
+            {name: 'Maghrib', time: '{{.Times.Maghrib}}'},
+            {name: 'Isya',    time: '{{.Times.Isya}}'}
+        ],
+        toMins(t) {
+            const [h, m] = t.split(':').map(Number);
+            return h * 60 + m;
+        },
+        get nowMins() {
+            return this.now.getHours() * 60 + this.now.getMinutes();
+        },
+        get nextIdx() {
+            for (let i = 0; i < this.prayers.length; i++) {
+                if (this.toMins(this.prayers[i].time) > this.nowMins) return i;
+            }
+            return 0;
+        },
+        isNext(i) { return i === this.nextIdx },
+        isPast(i) { return this.toMins(this.prayers[i].time) < this.nowMins && i !== this.nextIdx }
+    }" class="space-y-2">
+        <template x-for="(prayer, i) in prayers" :key="i">
+            <div class="flex items-center justify-between px-5 py-4 rounded-2xl border transition-colors duration-300"
+                 :class="{
+                     'border-emerald-400 dark:border-emerald-500 bg-emerald-50 dark:bg-emerald-950/40': isNext(i),
+                     'border-stone-200/60 dark:border-stone-800/60 bg-white dark:bg-stone-900 opacity-50': isPast(i),
+                     'border-stone-200/80 dark:border-stone-800/80 bg-white dark:bg-stone-900': !isNext(i) && !isPast(i)
+                 }">
+                <div class="flex items-center gap-3">
+                    <div class="w-2 h-2 rounded-full transition-colors"
+                         :class="isNext(i) ? 'bg-emerald-500' : isPast(i) ? 'bg-stone-300 dark:bg-stone-700' : 'bg-stone-200 dark:bg-stone-700'">
+                    </div>
+                    <span class="font-medium text-stone-800 dark:text-stone-100"
+                          :class="isNext(i) ? 'text-emerald-800 dark:text-emerald-300' : ''"
+                          x-text="prayer.name"></span>
+                    <span x-show="isNext(i)"
+                          class="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-400"
+                          style="display:none">
+                        Berikutnya
+                    </span>
+                </div>
+                <span class="font-mono font-bold text-lg tabular-nums"
+                      :class="isNext(i) ? 'text-emerald-700 dark:text-emerald-400' : isPast(i) ? 'text-stone-400 dark:text-stone-600' : 'text-stone-800 dark:text-stone-100'"
+                      x-text="prayer.time"></span>
+            </div>
+        </template>
+    </div>
+
+    <p class="mt-4 text-center text-xs text-stone-400 dark:text-stone-600">
+        Metode: Kemenag Indonesia · Sumber: Aladhan API
+    </p>
+
+    {{end}}
 </div>
 {{end}}
