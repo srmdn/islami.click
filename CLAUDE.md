@@ -82,32 +82,11 @@ Each adhkar entry in JSON:
 }
 ```
 
-## References
-
-Study these before building:
-
-- https://almatsurat.net/ — Main reference. Homepage with sugro/kubro navigation.
-- https://almatsurat.net/sugro — Wazifah Sugro (short version). Key UX: tap-to-count per dhikr, progress display (0/3, 0/100), "Selesai" completion status, sequential flow from isti'adzah through doa robithoh.
-- https://almatsurat.net/kubro — Wazifah Kubro (complete version). Same UX, longer content with more surah sections and higher repeat counts.
-
-Replicate the core interaction: user taps an area to increment count toward target, visual progress updates, section marked done when target reached.
-
-### Doa references
-- https://quran.nu.or.id/doa — Main reference. Categorized doa collection (keseharian, shalat, wirid harian, etc). Each entry has Arabic text, Latin transliteration, and Indonesian translation.
-- https://quran.nu.or.id/doa/doa-keseharian — Daily doa category. Study the content structure: doa title, Arabic, Latin, terjemah, source.
-- https://quran.nu.or.id/doa/wirid-harian — Daily wirid. Similar structure to doa keseharian.
-
-### Shalat (prayer times) references
-- https://www.jadwalsholat.org/ — Main reference. Prayer times for all Indonesian cities, Gregorian-Hijri calendar, city selector, printable schedules.
-- https://www.jadwalsholat.org/jadwal-sholat-hari-ini — Daily view. Study the layout: city picker, 5 prayer times display, hijri date.
-- https://aladhan.com/prayer-times-api — API for prayer times data. Use method=20 (KMTT/Kemenag Indonesia) for Indonesian calculation.
-
 ## Phase 1 scope (current)
 
-- `/almatsurat` — sugro + kubro with tap counter, progress tracking
-- `/doa` — categorized du'a collection
-- `/shalat` — prayer times via Aladhan API (fetched server-side)
-- Counter state: localStorage via Alpine.js (no accounts yet)
+- `/almatsurat` — sugro + kubro with tap counter, progress resets on reload
+- `/doa` — categorized du'a collection (content TBD)
+- `/shalat` — prayer times via Aladhan API (fetched server-side, method=20 Kemenag)
 
 ## Phase 2 scope (later)
 
