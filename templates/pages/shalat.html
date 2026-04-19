@@ -10,17 +10,17 @@
     </nav>
 
     {{/* City picker */}}
-    <form method="GET" action="/shalat" class="mb-8 p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800">
+    <form method="GET" action="/shalat" class="mb-8 p-4 rounded-2xl bg-stone-50 dark:bg-stone-900/50 border border-emerald-200 dark:border-emerald-800 shadow-card-rest">
         <label class="block text-xs font-semibold text-emerald-800 dark:text-emerald-400 mb-2 uppercase tracking-wide">Pilih Kota</label>
         <div class="flex gap-3">
             <select name="city"
-                    class="flex-1 px-4 py-3 rounded-xl border-2 border-emerald-300 dark:border-emerald-700 bg-white dark:bg-stone-900 text-stone-800 dark:text-stone-100 text-sm font-medium focus:outline-none focus:border-emerald-500 dark:focus:border-emerald-400">
+                    class="flex-1 px-4 py-3 rounded-xl border-2 border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-800 dark:text-stone-100 text-sm font-medium focus:outline-none focus:border-emerald-500 dark:focus:border-emerald-400">
                 {{range .Cities}}
                 <option value="{{.}}" {{if eq . $.City}}selected{{end}}>{{.}}</option>
                 {{end}}
             </select>
             <button type="submit"
-                    class="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white text-sm font-bold tracking-wide shadow-md shadow-emerald-200 dark:shadow-emerald-900/50 transition-colors">
+                    class="px-6 py-3 rounded-xl bg-[#0E5C73] hover:bg-[#0A4A5C] active:bg-[#083D4D] text-white text-sm font-bold tracking-wide shadow-md transition-colors">
                 Lihat
             </button>
         </div>
@@ -34,9 +34,9 @@
 
     {{/* Date header */}}
     <div class="mb-8 text-center">
-        <div class="text-2xl font-bold text-stone-900 dark:text-stone-50">{{.City}}</div>
-        <div class="mt-2 text-sm text-stone-600 dark:text-stone-300">{{.MasehiDate}}</div>
-        <div class="mt-1 text-sm font-semibold text-emerald-700 dark:text-emerald-400">
+        <div class="text-2xl font-bold tracking-tight text-stone-900 dark:text-stone-50">{{.City}}</div>
+        <div class="mt-2 text-sm text-stone-500 dark:text-stone-400">{{.MasehiDate}}</div>
+        <div class="mt-1 text-sm font-semibold text-[#0E5C73] dark:text-[#7AAAB5]">
             {{.Hijri.Day}} {{.Hijri.Month}} {{.Hijri.Year}} H
         </div>
     </div>
@@ -45,14 +45,14 @@
     <div x-data="{
         now: new Date(),
         prayers: [
-            {name: 'Imsyak',  time: '{{.Times.Imsyak}}'},
-            {name: 'Subuh',   time: '{{.Times.Subuh}}'},
-            {name: 'Terbit',  time: '{{.Times.Terbit}}'},
-            {name: 'Dhuha',   time: '{{.Times.Dhuha}}'},
-            {name: 'Dzuhur',  time: '{{.Times.Dzuhur}}'},
-            {name: 'Ashr',    time: '{{.Times.Ashr}}'},
-            {name: 'Maghrib', time: '{{.Times.Maghrib}}'},
-            {name: 'Isya',    time: '{{.Times.Isya}}'}
+            {name: 'Imsyak',  time: '{{.Times.Imsyak}}', minor: true},
+            {name: 'Subuh',   time: '{{.Times.Subuh}}', minor: false},
+            {name: 'Terbit',  time: '{{.Times.Terbit}}', minor: true},
+            {name: 'Dhuha',   time: '{{.Times.Dhuha}}', minor: false},
+            {name: 'Dzuhur',  time: '{{.Times.Dzuhur}}', minor: false},
+            {name: 'Ashr',    time: '{{.Times.Ashr}}', minor: false},
+            {name: 'Maghrib', time: '{{.Times.Maghrib}}', minor: false},
+            {name: 'Isya',    time: '{{.Times.Isya}}', minor: false}
         ],
         toMins(t) {
             const [h, m] = t.split(':').map(Number);
@@ -73,16 +73,16 @@
         <template x-for="(prayer, i) in prayers" :key="i">
             <div class="flex items-center justify-between px-6 py-5 rounded-2xl border-2 transition-all duration-300"
                  :class="{
-                     'border-emerald-500 bg-emerald-600 shadow-lg shadow-emerald-200 dark:shadow-emerald-900/40': isNext(i),
+                     'border-[#0E5C73] shadow-[0_4px_20px_rgba(14,92,115,0.20)] bg-gradient-to-b from-[#0E5C73] to-[#0A4A5C] text-white': isNext(i),
                      'border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-900/50 opacity-40': isPast(i),
                      'border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900': !isNext(i) && !isPast(i)
                  }">
                 <div class="flex items-center gap-4">
-                    <span class="font-bold text-base"
-                          :class="isNext(i) ? 'text-white' : isPast(i) ? 'text-stone-400 dark:text-stone-600' : 'text-stone-800 dark:text-stone-100'"
+                    <span class="text-base font-semibold tracking-tight"
+                          :class="isNext(i) ? 'text-white' : isPast(i) ? 'text-stone-400 dark:text-stone-600' : prayer.minor ? 'text-stone-400 dark:text-stone-500' : 'text-stone-800 dark:text-stone-100'"
                           x-text="prayer.name"></span>
                     <span x-show="isNext(i)"
-                          class="text-xs font-bold px-2.5 py-1 rounded-full bg-white/25 text-white"
+                          class="text-xs font-bold px-2.5 py-1 rounded-full bg-white/20 text-white backdrop-blur-sm"
                           style="display:none">
                         Berikutnya
                     </span>

@@ -16,6 +16,10 @@ func main() {
 		port = "8080"
 	}
 
+	funcMap := template.FuncMap{
+		"add": func(a, b int) int { return a + b },
+	}
+
 	pages := []string{
 		"home.html",
 		"almatsurat.html",
@@ -27,7 +31,8 @@ func main() {
 
 	tmpls := make(map[string]*template.Template)
 	for _, page := range pages {
-		t, err := template.ParseFS(islamiclick.TemplateFS,
+		tpl := template.New(page).Funcs(funcMap)
+		tpl, err := tpl.ParseFS(islamiclick.TemplateFS,
 			"templates/layouts/base.html",
 			"templates/partials/header.html",
 			"templates/partials/footer.html",
@@ -36,16 +41,17 @@ func main() {
 		if err != nil {
 			log.Fatalf("parse %s: %v", page, err)
 		}
-		tmpls[page] = t
+		tmpls[page] = tpl
 	}
 
 	partialTmpls := make(map[string]*template.Template)
 	{
-		t, err := template.ParseFS(islamiclick.TemplateFS, "templates/partials/shalat-mini.html")
+		tpl := template.New("shalat-mini").Funcs(funcMap)
+		tpl, err := tpl.ParseFS(islamiclick.TemplateFS, "templates/partials/shalat-mini.html")
 		if err != nil {
 			log.Fatalf("parse shalat-mini: %v", err)
 		}
-		partialTmpls["shalat-mini"] = t
+		partialTmpls["shalat-mini"] = tpl
 	}
 
 	h := handler.New(tmpls, partialTmpls, islamiclick.ContentFS)
