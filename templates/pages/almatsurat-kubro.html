@@ -21,12 +21,12 @@
         <div class="rounded-2xl border overflow-hidden transition-colors duration-500"
              :class="done ? 'border-teal-500 dark:border-teal-500' : 'border-stone-200/80 dark:border-stone-800/80'"
              x-data="{
-                get count() { return parseInt($root.counts['{{.ID}}'] || 0) },
+                get count() { return parseInt(counts['{{.ID}}'] || 0) },
                 target: {{.Repeat}},
                 tap(el) {
                     if (this.count < this.target) {
-                        $root.counts['{{.ID}}'] = this.count + 1;
-                        localStorage.setItem('kubro-counts', JSON.stringify($root.counts));
+                        counts['{{.ID}}'] = this.count + 1;
+                        localStorage.setItem('kubro-counts', JSON.stringify(counts));
                         if (navigator.vibrate) navigator.vibrate(20);
                         if (this.count >= this.target) {
                             if (navigator.vibrate) navigator.vibrate([50,50,50]);
