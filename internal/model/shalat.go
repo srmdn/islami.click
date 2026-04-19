@@ -14,15 +14,15 @@ type PrayerTimes struct {
 type HijriDate struct {
 	Day     string
 	Month   string
-	MonthAr string
 	Year    string
 	Weekday string
 }
 
 type ShalatPageData struct {
-	City   string
-	Cities []string
-	Times  PrayerTimes
-	Hijri  HijriDate
-	Error  string
+	City        string
+	Cities      []string
+	Times       PrayerTimes
+	Hijri       HijriDate
+	MasehiDate  string
+	Error       string
 }

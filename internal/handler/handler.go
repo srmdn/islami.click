@@ -16,6 +16,19 @@ import (
 	"github.com/srmdn/islami.click/internal/model"
 )
 
+var hijriMonthsID = [13]string{
+	"", "Muharram", "Safar", "Rabiul Awal", "Rabiul Akhir",
+	"Jumadil Awal", "Jumadil Akhir", "Rajab", "Sya'ban",
+	"Ramadhan", "Syawal", "Dzulqa'dah", "Dzulhijjah",
+}
+
+var masehiMonthsID = [13]string{
+	"", "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+	"Juli", "Agustus", "September", "Oktober", "November", "Desember",
+}
+
+var masehiDaysID = [7]string{"Ahad", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"}
+
 var indonesianCities = []string{
 	"Aceh", "Ambon", "Balikpapan", "Banda Aceh", "Bandar Lampung",
 	"Bandung", "Banjarmasin", "Batam", "Bekasi", "Bogor",
@@ -164,10 +177,10 @@ func (h *Handler) Shalat(w http.ResponseWriter, r *http.Request) {
 			} `json:"timings"`
 			Date struct {
 				Hijri struct {
-					Day     string `json:"day"`
-					Month   struct {
-						En string `json:"en"`
-						Ar string `json:"ar"`
+					Day   string `json:"day"`
+					Month struct {
+						Number int    `json:"number"`
+						En     string `json:"en"`
 					} `json:"month"`
 					Year    string `json:"year"`
 					Weekday struct {
@@ -197,13 +210,24 @@ func (h *Handler) Shalat(w http.ResponseWriter, r *http.Request) {
 	}
 
 	hijri := result.Data.Date.Hijri
+	monthID := hijri.Month.En
+	if n := hijri.Month.Number; n >= 1 && n <= 12 {
+		monthID = hijriMonthsID[n]
+	}
 	page.Hijri = model.HijriDate{
 		Day:     hijri.Day,
-		Month:   hijri.Month.En,
-		MonthAr: hijri.Month.Ar,
+		Month:   monthID,
 		Year:    hijri.Year,
 		Weekday: hijri.Weekday.En,
 	}
+
+	now := time.Now()
+	page.MasehiDate = fmt.Sprintf("%s, %d %s %d",
+		masehiDaysID[now.Weekday()],
+		now.Day(),
+		masehiMonthsID[now.Month()],
+		now.Year(),
+	)
 
 	h.render(w, "shalat.html", page)
 }
