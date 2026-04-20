@@ -3,24 +3,24 @@
 
 {{define "content"}}
 <div class="max-w-3xl mx-auto px-4 py-8">
-    <nav class="text-sm text-stone-500 dark:text-stone-400 mb-6">
-        <a href="/" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Beranda</a>
+    <nav class="text-sm text-slate-500 dark:text-slate-400 mb-6">
+        <a href="/" class="hover:text-[#14B8A6] transition-colors">Beranda</a>
         <span class="mx-2">/</span>
-        <span class="text-stone-800 dark:text-stone-200">Waktu Shalat</span>
+        <span class="text-slate-800 dark:text-slate-100">Waktu Shalat</span>
     </nav>
 
     {{/* City picker */}}
-    <form method="GET" action="/shalat" class="mb-8 p-4 rounded-2xl bg-stone-50 dark:bg-stone-900/50 border border-emerald-200 dark:border-emerald-800 shadow-card-rest">
-        <label class="block text-xs font-semibold text-emerald-800 dark:text-emerald-400 mb-2 uppercase tracking-wide">Pilih Kota</label>
+    <form method="GET" action="/shalat" class="mb-8 p-4 rounded-2xl bg-slate-100/80 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 shadow-lg">
+        <label class="block text-xs font-semibold text-[#14B8A6] mb-2 uppercase tracking-wide">Pilih Kota</label>
         <div class="flex gap-3">
             <select name="city"
-                    class="flex-1 px-4 py-3 rounded-xl border-2 border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-800 dark:text-stone-100 text-sm font-medium focus:outline-none focus:border-emerald-500 dark:focus:border-emerald-400">
+                    class="flex-1 px-4 py-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm font-medium focus:outline-none focus:border-[#14B8A6] transition-colors">
                 {{range .Cities}}
                 <option value="{{.}}" {{if eq . $.City}}selected{{end}}>{{.}}</option>
                 {{end}}
             </select>
             <button type="submit"
-                    class="px-6 py-3 rounded-xl bg-[#0E5C73] hover:bg-[#0A4A5C] active:bg-[#083D4D] text-white text-sm font-bold tracking-wide shadow-md transition-colors">
+                    class="px-6 py-3 rounded-xl bg-[#14B8A6] hover:bg-[#0D9488] active:bg-[#0F766E] text-white text-sm font-bold tracking-wide shadow-md transition-colors">
                 Lihat
             </button>
         </div>
@@ -34,9 +34,9 @@
 
     {{/* Date header */}}
     <div class="mb-8 text-center">
-        <div class="text-2xl font-bold tracking-tight text-stone-900 dark:text-stone-50">{{.City}}</div>
-        <div class="mt-2 text-sm text-stone-500 dark:text-stone-400">{{.MasehiDate}}</div>
-        <div class="mt-1 text-sm font-semibold text-[#0E5C73] dark:text-[#7AAAB5]">
+        <div class="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-50">{{.City}}</div>
+        <div class="mt-2 text-sm text-slate-500 dark:text-slate-400">{{.MasehiDate}}</div>
+        <div class="mt-1 text-sm font-semibold text-[#14B8A6]">
             {{.Hijri.Day}} {{.Hijri.Month}} {{.Hijri.Year}} H
         </div>
     </div>
@@ -73,13 +73,13 @@
         <template x-for="(prayer, i) in prayers" :key="i">
             <div class="flex items-center justify-between px-6 py-5 rounded-2xl border-2 transition-all duration-300"
                  :class="{
-                     'border-[#0E5C73] shadow-[0_4px_20px_rgba(14,92,115,0.20)] bg-gradient-to-b from-[#0E5C73] to-[#0A4A5C] text-white': isNext(i),
-                     'border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-900/50 opacity-40': isPast(i),
-                     'border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900': !isNext(i) && !isPast(i)
+                     'border-[#14B8A6] shadow-lg shadow-[#14B8A6]/20 bg-gradient-to-b from-[#14B8A6] to-[#0D9488] text-white': isNext(i),
+                     'border-slate-200 dark:border-slate-700 bg-slate-100/50 dark:bg-slate-800/50 opacity-40': isPast(i),
+                     'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800': !isNext(i) && !isPast(i)
                  }">
                 <div class="flex items-center gap-4">
                     <span class="text-base font-semibold tracking-tight"
-                          :class="isNext(i) ? 'text-white' : isPast(i) ? 'text-stone-400 dark:text-stone-600' : prayer.minor ? 'text-stone-400 dark:text-stone-500' : 'text-stone-800 dark:text-stone-100'"
+                          :class="isNext(i) ? 'text-white' : isPast(i) ? 'text-slate-400' : prayer.minor ? 'text-slate-400 dark:text-slate-500' : 'text-slate-800 dark:text-slate-100'"
                           x-text="prayer.name"></span>
                     <span x-show="isNext(i)"
                           class="text-xs font-bold px-2.5 py-1 rounded-full bg-white/20 text-white backdrop-blur-sm"
@@ -88,13 +88,13 @@
                     </span>
                 </div>
                 <span class="font-mono font-bold text-xl tabular-nums"
-                      :class="isNext(i) ? 'text-white' : isPast(i) ? 'text-stone-400 dark:text-stone-600' : 'text-stone-900 dark:text-stone-100'"
+                      :class="isNext(i) ? 'text-white' : isPast(i) ? 'text-slate-400' : 'text-slate-900 dark:text-slate-100'"
                       x-text="prayer.time"></span>
             </div>
         </template>
     </div>
 
-    <p class="mt-6 text-center text-xs text-stone-400 dark:text-stone-600">
+    <p class="mt-6 text-center text-xs text-slate-400 dark:text-slate-600">
         Metode: Kemenag Indonesia · Sumber: Aladhan API
     </p>
 

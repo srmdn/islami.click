@@ -3,23 +3,23 @@
 
 {{define "content"}}
 <div class="max-w-3xl mx-auto px-4 py-8">
-    <nav class="text-sm text-stone-500 dark:text-stone-400 mb-6">
-        <a href="/" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Beranda</a>
+    <nav class="text-sm text-slate-500 dark:text-slate-400 mb-6">
+        <a href="/" class="hover:text-[#14B8A6] transition-colors">Beranda</a>
         <span class="mx-2">/</span>
-        <a href="/almatsurat" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Al-Ma'tsurat</a>
+        <a href="/almatsurat" class="hover:text-[#14B8A6] transition-colors">Al-Ma'tsurat</a>
         <span class="mx-2">/</span>
-        <span class="text-stone-800 dark:text-stone-200">Sugro</span>
+        <span class="text-slate-700 dark:text-slate-200">Sugro</span>
     </nav>
 
     <div class="mb-8">
-        <h1 class="text-3xl font-semibold tracking-tight mb-2">{{.Title}}</h1>
-        <p class="text-stone-500 dark:text-stone-400">{{.Description}}</p>
+        <h1 class="text-3xl font-semibold tracking-tight mb-2 text-slate-800 dark:text-slate-100">{{.Title}}</h1>
+        <p class="text-slate-500 dark:text-slate-400">{{.Description}}</p>
     </div>
 
     <div class="space-y-4" x-data="{counts: {}}">
         {{range $idx, $section := .Sections}}
         <div class="rounded-2xl border overflow-hidden transition-colors duration-500"
-             :class="done ? 'border-emerald-500 dark:border-emerald-500' : 'border-stone-200/80 dark:border-stone-800/80'"
+             :class="done ? 'border-[#14B8A6] dark:border-[#14B8A6]' : 'border-slate-200/80 dark:border-slate-700/50'"
              x-data="{
                 get count() { return parseInt(counts['{{$section.ID}}'] || 0) },
                 target: {{$section.Repeat}},
@@ -38,40 +38,40 @@
                 },
                 get done() { return this.count >= this.target }
              }">
-            <div class="flex justify-between items-center px-5 py-3 bg-emerald-50/80 dark:bg-emerald-950/20 border-b border-stone-200 dark:border-stone-800">
+            <div class="flex justify-between items-center px-5 py-3 bg-emerald-50/80 dark:bg-emerald-950/20 border-b border-slate-200 dark:border-slate-700">
                 <div class="flex items-center gap-3">
-                    <span class="text-[10px] font-mono text-stone-400 dark:text-stone-600 tabular-nums">{{$idx | add 1}} / {{len $.Sections}}</span>
-                    <span class="font-semibold text-sm text-emerald-800 dark:text-emerald-300">{{$section.Title}}</span>
+                    <span class="text-[10px] font-mono text-slate-400 dark:text-slate-500 tabular-nums">{{$idx | add 1}} / {{len $.Sections}}</span>
+                    <span class="font-semibold text-sm text-emerald-700 dark:text-emerald-400">{{$section.Title}}</span>
                 </div>
                 <span class="text-[10px] font-semibold px-2.5 py-1 rounded-md bg-amber-50 dark:bg-amber-950/30 border border-amber-100 dark:border-amber-900/30 text-amber-700 dark:text-amber-400">Dibaca {{$section.Repeat}}x</span>
             </div>
-            <div class="p-6 bg-white dark:bg-stone-900">
-                <div class="arabic text-3xl leading-[2.4] mb-5 text-stone-900 dark:text-stone-50" dir="rtl">{{$section.Arabic}}</div>
+            <div class="p-6 bg-white dark:bg-slate-800">
+                <div class="arabic text-3xl leading-[2.4] mb-5 text-slate-800 dark:text-slate-100" dir="rtl">{{$section.Arabic}}</div>
                 <div class="flex items-center gap-3 mb-4">
-                    <div class="flex-1 h-px bg-stone-200 dark:bg-stone-700"></div>
-                    <svg width="12" height="12" viewBox="0 0 32 32" fill="none" class="text-stone-300 dark:text-stone-600">
+                    <div class="flex-1 h-px bg-slate-200 dark:bg-slate-700"></div>
+                    <svg width="12" height="12" viewBox="0 0 32 32" fill="none" class="text-slate-300 dark:text-slate-600">
                         <g transform="translate(16,16)">
                             <rect x="-3" y="-3" width="6" height="6" rx="0.5" fill="currentColor" opacity="0.5"/>
                             <rect x="-3" y="-3" width="6" height="6" rx="0.5" fill="currentColor" opacity="0.5" transform="rotate(45)"/>
                         </g>
                     </svg>
-                    <div class="flex-1 h-px bg-stone-200 dark:bg-stone-700"></div>
+                    <div class="flex-1 h-px bg-slate-200 dark:bg-slate-700"></div>
                 </div>
-                <div class="text-sm text-stone-600 dark:text-stone-300 leading-relaxed">{{$section.Translation}}</div>
-                {{if $section.Source}}<div class="text-xs text-stone-400 dark:text-stone-500 mt-3">{{$section.Source}}</div>{{end}}
+                <div class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">{{$section.Translation}}</div>
+                {{if $section.Source}}<div class="text-xs text-slate-400 dark:text-slate-500 mt-3">{{$section.Source}}</div>{{end}}
             </div>
-            <div class="cursor-pointer select-none bg-white dark:bg-stone-900 active:bg-emerald-50 dark:active:bg-emerald-950/20 transition-colors tap-press"
+            <div class="cursor-pointer select-none bg-white dark:bg-slate-800 active:bg-emerald-50 dark:active:bg-emerald-950/20 transition-colors tap-press"
                  @click="tap($el)">
-                <div class="h-1.5 bg-stone-100 dark:bg-stone-800">
-                    <div class="h-full bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-300"
+                <div class="h-1.5 bg-slate-100 dark:bg-slate-700">
+                    <div class="h-full bg-gradient-to-r from-[#14B8A6] to-emerald-500 transition-all duration-300"
                          :style="'width:' + Math.min(100, count/target*100) + '%'"></div>
                 </div>
-                <div class="py-4 text-center border-t border-dashed border-stone-200 dark:border-stone-700">
+                <div class="py-4 text-center border-t border-dashed border-slate-200 dark:border-slate-700">
                     <div x-show="!done">
                         <span class="font-bold text-lg text-emerald-700 dark:text-emerald-400" x-text="count + ' / ' + target"></span>
-                        <p class="text-xs text-stone-400 dark:text-stone-500 mt-1">Ketuk untuk menghitung</p>
+                        <p class="text-xs text-slate-400 dark:text-slate-500 mt-1">Ketuk untuk menghitung</p>
                     </div>
-                    <div x-show="done" class="flex items-center justify-center gap-2 text-emerald-600 dark:text-emerald-400 font-bold" style="display:none">
+                    <div x-show="done" class="flex items-center justify-center gap-2 text-[#14B8A6] dark:text-[#14B8A6] font-bold" style="display:none">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                         Selesai
                     </div>

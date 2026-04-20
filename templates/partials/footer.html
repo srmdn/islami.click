@@ -1,28 +1,29 @@
 {{define "footer"}}
-<footer class="mt-auto border-t border-stone-200/60 dark:border-stone-800/60 bg-stone-50/50 dark:bg-[#0C1E26]/50 relative overflow-hidden">
-    <div class="absolute inset-0 islamic-pattern opacity-30 pointer-events-none"></div>
+<footer class="mt-auto border-t border-slate-200/80 dark:border-slate-700/50 bg-slate-100/80 dark:bg-[#0B1120] relative overflow-hidden">
+    <div class="absolute inset-0 islamic-pattern-dark opacity-30 pointer-events-none"></div>
     <div class="max-w-3xl mx-auto px-4 py-8 relative">
         <div class="flex flex-col items-center gap-4">
             <div class="flex items-center gap-2">
-                <svg class="w-4 h-4" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="32" height="32" rx="7" class="fill-emerald-700/20 dark:fill-emerald-400/20"/>
-                    <g transform="translate(16,16)">
-                        <rect x="-6" y="-6" width="12" height="12" rx="1" class="fill-emerald-700/40 dark:fill-emerald-400/40"/>
-                        <rect x="-6" y="-6" width="12" height="12" rx="1" class="fill-emerald-700/40 dark:fill-emerald-400/40" transform="rotate(45)"/>
-                    </g>
-                </svg>
-                <span class="text-sm font-medium text-stone-500 dark:text-stone-400">islami.click</span>
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-[#14B8A6] to-[#0D9488] flex items-center justify-center">
+                    <svg class="w-4 h-4 text-white" viewBox="0 0 32 32" fill="none">
+                        <g transform="translate(16,16)">
+                            <rect x="-4" y="-4" width="8" height="8" rx="1" fill="currentColor" opacity="0.9"/>
+                            <rect x="-4" y="-4" width="8" height="8" rx="1" fill="currentColor" opacity="0.9" transform="rotate(45)"/>
+                        </g>
+                    </svg>
+                </div>
+                <span class="text-sm font-medium text-slate-600 dark:text-slate-300">islami.click</span>
             </div>
-            <nav class="flex items-center gap-4 text-xs text-stone-400 dark:text-stone-500">
-                <a href="/" class="hover:text-[#0E5C73] dark:hover:text-[#7AAAB5] transition-colors">Beranda</a>
-                <span class="text-stone-300 dark:text-stone-700">·</span>
-                <a href="/almatsurat" class="hover:text-[#0E5C73] dark:hover:text-[#7AAAB5] transition-colors">Al-Ma'tsurat</a>
-                <span class="text-stone-300 dark:text-stone-700">·</span>
-                <a href="/doa" class="hover:text-[#0E5C73] dark:hover:text-[#7AAAB5] transition-colors">Doa</a>
-                <span class="text-stone-300 dark:text-stone-700">·</span>
-                <a href="/shalat" class="hover:text-[#0E5C73] dark:hover:text-[#7AAAB5] transition-colors">Shalat</a>
+            <nav class="flex items-center gap-4 text-xs text-slate-400 dark:text-slate-500">
+                <a href="/" class="hover:text-[#14B8A6] transition-colors">Beranda</a>
+                <span class="text-slate-300 dark:text-slate-600">·</span>
+                <a href="/almatsurat" class="hover:text-[#14B8A6] transition-colors">Al-Ma'tsurat</a>
+                <span class="text-slate-300 dark:text-slate-600">·</span>
+                <a href="/doa" class="hover:text-[#14B8A6] transition-colors">Doa</a>
+                <span class="text-slate-300 dark:text-slate-600">·</span>
+                <a href="/shalat" class="hover:text-[#14B8A6] transition-colors">Shalat</a>
             </nav>
-            <p class="text-xs text-stone-400 dark:text-stone-500">Kumpulan konten Islami untuk ibadah harian</p>
+            <p class="text-xs text-slate-400 dark:text-slate-500">Kumpulan konten Islami untuk ibadah harian</p>
         </div>
     </div>
 </footer>

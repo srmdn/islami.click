@@ -9,10 +9,17 @@
     <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="/static/css/out.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        (function() {
+            var theme = localStorage.getItem('theme');
+            if (theme === 'dark') document.documentElement.classList.add('dark');
+        })();
+    </script>
     {{block "head" .}}{{end}}
+    <style>[x-cloak] { display: none !important; }</style>
 </head>
-<body class="bg-[#FAF7F2] dark:bg-[#0F2530] text-[#1A2E35] dark:text-[#EEE8DF] min-h-screen antialiased flex flex-col font-sans">
+<body class="bg-slate-50 dark:bg-[#0B1120] text-slate-800 dark:text-white min-h-screen antialiased flex flex-col font-sans transition-colors duration-300">
     {{template "header" .}}
 
     <main class="flex-1">
