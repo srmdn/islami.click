@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-sans: "Inter", system-ui, sans-serif;
   --font-arabic: "Amiri", "Scheherazade New", serif;
@@ -65,6 +67,9 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    color: rgba(0,0,0,0.12);
+  }
+  .dark .ornament-divider {
     color: rgba(255,255,255,0.2);
   }
   .ornament-divider::before,

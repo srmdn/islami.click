@@ -321,7 +321,7 @@ func (h *Handler) fetchShalatMini() model.ShalatMiniData {
 		}
 	}
 
-	return model.ShalatMiniData{Prayers: rows}
+	return model.ShalatMiniData{City: "Jakarta", Prayers: rows}
 }
 
 func stripSeconds(t string) string {
