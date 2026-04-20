@@ -1,23 +1,62 @@
 {{define "shalat-mini"}}
-<div class="bg-white dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/50 rounded-2xl p-5 shadow-lg">
-    <div class="flex items-center justify-between mb-4">
-        <span class="text-xs font-semibold text-[#14B8A6] uppercase tracking-wide">Waktu Shalat {{.City}}</span>
-        <a href="/shalat" class="flex items-center gap-1 text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-[#14B8A6] transition-colors arrow-slide">
-            Lihat semua
-            <svg class="w-3 h-3" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-        </a>
+<div
+    x-data="{
+        hh: '--', mm: '--', ss: '--',
+        ch: 0, cm: 0, cs: 0,
+        init() {
+            const target = {{.NextPrayerUnix}} * 1000;
+            const update = () => {
+                const wib = new Date(Date.now() + (new Date().getTimezoneOffset() + 420) * 60000);
+                this.hh = String(wib.getHours()).padStart(2,'0');
+                this.mm = String(wib.getMinutes()).padStart(2,'0');
+                this.ss = String(wib.getSeconds()).padStart(2,'0');
+                const diff = Math.max(0, Math.floor((target - Date.now()) / 1000));
+                this.ch = Math.floor(diff / 3600);
+                this.cm = Math.floor((diff % 3600) / 60);
+                this.cs = diff % 60;
+            };
+            update();
+            setInterval(update, 1000);
+        }
+    }"
+>
+    {{if and (not .Error) .NextPrayerUnix}}
+    <div class="flex items-center justify-center gap-2.5 px-1 mb-3 text-sm text-slate-400 dark:text-slate-500 tabular-nums">
+        <span class="font-mono text-slate-500 dark:text-slate-400" x-text="hh+':'+mm+':'+ss + ' WIB'">--:--:-- WIB</span>
+        <span class="text-slate-300 dark:text-slate-600 select-none">|</span>
+        <span>{{.NextPrayerName}} dalam</span>
+        <span class="font-semibold text-slate-600 dark:text-slate-300">
+            <template x-if="ch > 0">
+                <span x-text="ch + ' jam'"></span>
+            </template>
+            <template x-if="ch > 0 || cm > 0">
+                <span x-text="' ' + String(cm).padStart(2,'0') + ' menit'"></span>
+            </template>
+            <span x-text="' ' + String(cs).padStart(2,'0') + ' detik'"></span>
+        </span>
     </div>
-    {{if .Error}}
-    <p class="text-sm text-center text-slate-500 dark:text-slate-400 py-2">{{.Error}}</p>
-    {{else}}
-    <div class="flex gap-2">
-        {{range .Prayers}}
-        <div class="flex-1 rounded-xl px-2 py-3 text-center transition-all relative {{if .IsNext}}bg-gradient-to-b from-[#14B8A6] to-[#0D9488] shadow-lg shadow-[#14B8A6]/20{{else}}bg-slate-100 dark:bg-slate-700/50{{end}} {{if .IsPast}}opacity-40{{end}}">
-            <div class="text-[11px] font-semibold mb-1 {{if .IsNext}}text-white/70{{else}}text-slate-500 dark:text-slate-400{{end}}">{{.Name}}</div>
-            <div class="text-sm font-bold tabular-nums {{if .IsNext}}text-white{{else}}text-slate-700 dark:text-slate-200{{end}}">{{.Time}}</div>
+    {{end}}
+
+    <div class="bg-white dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/50 rounded-2xl p-5 shadow-lg">
+        <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-semibold text-[#14B8A6] uppercase tracking-wide">Waktu Shalat {{.City}}</span>
+            <a href="/shalat" class="flex items-center gap-1 text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-[#14B8A6] transition-colors arrow-slide">
+                Lihat semua
+                <svg class="w-3 h-3" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            </a>
+        </div>
+        {{if .Error}}
+        <p class="text-sm text-center text-slate-500 dark:text-slate-400 py-2">{{.Error}}</p>
+        {{else}}
+        <div class="flex gap-2">
+            {{range .Prayers}}
+            <div class="flex-1 rounded-xl px-2 py-3 text-center transition-all {{if .IsNext}}bg-gradient-to-b from-[#14B8A6] to-[#0D9488] shadow-lg shadow-[#14B8A6]/20{{else}}bg-slate-100 dark:bg-slate-700/50{{end}} {{if .IsPast}}opacity-40{{end}}">
+                <div class="text-[11px] font-semibold mb-1 {{if .IsNext}}text-white/70{{else}}text-slate-500 dark:text-slate-400{{end}}">{{.Name}}</div>
+                <div class="text-sm font-bold tabular-nums {{if .IsNext}}text-white{{else}}text-slate-700 dark:text-slate-200{{end}}">{{.Time}}</div>
+            </div>
+            {{end}}
         </div>
         {{end}}
     </div>
-    {{end}}
 </div>
 {{end}}

@@ -310,18 +310,32 @@ func (h *Handler) fetchShalatMini() model.ShalatMiniData {
 	}
 
 	rows := make([]model.PrayerMiniRow, len(prayers))
+	var nextName, nextTime string
 	if nextIdx == -1 {
 		// All prayers passed — Subuh is next (tomorrow)
 		for i, p := range prayers {
 			rows[i] = model.PrayerMiniRow{Name: p.Name, Time: p.Time, IsNext: i == 0, IsPast: i != 0}
 		}
+		nextName = prayers[0].Name
+		nextTime = prayers[0].Time
 	} else {
 		for i, p := range prayers {
 			rows[i] = model.PrayerMiniRow{Name: p.Name, Time: p.Time, IsNext: i == nextIdx, IsPast: i < nextIdx}
 		}
+		nextName = prayers[nextIdx].Name
+		nextTime = prayers[nextIdx].Time
 	}
 
-	return model.ShalatMiniData{City: "Jakarta", Prayers: rows}
+	// Compute Unix timestamp for next prayer
+	parts := strings.Split(nextTime, ":")
+	nextHr, _ := strconv.Atoi(parts[0])
+	nextMn, _ := strconv.Atoi(parts[1])
+	nextT := time.Date(now.Year(), now.Month(), now.Day(), nextHr, nextMn, 0, 0, wib)
+	if nextIdx == -1 {
+		nextT = nextT.Add(24 * time.Hour)
+	}
+
+	return model.ShalatMiniData{City: "Jakarta", Prayers: rows, NextPrayerUnix: nextT.Unix(), NextPrayerName: nextName}
 }
 
 func stripSeconds(t string) string {

@@ -35,7 +35,9 @@ type PrayerMiniRow struct {
 }
 
 type ShalatMiniData struct {
-	City    string
-	Prayers []PrayerMiniRow
-	Error   string
+	City           string
+	Prayers        []PrayerMiniRow
+	NextPrayerUnix int64
+	NextPrayerName string
+	Error          string
 }
