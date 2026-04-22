@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"html/template"
 	"log"
 	"net/http"
@@ -8,6 +9,7 @@ import (
 
 	islamiclick "github.com/srmdn/islami.click"
 	"github.com/srmdn/islami.click/internal/handler"
+	"github.com/srmdn/islami.click/internal/store"
 )
 
 func main() {
@@ -15,6 +17,12 @@ func main() {
 	if port == "" {
 		port = "8080"
 	}
+
+	contentStore, err := store.Open(context.Background(), os.Getenv("DB_PATH"), islamiclick.MigrationFS, islamiclick.ContentFS)
+	if err != nil {
+		log.Fatalf("open content store: %v", err)
+	}
+	defer contentStore.Close()
 
 	funcMap := template.FuncMap{
 		"add": func(a, b int) int { return a + b },
@@ -54,7 +62,7 @@ func main() {
 		partialTmpls["shalat-mini"] = tpl
 	}
 
-	h := handler.New(tmpls, partialTmpls, islamiclick.ContentFS)
+	h := handler.New(tmpls, partialTmpls, contentStore)
 
 	fs := http.Dir("static")
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(fs)))
