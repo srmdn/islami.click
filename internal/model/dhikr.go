@@ -20,16 +20,33 @@ type AlMatsurat struct {
 
 // DoaCategory represents a categorized collection of doa.
 type DoaCategory struct {
-	Category string     `json:"category"`
-	Title    string     `json:"title"`
-	Items    []DoaEntry `json:"items"`
+	ID          string     `json:"id"`
+	Title       string     `json:"title"`
+	Description string     `json:"description"`
+	Items       []DoaEntry `json:"items"`
 }
 
 // DoaEntry represents a single doa item.
 type DoaEntry struct {
-	ID          string `json:"id"`
-	Title       string `json:"title"`
-	Arabic      string `json:"arabic"`
-	Translation string `json:"translation"`
-	Source      string `json:"source,omitempty"`
+	ID           string `json:"id"`
+	Category     string `json:"category,omitempty"`
+	SourceType   string `json:"source_type,omitempty"` // quran or hadith
+	Title        string `json:"title"`
+	Arabic       string `json:"arabic"`
+	Latin        string `json:"latin"`
+	Translation  string `json:"translation"`
+	Source       string `json:"source,omitempty"`
+	SourceURL    string `json:"source_url,omitempty"`
+	Verification string `json:"verification,omitempty"`
+}
+
+// DoaPageData represents the doa collection page.
+type DoaPageData struct {
+	Title       string        `json:"title"`
+	Description string        `json:"description"`
+	Categories  []DoaCategory `json:"categories"`
+	// Pagination (not in JSON; populated by store)
+	Items    []DoaEntry
+	HasMore  bool
+	NextPage int
 }

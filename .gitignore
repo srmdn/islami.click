@@ -1,8 +1,8 @@
 # Binaries
-islami.click
-islami
-server
-tailwindcss
+/islami.click
+/islami
+/server
+/tailwindcss
 
 # Environment & secrets
 .env

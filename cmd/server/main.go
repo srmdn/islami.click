@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"html/template"
 	"log"
 	"net/http"
@@ -8,6 +9,7 @@ import (
 
 	islamiclick "github.com/srmdn/islami.click"
 	"github.com/srmdn/islami.click/internal/handler"
+	"github.com/srmdn/islami.click/internal/store"
 )
 
 func main() {
@@ -15,6 +17,12 @@ func main() {
 	if port == "" {
 		port = "8080"
 	}
+
+	contentStore, err := store.Open(context.Background(), os.Getenv("DB_PATH"), islamiclick.MigrationFS, islamiclick.ContentFS)
+	if err != nil {
+		log.Fatalf("open content store: %v", err)
+	}
+	defer contentStore.Close()
 
 	funcMap := template.FuncMap{
 		"add": func(a, b int) int { return a + b },
@@ -53,8 +61,16 @@ func main() {
 		}
 		partialTmpls["shalat-mini"] = tpl
 	}
+	{
+		tpl := template.New("doa-more").Funcs(funcMap)
+		tpl, err := tpl.ParseFS(islamiclick.TemplateFS, "templates/partials/doa-more.html")
+		if err != nil {
+			log.Fatalf("parse doa-more: %v", err)
+		}
+		partialTmpls["doa-more"] = tpl
+	}
 
-	h := handler.New(tmpls, partialTmpls, islamiclick.ContentFS)
+	h := handler.New(tmpls, partialTmpls, contentStore)
 
 	fs := http.Dir("static")
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(fs)))
@@ -64,6 +80,7 @@ func main() {
 	http.HandleFunc("/almatsurat/sugro", h.AlMatsuratSugro)
 	http.HandleFunc("/almatsurat/kubro", h.AlMatsuratKubro)
 	http.HandleFunc("/doa", h.Doa)
+	http.HandleFunc("/doa/more", h.DoaMore)
 	http.HandleFunc("/shalat", h.Shalat)
 	http.HandleFunc("/shalat/mini", h.ShalatMini)
 

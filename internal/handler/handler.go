@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"embed"
 	"encoding/json"
 	"fmt"
 	"html/template"
@@ -14,6 +13,7 @@ import (
 	"time"
 
 	"github.com/srmdn/islami.click/internal/model"
+	"github.com/srmdn/islami.click/internal/store"
 )
 
 var hijriMonthsID = [13]string{
@@ -44,11 +44,11 @@ var aladhanClient = &http.Client{Timeout: 10 * time.Second}
 type Handler struct {
 	tmpls        map[string]*template.Template
 	partialTmpls map[string]*template.Template
-	contentFS    embed.FS
+	contentStore *store.Store
 }
 
-func New(tmpls map[string]*template.Template, partialTmpls map[string]*template.Template, contentFS embed.FS) *Handler {
-	return &Handler{tmpls: tmpls, partialTmpls: partialTmpls, contentFS: contentFS}
+func New(tmpls map[string]*template.Template, partialTmpls map[string]*template.Template, contentStore *store.Store) *Handler {
+	return &Handler{tmpls: tmpls, partialTmpls: partialTmpls, contentStore: contentStore}
 }
 
 func (h *Handler) renderPartial(w http.ResponseWriter, name string, data any) {
@@ -84,28 +84,10 @@ func (h *Handler) AlMatsurat(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) AlMatsuratSugro(w http.ResponseWriter, r *http.Request) {
-	data, err := h.contentFS.ReadFile("content/almatsurat-sugro.json")
+	content, err := h.contentStore.AlMatsurat(r.Context(), "almatsurat-sugro")
 	if err != nil {
+		log.Printf("almatsurat sugro: %v", err)
 		http.Error(w, "Failed to load content", http.StatusInternalServerError)
-		return
-	}
-
-	var content struct {
-		Title       string `json:"title"`
-		Description string `json:"description"`
-		Sections    []struct {
-			ID          string `json:"id"`
-			Type        string `json:"type"`
-			Title       string `json:"title"`
-			Arabic      string `json:"arabic"`
-			Translation string `json:"translation"`
-			Repeat      int    `json:"repeat"`
-			Source      string `json:"source"`
-		} `json:"sections"`
-	}
-
-	if err := json.Unmarshal(data, &content); err != nil {
-		http.Error(w, "Failed to parse content", http.StatusInternalServerError)
 		return
 	}
 
@@ -113,36 +95,45 @@ func (h *Handler) AlMatsuratSugro(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) AlMatsuratKubro(w http.ResponseWriter, r *http.Request) {
-	data, err := h.contentFS.ReadFile("content/almatsurat-kubro.json")
+	content, err := h.contentStore.AlMatsurat(r.Context(), "almatsurat-kubro")
 	if err != nil {
+		log.Printf("almatsurat kubro: %v", err)
 		http.Error(w, "Failed to load content", http.StatusInternalServerError)
-		return
-	}
-
-	var content struct {
-		Title       string `json:"title"`
-		Description string `json:"description"`
-		Sections    []struct {
-			ID          string `json:"id"`
-			Type        string `json:"type"`
-			Title       string `json:"title"`
-			Arabic      string `json:"arabic"`
-			Translation string `json:"translation"`
-			Repeat      int    `json:"repeat"`
-			Source      string `json:"source"`
-		} `json:"sections"`
-	}
-
-	if err := json.Unmarshal(data, &content); err != nil {
-		http.Error(w, "Failed to parse content", http.StatusInternalServerError)
 		return
 	}
 
 	h.render(w, "almatsurat-kubro.html", content)
 }
 
+const doaPageSize = 20
+
 func (h *Handler) Doa(w http.ResponseWriter, r *http.Request) {
-	h.render(w, "doa.html", nil)
+	page, err := h.contentStore.DoaPage(r.Context(), 1, doaPageSize)
+	if err != nil {
+		log.Printf("doa page: %v", err)
+		http.Error(w, "Failed to load content", http.StatusInternalServerError)
+		return
+	}
+
+	h.render(w, "doa.html", page)
+}
+
+func (h *Handler) DoaMore(w http.ResponseWriter, r *http.Request) {
+	pageNum := 2
+	if p := r.URL.Query().Get("page"); p != "" {
+		if n, err := strconv.Atoi(p); err == nil && n > 1 {
+			pageNum = n
+		}
+	}
+
+	data, err := h.contentStore.DoaPage(r.Context(), pageNum, doaPageSize)
+	if err != nil {
+		log.Printf("doa more page %d: %v", pageNum, err)
+		http.Error(w, "Failed to load content", http.StatusInternalServerError)
+		return
+	}
+
+	h.renderPartial(w, "doa-more", data)
 }
 
 func (h *Handler) Shalat(w http.ResponseWriter, r *http.Request) {

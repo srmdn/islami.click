@@ -6,7 +6,7 @@ Islamic content hub. Phase 1 covers Al-Ma'tsurat (daily adhkar), du'a collection
 
 Go + html/template for server-side rendering. htmx for partial updates. Alpine.js for client-side reactivity (tap counters, localStorage state). Tailwind CSS via standalone CLI binary -- no Node, no npm, no build pipeline.
 
-SQLite via `modernc.org/sqlite` for future user accounts. Deploy target: Ubuntu 24.04, nginx, systemd.
+SQLite via `modernc.org/sqlite` for content storage (seeded from JSON on startup). Deploy target: Ubuntu 24.04, nginx, systemd.
 
 ## Run locally
 
@@ -27,9 +27,9 @@ go build -o islami.click ./cmd/server
 
 ## Features (Phase 1)
 
-**`/almatsurat`** -- Wazifah Sugro and Kubro with tap-to-count per dhikr, visual progress bars, and localStorage persistence. Content sourced from almatsurat.net; Arabic text should be verified against a mushaf before publishing.
+**`/almatsurat`** -- Wazifah Sugro and Kubro with tap-to-count per dhikr and visual progress bars. Progress resets on page reload (no persistence by design).
 
-**`/doa`** -- Categorized du'a collection. Content JSON at `content/doa/` -- Arabic text requires manual curation before use.
+**`/doa`** -- Du'a collection with 23 curated entries across 7 categories. Filter by source (Al-Qur'an / Hadits), filter by category, full-text search, accordion expand, and load-more pagination. Sourced from `content/doa-harian.json`.
 
 **`/shalat`** -- Prayer times via Aladhan API (method=20, Kemenag Indonesia), city picker, Hijri date. Fetched server-side, no client API calls.
 
@@ -46,7 +46,7 @@ templates/partials/  shared fragments (header, footer)
 static/css/          Tailwind input + compiled output
 static/js/           vendored htmx, Alpine.js
 static/fonts/        self-hosted Arabic fonts
-content/             JSON data (almatsurat, doa)
+content/             JSON data (almatsurat, doa-harian)
 deploy/              nginx + systemd configs
 migrations/          SQL migration files
 ```
