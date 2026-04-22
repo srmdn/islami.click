@@ -30,6 +30,7 @@ type DoaCategory struct {
 type DoaEntry struct {
 	ID           string `json:"id"`
 	Category     string `json:"category,omitempty"`
+	SourceType   string `json:"source_type,omitempty"` // quran or hadith
 	Title        string `json:"title"`
 	Arabic       string `json:"arabic"`
 	Latin        string `json:"latin"`

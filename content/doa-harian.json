@@ -9,8 +9,9 @@
       "items": [
         {
           "id": "bangun-tidur",
+          "source_type": "hadith",
           "title": "Doa Bangun Tidur",
-          "arabic": "الحَمْـدُ لِلّهِ الّذي أَحْـيانا بَعْـدَ ما أَماتَـنا وَإليه النُّـشور",
+          "arabic": "الحَمْـدُ لِلّهِ الّذي أَحْـيانا بَعْـدَ ما أَماتَـنا وَإليه النُّـشور",
           "latin": "Alhamdulillahil-ladzi ahyana ba'da ma amatana wa ilaihin-nusyur.",
           "translation": "Segala puji bagi Allah yang menghidupkan kami setelah mematikan kami, dan kepada-Nya tempat kembali.",
           "source": "Hisn al-Muslim 1; Al-Bukhari, Fathul-Bari 11/113; Muslim 4/2083",
@@ -19,8 +20,9 @@
         },
         {
           "id": "memakai-pakaian-baru",
+          "source_type": "hadith",
           "title": "Doa Memakai Pakaian Baru",
-          "arabic": "اللّهُـمَّ لَـكَ الحَـمْـدُ أنْـتَ كَسَـوْتَنيهِ، أََسْأََلُـكَ مِـنْ خَـيرِهِ وَخَـيْرِ مَا صُنِعَ لَـه، وَأَعوذُ بِكَ مِـنْ شَـرِّهِ وَشَـرِّ مـا صُنِعَ لَـهُ",
+          "arabic": "اللّهُـمَّ لَـكَ الحَـمْـدُ أنْـتَ كَسَـوْتَنيهِ، أَسْأَلُـكَ مِـنْ خَـيرِهِ وَخَـيْرِ مَا صُنِعَ لَـه، وَأَعوذُ بِكَ مِـنْ شَـرِّهِ وَشَـرِّ مـا صُنِعَ لَـهُ",
           "latin": "Allahumma lakal-hamdu anta kasautanihi, as'aluka min khairihi wa khairi ma shuni'a lahu, wa a'udzu bika min syarrihi wa syarri ma shuni'a lahu.",
           "translation": "Ya Allah, segala puji bagi-Mu. Engkau telah memakaikan pakaian ini kepadaku. Aku memohon kebaikannya dan kebaikan tujuan pembuatannya, serta berlindung kepada-Mu dari keburukannya dan keburukan tujuan pembuatannya.",
           "source": "Hisn al-Muslim 6; Abu Dawud; At-Tirmidhi; Al-Albani, Mukhtashar Syama'il At-Tirmidhi",
@@ -29,8 +31,9 @@
         },
         {
           "id": "masuk-toilet",
+          "source_type": "hadith",
           "title": "Doa Masuk Toilet",
-          "arabic": "(بِسْمِ الله) اللّهُـمَّ إِنِّـي أَعـوذُ بِـكَ مِـنَ الْخُـبْثِ وَالْخَبائِث",
+          "arabic": "بِسْمِ الله، اللّهُـمَّ إِنِّـي أَعـوذُ بِـكَ مِـنَ الْخُـبْثِ وَالْخَبائِث",
           "latin": "Bismillah. Allahumma inni a'udzu bika minal-khubutsi wal-khaba'its.",
           "translation": "Dengan nama Allah. Ya Allah, aku berlindung kepada-Mu dari setan laki-laki dan setan perempuan.",
           "source": "Hisn al-Muslim 10; Al-Bukhari 1/45; Muslim 1/283",
@@ -39,6 +42,7 @@
         },
         {
           "id": "keluar-toilet",
+          "source_type": "hadith",
           "title": "Doa Keluar Toilet",
           "arabic": "غُفْـرانَك",
           "latin": "Ghufranak.",
@@ -49,8 +53,9 @@
         },
         {
           "id": "keluar-rumah",
+          "source_type": "hadith",
           "title": "Doa Keluar Rumah",
-          "arabic": "بِسْمِ اللهِ ، تَوَكَّلْـتُ عَلى اللهِ وَلا حَوْلَ وَلا قُـوَّةَ إِلاّ بِالله",
+          "arabic": "بِسْمِ اللهِ، تَوَكَّلْـتُ عَلى اللهِ، وَلا حَوْلَ وَلا قُـوَّةَ إِلاّ بِالله",
           "latin": "Bismillahi, tawakkaltu 'alallah, wa la haula wa la quwwata illa billah.",
           "translation": "Dengan nama Allah, aku bertawakal kepada Allah. Tidak ada daya dan kekuatan kecuali dengan pertolongan Allah.",
           "source": "Hisn al-Muslim 16; Abu Dawud 4/325; At-Tirmidhi 5/490; Al-Albani, Sahih At-Tirmidhi 3/151",
@@ -66,8 +71,9 @@
       "items": [
         {
           "id": "duduk-antara-dua-sujud",
+          "source_type": "hadith",
           "title": "Doa Duduk di Antara Dua Sujud",
-          "arabic": "اللّهُـمَّ اغْفِـرْ لي ، وَارْحَمْـني ، وَاهْدِنـي ، وَاجْبُرْنـي ، وَعافِنـي وَارْزُقْنـي وَارْفَعْـني",
+          "arabic": "اللّهُـمَّ اغْفِـرْ لي، وَارْحَمْـني، وَاهْدِنـي، وَاجْبُرْنـي، وَعافِنـي، وَارْزُقْنـي، وَارْفَعْـني",
           "latin": "Allahummaghfir li, warhamni, wahdini, wajburni, wa 'afini, warzuqni, warfa'ni.",
           "translation": "Ya Allah, ampunilah aku, rahmatilah aku, berilah aku petunjuk, cukupkanlah kekuranganku, sehatkanlah aku, berilah aku rezeki, dan angkatlah derajatku.",
           "source": "Hisn al-Muslim 49; Abu Dawud; Ibn Majah; At-Tirmidhi; Al-Albani, Sahih At-Tirmidhi 1/90 dan Sahih Ibn Majah 1/148",
@@ -76,8 +82,9 @@
         },
         {
           "id": "perlindungan-sebelum-salam",
+          "source_type": "hadith",
           "title": "Doa Perlindungan Sebelum Salam",
-          "arabic": "اللّهُـمَّ إِنِّـي أَعـوذُ بِكَ مِـنْ عَذابِ القَـبْر ، وَأَعـوذُ بِكَ مِـنْ فِتْـنَةِ المَسيحِ الدَّجّـال ، أَعـوذُ بِكَ مِـنْ فِتْـنَةِ المَحْـيا وَالمَمـات . اللّهُـمَّ إِنِّـي أَعـوذُ بِكَ مِنَ المَأْثَـمِ وَالمَغْـرَم",
+          "arabic": "اللّهُـمَّ إِنِّـي أَعـوذُ بِكَ مِـنْ عَذابِ القَـبْر، وَأَعـوذُ بِكَ مِـنْ فِتْـنَةِ المَسيحِ الدَّجّـال، وَأَعـوذُ بِكَ مِـنْ فِتْـنَةِ المَحْـيا وَالمَمـات. اللّهُـمَّ إِنِّـي أَعـوذُ بِكَ مِنَ المَأْثَـمِ وَالمَغْـرَم",
           "latin": "Allahumma inni a'udzu bika min 'adzabil-qabr, wa a'udzu bika min fitnatil-masihid-dajjal, wa a'udzu bika min fitnatil-mahya wal-mamat. Allahumma inni a'udzu bika minal-ma'tsami wal-maghram.",
           "translation": "Ya Allah, aku berlindung kepada-Mu dari azab kubur, dari fitnah Al-Masih Ad-Dajjal, dan dari fitnah hidup dan mati. Ya Allah, aku berlindung kepada-Mu dari dosa dan utang.",
           "source": "Hisn al-Muslim 56; Al-Bukhari 1/202; Muslim 1/412",
@@ -86,8 +93,9 @@
         },
         {
           "id": "memohon-surga",
+          "source_type": "hadith",
           "title": "Doa Memohon Surga dan Berlindung dari Neraka",
-          "arabic": "اللّهُـمَّ إِنِّـي أَسْأَلُـكَ الجَـنَّةَ وأََعوذُ بِـكَ مِـنَ الـنّار",
+          "arabic": "اللّهُـمَّ إِنِّـي أَسْأَلُـكَ الجَـنَّةَ وَأَعوذُ بِـكَ مِـنَ الـنّار",
           "latin": "Allahumma inni as'alukal-jannah wa a'udzu bika minan-nar.",
           "translation": "Ya Allah, aku memohon surga kepada-Mu dan berlindung kepada-Mu dari neraka.",
           "source": "Hisn al-Muslim 61; Abu Dawud; Al-Albani, Sahih Ibn Majah 2/328",

@@ -195,12 +195,16 @@ func seedDoa(ctx context.Context, tx *sql.Tx, contentFS embed.FS, collectionID, 
 		}
 
 		for itemIndex, item := range category.Items {
+			sourceType := item.SourceType
+			if sourceType == "" {
+				sourceType = "hadith"
+			}
 			result, err := tx.ExecContext(ctx, `
 				INSERT INTO content_items (
 					collection_id, slug, kind, title, arabic, latin, translation,
 					source, source_url, verification, display_order
-				) VALUES (?, ?, 'doa', ?, ?, ?, ?, ?, ?, ?, ?)
-			`, collectionID, item.ID, item.Title, item.Arabic, item.Latin, item.Translation, item.Source, item.SourceURL, item.Verification, itemIndex+1)
+				) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			`, collectionID, item.ID, sourceType, item.Title, item.Arabic, item.Latin, item.Translation, item.Source, item.SourceURL, item.Verification, itemIndex+1)
 			if err != nil {
 				return fmt.Errorf("seed doa item %s: %w", item.ID, err)
 			}

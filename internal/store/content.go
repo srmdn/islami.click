@@ -117,7 +117,7 @@ func (s *Store) DoaPage(ctx context.Context) (model.DoaPageData, error) {
 func (s *Store) doaItemsByCategory(ctx context.Context, categoryID int64, categorySlug string) ([]model.DoaEntry, error) {
 	rows, err := s.db.QueryContext(ctx, `
 		SELECT item.slug, item.title, item.arabic, item.latin, item.translation,
-			item.source, item.source_url, item.verification
+			item.source, item.source_url, item.verification, item.kind
 		FROM content_items item
 		INNER JOIN content_item_categories link ON link.item_id = item.id
 		WHERE link.category_id = ?
@@ -140,6 +140,7 @@ func (s *Store) doaItemsByCategory(ctx context.Context, categoryID int64, catego
 			&item.Source,
 			&item.SourceURL,
 			&item.Verification,
+			&item.SourceType,
 		); err != nil {
 			return nil, fmt.Errorf("scan doa item for category %s: %w", categorySlug, err)
 		}
