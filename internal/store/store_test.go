@@ -68,7 +68,12 @@ func assertDoaMatchesJSON(t *testing.T, ctx context.Context, contentStore *store
 		t.Fatalf("parse doa JSON: %v", err)
 	}
 
-	fromDB, err := contentStore.DoaPage(ctx)
+	totalFromJSON := 0
+	for _, cat := range fromJSON.Categories {
+		totalFromJSON += len(cat.Items)
+	}
+
+	fromDB, err := contentStore.DoaPage(ctx, 1, 1000)
 	if err != nil {
 		t.Fatalf("read doa from db: %v", err)
 	}
@@ -79,9 +84,7 @@ func assertDoaMatchesJSON(t *testing.T, ctx context.Context, contentStore *store
 	if len(fromDB.Categories) != len(fromJSON.Categories) {
 		t.Fatalf("doa category count mismatch: got %d want %d", len(fromDB.Categories), len(fromJSON.Categories))
 	}
-	for i, category := range fromDB.Categories {
-		if len(category.Items) != len(fromJSON.Categories[i].Items) {
-			t.Fatalf("category %s item count mismatch: got %d want %d", category.ID, len(category.Items), len(fromJSON.Categories[i].Items))
-		}
+	if len(fromDB.Items) != totalFromJSON {
+		t.Fatalf("doa item count mismatch: got %d want %d", len(fromDB.Items), totalFromJSON)
 	}
 }

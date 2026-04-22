@@ -105,8 +105,10 @@ func (h *Handler) AlMatsuratKubro(w http.ResponseWriter, r *http.Request) {
 	h.render(w, "almatsurat-kubro.html", content)
 }
 
+const doaPageSize = 20
+
 func (h *Handler) Doa(w http.ResponseWriter, r *http.Request) {
-	page, err := h.contentStore.DoaPage(r.Context())
+	page, err := h.contentStore.DoaPage(r.Context(), 1, doaPageSize)
 	if err != nil {
 		log.Printf("doa page: %v", err)
 		http.Error(w, "Failed to load content", http.StatusInternalServerError)
@@ -114,6 +116,24 @@ func (h *Handler) Doa(w http.ResponseWriter, r *http.Request) {
 	}
 
 	h.render(w, "doa.html", page)
+}
+
+func (h *Handler) DoaMore(w http.ResponseWriter, r *http.Request) {
+	pageNum := 2
+	if p := r.URL.Query().Get("page"); p != "" {
+		if n, err := strconv.Atoi(p); err == nil && n > 1 {
+			pageNum = n
+		}
+	}
+
+	data, err := h.contentStore.DoaPage(r.Context(), pageNum, doaPageSize)
+	if err != nil {
+		log.Printf("doa more page %d: %v", pageNum, err)
+		http.Error(w, "Failed to load content", http.StatusInternalServerError)
+		return
+	}
+
+	h.renderPartial(w, "doa-more", data)
 }
 
 func (h *Handler) Shalat(w http.ResponseWriter, r *http.Request) {

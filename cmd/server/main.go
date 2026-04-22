@@ -61,6 +61,14 @@ func main() {
 		}
 		partialTmpls["shalat-mini"] = tpl
 	}
+	{
+		tpl := template.New("doa-more").Funcs(funcMap)
+		tpl, err := tpl.ParseFS(islamiclick.TemplateFS, "templates/partials/doa-more.html")
+		if err != nil {
+			log.Fatalf("parse doa-more: %v", err)
+		}
+		partialTmpls["doa-more"] = tpl
+	}
 
 	h := handler.New(tmpls, partialTmpls, contentStore)
 
@@ -72,6 +80,7 @@ func main() {
 	http.HandleFunc("/almatsurat/sugro", h.AlMatsuratSugro)
 	http.HandleFunc("/almatsurat/kubro", h.AlMatsuratKubro)
 	http.HandleFunc("/doa", h.Doa)
+	http.HandleFunc("/doa/more", h.DoaMore)
 	http.HandleFunc("/shalat", h.Shalat)
 	http.HandleFunc("/shalat/mini", h.ShalatMini)
 

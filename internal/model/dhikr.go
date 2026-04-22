@@ -45,4 +45,8 @@ type DoaPageData struct {
 	Title       string        `json:"title"`
 	Description string        `json:"description"`
 	Categories  []DoaCategory `json:"categories"`
+	// Pagination (not in JSON; populated by store)
+	Items    []DoaEntry
+	HasMore  bool
+	NextPage int
 }
