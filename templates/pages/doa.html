@@ -1,5 +1,5 @@
-{{define "title"}}Doa Harian{{end}}
-{{define "description"}}Kumpulan doa harian lengkap dengan terjemah{{end}}
+{{define "title"}}{{.Title}}{{end}}
+{{define "description"}}{{.Description}}{{end}}
 
 {{define "content"}}
 <div class="max-w-3xl mx-auto px-4 py-8">
@@ -9,23 +9,72 @@
         <span class="text-slate-800 dark:text-slate-100">Doa</span>
     </nav>
 
-    <h1 class="text-3xl font-semibold tracking-tight mb-2 text-slate-800 dark:text-slate-100">Doa Harian</h1>
-    <p class="text-slate-500 dark:text-slate-400 mb-8">Kumpulan doa harian akan segera hadir.</p>
-
-    <div class="bg-gradient-to-br from-amber-50/80 to-amber-100/50 dark:from-amber-950/20 dark:to-amber-900/10 border border-amber-200/60 dark:border-amber-800/40 rounded-2xl p-6 text-center relative overflow-hidden shimmer">
-        <div class="relative z-10">
-            <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-amber-100/70 dark:bg-amber-950/50 flex items-center justify-center">
-                <svg class="w-6 h-6 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M6 10a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v6a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-6z"/>
-                    <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
-                    <path d="M12 12v2"/>
-                    <path d="M10 16h4"/>
-                    <path d="M8 18h8"/>
-                </svg>
+    <div class="mb-8">
+        <div class="flex items-start justify-between gap-4">
+            <div>
+                <h1 class="text-3xl font-semibold tracking-tight mb-2 text-slate-800 dark:text-slate-100">{{.Title}}</h1>
+                <p class="text-slate-500 dark:text-slate-400 leading-relaxed">{{.Description}}</p>
             </div>
-            <p class="text-sm text-amber-700 dark:text-amber-300 font-medium">Sedang dalam pengembangan</p>
-            <p class="text-xs text-amber-600/70 dark:text-amber-400/70 mt-1">Doa keseharian, wirid, dan doa shalat</p>
+            <div class="hidden sm:block px-3 py-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/40 text-xs font-semibold text-emerald-700 dark:text-emerald-400 whitespace-nowrap">
+                Bersumber
+            </div>
         </div>
+    </div>
+
+    <div class="space-y-8">
+        {{range .Categories}}
+        <section id="{{.ID}}" class="scroll-mt-24">
+            <div class="mb-4">
+                <h2 class="text-lg font-semibold tracking-tight text-slate-800 dark:text-slate-100">{{.Title}}</h2>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">{{.Description}}</p>
+            </div>
+
+            <div class="space-y-4">
+                {{range .Items}}
+                <article class="rounded-2xl border border-slate-200/80 dark:border-slate-700/50 overflow-hidden bg-white dark:bg-slate-800 shadow-sm">
+                    <header class="px-5 py-4 bg-slate-50/80 dark:bg-slate-900/30 border-b border-slate-200 dark:border-slate-700">
+                        <div class="flex items-start justify-between gap-3">
+                            <h3 class="font-semibold text-slate-800 dark:text-slate-100">{{.Title}}</h3>
+                            {{if .SourceURL}}
+                            <a href="{{.SourceURL}}" target="_blank" rel="noopener noreferrer" class="text-[11px] font-semibold px-2.5 py-1 rounded-md bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900/30 text-emerald-700 dark:text-emerald-400 hover:border-emerald-300 dark:hover:border-emerald-700 transition-colors whitespace-nowrap">
+                                Sumber
+                            </a>
+                            {{end}}
+                        </div>
+                    </header>
+
+                    <div class="p-5 sm:p-6">
+                        <div class="arabic text-3xl leading-[2.4] text-slate-800 dark:text-slate-100" dir="rtl">{{.Arabic}}</div>
+
+                        {{if .Latin}}
+                        <div class="mt-5 rounded-xl bg-slate-50 dark:bg-slate-900/30 border border-slate-100 dark:border-slate-700/50 px-4 py-3">
+                            <div class="text-xs font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500 mb-1">Latin</div>
+                            <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-300 italic">{{.Latin}}</p>
+                        </div>
+                        {{end}}
+
+                        <div class="mt-4 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">{{.Translation}}</div>
+
+                        <div class="mt-5 pt-4 border-t border-dashed border-slate-200 dark:border-slate-700 space-y-2">
+                            {{if .Source}}
+                            <p class="text-xs text-slate-500 dark:text-slate-400">
+                                <span class="font-semibold text-slate-600 dark:text-slate-300">Rujukan:</span>
+                                {{.Source}}
+                            </p>
+                            {{end}}
+                            {{if .Verification}}
+                            <p class="text-xs text-emerald-700 dark:text-emerald-400">
+                                <span class="font-semibold">Verifikasi:</span>
+                                {{.Verification}}
+                            </p>
+                            {{end}}
+                        </div>
+                    </div>
+                </article>
+                {{end}}
+            </div>
+        </section>
+        {{end}}
     </div>
 </div>
 {{end}}

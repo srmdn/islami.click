@@ -142,7 +142,19 @@ func (h *Handler) AlMatsuratKubro(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) Doa(w http.ResponseWriter, r *http.Request) {
-	h.render(w, "doa.html", nil)
+	data, err := h.contentFS.ReadFile("content/doa-harian.json")
+	if err != nil {
+		http.Error(w, "Failed to load content", http.StatusInternalServerError)
+		return
+	}
+
+	var page model.DoaPageData
+	if err := json.Unmarshal(data, &page); err != nil {
+		http.Error(w, "Failed to parse content", http.StatusInternalServerError)
+		return
+	}
+
+	h.render(w, "doa.html", page)
 }
 
 func (h *Handler) Shalat(w http.ResponseWriter, r *http.Request) {
