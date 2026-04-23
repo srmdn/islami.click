@@ -71,7 +71,6 @@ func (s *Store) DoaPage(ctx context.Context, pageNum, pageSize int) (model.DoaPa
 		return page, fmt.Errorf("read doa collection: %w", err)
 	}
 
-	// Categories — metadata only, for filter chips
 	catRows, err := s.db.QueryContext(ctx, `
 		SELECT slug, title, description
 		FROM content_categories
@@ -94,27 +93,68 @@ func (s *Store) DoaPage(ctx context.Context, pageNum, pageSize int) (model.DoaPa
 	}
 	_ = catRows.Close()
 
-	// Total item count for HasMore
-	var total int
+	var quranCount, hadithCount, ruqyahCount int
+
+	collectionIDs := []string{collectionID, "ayat-doa-ruqyah"}
+	placeholders := make([]byte, 0, len(collectionIDs)*2)
+	argsBase := make([]any, 0, len(collectionIDs))
+	for i, id := range collectionIDs {
+		if i > 0 {
+			placeholders = append(placeholders, ',')
+		}
+		placeholders = append(placeholders, '?')
+		argsBase = append(argsBase, id)
+	}
+
+	countQueryBase := fmt.Sprintf(`SELECT COUNT(*) FROM content_items WHERE collection_id IN (%s) AND kind = ?`, placeholders)
+
+	quranArgs := append(argsBase[:len(collectionIDs)], "quran")
+	if err := s.db.QueryRowContext(ctx, countQueryBase, quranArgs...).Scan(&quranCount); err != nil && err != sql.ErrNoRows {
+		return page, fmt.Errorf("count quran items: %w", err)
+	}
+
+	hadithArgs := append(argsBase[:len(collectionIDs)], "hadith")
+	if err := s.db.QueryRowContext(ctx, countQueryBase, hadithArgs...).Scan(&hadithCount); err != nil && err != sql.ErrNoRows {
+		return page, fmt.Errorf("count hadith items: %w", err)
+	}
+
 	if err := s.db.QueryRowContext(ctx, `
 		SELECT COUNT(*) FROM content_items WHERE collection_id = ?
-	`, collectionID).Scan(&total); err != nil {
+	`, "ayat-doa-ruqyah").Scan(&ruqyahCount); err != nil && err != sql.ErrNoRows {
+		return page, fmt.Errorf("count ruqyah items: %w", err)
+	}
+
+	page.SourceTypes = []model.DoaSourceType{
+		{ID: "quran", Title: "Al-Qur'an", Count: quranCount},
+		{ID: "hadith", Title: "Hadits", Count: hadithCount},
+		{ID: "ruqyah", Title: "Ruqyah", Count: ruqyahCount},
+	}
+
+	args := append(argsBase, pageSize)
+	offset := (pageNum - 1) * pageSize
+	args = append(args, offset)
+
+	var total int
+	totalQuery := fmt.Sprintf(`
+		SELECT COUNT(*) FROM content_items
+		WHERE collection_id IN (%s)
+	`, placeholders)
+	if err := s.db.QueryRowContext(ctx, totalQuery, argsBase...).Scan(&total); err != nil {
 		return page, fmt.Errorf("count doa items: %w", err)
 	}
 
-	// Flat paginated items
-	offset := (pageNum - 1) * pageSize
-	itemRows, err := s.db.QueryContext(ctx, `
+	itemQuery := fmt.Sprintf(`
 		SELECT item.slug, item.title, item.arabic, item.latin, item.translation,
-			item.source, item.source_url, item.verification, item.kind,
-			cat.slug
+			item.source, item.source_url, item.verification, item.kind, item.collection_id,
+			COALESCE(cat.slug, '')
 		FROM content_items item
-		INNER JOIN content_item_categories link ON link.item_id = item.id
-		INNER JOIN content_categories cat ON cat.id = link.category_id
-		WHERE item.collection_id = ?
-		ORDER BY cat.display_order, link.display_order, item.id
+		LEFT JOIN content_item_categories link ON link.item_id = item.id
+		LEFT JOIN content_categories cat ON cat.id = link.category_id
+		WHERE item.collection_id IN (%s)
+		ORDER BY item.kind, link.display_order, item.id
 		LIMIT ? OFFSET ?
-	`, collectionID, pageSize, offset)
+	`, placeholders)
+	itemRows, err := s.db.QueryContext(ctx, itemQuery, args...)
 	if err != nil {
 		return page, fmt.Errorf("read doa items: %w", err)
 	}
@@ -125,9 +165,13 @@ func (s *Store) DoaPage(ctx context.Context, pageNum, pageSize int) (model.DoaPa
 		if err := itemRows.Scan(
 			&item.ID, &item.Title, &item.Arabic, &item.Latin, &item.Translation,
 			&item.Source, &item.SourceURL, &item.Verification, &item.SourceType,
-			&item.Category,
+			&item.CollectionID, &item.Category,
 		); err != nil {
 			return page, fmt.Errorf("scan doa item: %w", err)
+		}
+		if item.CollectionID == "ayat-doa-ruqyah" {
+			item.Category = "ruqyah"
+			item.IsRuqyah = true
 		}
 		page.Items = append(page.Items, item)
 	}
@@ -140,4 +184,3 @@ func (s *Store) DoaPage(ctx context.Context, pageNum, pageSize int) (model.DoaPa
 
 	return page, nil
 }
-
