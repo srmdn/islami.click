@@ -129,6 +129,9 @@ func (s *Store) SeedContent(ctx context.Context, contentFS embed.FS) error {
 	if err := seedDoa(ctx, tx, contentFS, "doa-harian", "content/doa-harian.json", 30); err != nil {
 		return err
 	}
+	if err := seedDoa(ctx, tx, contentFS, "ayat-doa-ruqyah", "content/ayat-doa-ruqyah.json", 40); err != nil {
+		return err
+	}
 
 	if err := tx.Commit(); err != nil {
 		return fmt.Errorf("commit content seed: %w", err)

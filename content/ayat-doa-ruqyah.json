@@ -1,0 +1,262 @@
+{
+  "title": "Ayat dan Doa Ruqyah Syar'iyyah",
+  "description": "Kumpulan ayat Al-Qur'an dan doa dari hadits shahih yang digunakan untuk ruqyah syar'iyyah, sesuai tuntunan Rasulullah ﷺ.",
+  "categories": [
+    {
+      "id": "ruqyah-quran",
+      "title": "Ayat-Ayat Ruqyah dari Al-Qur'an",
+      "description": "Surat dan ayat Al-Qur'an yang digunakan sebagai ruqyah, dibacakan untuk pengobatan dan perlindungan dari gangguan jin, sihir, dan penyakit.",
+      "items": [
+        {
+          "id": "al-fatihah",
+          "source_type": "quran",
+          "title": "Surat Al-Fatihah",
+          "arabic": "بِسْمِ اللَّهِ الرَّحْمٰنِ الرَّحِيمِ · اَلْحَمْدُ لِلَّهِ رَبِّ الْعٰلَمِيْنَ · الرَّحْمٰنِ الرَّحِيمِ · مٰلِكِ يَوْمِ الدِّيْنِ · اِيَّاكَ نَعْبُدُ وَاِيَّاكَ نَسْتَعِيْنُ · اِهْدِنَا الصِّرَاطَ الْمُسْتَقِيْمَ · صِرَاطَ الَّذِيْنَ اَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوْبِ عَلَيْهِمْ وَلَا الضَّاۤلِّيْنَ",
+          "latin": "Bismillāhir-Raḥmānir-Raḥīm. Al-ḥamdu lillāhi rabbil-‘ālamīn. Ar-raḥmānir-raḥīm. Māliki yaumid-dīn. Iyyāka na‘budu wa iyyāka nasta‘īn. Ihdinaṣ-ṣirāṭal-mustaqīm. Ṣirāṭallażīna an‘amta ‘alaihim ghairil-magḍūbi ‘alaihim wa laḍ-ḍāllīn.",
+          "translation": "Dengan nama Allah Yang Maha Pengasih lagi Maha Penyayang. Segala puji bagi Allah, Tuhan semesta alam. Yang Maha Pengasih lagi Maha Penyayang. Yang menguasai di Hari Pembalasan. Hanya kepada Engkaulah kami menyembah dan hanya kepada Engkaulah kami mohon pertolongan. Tunjukilah kami jalan yang lurus, jalan orang-orang yang telah Engkau beri nikmat kepadanya; bukan jalan mereka yang dimurkai dan bukan pula jalan mereka yang sesat.",
+          "source": "QS. Al-Fatihah (1):1-7",
+          "source_url": "https://quran.com/1",
+          "verification": "HR. Bukhari no. 5736, Muslim no. 2201 — ruqyah utama yang diajarkan Rasulullah ﷺ untuk pengobatan"
+        },
+        {
+          "id": "ayat-kursi",
+          "source_type": "quran",
+          "title": "Ayat Kursi",
+          "arabic": "اَللّٰهُ لَآ اِلٰهَ اِلَّا هُوَۚ اَلْحَيُّ الْقَيُّوْمُ ەۚ لَا تَأْخُذُهٗ سِنَةٌ وَّلَا نَوْمٌۗ لَهٗ مَا فِى السَّمٰوٰتِ وَمَا فِى الْاَرْضِۗ مَنْ ذَا الَّذِيْ يَشْفَعُ عِنْدَهٗٓ اِلَّا بِاِذْنِهٖۗ يَعْلَمُ مَا بَيْنَ اَيْدِيْهِمْ وَمَا خَلْفَهُمْۚ وَلَا يُحِيْطُوْنَ بِشَيْءٍ مِّنْ عِلْمِهٖٓ اِلَّا بِمَا شَاۤءَۚ وَسِعَ كُرْسِيُّهُ السَّمٰوٰتِ وَالْاَرْضَۚ وَلَا يَـُٔوْدُهٗ حِفْظُهُمَاۚ وَهُوَ الْعَلِيُّ الْعَظِيْمُ",
+          "latin": "Allāhu lā ilāha illā huwa, al-ḥayyul-qayyūm, lā ta'khudhuhū sinatuw wa lā na'um, lahū mā fis-samāwāti wa mā fil-arḍ, man dzalladzī yasyfa'u 'indahū illā bi'idhnih, ya'lamu mā baina aidīhim wa mā khalfahum, wa lā yūḥīṭūna bisyai'im min 'ilmihī illā bimā syā', wasi'a kursiyyuhus-samāwāti wal-arḍ, wa lā ya'ūduhū hifẓuhumā, wa huwal-'aliyyul-'aẓīm.",
+          "translation": "Allah, tidak ada tuhan selain Dia. Yang Mahahidup, Yang terus menerus mengurus (makhluk-Nya), tidak mengantuk dan tidak tidur. Kepunyaan-Nya apa yang ada di langit dan apa yang ada di bumi. Tidak ada yang dapat memberi syafaat di sisi-Nya tanpa izin-Nya. Dia mengetahui apa yang di hadapan mereka dan apa yang di belakang mereka, dan mereka tidak mengetahui apa-apa dari ilmu Allah melainkan apa yang Dia kehendaki. Kursi-Nya meliputi langit dan bumi. Dan Allah tidak merasa berat memelihara keduanya, dan Dia Mahatinggi lagi Mahabesar.",
+          "source": "QS. Al-Baqarah (2):255",
+          "source_url": "https://quran.com/2/255",
+          "verification": "Ayat paling utama untuk perlindungan dari jin dan setan. HR. Bukhari & Muslim; Tafsir Ibnu Katsir"
+        },
+        {
+          "id": "al-ikhlas",
+          "source_type": "quran",
+          "title": "Surat Al-Ikhlas",
+          "arabic": "قُلْ هُوَ اللّٰهُ اَحَدٌ · اللّٰهُ الصَّمَدُ · لَمْ يَلِدْ وَلَمْ يُوْلَدْ · وَلَمْ يَكُنْ لَّهٗ كُفُوًا اَحَدٌ",
+          "latin": "Qul huwallāhu aḥad. Allāhuṣ-ṣamad. Lam yalid wa lam yūlad. Wa lam yakul lahu kufuwan aḥad.",
+          "translation": "Katakanlah (Muhammad), Dialah Allah, Yang Maha Esa. Allah tempat meminta segala sesuatu. (Allah) tidak beranak dan tidak pula diperanakkan. Dan tidak ada suatu pun yang setara dengan Dia.",
+          "source": "QS. Al-Ikhlas (112):1-4",
+          "source_url": "https://quran.com/112",
+          "verification": "HR. Bukhari no. 5017, Muslim no. 2714 — Rasulullah ﷺ membacanya saat ruqyah diri sendiri sebelum tidur"
+        },
+        {
+          "id": "al-falaq",
+          "source_type": "quran",
+          "title": "Surat Al-Falaq",
+          "arabic": "قُلْ اَعُوْذُ بِرَبِّ الْفَلَقِ · مِنْ شَرِّ مَا خَلَقَ · وَمِنْ شَرِّ غَاسِقٍ اِذَا وَقَبَ · وَمِنْ شَرِّ النَّفّٰثٰتِ فِى الْعُقَدِ · وَمِنْ شَرِّ حَاسِدٍ اِذَا حَسَدَ",
+          "latin": "Qul a'ūdzu birabbil-falaq. Min syarri mā khalaq. Wa min syarri ghāsiqin iżā waqab. Wa min syarrin-naffāṡāti fil-'uqad. Wa min syarri ḥāsidin iżā ḥasad.",
+          "translation": "Katakanlah, Aku berlindung kepada Tuhan yang menguasai subuh (fajar), dari kejahatan (makhluk yang) Dia ciptakan, dari kejahatan malam apabila telah gelap gulita, dari kejahatan (perempuan-perempuan) penyihir yang meniup pada buhul-buhul (talinya), dan dari kejahatan orang yang dengki apabila dia dengki.",
+          "source": "QS. Al-Falaq (113):1-5",
+          "source_url": "https://quran.com/113",
+          "verification": "HR. Bukhari no. 5017, Muslim no. 2714 — bagian dari Al-Mu'awwidzat"
+        },
+        {
+          "id": "an-nas",
+          "source_type": "quran",
+          "title": "Surat An-Nas",
+          "arabic": "قُلْ اَعُوْذُ بِرَبِّ النَّاسِ · مَلِكِ النَّاسِ · اِلٰهِ النَّاسِ · مِنْ شَرِّ الْوَسْوَاسِ ەۙ الْخَنَّاسِ · الَّذِيْ يُوَسْوِسُ فِيْ صُدُوْرِ النَّاسِ · مِنَ الْجِنَّةِ وَالنَّاسِ",
+          "latin": "Qul a'ūdzu birabbin-nās. Mālikin-nās. Ilāhin-nās. Min syarril-waswāsil-khannās. Allażī yuwaswisu fī ṣudūrin-nās. Minal-jinnati wan-nās.",
+          "translation": "Katakanlah, Aku berlindung kepada Tuhannya manusia, Raja manusia, sembahan manusia, dari kejahatan (bisikan) setan yang bersembunyi, yang membisikkan (kejahatan) ke dalam dada manusia, dari (golongan) jin dan manusia.",
+          "source": "QS. An-Nas (114):1-6",
+          "source_url": "https://quran.com/114",
+          "verification": "HR. Bukhari no. 5017, Muslim no. 2714 — bagian dari Al-Mu'awwidzat"
+        },
+        {
+          "id": "baqarah-284-286",
+          "source_type": "quran",
+          "title": "Tiga Ayat Terakhir Surat Al-Baqarah",
+          "arabic": "لِلَّهِ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ وَإِنْ تُبْدُوا مَا فِي أَنْفُسِكُمْ أَوْ تُخْفُوهُ يُحَاسِبْكُمْ بِهِ اللَّهُ ۖ فَيَغْفِرُ لِمَنْ يَشَاءُ وَيُعَذِّبُ مَنْ يَشَاءُ ۗ وَاللَّهُ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ · آمَنَ الرَّسُولُ بِمَا أُنْزِلَ إِلَيْهِ مِنْ رَبِّهِ وَالْمُؤْمِنُونَ ۚ كُلٌّ آمَنَ بِاللَّهِ وَمَلَائِكَتِهِ وَكُتُبِهِ وَرُسُلِهِ لَا نُفَرِّقُ بَيْنَ أَحَدٍ مِنْ رُسُلِهِ ۖ وَقَالُوا سَمِعْنَا وَأَطَعْنَا غُفْرَانَكَ رَبَّنَا وَإِلَيْكَ الْمَصِيرُ · لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا ۚ لَهَا مَا كَسَبَتْ وَعَلَيْهَا مَا اكْتَسَبَتْ ۚ رَبَّنَا لَا تُؤَاخِذْنَا إِنْ نَسِينَا أَوْ أَخْطَأْنَا ۚ رَبَّنَا وَلَا تَحْمِلْ عَلَيْنَا إِصْرًا كَمَا حَمَلْتَهُ عَلَى الَّذِينَ مِنْ قَبْلِنَا ۚ رَبَّنَا وَلَا تُحَمِّلْنَا مَا لَا طَاقَةَ لَنَا بِهِ ۖ وَاعْفُ عَنَّا وَاغْفِرْ لَنَا وَارْحَمْنَا أَنْتَ مَوْلَانَا فَانْصُرْنَا عَلَى الْقَوْمِ الْكَافِرِينَ",
+          "latin": "Lillāhi mā fis-samāwāti wa mā fil-arḍ. Wa in tubdū mā fī anfusikum au tukhfūhu yuḥāsibkum bihillāh, fa yaghfiru liman yasyā'u wa yu'aẓẓibu man yasyā', wallāhu 'alā kulli syai'in qadīr. Āmanar-rasūlu bimā unzila ilaihi mir rabbihī wal-mu'minūn, kullun āmana billāhi wa malā'ikatihī wa kutubihī wa rusulih, lā nufarriqu baina aḥadim mir rusulih. Wa qālū sami'nā wa aṭa'nā ghufrānaka rabbanā wa ilaikal-maṣīr. Lā yukallifullāhu nafsan illā wus'ahā, lahā mā kasabat wa 'alaihā maktasabat. Rabbanā lā tu'ākhidznā in nasīnā aw akhṭa'nā. Rabbanā wa lā taḥmil 'alainā iṣran kamā ḥamaltahū 'alallażīna min qablinā. Rabbanā wa lā tuḥammilnā mā lā ṭāqata lanā bih. Wa'fu 'annā waghfir lanā warḥamnā, anta maulānā fansurnā 'alal-qaumil-kāfirīn.",
+          "translation": "Allah memiliki apa yang di langit dan di bumi. Jika kamu nyatakan atau sembunyikan, Allah membuat perhitunganmu. Siapa yang Dia kehendaki diampuni dan siapa yang Dia kehendaki disiksa. Allah Mahakuasa atas segala. Rasul beriman kepada Al-Qur'an dari Tuhannya, demikian pula orang-orang beriman. Semua beriman kepada Allah, malaikat-Nya, kitab-kitab-Nya, dan rasul-Nya. Mereka berkata: Kami dengar dan taat. Ampunilah kami Ya Tuhan kami, kepada-Mu tempat kembali. Allah tidak membebani seseorang melainkan sesuai kemampuannya. Setiap jiwa bertanggung jawab atas perbuatannya. Ya Tuhan kami, janganlah Engkau hukum kami jika kami lupa atau salah. Janganlah Engkau bebankan kepada kami beban berat sebagaimana Engkau bebankan kepada orang sebelum kami. Ampuni kami, ampunilah kami, rahmatilah kami. Engkaulah Pelindung kami, tolonglah kami terhadap kaum kafir.",
+          "source": "QS. Al-Baqarah (2):284-286",
+          "source_url": "https://quran.com/2/284",
+          "verification": "Barangsiapa membaca 10 ayat dari Al-Baqarah (termasuk Ayat Kursi dan 3 ayat terakhir), setan tidak akan masuk rumahnya semalam. HR. Muslim no. 2723, Ibn Hibban"
+        },
+        {
+          "id": "baqarah-102",
+          "source_type": "quran",
+          "title": "Surat Al-Baqarah Ayat 102",
+          "arabic": "وَاتَّبَعُوْا مَا تَتْلُو الشَّيٰطِيْنُ عَلٰى مُلْكِ سُلَيْمٰنَ ۚ وَمَا كَفَرَ سُلَيْمٰنُ وَلٰكِنَّ الشَّيٰطِيْنَ كَفَرُوْا يُعَلِّمُوْنَ النَّاسَ السِّحْرَ وَمَآ اُنْزِلَ عَلَى الْمَلَكَيْنِ بِبَابِلَ هَارُوْتَ وَمَارُوْتَ ۗ وَمَا يُعَلِّمٰنِ مِنْ اَحَدٍ حَتّٰى يَقُوْلَآ اِنَّمَا نَحْنُ فِتْنَةٌ فَلَا تَكْفُرْ ۗ فَيَتَعَلَّمُوْنَ مِنْهُمَا مَا يُفَرِّقُوْنَ بِهٖ بَيْنَ الْمَرْءِ وَزَوْجِهٖ ۗ وَمَا هُمْ بِضَاۤارِّيْنَ بِهٖ مِنْ اَحَدٍ اِلَّا بِاِذْنِ اللّٰهِ ۗ وَيَتَعَلَّمُوْنَ مَا يَضُرُّهُمْ وَلَا يَنْفَعُهُمْ ۗ وَلَقَدْ عَلِمُوْا لَمَنِ اشْتَرٰىهُ مَا لَهٗ فِى الْاٰخِرَةِ مِنْ خَلَاقٍ ۗ وَلَبِئْسَ مَاشَرَوْا بِهٖٓ اَنْفُسَهُمْ ۗ لَوْ كَانُوْا يَعْلَمُوْنَ",
+          "latin": "Wattaba'ū mā tatlus-syayāṭīna 'alā mulki sulaimān, wa mā kafara sulaimānu wa lākinnasy-syayāṭīna kafarū yu'allimūnan-nāsa siḥra, wa mā unzila 'alal-malakaini bibābila hārūta wa mārūt. Wa mā yu'allimāni min aḥadin ḥattā yaqūlā innamā naḥnu fitnatun fa lā takfur. Fa yata'allamūna min-humā mā yufarriqūna bihī bainal-mar'i wa zaujih. Wa mā hum biḍārrīna bihī min aḥadin illā bi'iżnillāh. Wa yata'allamūna mā yaḍurruhum wa lā yanja'uhum. Wa laqad 'alimū limanisytarāhu mā lahū fil-ākhirati min khalāq. Wa labi'sa mā syarau bihī anfusahum lau kānū ya'lamūn.",
+          "translation": "Dan mereka mengikuti apa yang dibaca oleh setan-setan pada masa kerajaan Sulaiman. Sulaiman tidak kafir tetapi setan-setan itulah yang kafir, mereka mengajarkan sihir kepada manusia dan apa yang diturunkan kepada dua malaikat di Babilonia yaitu Harut dan Marut. Keduanya tidak mengajarkan sesuatu kepada seseorang sebelum mengatakan, Sesungguhnya kami hanyalah cobaan (bagimu), sebab itu janganlah kafir. Maka mereka mempelajari dari keduanya apa yang dapat memisahkan antara seorang (suami) dengan istrinya. Mereka tidak akan dapat mencelakakan seseorang dengan sihirnya kecuali dengan izin Allah. Mereka mempelajari sesuatu yang mencelakakan, dan tidak memberi manfaat kepada mereka. Sungguh, mereka sudah tahu, barangsiapa membeli (menggunakan sihir) itu, niscaya tidak akan mendapat keuntungan di akhirat. Dan amat buruklah perbuatan mereka yang menjual dirinya dengan sihir, sekiranya mereka tahu.",
+          "source": "QS. Al-Baqarah (2):102",
+          "source_url": "https://quran.com/2/102",
+          "verification": "Ayat tentang sihir dan penyihir Harut-Marut. HR. Ibnu Majah 2/1175; umum digunakan untuk pembatal sihir"
+        },
+        {
+          "id": "a'raf-117-122",
+          "source_type": "quran",
+          "title": "Surat Al-A'raf Ayat 117-122",
+          "arabic": "وَاَوْحَيْنَآ اِلٰى مُوْسٰٓى اَنْ اَلْقِ عَصَاكَ ۚ فَاِذَا هِيَ تَلْقَفُ مَا يَأْفِكُوْنَ ۚ فَوَقَعَ الْحَقُّ وَبَطَلَ مَا كَانُوْا يَعْمَلُوْنَ ۚ فَغُلِبُوْا هُنَالِكَ وَانْقَلَبُوْا صٰغِرِيْنَ ۚ وَاُلْقِيَ السَّحَرَةُ سٰجِدِيْنَ ۙ قَالُوْٓا اٰمَنَّا بِرَبِّ الْعٰلَمِيْنَ ۙ رَبِّ مُوْسٰى وَهٰارُوْنَ",
+          "latin": "Wa auḥainā ilā mūsā an alqi 'aṣāk, fa iżā hiya talqafu mā ya'fikūn. Fa waqa'al-ḥaqqu wa baṭala mā kānū ya'malūn. Fa gulibū hunālika wa ingqalabū ṣāghirīn. Wa ulqiyas-saḥaratu sājidīn. Qālū āmannā birabbil-'ālamīn. Rabbi mūsā wa hārūn.",
+          "translation": "Dan Kami wahyukan kepada Musa, Lemparkanlah tongkatmu! Maka tiba-tiba ia menelan (habis) segala kepalsuan mereka. Maka terbuktilah kebenaran, dan segala yang mereka kerjakan jadi sia-sia. Maka mereka dikalahkan di tempat itu dan jadilah mereka orang-orang yang hina. Dan para pesihir itu serta merta menjatuhkan diri dengan bersujud. Mereka berkata, Kami beriman kepada Tuhan seluruh alam, (yaitu) Tuhannya Musa dan Harun.",
+          "source": "QS. Al-A'raf (7):117-122",
+          "source_url": "https://quran.com/7/117",
+          "verification": "Kisah penghancuran sihir Fir'aun oleh Nabi Musa. Ayat ruqyah azab untuk menyiksa jin dan pembatal sihir."
+        },
+        {
+          "id": "yunus-81-82",
+          "source_type": "quran",
+          "title": "Surat Yunus Ayat 81-82",
+          "arabic": "فَلَمَّآ اَلْقَوْا قَالَ مُوْسٰى مَا جِئْتُمْ بِهِ ۙالسِّحْرُ ۗ اِنَّ اللّٰهَ سَيُبْطِلُهٗ ۗ اِنَّ اللّٰهَ لَا يُصْلِحُ عَمَلَ الْمُفْسِدِيْنَ وَيُحِقُّ اللّٰهُ الْحَقَّ بِكَلِمٰتِهٖ وَلَوْ كَرِهَ الْمُجْرِمُوْنَ",
+          "latin": "Fa lammā alqau qāla mūsā mā ji'tum bihis-siḥr. Innal-lāha sayubṭiluh. Innal-lāha lā yuṣliḥu 'amalal-mufsidīn. Wa yuḥiqqullāhu al-ḥaqqa bikalimātihī wa lau karihal-mujrimūn.",
+          "translation": "Setelah mereka melemparkan, Musa berkata, Apa yang kamu lakukan itu, itulah sihir, sesungguhnya Allah akan menampakkan kepalsuan sihir itu. Sungguh, Allah tidak akan membiarkan terus berlangsungnya pekerjaan orang yang berbuat kerusakan. Dan Allah akan mengukuhkan yang benar dengan ketetapan-Nya, walaupun orang-orang yang berbuat dosa tidak menyukainya.",
+          "source": "QS. Yunus (10):81-82",
+          "source_url": "https://quran.com/10/81",
+          "verification": "Ayat pembatal sihir utama. HR. Ibnu Majah 2/1175; umum digunakan untuk melemahkan dan memantulkan kekuatan sihir"
+        },
+        {
+          "id": "shaffat-1-10",
+          "source_type": "quran",
+          "title": "Surat Ash-Shaffat Ayat 1-10",
+          "arabic": "وَالصّٰۤفّٰتِ صَفًّا · فَالنَّاجِيَاتِ نَجْدًا · فَالْمُدَبِّرَاتِ اَمْرًا · اِنَّ اِلٰهَكُمْ لَوَاحِدٌ · رَبُّ السَّمٰوٰتِ وَالْاَرْضِ وَمَا بَيْنَهُمَا وَرَبُّ الْمَشَارِقِ · اِنَّا زَيَّنَّا السَّمَاۤءَ الدُّنْيَا بِزِيْنَةٍ ِۨالْكَوَاكِبِ · وَحِفْظًا مِّنْ كُلِّ شَيْطٰنٍ مَّارِدٍ · لَا يَسَّمَّعُوْنَ اِلَى الْمَلَاِ الْاَعْلٰى وَيُقْذَفُوْنَ مِنْ كُلِّ جَانِبٍ · دُحُوْرًا وَّلَهُمْ عَذَابٌ وَّاصِبٌ · اِلَّا مَنْ خَطِفَ الْخَطْفَةَ فَاَتْبَعَهٗ شِهَابٌ ثَاقِبٌ",
+          "latin": "Waṣ-ṣāffāti ṣaffā(n). Fan-nājiyāti najdā(n). Fal-mudabbirāti amrā(n). Inna ilāhakum lawāḥid(un). Rabbus-samāwāti wal-arḍi wa mā bainahumā wa rabbul-masyāriq. Inna zaiyarnas-samā'ad-dunyā biz-zinati lil-kawākib. Wa ḥifẓam ming kulli syaithānim mārid. Lā yassamma'ūna ilal-mala'il-a'lā wa yuqżafūna ming kulli jānib. Duḥūraw wa lahum 'ażābuw wāṣib. Illa man khaṭifal-khaṭfata fa atba'ahū syihābun ṣāqib.",
+          "translation": "Demi (rombongan malaikat) yang berbaris bersaf-saf, demi (rombongan) yang mencegah dengan sungguh-sungguh, demi (rombongan) yang membacakan peringatan, sesungguhnya Tuhanmu benar-benar Esa. Tuhan langit dan bumi dan apa yang di antara keduanya dan Tuhan tempat-tempat terbit. Sesungguhnya Kami telah menghias langit dunia dengan hiasan bintang-bintang, dan (Kami) telah menjaganya dari setiap setan yang durhaka. Mereka tidak dapat mendengar (pembicaraan) para malaikat dan mereka dilempari dari segala penjuru, untuk mengusir mereka dan mereka akan mendapat azab yang kekal, kecuali (setan) yang mencuri (pembicaraan); maka ia dikejar oleh bintang yang menyala.",
+          "source": "QS. Ash-Shaffat (37):1-10",
+          "source_url": "https://quran.com/37/1",
+          "verification": "Ayat powerful untuk mengusir setan dari langit. HR. Ibnu Majah 2/1175; bagian dari kumpulan ayat ruqyah standar"
+        },
+        {
+          "id": "mu'minun-115-118",
+          "source_type": "quran",
+          "title": "Surat Al-Mu'minun Ayat 115",
+          "arabic": "اَفَحَسِبْتُمْ اَنَّمَا خَلَقْنٰكُمْ عَبَثًا وَّاَنَّكُمْ اِلَيْنَا لَا تُرْجَعُوْنَ",
+          "latin": "A fa ḥasibtum annamā khalaqnākum 'abathaw wa annakum ilainā lā turja'ūn.",
+          "translation": "Maka apakah kamu mengira, bahwa Kami menciptakan kamu main-main (tanpa ada maksud) dan bahwa kamu tidak akan dikembalikan kepada Kami?",
+          "source": "QS. Al-Mu'minun (23):115",
+          "source_url": "https://quran.com/23/115",
+          "verification": "HR. Ibnu Majah 2/1175; bagian dari surat untuk perlindungan dan istighfar"
+        },
+        {
+          "id": "hasyr-21-24",
+          "source_type": "quran",
+          "title": "Surat Al-Hasyr Ayat 21-24",
+          "arabic": "لَوْ اَنْزَلْنَا هٰذَا الْقُرْاٰنَ عَلٰى جَبَلٍ لَّرَاَيْتَهُ خَاشِعًا مُتَصَدِّعًا مِّنْ خَشْيَةِ اللّٰهِ ۚ وَتِلْكَ الْاَمْثَالُ نَضْرِبُهَا لِلنَّاسِ لَعَلَّهُمْ يَتَفَكَّرُوْنَ · هُوَ اللّٰهُ الَّذِيْ لَا اِلٰهَ اِلَّا هُوَ ۖ عَالِمُ الْغَيْبِ وَالشَّهَادَةِ ۖ هُوَ الرَّحْمٰنُ الرَّحِيْمُ · هُوَ اللّٰهُ الَّذِيْ لَا اِلٰهَ اِلَّا هُوَ الْمَلِكُ الْقُدُّوسُ السَّلَامُ الْمُؤْمِنُ الْمُهَيْمِنُ الْعَزِيْزُ الْجَبَّارُ الْمُتَكَبِّرُ ۚ سُبْحَانَ اللّٰهِ عَمَّا يُشْرِكُوْنَ · هُوَ اللّٰهُ الْخَالِقُ الْبَارِئُ الْمُصَوِّرُ ۖ لَهُ الْاَسْمَاۤءُ الْحُسْنٰى ۚ يُسَبِّحُ لَهُ مَا فِى السَّمٰوٰتِ وَالْاَرْضِ ۖ وَهُوَ الْعَزِيْزُ الْحَكِيْمُ",
+          "latin": "Lau anzalnā hāżal-qur'āna 'alā jabalin lara'aitahū khāsyi'am mutaṣaddi'am min khasyyatillāh. Wa tilkal-amṡālu naḍribuhā lin-nāsi la'allahum yatafakkarūn. Huwallāhullażī lā ilāha illā huwa, 'ālimul-ghaibi wasy-syahādah, huwar-raḥmānur-raḥīm. Huwallāhullażī lā ilāha illā huwal-malikul-quddūsus-salāmul-mu'minul-muhaiminul-'azīzul-jabbārul-mutakabbir. Subḥānallāhi 'ammā yusyrikūn. Huwallāhul-khāliqul-bāri'ul-muṣawwiru, lahul-asmā'ul-ḥusnā, yusabbiḥu lahū mā fis-samāwāti wal-arḍ, wa huwal-'azīzul-ḥakīm.",
+          "translation": "Sekiranya Kami turunkan Al-Qur'an ini kepada sebuah gunung, pasti kamu akan melihatnya tunduk terpecah belah disebabkan takut kepada Allah. Dan perumpamaan-perumpamaan itu Kami buat untuk manusia agar mereka berpikir. Dialah Allah tidak ada tuhan selain Dia. Yang Mengetahui yang gaib dan yang nyata, Dialah Yang Maha Pengasih lagi Maha Penyayang. Dialah Allah tidak ada tuhan selain Dia. Maharaja, Yang Mahasuci, Yang Mahasejahtera, Yang Menjaga Keamanan, Pemelihara Keselamatan, Yang Mahaperkasa, Yang Mahakuasa, Yang Memiliki Segala Keagungan, Mahasuci Allah dari apa yang mereka persekutukan. Dialah Allah Yang Menciptakan, Yang Mengadakan, Yang Membentuk Rupa, bagi-Nya nama-nama yang indah. Apa yang di langit dan di bumi bertasbih kepada-Nya. Dan Dialah Yang Mahaperkasa lagi Mahabijaksana.",
+          "source": "QS. Al-Hasyr (59):21-24",
+          "source_url": "https://quran.com/59/21",
+          "verification": "HR. Ibnu Majah 2/1175; contains Asmaul Husna yang powerful untuk perlindungan"
+        },
+        {
+          "id": "ysin-1-9",
+          "source_type": "quran",
+          "title": "Surat Yasin Ayat 1-9",
+          "arabic": "يٰسۤ ۚ وَالْقُرْاٰنِ الْحَكِيْمِ ۙ اِنَّكَ لَمِنَ الْمُرْسَلِيْنَ ۙ عَلٰى صِرَاطٍ مُّسْتَقِيْمٍ ۗ تَنْزِيْلَ الْعَزِيْزِ الرَّحِيْمِ ۙ لِتُنْذِرَ قَوْمًا مَّآ اُنْذِرَ اٰبَاۤؤُهُمْ فَهُمْ غٰفِلُوْنَ ۗ لَقَدْ حَقَّ الْقَوْلُ عَلٰٓى اَكْثَرِهِمْ فَهُمْ لَا يُؤْمِنُوْنَ ۗ اِنَّا جَعَلْنَا فِيْٓ اَعْنَاقِهِمْ اَغْلٰلًا فَهِيَ اِلَى الْاَذْقَانِ فَهُمْ مُّقْمَحُوْنَ ۗ وَجَعَلْنَا مِنْۢ بَيْنِ اَيْدِيْهِمْ سَدًّا وَّمِنْ خَلْفِهِمْ سَدًّا فَاَغْشَيْنٰهُمْ فَهُمْ لَا يُبْصِرُوْنَ",
+          "latin": "Yā Sīn. Wal-qur'ānil-ḥakīm. Innaka laminal-mursalīn. 'Alā ṣirāṭim mustaqīm. Tanzīlal-'azīzir-raḥīm. Litunzira qaumam mā unzira ābā'uhum fa hum ghāfilūn. Laqad ḥaqqal-qaulu 'alā aktharihim fa hum lā yu'minūn. Inna ja'alnā fī a'nāqihim aghlālan fa hiya ilal-adzqāni fa hum muqmahuun. Wa ja'alnaa mim baini aidīhim saddaw wa min khalfihim saddan fa agsysyaināhum fa hum lā yubṣirūn.",
+          "translation": "Ya Sin. Demi Al-Qur'an yang penuh hikmah, sungguh, engkau (Muhammad) adalah salah seorang dari rasul-rasul, (yang berada) di atas jalan yang lurus, (sebagai wahyu) yang diturunkan oleh (Allah) Yang Mahaperkasa lagi Maha Penyayang, agar engkau memberi peringatan kepada suatu kaum yang nenek moyangnya belum pernah diberi peringatan, karena itu mereka lalai. Sungguh, pasti berlaku perkataan (hukuman) terhadap kebanyakan mereka, karena mereka tidak beriman. Sungguh, Kami telah memasang belenggu di leher mereka, lalu tangan mereka (diangkat) ke dagu, karena itu mereka tertengadah. Dan Kami jadikan di hadapan mereka sekat (dinding) dan di belakang mereka juga sekat, dan Kami tutup (mata) mereka sehingga mereka tidak dapat melihat.",
+          "source": "QS. Yasin (36):1-9",
+          "source_url": "https://quran.com/36/1",
+          "verification": "Pembuka Surat Yasin — sebagai benteng dan perlindungan rumah dari gangguan jin dan setan"
+        },
+        {
+          "id": "isra-82",
+          "source_type": "quran",
+          "title": "Surat Al-Isra Ayat 82",
+          "arabic": "وَنُنَزِّلُ مِنَ الْقُرْاٰنِ مَا هُوَ شِفَآءٌ وَّرَحْمَةٌ لِّلْمُؤْمِنِيْنَ وَلَا يَزِيْدُ الظّٰلِمِيْنَ اِلَّا خَسَارًا",
+          "latin": "Wa nunazzilu minal-qur'āni mā huwa syarfā'uw wa raḥmatul-lil-mu'minīna, wa lā yazīduẓ-ẓālimīna illā khasārā.",
+          "translation": "Dan Kami turunkan dari Al-Qur'an (sesuatu) yang menjadi penawar dan rahmat bagi orang yang beriman, sedangkan bagi orang yang zalim (Al-Qur'an itu) hanya akan menambah kerugian.",
+          "source": "QS. Al-Isra (17):82",
+          "source_url": "https://quran.com/17/82",
+          "verification": "Dalil utama Al-Qur'an sebagai shifa (penyembuh). HR. Bukhari & Muslim; menjadi dasar legitimasi ruqyah syar'iyyah"
+        }
+      ]
+    },
+    {
+      "id": "ruqyah-hadits",
+      "title": "Doa-Doa Ruqyah dari Hadits Shahih",
+      "description": "Doa-doa yang diajarkan Rasulullah ﷺ untuk ruqyah, pengobatan, dan perlindungan dari gangguan jin dan sihir.",
+      "items": [
+        {
+          "id": "ruqyah-jibril",
+          "source_type": "hadith",
+          "title": "Ruqyah Jibril",
+          "arabic": "بِسْمِ اللَّهِ اَرْقِيْكَ، مِنْ كُلِّ شَيْءٍ يُؤْذِيْكَ، مِنْ شَرِّ كُلِّ نَفْسٍ اَوْ عَيْنٍ حَاسِدٍ، اللَّهُ يَشْفِيْكَ، بِسْمِ اللَّهِ اَرْقِيْكَ",
+          "latin": "Bismillāhi arqīka, min kulli syai'in yu'żīka, min syarri kulli nafsin au 'ainin ḥāsid, allāhu yasyfīka, bismillāhi arqīka.",
+          "translation": "Dengan nama Allah aku meruqyahmu, dari segala sesuatu yang menyakitimu, dari kejahatan setiap jiwa atau mata orang yang dengki; semoga Allah menyembuhkanmu; dengan nama Allah aku meruqyahmu.",
+          "source": "HR. Muslim no. 2186; Ibn Majah no. 3523; Musnad Ahmad no. 11225",
+          "source_url": "https://sunnah.com/muslim:2186",
+          "verification": "Hadis Abu Hurairah RA bahwa Jibril AS mengajarkan ruqyah ini kepada Nabi ﷺ, dan Nabi ﷺ mengajarkan kepada Abu Hurairah"
+        },
+        {
+          "id": "isti'adzah-saat-sakit",
+          "source_type": "hadith",
+          "title": "Doa Berlindung Saat Merasa Sakit",
+          "arabic": "بِسْمِ اللَّهِ (×٣) اَعُوذُ بِعِزَّةِ اللَّهِ وَقُدْرَتِهِ مِنْ شَرِّ مَا اَجِدُ وَاُحَاذِرُ (×٧)",
+          "latin": "Bismillāhi (×3). A'ūdzu bi 'izzatillāhi wa qudratihi min syarri mā ajidu wa uḥāżiru (×7).",
+          "translation": "Dengan nama Allah (3 kali). Aku berlindung dengan keperkasaan Allah dan kekuasaan-Nya, dari kejelekan yang aku rasakan dan yang aku khawatirkan (7 kali).",
+          "source": "HR. Muslim no. 5867; Ibnu Hibban no. 2964",
+          "source_url": "https://sunnah.com/muslim:5867",
+          "verification": "Hadis Utsman bin Abil 'Ash RA — Rasulullah ﷺ mengajarkan untuk meletakkan tangan di bagian yang sakit dan membaca doa ini"
+        },
+        {
+          "id": "doa-kesembuhan-aisyah",
+          "source_type": "hadith",
+          "title": "Doa Mohon Kesembuhan",
+          "arabic": "اللَّهُمَّ رَبَّ النَّاسِ، اَذْهِبِ الْبَأْسَ، اشْفِ وَاَنْتَ الشَّافِي، لَا شِفَاءَ اِلَّا شِفَاءُكَ، شِفَاءً لَّا يُغَادِرُ سَقَمًا",
+          "latin": "Allāhumma rabban-nās, ażhibil-ba'asa, isyfi wa antas-syāfī, lā syifā'a illā syifā'uka, syifā'an lā yughādiru saqamā.",
+          "translation": "Ya Allah, hilangkanlah penyakit, berikanlah kesembuhan karena Engkau adalah penyembuh. Tiada yang dapat menyembuhkan penyakit kecuali Engkau dengan kesembuhan yang tidak menyisakan rasa nyeri.",
+          "source": "HR. Bukhari no. 5742, Muslim no. 2191",
+          "source_url": "https://sunnah.com/bukhari:5742",
+          "verification": "Hadis Aisyah RA bahwa Rasulullah ﷺ menjenguk keluarganya yang sakit dan mengucapkan doa ini"
+        },
+        {
+          "id": "tiupan-jibril",
+          "source_type": "hadith",
+          "title": "Tiupan Jibril untuk Rasulullah ﷺ",
+          "arabic": "بِاسْمِ اللَّهِ يُبْرِيكَ، وَمِنْ كُلِّ دَاءٍ يَشْفِيْكَ، وَمِنْ شَرِّ حَاسِدٍ اِذَا حَسَدَ، وَشَرِّ كُلِّ ذِي عَيْنٍ",
+          "latin": "Bismillāhi yubrika, wa min kulli dā'in yasyfika, wa min syarri ḥāsidin iżā ḥasada, wa syarri kulli żī 'ain.",
+          "translation": "Dengan nama Allah, semoga Dia menyembuhkanmu; dari setiap penyakit semoga Dia menyembuhkanmu; dari kejahatan orang yang dengki apabila ia dengki; dan dari kejahatan semua pemilik mata (ain).",
+          "source": "HR. Muslim no. 2185",
+          "source_url": "https://sunnah.com/muslim:2185",
+          "verification": "Hadis Aisyah RA bahwa Jibril AS meruqyah Nabi ﷺ saat beliau sakit"
+        },
+        {
+          "id": "tiup-tanah-ludah",
+          "source_type": "hadith",
+          "title": "Doa dengan Tanah dan Ludah",
+          "arabic": "بِسْمِ اللَّهِ تُرْبَةُ اَرْضِنَا بِرِيْقَةِ بَعْضِنَا يُشْفَى سَقِيْمُنَا بِاِذْنِ رَبِّنَا",
+          "latin": "Bismillāhi, turbatu arḍinā bi-riqati ba'ḍinā, yusyafā saqīmunā bi-idzni rabbinā.",
+          "translation": "Dengan nama Allah, debu tanah kami dengan ludah sebagian kami, semoga sembuh orang yang sakit di antara kami dengan izin Tuhan kami.",
+          "source": "HR. Bukhari no. 5745, Muslim no. 5848",
+          "source_url": "https://sunnah.com/bukhari:5745",
+          "verification": "Hadis Aisyah RA — ketika Nabi ﷺ sakit parah, Aisyah dan sahabat membaca ini dan diusapkan ke tangan Nabi ﷺ"
+        },
+        {
+          "id": "doa-perlindungan-sempurna",
+          "source_type": "hadith",
+          "title": "Doa Perlindungan Sempurna",
+          "arabic": "اَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ",
+          "latin": "A'ūdzu bikalimātillāhit-tāmmāti min syarri mā khalaq.",
+          "translation": "Aku berlindung dengan kalimat-kalimat Allah yang sempurna dari kejahatan apa saja yang Dia ciptakan.",
+          "source": "HR. Muslim no. 2709; At-Tirmidzi no. 3604; Ibnu Majah no. 3547",
+          "source_url": "https://sunnah.com/muslim:2709",
+          "verification": "Sahih Muslim; dibaca tiga kali setiap petang sebagai perlindungan dari setan"
+        },
+        {
+          "id": "doa-turun-tanah",
+          "source_type": "hadith",
+          "title": "Doa Ketika Turun di Tempat Baru",
+          "arabic": "مَنْ نَزَلَ مَنْزِلًا ثُمَّ قَالَ: اَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ، مَا يَضُرُّهُ شَيْءٌ حَتَّى يَرْتَحِلَ مِنْ مَنْزِلِهِ ذَلِكَ",
+          "latin": "Man nazala manzilan ṭhumma qāla: A'ūdzu bikalimātillāhit-tāmmāti min syarri mā khalaq, mā yaḍurruhū syai'un ḥattā yartahiḥa min manzilatihī dzālik.",
+          "translation": "Barang siapa tiba di suatu tempat baru lalu membaca: Aku berlindung dengan kalimat-kalimat Allah yang sempurna dari kejahatan apa saja yang diciptakan-Nya, maka tidak ada sesuatu pun yang akan membinasakannya hingga ia meninggalkan tempat itu.",
+          "source": "HR. Muslim",
+          "source_url": "https://sunnah.com/muslim:2709",
+          "verification": "Hadis Khaulah binti al-Hakim As-Salamiyyah RA — perlindungan saat perjalanan"
+        },
+        {
+          "id": "doa-tawakal",
+          "source_type": "hadith",
+          "title": "Doa Tawakal kepada Allah",
+          "arabic": "حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ، نِعْمَ الْمَوْلَى وَنِعْمَ النَّصِيرُ",
+          "latin": "Ḥasbunallāhu wa ni'mal-wakīl, ni'mal-maulā wa ni'man-naṣīr.",
+          "translation": "Cukuplah Allah bagi kami dan Dia sebaik-baik pelindung. Sebaik-baik teman dan sebaik-baik penolong.",
+          "source": "HR. Bukhari no. 3023, Muslim no. 2733",
+          "source_url": "https://sunnah.com/bukhari:3023",
+          "verification": "Hadis Nabi ﷺ saat menghadapi kaum pada perang Khandaq"
+        }
+      ]
+    }
+  ]
+}

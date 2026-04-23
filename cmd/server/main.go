@@ -26,6 +26,24 @@ func main() {
 
 	funcMap := template.FuncMap{
 		"add": func(a, b int) int { return a + b },
+		"js": func(s string) string {
+			var result []byte
+			for i := 0; i < len(s); i++ {
+				c := s[i]
+				if c == '\'' || c == '"' || c == '`' || c == '\\' {
+					result = append(result, '_')
+				} else if c == 0xE2 && i+2 < len(s) && s[i+1] == 0x80 && s[i+2] == 0x99 {
+					result = append(result, '_')
+					i += 2
+				} else if c == 0xE2 && i+2 < len(s) && s[i+1] == 0x80 && s[i+2] == 0x98 {
+					result = append(result, '_')
+					i += 2
+				} else {
+					result = append(result, c)
+				}
+			}
+			return string(result)
+		},
 	}
 
 	pages := []string{

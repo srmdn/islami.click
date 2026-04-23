@@ -29,8 +29,10 @@ type DoaCategory struct {
 // DoaEntry represents a single doa item.
 type DoaEntry struct {
 	ID           string `json:"id"`
+	CollectionID string `json:"collection_id,omitempty"`
 	Category     string `json:"category,omitempty"`
-	SourceType   string `json:"source_type,omitempty"` // quran or hadith
+	SourceType   string `json:"source_type,omitempty"`
+	IsRuqyah     bool   `json:"is_ruqyah,omitempty"`
 	Title        string `json:"title"`
 	Arabic       string `json:"arabic"`
 	Latin        string `json:"latin"`
@@ -40,11 +42,19 @@ type DoaEntry struct {
 	Verification string `json:"verification,omitempty"`
 }
 
+// DoaSourceType represents a source type filter tab.
+type DoaSourceType struct {
+	ID    string `json:"id"`
+	Title string `json:"title"`
+	Count int    `json:"count"`
+}
+
 // DoaPageData represents the doa collection page.
 type DoaPageData struct {
-	Title       string        `json:"title"`
-	Description string        `json:"description"`
-	Categories  []DoaCategory `json:"categories"`
+	Title       string          `json:"title"`
+	Description string          `json:"description"`
+	Categories  []DoaCategory   `json:"categories"`
+	SourceTypes []DoaSourceType `json:"source_types"`
 	// Pagination (not in JSON; populated by store)
 	Items    []DoaEntry
 	HasMore  bool
