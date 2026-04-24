@@ -2,67 +2,67 @@
 {{define "description"}}Kumpulan konten Islami: Al-Ma'tsurat, Doa, Waktu Shalat, dan lainnya{{end}}
 
 {{define "content"}}
-<section class="relative overflow-hidden bg-gradient-to-br from-[#FAF7F2] via-white to-[#F0FDFA] dark:from-[#0B1120] dark:via-[#0F172A] dark:to-[#1E293B]">
+<section class="relative overflow-hidden">
     <div class="absolute inset-0 islamic-pattern opacity-40 pointer-events-none"></div>
-    <div class="absolute top-0 right-0 w-80 h-80 bg-[#14B8A6]/20 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute bottom-20 left-10 w-60 h-60 bg-amber-400/10 rounded-full blur-2xl pointer-events-none animate-float"></div>
 
-    <div class="absolute top-32 left-16 w-2 h-2 rounded-full bg-[#14B8A6]/60 animate-float pointer-events-none" style="animation-delay: 0.5s;"></div>
-    <div class="absolute top-48 right-24 w-1.5 h-1.5 rounded-full bg-amber-400/50 animate-float pointer-events-none" style="animation-delay: 1s;"></div>
-    <div class="absolute top-24 right-32 w-2 h-2 rounded-full bg-[#14B8A6]/40 animate-float pointer-events-none" style="animation-delay: 1.5s;"></div>
-    <div class="absolute bottom-40 left-1/4 w-1.5 h-1.5 rounded-full bg-orange-400/50 animate-float pointer-events-none" style="animation-delay: 0.8s;"></div>
-    <div class="absolute top-1/3 left-1/3 w-1 h-1 rounded-full bg-[#14B8A6]/50 animate-float pointer-events-none" style="animation-delay: 2s;"></div>
-    <div class="absolute bottom-1/3 right-1/4 w-1.5 h-1.5 rounded-full bg-amber-400/40 animate-float pointer-events-none" style="animation-delay: 1.2s;"></div>
+    <svg class="hero-star absolute -top-8 -right-8 sm:top-0 sm:right-0 w-64 h-64 sm:w-80 sm:h-80 text-[#14B8A6] dark:text-teal-300" viewBox="0 0 200 200" fill="currentColor" aria-hidden="true">
+        <g transform="translate(100,100)">
+            <rect x="-42" y="-42" width="84" height="84" rx="4"/>
+            <rect x="-42" y="-42" width="84" height="84" rx="4" transform="rotate(45)"/>
+        </g>
+    </svg>
 
-    <div class="relative z-10 max-w-3xl mx-auto px-4 py-16 sm:py-24">
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight mb-4 text-slate-800 dark:text-white">
+    <div class="hero-bismillah absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl sm:text-5xl md:text-6xl text-slate-800 dark:text-white whitespace-nowrap" aria-hidden="true">
+        بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
+    </div>
+
+    <div class="relative z-10 max-w-3xl mx-auto px-4 pt-20 sm:pt-28 md:pt-32 pb-28 sm:pb-36 md:pb-40">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight mb-4 text-slate-800 dark:text-white">
             Ibadahmu, lebih mudah.
         </h1>
 
-        <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-lg mb-10">
-            Dzikir, doa, dan waktu shalat.
+        <p class="text-lg sm:text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-xl mb-10">
+            Dzikir pagi &amp; petang, doa harian, jadwal shalat. Semua di satu tempat.
         </p>
 
         <div class="flex flex-wrap items-center gap-4">
-            <a href="/almatsurat" class="inline-flex items-center gap-2 px-6 py-3 bg-[#14B8A6] hover:bg-[#0D9488] text-white font-semibold rounded-xl shadow-lg shadow-[#14B8A6]/25 transition-all">
+            <a href="/almatsurat" class="inline-flex items-center gap-2 px-6 py-3 bg-[#14B8A6] hover:bg-[#0D9488] text-white font-semibold rounded-xl shadow-md shadow-[#14B8A6]/20 transition-all">
                 Mulai Dzikir
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
-            <a href="/shalat" class="inline-flex items-center gap-2 px-6 py-3 border border-slate-300 dark:border-slate-500 hover:border-[#14B8A6] text-slate-600 dark:text-slate-300 hover:text-[#14B8A6] font-medium rounded-xl transition-all">
+            <a href="/shalat" class="inline-flex items-center gap-2 px-6 py-3 border border-slate-300 dark:border-slate-600 hover:border-[#14B8A6] dark:hover:border-[#14B8A6] text-slate-600 dark:text-slate-300 hover:text-[#14B8A6] dark:hover:text-[#14B8A6] font-medium rounded-xl transition-all">
                 Cek Jadwal Shalat
             </a>
         </div>
     </div>
-    <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-slate-50 to-transparent dark:from-[#0B1120] dark:to-transparent pointer-events-none"></div>
 </section>
 
-<section class="bg-slate-50 dark:bg-[#0B1120]">
-    <div class="max-w-3xl mx-auto px-4 pt-6 pb-20">
-        <div hx-get="/shalat/mini" hx-trigger="load" hx-swap="outerHTML">
+<section class="relative z-10 -mt-16 sm:-mt-20 pb-20">
+    <div class="max-w-3xl mx-auto px-4">
+        <div hx-get="/shalat/mini" hx-trigger="load" hx-swap="outerHTML" role="region" aria-label="Waktu Shalat Hari Ini">
             <div class="bg-white dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/50 rounded-2xl p-5 h-24 animate-pulse"></div>
         </div>
 
-        <div class="grid gap-3 sm:grid-cols-5 mt-6">
-            <a href="/almatsurat" class="group sm:col-span-3 block bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200/80 dark:border-slate-700/50 overflow-hidden hover:border-[#14B8A6] dark:hover:border-[#14B8A6] shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200">
-                <div class="p-5 sm:flex sm:items-center sm:gap-4">
-                    <div class="w-12 h-12 mb-4 sm:mb-0 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 flex items-center justify-center group-hover:scale-105 transition-transform duration-200 flex-shrink-0">
+        <div class="grid gap-6 sm:gap-8 sm:grid-cols-3 mt-8">
+            <a href="/almatsurat" class="group block bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200/80 dark:border-slate-700/50 overflow-hidden hover:border-[#14B8A6] dark:hover:border-[#14B8A6] transition-colors duration-200">
+                <div class="p-5">
+                    <div class="w-12 h-12 mb-4 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
                         <svg class="w-6 h-6 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                             <circle cx="12" cy="12" r="10"/>
                             <path d="M12 6v6l4 2"/>
                         </svg>
                     </div>
-                    <div class="flex-1">
-                        <h2 class="text-base font-semibold mb-1 text-slate-800 dark:text-white">Al-Ma'tsurat</h2>
-                        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-3 sm:mb-0">Dzikir pagi dan petang dengan penghitung otomatis</p>
-                    </div>
-                    <div class="hidden sm:flex items-center gap-1 text-xs font-semibold text-emerald-600 arrow-slide flex-shrink-0">
+                    <p class="font-arabic text-xl leading-loose text-slate-400 dark:text-slate-500 mb-1" dir="rtl">أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ</p>
+                    <h2 class="text-base font-semibold mb-1 text-slate-800 dark:text-white">Al-Ma'tsurat</h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Dzikir pagi dan petang dengan penghitung otomatis</p>
+                    <div class="flex items-center gap-1 mt-3 text-xs font-semibold text-emerald-600 dark:text-emerald-400 arrow-slide">
                         Buka
                         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                     </div>
                 </div>
             </a>
 
-            <a href="/doa" class="group sm:col-span-2 block bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200/80 dark:border-slate-700/50 overflow-hidden hover:border-[#14B8A6] dark:hover:border-[#14B8A6] shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200">
+            <a href="/doa" class="group block bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200/80 dark:border-slate-700/50 overflow-hidden hover:border-[#14B8A6] dark:hover:border-[#14B8A6] transition-colors duration-200">
                 <div class="p-5">
                     <div class="w-12 h-12 mb-4 rounded-2xl bg-amber-500/10 flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
                         <svg class="w-6 h-6 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -70,24 +70,41 @@
                             <rect x="4" y="3" width="16" height="18" rx="3"/>
                         </svg>
                     </div>
+                    <p class="font-arabic text-xl leading-loose text-slate-400 dark:text-slate-500 mb-1" dir="rtl">رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً</p>
                     <h2 class="text-base font-semibold mb-1 text-slate-800 dark:text-white">Doa</h2>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-3">Kumpulan doa harian lengkap dengan terjemah</p>
-                    <div class="flex items-center gap-1 text-xs font-semibold text-amber-600 arrow-slide">
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Kumpulan doa harian lengkap dengan terjemah</p>
+                    <div class="flex items-center gap-1 mt-3 text-xs font-semibold text-amber-600 dark:text-amber-400 arrow-slide">
                         Buka
                         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                     </div>
                 </div>
             </a>
 
+            <a href="/shalat" class="group block bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200/80 dark:border-slate-700/50 overflow-hidden hover:border-[#14B8A6] dark:hover:border-[#14B8A6] transition-colors duration-200">
+                <div class="p-5">
+                    <div class="w-12 h-12 mb-4 rounded-2xl bg-teal-500/10 flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
+                        <svg class="w-6 h-6 text-teal-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                            <path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0"/>
+                            <path d="M12 2v2M12 20v2M2 12h2M20 12h2"/>
+                        </svg>
+                    </div>
+                    <p class="font-arabic text-xl leading-loose text-slate-400 dark:text-slate-500 mb-1" dir="rtl">إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا</p>
+                    <h2 class="text-base font-semibold mb-1 text-slate-800 dark:text-white">Jadwal Shalat</h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Waktu shalat berdasarkan lokasi Anda</p>
+                    <div class="flex items-center gap-1 mt-3 text-xs font-semibold text-teal-600 dark:text-teal-400 arrow-slide">
+                        Buka
+                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                    </div>
+                </div>
+            </a>
         </div>
 
-        <div class="mt-6 bg-slate-100/80 dark:bg-slate-800/50 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 px-5 py-4 text-center">
-            <p class="text-sm text-slate-500 dark:text-slate-400">
-                <span class="font-semibold text-slate-700 dark:text-slate-200">Segera hadir:</span>
-                Asmaul Husna, Arah Kiblat, Quran Reader
-            </p>
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-2 text-sm">
+            <span class="text-slate-500 dark:text-slate-400 font-medium">Segera hadir:</span>
+            <span class="coming-soon-pill">Asmaul Husna</span>
+            <span class="coming-soon-pill">Arah Kiblat</span>
+            <span class="coming-soon-pill">Quran Reader</span>
         </div>
-
     </div>
 </section>
 {{end}}
