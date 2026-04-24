@@ -1,5 +1,6 @@
 {{define "header"}}
-<header class="sticky top-0 z-50 bg-[#FAF7F2]/90 dark:bg-[#0B1120]/90 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-700/50">
+<header class="sticky top-0 z-40 border-b border-slate-200/80 dark:border-slate-700/50" x-data="{ open: false, isDark: document.documentElement.classList.contains('dark') }" x-init="$watch('isDark', v => { document.documentElement.classList.toggle('dark', v); localStorage.setItem('theme', v ? 'dark' : 'light'); })" @keydown.escape.window="open = false">
+    <div aria-hidden="true" class="absolute inset-0 bg-[#FAF7F2]/90 dark:bg-[#0B1120]/90 backdrop-blur-xl" style="z-index: -1"></div>
     <nav class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
         <a href="/" class="flex items-center gap-2.5 group">
             <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#14B8A6] to-[#0D9488] flex items-center justify-center shadow-md shadow-teal-500/20">
@@ -13,45 +14,115 @@
             </div>
             <span class="text-lg font-bold tracking-tight text-slate-800 dark:text-white group-hover:text-[#14B8A6] transition-colors">islami.click</span>
         </a>
-        <div class="flex items-center gap-2">
+
+        <div class="hidden md:flex items-center gap-2">
             <a href="/almatsurat" class="relative px-3 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-[#14B8A6] dark:hover:text-[#14B8A6] transition-all">Al-Ma'tsurat</a>
             <a href="/doa" class="relative px-3 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-[#14B8A6] dark:hover:text-[#14B8A6] transition-all">Doa</a>
             <a href="/shalat" class="relative px-3 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-[#14B8A6] dark:hover:text-[#14B8A6] transition-all">Shalat</a>
-            <button id="themeToggle" aria-label="Toggle dark mode" class="ml-2 w-9 h-9 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-[#14B8A6]/10 transition-colors cursor-pointer">
-                <svg id="sunIcon" class="w-4.5 h-4.5 text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <button @click="isDark = !isDark" class="ml-2 w-9 h-9 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-[#14B8A6]/10 transition-colors cursor-pointer" aria-label="Toggle dark mode">
+                <svg x-show="!isDark" class="w-4.5 h-4.5 text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="5"/>
                     <path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/>
                 </svg>
-                <svg id="moonIcon" class="w-4.5 h-4.5 text-slate-500 dark:text-slate-300 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg x-show="isDark" class="w-4.5 h-4.5 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
                 </svg>
             </button>
         </div>
+
+        <button
+            @click="open = true"
+            class="md:hidden w-9 h-9 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-[#14B8A6]/10 transition-colors cursor-pointer"
+            aria-label="Open menu"
+        >
+            <svg class="w-5 h-5 text-slate-600 dark:text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 12h18M3 6h18M3 18h18"/>
+            </svg>
+        </button>
     </nav>
-    <script>
-    (function() {
-        var btn = document.getElementById('themeToggle');
-        var sun = document.getElementById('sunIcon');
-        var moon = document.getElementById('moonIcon');
-        if (!btn || !sun || !moon) return;
-        function updateIcon() {
-            var isDark = document.documentElement.classList.contains('dark');
-            sun.classList.toggle('hidden', isDark);
-            moon.classList.toggle('hidden', !isDark);
-        }
-        updateIcon();
-        btn.addEventListener('click', function() {
-            var isDark = document.documentElement.classList.contains('dark');
-            if (isDark) {
-                document.documentElement.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-            } else {
-                document.documentElement.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-            }
-            updateIcon();
-        });
-    })();
-    </script>
+
+    <!-- Backdrop: fades in/out, click anywhere outside drawer to close -->
+    <div
+        x-show="open"
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        @click="open = false"
+        class="md:hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm"
+    ></div>
+
+    <!-- Drawer panel: slides in from left, full viewport height, above backdrop -->
+    <div
+        x-show="open"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="-translate-x-full"
+        x-transition:enter-end="translate-x-0"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="translate-x-0"
+        x-transition:leave-end="-translate-x-full"
+        class="md:hidden fixed inset-y-0 left-0 z-60 w-80 bg-[#FAF7F2] dark:bg-[#0B1120] shadow-2xl flex flex-col"
+    >
+        <div class="flex items-center justify-between px-4 py-3 border-b border-slate-200/80 dark:border-slate-700/50">
+            <span class="text-base font-bold text-slate-800 dark:text-white">Menu</span>
+            <button
+                @click="open = false"
+                class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                aria-label="Close menu"
+            >
+                <svg class="w-5 h-5 text-slate-600 dark:text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <nav class="flex-1 px-4 py-6 flex flex-col gap-2">
+            <a href="/almatsurat" @click="open = false" class="flex items-center gap-4 px-4 py-4 rounded-2xl text-lg font-medium text-slate-700 dark:text-slate-200 hover:bg-[#14B8A6]/10 hover:text-[#14B8A6] transition-all">
+                <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center">
+                    <svg class="w-6 h-6 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 6v6l4 2"/>
+                    </svg>
+                </div>
+                Al-Ma'tsurat
+            </a>
+            <a href="/doa" @click="open = false" class="flex items-center gap-4 px-4 py-4 rounded-2xl text-lg font-medium text-slate-700 dark:text-slate-200 hover:bg-[#14B8A6]/10 hover:text-[#14B8A6] transition-all">
+                <div class="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center">
+                    <svg class="w-6 h-6 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <path d="M8 6h8M6 10h12M8 14h8"/>
+                        <rect x="4" y="3" width="16" height="18" rx="3"/>
+                    </svg>
+                </div>
+                Doa
+            </a>
+            <a href="/shalat" @click="open = false" class="flex items-center gap-4 px-4 py-4 rounded-2xl text-lg font-medium text-slate-700 dark:text-slate-200 hover:bg-[#14B8A6]/10 hover:text-[#14B8A6] transition-all">
+                <div class="w-12 h-12 rounded-2xl bg-teal-500/10 flex items-center justify-center">
+                    <svg class="w-6 h-6 text-teal-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0"/>
+                        <path d="M12 2v2M12 20v2M2 12h2M20 12h2"/>
+                    </svg>
+                </div>
+                Jadwal Shalat
+            </a>
+        </nav>
+
+        <div class="px-4 py-4 border-t border-slate-200/80 dark:border-slate-700/50">
+            <button
+                @click="isDark = !isDark; open = false"
+                class="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-[#14B8A6]/10 transition-colors text-sm font-medium text-slate-600 dark:text-slate-300"
+            >
+                <svg x-show="!isDark" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"/>
+                    <path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/>
+                </svg>
+                <svg x-show="isDark" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+                <span x-text="isDark ? 'Light Mode' : 'Dark Mode'">Dark Mode</span>
+            </button>
+        </div>
+    </div>
 </header>
 {{end}}

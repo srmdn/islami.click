@@ -7,6 +7,12 @@
   --font-arabic: "Amiri", "Scheherazade New", serif;
 }
 
+@layer utilities {
+  .z-60 {
+    z-index: 60;
+  }
+}
+
 @layer base {
   .arabic {
     font-family: var(--font-arabic);
