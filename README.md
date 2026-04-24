@@ -1,20 +1,18 @@
 # islami.click
 
-Islamic content hub. Phase 1 covers Al-Ma'tsurat (daily adhkar), du'a collection, and prayer times for Indonesian users.
+Islamic content hub for Indonesian Muslims. Al-Ma'tsurat daily adhkar, du'a collection, and prayer times.
 
 ## Stack
 
-Go + html/template for server-side rendering. htmx for partial updates. Alpine.js for client-side reactivity (tap counters, localStorage state). Tailwind CSS via standalone CLI binary -- no Node, no npm, no build pipeline.
-
-SQLite via `modernc.org/sqlite` for content storage (seeded from JSON on startup). Deploy target: Ubuntu 24.04, nginx, systemd.
+Go + html/template for server-side rendering. htmx for partial updates. Alpine.js for client-side reactivity (tap counters, modals). Tailwind CSS v4 via standalone CLI binary — no Node, no npm, no build pipeline. SQLite via `modernc.org/sqlite` for content storage. Deploy target: Ubuntu 24.04 VPS, nginx, systemd.
 
 ## Run locally
 
 ```bash
-# Terminal 1 -- compile CSS
+# Terminal 1 — compile CSS
 ./tailwindcss -i static/css/input.css -o static/css/out.css --watch
 
-# Terminal 2 -- dev server
+# Terminal 2 — dev server
 go run ./cmd/server
 # http://localhost:8080
 ```
@@ -25,35 +23,38 @@ Build for production:
 go build -o islami.click ./cmd/server
 ```
 
-## Features (Phase 1)
+## Features
 
-**`/almatsurat`** -- Wazifah Sugro and Kubro with tap-to-count per dhikr and visual progress bars. Progress resets on page reload (no persistence by design).
+**`/`** — Landing page with Bismillah hero, 3 feature cards, prayer times widget.
 
-**`/doa`** -- Du'a collection with 23 curated entries across 7 categories. Filter by source (Al-Qur'an / Hadits), filter by category, full-text search, accordion expand, and load-more pagination. Sourced from `content/doa-harian.json`.
+**`/almatsurat`** — Wazifah Sugro and Kubro with tap-to-count per dhikr and visual progress bars. Progress resets on page reload.
 
-**`/shalat`** -- Prayer times via Aladhan API (method=20, Kemenag Indonesia), city picker, Hijri date. Fetched server-side, no client API calls.
+**`/doa`** — 23 curated du'a across 7 categories plus ayat ruqyah. Source filter (Al-Qur'an / Hadits), category filter, full-text search, accordion, and load-more pagination.
+
+**`/shalat`** — Prayer times via Aladhan API (method=20, Kemenag Indonesia). City picker, Hijri date, next-prayer highlight, mini widget for homepage.
 
 ## Project layout
 
 ```
-cmd/server/          entrypoint, router
-internal/handler/    HTTP handlers per feature
-internal/model/      domain types
-internal/store/      SQLite queries
-templates/layouts/   base HTML layout
-templates/pages/     per-page templates
-templates/partials/  shared fragments (header, footer)
-static/css/          Tailwind input + compiled output
-static/js/           vendored htmx, Alpine.js
-static/fonts/        self-hosted Arabic fonts
-content/             JSON data (almatsurat, doa-harian)
-deploy/              nginx + systemd configs
-migrations/          SQL migration files
+cmd/server/main.go       entrypoint, router
+internal/handler/         HTTP handlers per feature
+internal/model/           domain types (dhikr, doa, shalat)
+internal/store/           SQLite queries
+migrations/               SQL migration files
+templates/layouts/        base HTML layout
+templates/pages/          per-page templates
+templates/partials/       shared fragments (header, footer, shalat-mini, doa-more)
+static/css/               Tailwind input + compiled output
+static/js/                vendored htmx, Alpine.js
+static/fonts/             self-hosted Arabic fonts (Amiri)
+static/favicon.svg        SVG favicon (Rub el Hizb star)
+content/                  JSON data (almatsurat, doa-harian, ayat-doa-ruqyah)
+deploy/                   nginx + systemd configs
 ```
 
 ## Content rules
 
-Arabic text is never auto-generated. All adhkar, du'a, and Quranic content must be verified against a primary source (mushaf or a known printed edition) before committing.
+Arabic text is never auto-generated. All adhkar, du'a, and Quranic content must be verified against a primary source (mushaf or known printed edition) before committing.
 
 ## What's not here
 

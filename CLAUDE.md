@@ -1,11 +1,11 @@
 # CLAUDE.md — islami.click
 
-Islam hub — Islamic content collection site.
+Islamic content hub for Indonesian Muslims.
 
 ## Stack
 
 - Go + html/template + htmx + Alpine.js
-- Tailwind CSS via standalone CLI (no Node/npm)
+- Tailwind CSS v4 via standalone CLI (no Node/npm)
 - SQLite via modernc.org/sqlite
 - Deploy: Ubuntu 24.04 VPS, nginx, systemd, no Docker
 
@@ -15,61 +15,59 @@ Islam hub — Islamic content collection site.
 go run ./cmd/server                          # Dev server (port 8080)
 ./tailwindcss -i static/css/input.css -o static/css/out.css --watch  # CSS dev
 go build -o islami.click ./cmd/server        # Production build
+go test ./...                                # Run tests
 ```
 
 ## Project structure
 
 ```
-assets.go                — Embed declarations (templates + content FS)
 cmd/server/main.go       — Entrypoint, router, per-page template parsing
-internal/handler/         — HTTP handlers per feature
-internal/model/           — Domain types (dhikr, doa, user)
+internal/handler/          — HTTP handlers per feature
+internal/model/           — Domain types (dhikr, doa, shalat)
 internal/store/           — SQLite queries
 migrations/               — SQL migration files
-templates/layouts/        — Base HTML layout (shared via {{define "base"}})
-templates/pages/          — Page templates (define title/description/content blocks)
-templates/partials/       — Reusable fragments (header, footer)
+templates/layouts/        — Base HTML layout ({{define "base"}})
+templates/pages/          — Page templates (title/description/content blocks)
+templates/partials/       — Reusable fragments (header, footer, shalat-mini, doa-more)
 static/css/               — Tailwind input + compiled output
 static/js/                — Vendored JS (htmx, Alpine.js)
-static/fonts/             — Arabic fonts (self-hosted)
-static/favicon.svg        — SVG favicon (Rub el Hizb / 8-pointed star)
-content/                  — JSON data (almatsurat, doa, asmaul-husna)
+static/fonts/             — Arabic fonts (self-hosted Amiri)
+static/favicon.svg        — SVG favicon (Rub el Hizb star)
+content/                  — JSON data (almatsurat-sugro, almatsurat-kubro, doa-harian, ayat-doa-ruqyah)
 deploy/                   — nginx + systemd configs
 ```
 
-## Frontend design rules (for AI tools)
+## Frontend design rules
 
-The frontend must look polished and modern, not like a bare admin panel.
-Go templates produce HTML — the browser doesn't care what generated it.
-Design quality comes from CSS + markup, not from the framework.
+Full design system: `docs/ref/lp/ISLAMICLICK-DESIGN.md`
+
+Key rules:
+- Warm ivory canvas (`#FAF7F2` light, `#0C1E26` dark), deep teal primary (`#0E5C73`), warm gold accent (`#C9A84C`)
+- Arabic text is the visual anchor — Amiri font, RTL, line-height 2.0+, never compress
+- Plus Jakarta Sans for all Latin text
+- Mobile-first, responsive, full dark mode via `dark:` classes
+- Cards with warm borders (`#E2D9CE` light, `#1E4458` dark), rounded corners, minimal shadow
+- No cool greys (`slate-*`, `gray-*`, `zinc-*`) — always warm tones
+- Interactive elements: 44px touch targets, tap feedback, smooth transitions
+- No Islamic geometric patterns as decoration — Arabic text IS the decoration
+- htmx 2.x for partial updates, Alpine.js for client reactivity
 
 ### Required frontend stack
-- **Tailwind CSS** via standalone CLI binary (NOT npm). Download from GitHub releases.
-- **htmx 2.x** vendored at `static/js/htmx.min.js` for server interactions
-- **Alpine.js** vendored at `static/js/alpine.min.js` for client-side reactivity (counters, modals, transitions)
-- **Google Fonts** for Arabic: Amiri or Scheherazade New (self-host in static/fonts/)
-
-### Design standards
-- Mobile-first, responsive
-- Dark/light mode support via Tailwind `dark:` classes
-- Arabic text: RTL, large line-height (2.0+), proper font
-- Smooth transitions on state changes (htmx `hx-swap` + CSS transitions)
-- Interactive elements must feel tactile (tap feedback, count animations)
-- Use color intentionally: muted backgrounds, accent for progress/completion
-- Cards, rounded corners, subtle shadows — not flat/brutalist
-- Progress indicators must be visual (progress bars, circular counters), not just "3/10"
+- **Tailwind CSS v4** via standalone CLI binary (NOT npm)
+- **htmx 2.x** vendored at `static/js/htmx.min.js`
+- **Alpine.js** vendored at `static/js/alpine.min.js`
+- **Amiri** font self-hosted at `static/fonts/`
 
 ### What NOT to do
 - Do not install Node, npm, Bun, or any JS build tool
 - Do not add JS frameworks (React, Vue, Svelte, Preact)
 - Do not use CSS-in-JS
-- Do not over-engineer: htmx + Alpine.js covers all interactivity needed
-- Do not use Tailwind CDN in production (use standalone CLI for purging)
+- Do not use cool grey palette (`slate`, `gray`, `zinc`) — use warm tones only
+- Do not use Tailwind CDN in production
 
-## Content data shape (almatsurat)
+## Content data shape
 
-Each adhkar entry in JSON:
-
+### Almatsurat (dhikr)
 ```json
 {
   "id": "isti-adzah",
@@ -82,16 +80,31 @@ Each adhkar entry in JSON:
 }
 ```
 
-## Phase 1 scope (current)
+### Doa
+```json
+{
+  "id": "doa-sebelum-makan",
+  "category": "makanan",
+  "source_type": "hadits",
+  "title": "Doa Sebelum Makan",
+  "arabic": "...",
+  "translation": "...",
+  "source": "HR. Abu Dawud"
+}
+```
 
-- `/almatsurat` — sugro + kubro with tap counter, progress resets on reload
-- `/doa` — categorized du'a collection (content TBD)
-- `/shalat` — prayer times via Aladhan API (fetched server-side, method=20 Kemenag)
+## Phase 1 scope (current — complete)
 
-## Phase 2 scope (later)
+- `/` — Landing page with Bismillah hero, feature cards, prayer times widget
+- `/almatsurat` — Sugro + Kubro with tap counter, progress resets on reload
+- `/doa` — 23 curated du'a across 7 categories, source filter, search, accordion, pagination, + ruqyah
+- `/shalat` — Prayer times via Aladhan API (server-side, method=20 Kemenag), city picker, Hijri date, next-prayer highlight
 
+## Phase 2 scope (next)
+
+- Cache prayer times in SQLite (see issue #5)
+- Checksum-aware content seeding (see issue #4)
 - User accounts, streak tracking, cross-device sync
-- SQLite for persistent state
 - Auth (session-based)
 
 ## Phase 3 scope (later)
@@ -104,5 +117,5 @@ Each adhkar entry in JSON:
 - Arabic text must be accurate — do not auto-generate or guess
 - No npm/node/bun packages — ever
 - No `.env`, `*.db`, `static/css/out.css` in commits
-- Keep `AGENTS.md` aligned with this file
 - git config: `user.name "srmdn"`, `user.email "mail@saidwp.com"`
+- No footer lines in commit messages — no "Ultraworked with", no "Co-authored-by: Sisyphus", no attribution trailers
