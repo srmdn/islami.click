@@ -110,32 +110,54 @@ func (s *Store) Migrate(ctx context.Context, migrationFS embed.FS) error {
 }
 
 func (s *Store) SeedContent(ctx context.Context, contentFS embed.FS) error {
-	tx, err := s.db.BeginTx(ctx, nil)
-	if err != nil {
-		return fmt.Errorf("begin content seed: %w", err)
-	}
-	defer tx.Rollback()
-
-	if _, err := tx.ExecContext(ctx, "DELETE FROM content_collections"); err != nil {
-		return fmt.Errorf("clear content seed: %w", err)
+	type collectionDef struct {
+		id    string
+		path  string
+		order int
+		seed  func(ctx context.Context, tx *sql.Tx, contentFS embed.FS, collectionID, path string, order int) error
 	}
 
-	if err := seedAlMatsurat(ctx, tx, contentFS, "almatsurat-sugro", "content/almatsurat-sugro.json", 10); err != nil {
-		return err
-	}
-	if err := seedAlMatsurat(ctx, tx, contentFS, "almatsurat-kubro", "content/almatsurat-kubro.json", 20); err != nil {
-		return err
-	}
-	if err := seedDoa(ctx, tx, contentFS, "doa-harian", "content/doa-harian.json", 30); err != nil {
-		return err
-	}
-	if err := seedDoa(ctx, tx, contentFS, "ayat-doa-ruqyah", "content/ayat-doa-ruqyah.json", 40); err != nil {
-		return err
+	collections := []collectionDef{
+		{id: "almatsurat-sugro", path: "content/almatsurat-sugro.json", order: 10, seed: seedAlMatsurat},
+		{id: "almatsurat-kubro", path: "content/almatsurat-kubro.json", order: 20, seed: seedAlMatsurat},
+		{id: "doa-harian", path: "content/doa-harian.json", order: 30, seed: seedDoa},
+		{id: "ayat-doa-ruqyah", path: "content/ayat-doa-ruqyah.json", order: 40, seed: seedDoa},
 	}
 
-	if err := tx.Commit(); err != nil {
-		return fmt.Errorf("commit content seed: %w", err)
+	for _, col := range collections {
+		data, err := contentFS.ReadFile(col.path)
+		if err != nil {
+			return fmt.Errorf("read %s: %w", col.path, err)
+		}
+
+		sum := checksum(data)
+
+		var existingChecksum string
+		err = s.db.QueryRowContext(ctx, "SELECT source_checksum FROM content_collections WHERE id = ?", col.id).Scan(&existingChecksum)
+		if err == nil && existingChecksum == sum {
+			continue
+		}
+
+		tx, err := s.db.BeginTx(ctx, nil)
+		if err != nil {
+			return fmt.Errorf("begin seed tx for %s: %w", col.id, err)
+		}
+
+		if _, err := tx.ExecContext(ctx, "DELETE FROM content_collections WHERE id = ?", col.id); err != nil {
+			_ = tx.Rollback()
+			return fmt.Errorf("clear collection %s: %w", col.id, err)
+		}
+
+		if err := col.seed(ctx, tx, contentFS, col.id, col.path, col.order); err != nil {
+			_ = tx.Rollback()
+			return err
+		}
+
+		if err := tx.Commit(); err != nil {
+			return fmt.Errorf("commit seed for %s: %w", col.id, err)
+		}
 	}
+
 	return nil
 }
 
