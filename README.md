@@ -31,7 +31,7 @@ go build -o islami.click ./cmd/server
 
 **`/doa`** — 23 curated du'a across 7 categories plus ayat ruqyah. Source filter (Al-Qur'an / Hadits), category filter, full-text search, accordion, and load-more pagination.
 
-**`/shalat`** — Prayer times via Aladhan API (method=20, Kemenag Indonesia). City picker, Hijri date, next-prayer highlight, mini widget for homepage.
+**`/shalat`** — Prayer times with SQLite caching. Serves from cache after first daily fetch per city; falls back to stale cache if Aladhan API is down. Method=20 (Kemenag Indonesia), city picker, Hijri date, next-prayer highlight, mini widget for homepage. ±1–3 min variance from official Kemenag schedules.
 
 ## Project layout
 

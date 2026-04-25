@@ -93,17 +93,20 @@ Key rules:
 }
 ```
 
-## Phase 1 scope (current — complete)
+## Phase 1 scope (complete)
 
 - `/` — Landing page with Bismillah hero, feature cards, prayer times widget
 - `/almatsurat` — Sugro + Kubro with tap counter, progress resets on reload
 - `/doa` — 23 curated du'a across 7 categories, source filter, search, accordion, pagination, + ruqyah
-- `/shalat` — Prayer times via Aladhan API (server-side, method=20 Kemenag), city picker, Hijri date, next-prayer highlight
+- `/shalat` — Prayer times with SQLite caching (method=20 Kemenag), city picker, Hijri date, next-prayer highlight, mini widget
+
+## Phase 2 scope (complete)
+
+- Cache prayer times in SQLite — on-demand per city, expires daily, stale fallback on API failure
+- Checksum-aware content seeding — starts up idempotently, only re-seeds changed JSON collections
 
 ## Phase 2 scope (next)
 
-- Cache prayer times in SQLite (see issue #5)
-- Checksum-aware content seeding (see issue #4)
 - User accounts, streak tracking, cross-device sync
 - Auth (session-based)
 
