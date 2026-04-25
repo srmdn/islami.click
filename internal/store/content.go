@@ -55,6 +55,44 @@ func (s *Store) AlMatsurat(ctx context.Context, collectionID string) (model.AlMa
 	return content, nil
 }
 
+func (s *Store) AsmaulHusna(ctx context.Context) (model.AsmaulHusnaPage, error) {
+	var page model.AsmaulHusnaPage
+	err := s.db.QueryRowContext(ctx, `
+		SELECT title, description
+		FROM content_collections
+		WHERE id = ? AND kind = 'asmaul_husna'
+	`, "asmaul-husna").Scan(&page.Title, &page.Description)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return page, fmt.Errorf("asmaul husna collection not found")
+		}
+		return page, fmt.Errorf("read asmaul husna collection: %w", err)
+	}
+
+	rows, err := s.db.QueryContext(ctx, `
+		SELECT number, slug, arabic, latin, translation, COALESCE(source, '')
+		FROM asmaul_husna_names
+		ORDER BY number
+	`)
+	if err != nil {
+		return page, fmt.Errorf("read asmaul husna names: %w", err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var entry model.AsmaulHusnaEntry
+		if err := rows.Scan(&entry.Number, &entry.Slug, &entry.Arabic, &entry.Latin, &entry.Translation, &entry.Source); err != nil {
+			return page, fmt.Errorf("scan asmaul husna name: %w", err)
+		}
+		page.Names = append(page.Names, entry)
+	}
+	if err := rows.Err(); err != nil {
+		return page, fmt.Errorf("iterate asmaul husna names: %w", err)
+	}
+
+	return page, nil
+}
+
 func (s *Store) DoaPage(ctx context.Context, pageNum, pageSize int) (model.DoaPageData, error) {
 	const collectionID = "doa-harian"
 

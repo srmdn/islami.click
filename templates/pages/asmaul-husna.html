@@ -1,0 +1,33 @@
+{{define "title"}}{{.Title}}{{end}}
+{{define "description"}}{{.Description}}{{end}}
+
+{{define "content"}}
+<div class="max-w-3xl mx-auto px-4 py-8">
+    <nav class="text-sm text-slate-500 dark:text-slate-400 mb-6">
+        <a href="/" class="hover:text-[#14B8A6] transition-colors">Beranda</a>
+        <span class="mx-2">/</span>
+        <span class="text-slate-800 dark:text-slate-100">Asmaul Husna</span>
+    </nav>
+
+    <div class="mb-8">
+        <h1 class="text-3xl font-semibold tracking-tight mb-2 text-slate-800 dark:text-slate-100">{{.Title}}</h1>
+        <p class="text-slate-500 dark:text-slate-400 leading-relaxed">{{.Description}}</p>
+    </div>
+
+    <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {{range .Names}}
+        <div class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200/80 dark:border-slate-700/50 p-4 hover:border-[#14B8A6] dark:hover:border-[#14B8A6] transition-colors duration-200">
+            <div class="flex items-start gap-3">
+                <span class="flex-shrink-0 w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center text-xs font-bold text-amber-600 dark:text-amber-400">{{.Number}}</span>
+                <div class="min-w-0 flex-1">
+                    <p class="font-arabic text-xl leading-loose text-slate-800 dark:text-white mb-1" dir="rtl">{{.Arabic}}</p>
+                    <p class="text-sm font-medium text-slate-700 dark:text-slate-200">{{.Latin}}</p>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-0.5">{{.Translation}}</p>
+                    {{if .Source}}<p class="text-[11px] text-slate-400 dark:text-slate-500 mt-1">{{.Source}}</p>{{end}}
+                </div>
+            </div>
+        </div>
+        {{end}}
+    </div>
+</div>
+{{end}}

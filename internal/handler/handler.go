@@ -112,6 +112,17 @@ func (h *Handler) AlMatsurat(w http.ResponseWriter, r *http.Request) {
 	h.render(w, "almatsurat.html", nil)
 }
 
+func (h *Handler) AsmaulHusna(w http.ResponseWriter, r *http.Request) {
+	content, err := h.contentStore.AsmaulHusna(r.Context())
+	if err != nil {
+		log.Printf("asmaul husna: %v", err)
+		http.Error(w, "Failed to load content", http.StatusInternalServerError)
+		return
+	}
+
+	h.render(w, "asmaul-husna.html", content)
+}
+
 func (h *Handler) AlMatsuratSugro(w http.ResponseWriter, r *http.Request) {
 	content, err := h.contentStore.AlMatsurat(r.Context(), "almatsurat-sugro")
 	if err != nil {
