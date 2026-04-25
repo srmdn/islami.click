@@ -157,4 +157,13 @@
     color: #fbbf24;
     border-color: rgba(251, 191, 36, 0.2);
   }
+
+  .compass-needle {
+    will-change: transform;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .compass-needle {
+      transition: none !important;
+    }
+  }
 }

@@ -122,6 +122,7 @@ func (s *Store) SeedContent(ctx context.Context, contentFS embed.FS) error {
 		{id: "almatsurat-kubro", path: "content/almatsurat-kubro.json", order: 20, seed: seedAlMatsurat},
 		{id: "doa-harian", path: "content/doa-harian.json", order: 30, seed: seedDoa},
 		{id: "ayat-doa-ruqyah", path: "content/ayat-doa-ruqyah.json", order: 40, seed: seedDoa},
+		{id: "asmaul-husna", path: "content/asmaul-husna.json", order: 50, seed: seedAsmaulHusna},
 	}
 
 	for _, col := range collections {
@@ -243,6 +244,34 @@ func seedDoa(ctx context.Context, tx *sql.Tx, contentFS embed.FS, collectionID, 
 			`, itemID, categoryID, itemIndex+1); err != nil {
 				return fmt.Errorf("link doa item %s: %w", item.ID, err)
 			}
+		}
+	}
+
+	return nil
+}
+
+func seedAsmaulHusna(ctx context.Context, tx *sql.Tx, contentFS embed.FS, collectionID, path string, order int) error {
+	data, err := contentFS.ReadFile(path)
+	if err != nil {
+		return fmt.Errorf("read %s: %w", path, err)
+	}
+
+	var page model.AsmaulHusnaPage
+	if err := json.Unmarshal(data, &page); err != nil {
+		return fmt.Errorf("parse %s: %w", path, err)
+	}
+
+	if err := insertCollection(ctx, tx, collectionID, "asmaul_husna", page.Title, page.Description, path, checksum(data), order); err != nil {
+		return err
+	}
+
+	for _, name := range page.Names {
+		_, err := tx.ExecContext(ctx, `
+			INSERT INTO asmaul_husna_names (number, slug, arabic, latin, translation, source)
+			VALUES (?, ?, ?, ?, ?, ?)
+		`, name.Number, name.Slug, name.Arabic, name.Latin, name.Translation, name.Source)
+		if err != nil {
+			return fmt.Errorf("seed asmaul husna #%d %s: %w", name.Number, name.Slug, err)
 		}
 	}
 
