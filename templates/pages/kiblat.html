@@ -1,0 +1,248 @@
+{{define "title"}}Arah Kiblat{{end}}
+{{define "description"}}Arah Kiblat ke Ka'bah berdasarkan lokasi Anda{{end}}
+
+{{define "content"}}
+<div class="max-w-3xl mx-auto px-4 py-8" x-data="kiblat()">
+    <h1 class="sr-only">Arah Kiblat</h1>
+    <nav class="text-sm text-slate-500 dark:text-slate-400 mb-6">
+        <a href="/" class="hover:text-[#14B8A6] transition-colors">Beranda</a>
+        <span class="mx-2">/</span>
+        <span class="text-slate-800 dark:text-slate-100">Arah Kiblat</span>
+    </nav>
+
+    {{/* Permission & error states */}}
+    <div x-show="state === 'pending'" class="text-center py-16">
+        <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-teal-500/10 flex items-center justify-center">
+            <svg class="w-10 h-10 text-teal-600 dark:text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                <circle cx="12" cy="9" r="2.5"/>
+            </svg>
+        </div>
+        <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-2">Arah Kiblat</h2>
+        <p class="text-slate-500 dark:text-slate-400 mb-6 max-w-sm mx-auto">Izinkan akses lokasi untuk menentukan arah Kiblat dari posisi Anda saat ini.</p>
+        <button @click="requestPermission()" class="px-6 py-3 rounded-xl bg-[#14B8A6] hover:bg-[#0D9488] active:bg-[#0F766E] text-white font-semibold shadow-md shadow-[#14B8A6]/20 transition-colors">
+            Izinkan Lokasi
+        </button>
+    </div>
+
+    <div x-show="state === 'loading'" class="text-center py-16">
+        <div class="w-16 h-16 mx-auto mb-4 border-4 border-slate-200 dark:border-slate-700 border-t-[#14B8A6] rounded-full animate-spin"></div>
+        <p class="text-slate-500 dark:text-slate-400">Mencari lokasi Anda...</p>
+    </div>
+
+    <div x-show="state === 'error'" class="text-center py-16">
+        <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-red-500/10 flex items-center justify-center">
+            <svg class="w-10 h-10 text-red-500 dark:text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 8v4M12 16h.01"/>
+            </svg>
+        </div>
+        <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-2">Lokasi Tidak Tersedia</h2>
+        <p class="text-slate-500 dark:text-slate-400 mb-4 max-w-sm mx-auto" x-text="errorMsg"></p>
+        <button @click="requestPermission()" class="px-6 py-3 rounded-xl bg-[#14B8A6] hover:bg-[#0D9488] active:bg-[#0F766E] text-white font-semibold shadow-md shadow-[#14B8A6]/20 transition-colors">
+            Coba Lagi
+        </button>
+    </div>
+
+    {{/* Main compass view */}}
+    <div x-show="state === 'ready'" class="flex flex-col items-center">
+        <div class="relative w-72 h-72 sm:w-80 sm:h-80 mb-8">
+            <div class="absolute inset-0 rounded-full border-4 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 shadow-lg"></div>
+
+            <svg class="absolute inset-0 w-full h-full" viewBox="0 0 320 320" fill="none">
+                <line x1="160" y1="14" x2="160" y2="30" stroke="currentColor" stroke-width="2.5" class="text-slate-800 dark:text-white"/>
+                <text x="160" y="48" text-anchor="middle" class="fill-slate-800 dark:fill-white" font-size="14" font-weight="700" font-family="Inter, system-ui, sans-serif">U</text>
+
+                <line x1="223.5" y1="24.8" x2="216.6" y2="38.6" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
+                <line x1="284" y1="76" x2="272" y2="83" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
+
+                <line x1="306" y1="160" x2="290" y2="160" stroke="currentColor" stroke-width="2.5" class="text-slate-800 dark:text-white"/>
+                <text x="274" y="165" text-anchor="middle" class="fill-slate-800 dark:fill-white" font-size="14" font-weight="700" font-family="Inter, system-ui, sans-serif">T</text>
+
+                <line x1="284" y1="244" x2="272" y2="237" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
+                <line x1="223.5" y1="295.2" x2="216.6" y2="281.4" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
+
+                <line x1="160" y1="306" x2="160" y2="290" stroke="currentColor" stroke-width="2.5" class="text-slate-800 dark:text-white"/>
+                <text x="160" y="284" text-anchor="middle" class="fill-slate-800 dark:fill-white" font-size="13" font-weight="700" font-family="Inter, system-ui, sans-serif">S</text>
+
+                <line x1="96.5" y1="295.2" x2="103.4" y2="281.4" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
+                <line x1="36" y1="244" x2="48" y2="237" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
+
+                <line x1="14" y1="160" x2="30" y2="160" stroke="currentColor" stroke-width="2.5" class="text-slate-800 dark:text-white"/>
+                <text x="46" y="165" text-anchor="middle" class="fill-slate-800 dark:fill-white" font-size="14" font-weight="700" font-family="Inter, system-ui, sans-serif">B</text>
+
+                <line x1="36" y1="76" x2="48" y2="83" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
+                <line x1="96.5" y1="24.8" x2="103.4" y2="38.6" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
+
+                <circle cx="160" cy="160" r="80" stroke="currentColor" stroke-width="0.5" class="text-slate-300 dark:text-slate-600"/>
+                <circle cx="160" cy="160" r="4" fill="currentColor" class="text-slate-400 dark:text-slate-500"/>
+            </svg>
+
+            <div class="absolute inset-0 flex items-center justify-center compass-needle" :style="needleStyle">
+                <div class="absolute top-4 left-1/2 -translate-x-1/2 flex flex-col items-center">
+                    <svg width="28" height="28" viewBox="0 0 28 28" class="text-[#14B8A6] dark:text-teal-400">
+                        <path d="M14 0L18 28H10L14 0Z" fill="currentColor"/>
+                    </svg>
+                    <span class="text-[10px] font-bold text-[#14B8A6] dark:text-teal-400 mt-0.5">Ka'bah</span>
+                </div>
+                <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center">
+                    <svg width="20" height="20" viewBox="0 0 20 20" class="text-[#C9A84C] dark:text-amber-400">
+                        <path d="M10 20L6 0H14L10 20Z" fill="currentColor" opacity="0.5"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mb-6">
+            <div class="text-4xl sm:text-5xl font-bold tracking-tight text-slate-800 dark:text-white">
+                <span x-text="bearing.toFixed(1)">0</span>°
+            </div>
+            <div class="mt-1 text-base font-semibold text-[#14B8A6] dark:text-teal-400" x-text="cardinalLabel">—</div>
+        </div>
+
+        <div class="w-full max-w-sm space-y-3 mb-6">
+            <div class="flex items-center justify-between px-5 py-4 rounded-2xl border border-slate-200/80 dark:border-slate-700/50 bg-white dark:bg-slate-800/80">
+                <span class="text-sm text-slate-500 dark:text-slate-400">Jarak ke Ka'bah</span>
+                <span class="font-semibold text-slate-800 dark:text-white" x-text="distanceText">—</span>
+            </div>
+            <div class="flex items-center justify-between px-5 py-4 rounded-2xl border border-slate-200/80 dark:border-slate-700/50 bg-white dark:bg-slate-800/80">
+                <span class="text-sm text-slate-500 dark:text-slate-400">Koordinat Anda</span>
+                <span class="font-mono text-sm font-semibold text-slate-800 dark:text-white" x-text="coordsText">—</span>
+            </div>
+        </div>
+
+        <div x-show="!hasCompass" class="w-full max-w-sm mb-6 px-4 py-3 rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50 text-sm text-amber-700 dark:text-amber-300 text-center">
+            Arah ditunjukkan berdasarkan perhitungan, bukan kompas perangkat. Putar perangkat untuk kompas real-time.
+        </div>
+
+        <p class="text-xs text-slate-400 dark:text-slate-500 text-center max-w-xs">
+            Lokasi Anda hanya dihitung di perangkat dan tidak dikirim ke server.
+        </p>
+    </div>
+</div>
+{{end}}
+
+{{define "scripts"}}
+<script>
+function kiblat() {
+    const KAABA_LAT = 21.4225;
+    const KAABA_LNG = 39.8262;
+
+    function cardinalLabel(deg) {
+        const dirs = ['Utara','Timur Laut','Timur','Tenggara','Selatan','Barat Daya','Barat','Barat Laut'];
+        return dirs[Math.round(deg / 45) % 8];
+    }
+
+    function toRad(d) { return d * Math.PI / 180; }
+
+    function calcBearing(lat1, lng1, lat2, lng2) {
+        const dLng = toRad(lng2 - lng1);
+        const y = Math.sin(dLng) * Math.cos(toRad(lat2));
+        const x = Math.cos(toRad(lat1)) * Math.sin(toRad(lat2)) -
+                  Math.sin(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.cos(dLng);
+        return (180 / Math.PI * Math.atan2(y, x) + 360) % 360;
+    }
+
+    function calcDistance(lat1, lng1, lat2, lng2) {
+        const R = 6371;
+        const dLat = toRad(lat2 - lat1);
+        const dLng = toRad(lng2 - lng1);
+        const a = Math.sin(dLat / 2) ** 2 +
+                  Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) ** 2;
+        return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    }
+
+    return {
+        state: 'pending',
+        errorMsg: '',
+        bearing: 0,
+        distance: 0,
+        userLat: null,
+        userLng: null,
+        heading: 0,
+        hasCompass: false,
+
+        get needleStyle() {
+            return `transform: rotate(${this.bearing - this.heading}deg); transition: transform 0.3s ease-out;`;
+        },
+
+        get cardinalLabel() { return cardinalLabel(this.bearing); },
+
+        get distanceText() {
+            if (!this.distance) return '—';
+            if (this.distance < 1) return Math.round(this.distance * 1000) + ' m';
+            return Math.round(this.distance).toLocaleString('id-ID') + ' km';
+        },
+
+        get coordsText() {
+            if (this.userLat === null) return '—';
+            return this.userLat.toFixed(4) + ', ' + this.userLng.toFixed(4);
+        },
+
+        requestPermission() {
+            this.state = 'loading';
+
+            if (typeof DeviceOrientationEvent !== 'undefined' &&
+                typeof DeviceOrientationEvent.requestPermission === 'function') {
+                DeviceOrientationEvent.requestPermission()
+                    .then(function(resp) {
+                        if (resp === 'granted') this.attachOrientation();
+                    }.bind(this))
+                    .catch(function() {});
+            }
+
+            if (!navigator.geolocation) {
+                this.state = 'error';
+                this.errorMsg = 'Browser Anda tidak mendukung geolokasi. Gunakan browser lain atau aktifkan lokasi.';
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(
+                function(pos) {
+                    this.userLat = pos.coords.latitude;
+                    this.userLng = pos.coords.longitude;
+                    this.bearing = calcBearing(this.userLat, this.userLng, KAABA_LAT, KAABA_LNG);
+                    this.distance = calcDistance(this.userLat, this.userLng, KAABA_LAT, KAABA_LNG);
+                    this.state = 'ready';
+                }.bind(this),
+                function(err) {
+                    this.state = 'error';
+                    var msgs = {
+                        1: 'Akses lokasi ditolak. Aktifkan izin lokasi di pengaturan browser Anda.',
+                        2: 'Lokasi tidak tersedia. Pastikan GPS aktif dan coba lagi.',
+                        3: 'Waktu permintaan lokasi habis. Coba lagi.'
+                    };
+                    this.errorMsg = msgs[err.code] || 'Gagal mendapatkan lokasi. Coba lagi.';
+                }.bind(this),
+                { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+            );
+        },
+
+        attachOrientation() {
+            var self = this;
+            window.addEventListener('deviceorientation', function(e) {
+                if (e.webkitCompassHeading !== undefined) {
+                    self.heading = e.webkitCompassHeading;
+                    self.hasCompass = true;
+                } else if (e.alpha !== null) {
+                    self.heading = (360 - e.alpha) % 360;
+                    self.hasCompass = true;
+                }
+            }, true);
+        },
+
+        init() {
+            if (typeof DeviceOrientationEvent !== 'undefined' &&
+                typeof DeviceOrientationEvent.requestPermission !== 'function') {
+                this.attachOrientation();
+            }
+
+            if (typeof DeviceOrientationEvent === 'undefined' ||
+                typeof DeviceOrientationEvent.requestPermission !== 'function') {
+                this.requestPermission();
+            }
+        }
+    };
+}
+</script>
+{{end}}

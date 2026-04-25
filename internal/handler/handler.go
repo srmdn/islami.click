@@ -112,6 +112,10 @@ func (h *Handler) AlMatsurat(w http.ResponseWriter, r *http.Request) {
 	h.render(w, "almatsurat.html", nil)
 }
 
+func (h *Handler) Kiblat(w http.ResponseWriter, r *http.Request) {
+	h.render(w, "kiblat.html", nil)
+}
+
 func (h *Handler) AsmaulHusna(w http.ResponseWriter, r *http.Request) {
 	content, err := h.contentStore.AsmaulHusna(r.Context())
 	if err != nil {
