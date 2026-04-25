@@ -2,6 +2,7 @@ package store_test
 
 import (
 	"context"
+	"database/sql"
 	"encoding/json"
 	"path/filepath"
 	"testing"
@@ -9,6 +10,8 @@ import (
 	islamiclick "github.com/srmdn/islami.click"
 	"github.com/srmdn/islami.click/internal/model"
 	"github.com/srmdn/islami.click/internal/store"
+
+	_ "modernc.org/sqlite"
 )
 
 func TestSeededContentMatchesJSON(t *testing.T) {
@@ -86,5 +89,106 @@ func assertDoaMatchesJSON(t *testing.T, ctx context.Context, contentStore *store
 	}
 	if len(fromDB.Items) != totalFromJSON {
 		t.Fatalf("doa item count mismatch: got %d want %d", len(fromDB.Items), totalFromJSON)
+	}
+}
+
+func TestChecksumSkipOnReopen(t *testing.T) {
+	ctx := context.Background()
+	dbPath := filepath.Join(t.TempDir(), "content.db")
+
+	store1, err := store.Open(ctx, dbPath, islamiclick.MigrationFS, islamiclick.ContentFS)
+	if err != nil {
+		t.Fatalf("first open: %v", err)
+	}
+	store1.Close()
+
+	store2, err := store.Open(ctx, dbPath, islamiclick.MigrationFS, islamiclick.ContentFS)
+	if err != nil {
+		t.Fatalf("second open: %v", err)
+	}
+	defer store2.Close()
+
+	content, err := store2.AlMatsurat(ctx, "almatsurat-sugro")
+	if err != nil {
+		t.Fatalf("read almatsurat-sugro: %v", err)
+	}
+	if content.Title == "" {
+		t.Fatal("title is empty after checksum skip")
+	}
+}
+
+func TestChecksumReSeedOnChange(t *testing.T) {
+	ctx := context.Background()
+	dbPath := filepath.Join(t.TempDir(), "content.db")
+
+	store1, err := store.Open(ctx, dbPath, islamiclick.MigrationFS, islamiclick.ContentFS)
+	if err != nil {
+		t.Fatalf("first open: %v", err)
+	}
+	store1.Close()
+
+	db, err := sql.Open("sqlite", dbPath)
+	if err != nil {
+		t.Fatalf("open db for corrupt: %v", err)
+	}
+	if _, err := db.Exec("UPDATE content_collections SET source_checksum = 'corrupted' WHERE id = 'doa-harian'"); err != nil {
+		db.Close()
+		t.Fatalf("update checksum: %v", err)
+	}
+	db.Close()
+
+	store2, err := store.Open(ctx, dbPath, islamiclick.MigrationFS, islamiclick.ContentFS)
+	if err != nil {
+		t.Fatalf("second open: %v", err)
+	}
+	defer store2.Close()
+
+	data, err := islamiclick.ContentFS.ReadFile("content/doa-harian.json")
+	if err != nil {
+		t.Fatalf("read doa json: %v", err)
+	}
+	var fromJSON model.DoaPageData
+	if err := json.Unmarshal(data, &fromJSON); err != nil {
+		t.Fatalf("parse doa json: %v", err)
+	}
+
+	fromDB, err := store2.DoaPage(ctx, 1, 1000)
+	if err != nil {
+		t.Fatalf("read doa from db: %v", err)
+	}
+	if fromDB.Title != fromJSON.Title {
+		t.Fatalf("title mismatch after re-seed: got %q want %q", fromDB.Title, fromJSON.Title)
+	}
+}
+
+func TestNoDuplicateRowsAfterReopen(t *testing.T) {
+	ctx := context.Background()
+	dbPath := filepath.Join(t.TempDir(), "content.db")
+
+	store1, err := store.Open(ctx, dbPath, islamiclick.MigrationFS, islamiclick.ContentFS)
+	if err != nil {
+		t.Fatalf("first open: %v", err)
+	}
+	store1.Close()
+
+	store2, err := store.Open(ctx, dbPath, islamiclick.MigrationFS, islamiclick.ContentFS)
+	if err != nil {
+		t.Fatalf("second open: %v", err)
+	}
+	defer store2.Close()
+
+	db, err := sql.Open("sqlite", dbPath)
+	if err != nil {
+		t.Fatalf("open db for check: %v", err)
+	}
+	defer db.Close()
+
+	var total, distinct int
+	err = db.QueryRowContext(ctx, "SELECT COUNT(*), COUNT(DISTINCT collection_id || ':' || slug) FROM content_items").Scan(&total, &distinct)
+	if err != nil {
+		t.Fatalf("count rows: %v", err)
+	}
+	if total != distinct {
+		t.Fatalf("duplicate rows: total=%d distinct=%d", total, distinct)
 	}
 }
