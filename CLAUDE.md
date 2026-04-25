@@ -105,14 +105,20 @@ Key rules:
 - Cache prayer times in SQLite — on-demand per city, expires daily, stale fallback on API failure
 - Checksum-aware content seeding — starts up idempotently, only re-seeds changed JSON collections
 
-## Phase 2 scope (next)
+## Phase 2 scope (next — content features)
 
-- User accounts, streak tracking, cross-device sync
-- Auth (session-based)
+- `/asmaul-husna` — 99 Names of Allah with Arabic, transliteration, meaning
+- `/kiblat` — Qibla direction compass using device geolocation
+- `/hisab` — Hijri calendar converter and Islamic date display
+- `/quran` — Quran reader with per-surah browsing and audio
+
+## Deferred
+
+- User accounts, streak tracking, cross-device sync — useful for a platform, not a utility. `localStorage` suffices for progress tracking.
+- Auth (session-based) — no login wall for an Islamic content site. Speed of access beats identity.
 
 ## Phase 3 scope (later)
 
-- `/asmaul-husna`, `/kiblat`, `/hisab`, `/quran` reader
 - Gamification (daily goals, badges, sharing)
 
 ## Hard rules
