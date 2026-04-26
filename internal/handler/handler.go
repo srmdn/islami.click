@@ -13,6 +13,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/srmdn/islami.click/internal/hijri"
 	"github.com/srmdn/islami.click/internal/model"
 	"github.com/srmdn/islami.click/internal/store"
 )
@@ -114,6 +115,37 @@ func (h *Handler) AlMatsurat(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) Kiblat(w http.ResponseWriter, r *http.Request) {
 	h.render(w, "kiblat.html", nil)
+}
+
+func (h *Handler) Hisab(w http.ResponseWriter, r *http.Request) {
+	wib := time.FixedZone("WIB", 7*3600)
+	now := time.Now().In(wib)
+	hijriDate := hijri.FromGregorian(now)
+
+	months := make([]model.HijriMonthEntry, 12)
+	for i := 1; i <= 12; i++ {
+		days := 30
+		if i%2 != 0 {
+			days = 29
+		}
+		months[i-1] = model.HijriMonthEntry{
+			Number: i,
+			Name:   hijri.MonthNamesID[i],
+			Days:   days,
+		}
+	}
+
+	data := model.HisabPageData{
+		HijriToday:     hijriDate.FormatID(),
+		MasehiToday:    hijri.FormatGregorianID(now),
+		HijriDay:       hijriDate.Day,
+		HijriMonth:     hijriDate.Month,
+		HijriMonthName: hijri.MonthNamesID[hijriDate.Month],
+		HijriYear:      hijriDate.Year,
+		Months:         months,
+	}
+
+	h.render(w, "hisab.html", data)
 }
 
 func (h *Handler) AsmaulHusna(w http.ResponseWriter, r *http.Request) {

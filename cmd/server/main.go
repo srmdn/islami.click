@@ -55,6 +55,7 @@ func main() {
 		"shalat.html",
 		"asmaul-husna.html",
 		"kiblat.html",
+		"hisab.html",
 	}
 
 	tmpls := make(map[string]*template.Template)
@@ -103,6 +104,7 @@ func main() {
 	http.HandleFunc("/doa/more", h.DoaMore)
 	http.HandleFunc("/kiblat", h.Kiblat)
 	http.HandleFunc("/asmaul-husna", h.AsmaulHusna)
+	http.HandleFunc("/hisab", h.Hisab)
 	http.HandleFunc("/shalat", h.Shalat)
 	http.HandleFunc("/shalat/mini", h.ShalatMini)
 
