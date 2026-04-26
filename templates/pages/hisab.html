@@ -1,0 +1,227 @@
+{{define "title"}}Konversi Hijriyah{{end}}
+{{define "description"}}Konversi tanggal Hijriyah ke Masehi dan sebaliknya{{end}}
+
+{{define "content"}}
+<div class="max-w-3xl mx-auto px-4 py-8" x-data="hisab()" style="color-scheme: light dark;">
+    <h1 class="sr-only">Konversi Hijriyah</h1>
+    <nav class="text-sm text-slate-500 dark:text-slate-400 mb-6">
+        <a href="/" class="hover:text-[#14B8A6] transition-colors">Beranda</a>
+        <span class="mx-2">/</span>
+        <span class="text-slate-800 dark:text-slate-100">Hisab Hijriyah</span>
+    </nav>
+
+    <div class="mb-8">
+        <h2 class="text-3xl font-semibold tracking-tight mb-2 text-slate-800 dark:text-slate-100">Hisab Hijriyah</h2>
+        <p class="text-slate-500 dark:text-slate-400 leading-relaxed">Konversi tanggal Hijriyah ke Masehi dan sebaliknya</p>
+    </div>
+
+    <div class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200/80 dark:border-slate-700/50 p-6 mb-6">
+        <div class="text-center mb-6">
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-2">Hari ini</p>
+            <p class="text-2xl sm:text-3xl font-semibold text-slate-800 dark:text-white mb-1">{{.HijriToday}}</p>
+            <p class="text-base text-slate-500 dark:text-slate-400">{{.MasehiToday}}</p>
+        </div>
+
+        <div class="border-t border-slate-200/80 dark:border-slate-700/50 my-6"></div>
+
+        <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Tanggal Hijriyah</label>
+                <div class="grid grid-cols-3 gap-2">
+                    <input type="number" x-model="hijriDay" min="1" max="30" placeholder="Hari"
+                        class="w-full px-3 py-2.5 rounded-xl border border-slate-200/80 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-400 text-center font-medium focus:outline-none focus:ring-2 focus:ring-[#14B8A6] focus:border-transparent transition-all">
+                    <select x-model="hijriMonth"
+                        class="w-full px-2 py-2.5 rounded-xl border border-slate-200/80 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white text-center font-medium focus:outline-none focus:ring-2 focus:ring-[#14B8A6] focus:border-transparent transition-all">
+                        <option value="">Bulan</option>
+                        {{range .Months}}
+                        <option value="{{.Number}}">{{.Name}}</option>
+                        {{end}}
+                    </select>
+                    <input type="number" x-model="hijriYear" min="1" placeholder="Tahun"
+                        class="w-full px-3 py-2.5 rounded-xl border border-slate-200/80 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-400 text-center font-medium focus:outline-none focus:ring-2 focus:ring-[#14B8A6] focus:border-transparent transition-all">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Tanggal Masehi</label>
+                <div class="grid grid-cols-3 gap-2">
+                    <input type="number" x-model="masehiDay" min="1" max="31" placeholder="Hari"
+                        class="w-full px-3 py-2.5 rounded-xl border border-slate-200/80 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-400 text-center font-medium focus:outline-none focus:ring-2 focus:ring-[#14B8A6] focus:border-transparent transition-all">
+                    <select x-model="masehiMonth"
+                        class="w-full px-2 py-2.5 rounded-xl border border-slate-200/80 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white text-center font-medium focus:outline-none focus:ring-2 focus:ring-[#14B8A6] focus:border-transparent transition-all">
+                        <option value="">Bulan</option>
+                        <option value="1">Januari</option>
+                        <option value="2">Februari</option>
+                        <option value="3">Maret</option>
+                        <option value="4">April</option>
+                        <option value="5">Mei</option>
+                        <option value="6">Juni</option>
+                        <option value="7">Juli</option>
+                        <option value="8">Agustus</option>
+                        <option value="9">September</option>
+                        <option value="10">Oktober</option>
+                        <option value="11">November</option>
+                        <option value="12">Desember</option>
+                    </select>
+                    <input type="number" x-model="masehiYear" min="1" placeholder="Tahun"
+                        class="w-full px-3 py-2.5 rounded-xl border border-slate-200/80 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-400 text-center font-medium focus:outline-none focus:ring-2 focus:ring-[#14B8A6] focus:border-transparent transition-all">
+                </div>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-center gap-3 mt-6">
+            <button @click="hijriToMasehi()"
+                :disabled="!hijriDay || !hijriMonth || !hijriYear"
+                class="px-5 py-2.5 rounded-xl bg-[#14B8A6] hover:bg-[#0D9488] active:bg-[#0F766E] disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold shadow-md shadow-[#14B8A6]/20 transition-colors text-sm">
+                Hijriyah &rarr; Masehi
+            </button>
+            <button @click="masehiToHijri()"
+                :disabled="!masehiDay || !masehiMonth || !masehiYear"
+                class="px-5 py-2.5 rounded-xl border border-[#14B8A6] text-[#14B8A6] hover:bg-[#14B8A6]/10 active:bg-[#14B8A6]/20 disabled:opacity-40 disabled:cursor-not-allowed font-semibold transition-colors text-sm">
+                Masehi &rarr; Hijriyah
+            </button>
+        </div>
+
+        <div x-show="result" x-transition class="mt-6 text-center p-5 rounded-2xl bg-gradient-to-b from-[#14B8A6] to-[#0D9488] border-2 border-[#14B8A6] shadow-lg shadow-[#14B8A6]/20">
+            <p class="text-lg font-semibold text-white" x-text="result"></p>
+            <p class="text-sm text-white/70 mt-1" x-text="resultSub"></p>
+        </div>
+
+        <div x-show="error" x-transition class="mt-6 text-center p-4 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200/80 dark:border-red-800/50">
+            <p class="text-sm text-red-600 dark:text-red-400" x-text="error"></p>
+        </div>
+    </div>
+
+    <div class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200/80 dark:border-slate-700/50 p-6">
+        <h3 class="text-lg font-semibold text-slate-800 dark:text-white mb-4">Bulan Hijriyah</h3>
+        <div class="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+            {{range .Months}}
+            {{if eq .Number $.HijriMonth}}
+            <div class="flex items-center justify-between px-4 py-3 rounded-2xl border-2 border-[#14B8A6] bg-gradient-to-b from-[#14B8A6] to-[#0D9488] shadow-lg shadow-[#14B8A6]/20">
+                <div class="flex items-center gap-3">
+                    <span class="w-7 h-7 rounded-lg bg-white/20 text-white flex items-center justify-center text-xs font-bold">{{.Number}}</span>
+                    <span class="text-sm font-semibold text-white">{{.Name}}</span>
+                </div>
+                <span class="text-xs font-medium text-white/70">{{.Days}} hari</span>
+            </div>
+            {{else}}
+            <div class="flex items-center justify-between px-4 py-3 rounded-2xl border border-slate-200/80 dark:border-slate-600 bg-white dark:bg-slate-700/50">
+                <div class="flex items-center gap-3">
+                    <span class="w-7 h-7 rounded-lg bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xs font-bold">{{.Number}}</span>
+                    <span class="text-sm font-medium text-slate-700 dark:text-slate-200">{{.Name}}</span>
+                </div>
+                <span class="text-xs text-slate-500 dark:text-slate-400">{{.Days}} hari</span>
+            </div>
+            {{end}}
+            {{end}}
+        </div>
+    </div>
+
+    <p class="mt-6 text-xs text-slate-400 dark:text-slate-500 text-center">
+        Perhitungan menggunakan kalender tabular (hisab). Hasil dapat berbeda &plusmn;1 hari dari penentuan ruyatul hilal.
+    </p>
+</div>
+{{end}}
+
+{{define "scripts"}}
+<script>
+function hisab() {
+    var hijriMonths = ["","Muharram","Safar","Rabiul Awal","Rabiul Akhir","Jumadil Awal","Jumadil Akhir","Rajab","Sya'ban","Ramadhan","Syawal","Dzulqa'dah","Dzulhijjah"];
+    var masehiMonths = ["","Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+    var dayNames = ["Ahad","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
+
+    function gregorianToJDN(y, m, d) {
+        var a = Math.floor((14 - m) / 12);
+        var y1 = y + 4800 - a;
+        var m1 = m + 12 * a - 3;
+        return d + Math.floor((153 * m1 + 2) / 5) + 365 * y1 + Math.floor(y1 / 4) - Math.floor(y1 / 100) + Math.floor(y1 / 400) - 32045;
+    }
+
+    function jdnToGregorian(jd) {
+        var a = jd + 32044;
+        var b = Math.floor((4 * a + 3) / 146097);
+        var c = a - Math.floor(146097 * b / 4);
+        var d = Math.floor((4 * c + 3) / 1461);
+        var e = c - Math.floor(1461 * d / 4);
+        var m = Math.floor((5 * e + 2) / 153);
+        var day = e - Math.floor((153 * m + 2) / 5) + 1;
+        var month = m + 3 - 12 * Math.floor(m / 10);
+        var year = 100 * b + d - 4800 + Math.floor(m / 10);
+        return { year: year, month: month, day: day };
+    }
+
+    function hijriToJDN(y, m, d) {
+        return Math.floor((10631 * y - 10617) / 30) + Math.floor((325 * m - 320) / 11) + d + 1948439;
+    }
+
+    function jdnToHijri(jd) {
+        var k2 = 30 * (jd - 1948440) + 15;
+        var k1 = 11 * (Math.floor(k2 % 10631 / 30)) + 5;
+        var year = Math.floor(k2 / 10631) + 1;
+        var month = Math.floor(k1 / 325) + 1;
+        var day = Math.floor(k1 % 325 / 11) + 1;
+        return { year: year, month: month, day: day };
+    }
+
+    function jdnToWeekday(jd) {
+        return dayNames[(jd + 1) % 7];
+    }
+
+    return {
+        hijriDay: '',
+        hijriMonth: '',
+        hijriYear: '',
+        masehiDay: '',
+        masehiMonth: '',
+        masehiYear: '',
+        result: '',
+        resultSub: '',
+        error: '',
+
+        hijriToMasehi: function() {
+            this.error = '';
+            this.result = '';
+            this.resultSub = '';
+            var d = parseInt(this.hijriDay);
+            var m = parseInt(this.hijriMonth);
+            var y = parseInt(this.hijriYear);
+            if (!d || !m || !y || y < 1) {
+                this.error = 'Masukkan tanggal Hijriyah yang valid.';
+                return;
+            }
+            if (d < 1 || d > 30 || m < 1 || m > 12) {
+                this.error = 'Tanggal atau bulan di luar jangkauan.';
+                return;
+            }
+            var jd = hijriToJDN(y, m, d);
+            var g = jdnToGregorian(jd);
+            var wd = jdnToWeekday(jd);
+            this.result = wd + ', ' + g.day + ' ' + masehiMonths[g.month] + ' ' + g.year;
+            this.resultSub = g.day + '/' + g.month + '/' + g.year + ' M';
+        },
+
+        masehiToHijri: function() {
+            this.error = '';
+            this.result = '';
+            this.resultSub = '';
+            var d = parseInt(this.masehiDay);
+            var m = parseInt(this.masehiMonth);
+            var y = parseInt(this.masehiYear);
+            if (!d || !m || !y || y < 1) {
+                this.error = 'Masukkan tanggal Masehi yang valid.';
+                return;
+            }
+            if (d < 1 || d > 31 || m < 1 || m > 12) {
+                this.error = 'Tanggal atau bulan di luar jangkauan.';
+                return;
+            }
+            var jd = gregorianToJDN(y, m, d);
+            var h = jdnToHijri(jd);
+            var wd = jdnToWeekday(jd);
+            this.result = wd + ', ' + h.day + ' ' + hijriMonths[h.month] + ' ' + h.year + ' H';
+            this.resultSub = h.day + '/' + h.month + '/' + h.year + ' H';
+        }
+    };
+}
+</script>
+{{end}}

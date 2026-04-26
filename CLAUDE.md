@@ -23,8 +23,9 @@ go test ./...                                # Run tests
 ```
 cmd/server/main.go       — Entrypoint, router, per-page template parsing
 internal/handler/          — HTTP handlers per feature
-internal/model/           — Domain types (dhikr, doa, shalat)
+internal/model/           — Domain types (dhikr, doa, shalat, hisab)
 internal/store/           — SQLite queries
+internal/hijri/           — Hijri↔Gregorian date conversion
 migrations/               — SQL migration files
 templates/layouts/        — Base HTML layout ({{define "base"}})
 templates/pages/          — Page templates (title/description/content blocks)
@@ -104,22 +105,18 @@ Key rules:
 
 - Cache prayer times in SQLite — on-demand per city, expires daily, stale fallback on API failure
 - Checksum-aware content seeding — starts up idempotently, only re-seeds changed JSON collections
-
-## Phase 2 scope (next — content features)
-
 - `/asmaul-husna` — 99 Names of Allah with Arabic, transliteration, meaning
 - `/kiblat` — Qibla direction compass using device geolocation
-- `/hisab` — Hijri calendar converter and Islamic date display
-- `/quran` — Quran reader with per-surah browsing and audio
+- `/hisab` — Hijri calendar converter with bidirectional date conversion and month reference
 
 ## Deferred
 
 - User accounts, streak tracking, cross-device sync — useful for a platform, not a utility. `localStorage` suffices for progress tracking.
 - Auth (session-based) — no login wall for an Islamic content site. Speed of access beats identity.
 
-## Phase 3 scope (later)
+## Phase 3 scope (next)
 
-- Gamification (daily goals, badges, sharing)
+- `/quran` — Quran reader with per-surah browsing and audio
 
 ## Hard rules
 
