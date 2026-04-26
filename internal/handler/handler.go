@@ -128,10 +128,12 @@ func (h *Handler) Hisab(w http.ResponseWriter, r *http.Request) {
 		if i%2 != 0 {
 			days = 29
 		}
+		isHaram := i == 1 || i == 7 || i == 11 || i == 12
 		months[i-1] = model.HijriMonthEntry{
-			Number: i,
-			Name:   hijri.MonthNamesID[i],
-			Days:   days,
+			Number:  i,
+			Name:    hijri.MonthNamesID[i],
+			Days:    days,
+			IsHaram: isHaram,
 		}
 	}
 
