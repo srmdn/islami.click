@@ -11,7 +11,8 @@ type HisabPageData struct {
 }
 
 type HijriMonthEntry struct {
-	Number int
-	Name   string
-	Days   int
+	Number  int
+	Name    string
+	Days    int
+	IsHaram bool
 }

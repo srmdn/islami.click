@@ -1,5 +1,5 @@
 {{define "title"}}Konversi Hijriyah{{end}}
-{{define "description"}}Konversi tanggal Hijriyah ke Masehi dan sebaliknya{{end}}
+{{define "description"}}Konversi tanggal Hijriyah ke Masehi dan sebaliknya, kalender bulan, dan hari besar Islam{{end}}
 
 {{define "content"}}
 <div class="max-w-3xl mx-auto px-4 py-8" x-data="hisab()" style="color-scheme: light dark;">
@@ -15,7 +15,7 @@
         <p class="text-slate-500 dark:text-slate-400 leading-relaxed">Konversi tanggal Hijriyah ke Masehi dan sebaliknya</p>
     </div>
 
-    <div class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200/80 dark:border-slate-700/50 p-6 mb-6">
+    <div id="converter" class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200/80 dark:border-slate-700/50 p-6 mb-6">
         <div class="text-center mb-6">
             <p class="text-sm text-slate-500 dark:text-slate-400 mb-2">Hari ini</p>
             <p class="text-2xl sm:text-3xl font-semibold text-slate-800 dark:text-white mb-1">{{.HijriToday}}</p>
@@ -24,11 +24,34 @@
 
         <div class="border-t border-slate-200/80 dark:border-slate-700/50 my-6"></div>
 
+        <div x-show="nextEvent" x-transition class="mb-6 bg-gradient-to-r from-amber-50 to-amber-100/50 dark:from-amber-900/20 dark:to-amber-800/10 rounded-xl border border-amber-200/80 dark:border-amber-700/50 p-4">
+            <div class="flex items-start gap-3">
+                <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-amber-500/10 flex items-center justify-center mt-0.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-amber-600 dark:text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                </div>
+                <div class="min-w-0">
+                    <p class="text-xs font-medium text-amber-600 dark:text-amber-400">Hari besar berikutnya</p>
+                    <p class="text-lg font-semibold text-slate-800 dark:text-white" x-text="nextEvent ? nextEvent.label : ''"></p>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">
+                        <span x-text="nextEvent ? nextEvent.hijri : ''"></span> &middot; <span x-text="nextEvent ? nextEvent.gregorian : ''"></span>
+                    </p>
+                    <template x-if="nextEvent && nextEvent.isToday">
+                        <span class="inline-block text-xs font-semibold text-white bg-[#14B8A6] px-2 py-0.5 rounded-full mt-1">Hari ini!</span>
+                    </template>
+                    <template x-if="nextEvent && !nextEvent.isToday && nextEvent.daysAway <= 30">
+                        <span class="inline-block text-xs text-slate-500 dark:text-slate-400 mt-1" x-text="nextEvent.daysAway + ' hari lagi'"></span>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <div x-show="nextEvent" class="border-t border-slate-200/80 dark:border-slate-700/50 my-6"></div>
+
         <div class="grid gap-4 sm:grid-cols-2">
             <div>
                 <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Tanggal Hijriyah</label>
                 <div class="grid grid-cols-3 gap-2">
-                    <input type="number" x-model="hijriDay" min="1" max="30" placeholder="Hari"
+                    <input type="number" x-model="hijriDay" min="1" max="30" placeholder="Tgl"
                         class="w-full px-3 py-2.5 rounded-xl border border-slate-200/80 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-400 text-center font-medium focus:outline-none focus:ring-2 focus:ring-[#14B8A6] focus:border-transparent transition-all">
                     <select x-model="hijriMonth"
                         class="w-full px-2 py-2.5 rounded-xl border border-slate-200/80 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white text-center font-medium focus:outline-none focus:ring-2 focus:ring-[#14B8A6] focus:border-transparent transition-all">
@@ -45,7 +68,7 @@
             <div>
                 <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Tanggal Masehi</label>
                 <div class="grid grid-cols-3 gap-2">
-                    <input type="number" x-model="masehiDay" min="1" max="31" placeholder="Hari"
+                    <input type="number" x-model="masehiDay" min="1" max="31" placeholder="Tgl"
                         class="w-full px-3 py-2.5 rounded-xl border border-slate-200/80 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-400 text-center font-medium focus:outline-none focus:ring-2 focus:ring-[#14B8A6] focus:border-transparent transition-all">
                     <select x-model="masehiMonth"
                         class="w-full px-2 py-2.5 rounded-xl border border-slate-200/80 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white text-center font-medium focus:outline-none focus:ring-2 focus:ring-[#14B8A6] focus:border-transparent transition-all">
@@ -92,6 +115,82 @@
         </div>
     </div>
 
+    <div class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200/80 dark:border-slate-700/50 p-4 sm:p-6 mb-6">
+        <p class="text-xs text-slate-400 dark:text-slate-500 text-center mb-3">Klik tanggal untuk konversi otomatis</p>
+        <div class="flex justify-center mb-4">
+            <div class="inline-flex rounded-xl border border-slate-200/80 dark:border-slate-600 p-0.5">
+                <button @click="switchToHijri()" :class="calendarMode === 'hijri' ? 'bg-[#14B8A6] text-white shadow-sm' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'" class="px-4 py-1.5 rounded-lg text-sm font-medium transition-colors">Hijriyah</button>
+                <button @click="switchToMasehi()" :class="calendarMode === 'masehi' ? 'bg-[#14B8A6] text-white shadow-sm' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'" class="px-4 py-1.5 rounded-lg text-sm font-medium transition-colors">Masehi</button>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between mb-4">
+            <button @click="prevMonth()" class="w-9 h-9 flex items-center justify-center rounded-xl border border-slate-200/80 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors" aria-label="Bulan sebelumnya">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
+            </button>
+            <div class="text-center min-w-0">
+                <h3 class="text-lg sm:text-xl font-semibold text-slate-800 dark:text-white" x-text="monthTitle"></h3>
+                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400" x-text="monthSubTitle"></p>
+            </div>
+            <button @click="nextMonth()" class="w-9 h-9 flex items-center justify-center rounded-xl border border-slate-200/80 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors" aria-label="Bulan berikutnya">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+            </button>
+        </div>
+        <div x-show="!isCurrentMonth" x-transition class="text-center mb-3">
+            <button @click="resetToToday()" class="text-xs font-medium text-[#14B8A6] hover:text-[#0D9488] transition-colors">&#8617; Kembali ke bulan ini</button>
+        </div>
+
+        <div class="grid grid-cols-7 gap-1 mb-1">
+            <div class="text-center text-[10px] sm:text-xs font-medium text-slate-400 dark:text-slate-500 py-1">Ah</div>
+            <div class="text-center text-[10px] sm:text-xs font-medium text-slate-400 dark:text-slate-500 py-1">Sn</div>
+            <div class="text-center text-[10px] sm:text-xs font-medium text-slate-400 dark:text-slate-500 py-1">Sl</div>
+            <div class="text-center text-[10px] sm:text-xs font-medium text-slate-400 dark:text-slate-500 py-1">Rb</div>
+            <div class="text-center text-[10px] sm:text-xs font-medium text-slate-400 dark:text-slate-500 py-1">Km</div>
+            <div class="text-center text-[10px] sm:text-xs font-medium text-[#14B8A6] dark:text-teal-400 py-1">Jm</div>
+            <div class="text-center text-[10px] sm:text-xs font-medium text-slate-400 dark:text-slate-500 py-1">Sb</div>
+        </div>
+
+        <div class="grid grid-cols-7 gap-1">
+            <template x-for="(day, idx) in calendarGrid" :key="idx">
+                <div @click="day && selectDay(day)"
+                     class="min-h-[2.75rem] sm:min-h-[3.5rem] flex flex-col items-center justify-center rounded-xl text-center relative px-0.5 transition-colors"
+                     :class="{
+                        'bg-gradient-to-b from-[#14B8A6] to-[#0D9488] shadow-md shadow-[#14B8A6]/20': day && day.isToday,
+                        'bg-amber-50 dark:bg-amber-900/20 border border-amber-200/80 dark:border-amber-700/50': day && day.isImportant && !day.isToday,
+                        'bg-teal-100/60 dark:bg-teal-800/30 border border-teal-200/60 dark:border-teal-700/40': day && day.isJumat && !day.isToday && !day.isImportant,
+                        'bg-slate-50 dark:bg-slate-700/30': day && !day.isToday && !day.isImportant && !day.isJumat,
+                        'cursor-pointer hover:ring-1 hover:ring-[#14B8A6]/30': !!day
+                     }">
+                    <template x-if="day">
+                        <div class="flex flex-col items-center leading-tight">
+                            <span class="text-sm sm:text-base font-semibold" :class="day.isToday ? 'text-white' : day.isJumat ? 'text-[#0E5C73] dark:text-teal-400' : 'text-slate-800 dark:text-slate-100'" x-text="day.primary"></span>
+                            <span class="text-[9px] sm:text-[10px]" :class="day.isToday ? 'text-white/70' : 'text-slate-400'" x-text="day.secondary"></span>
+                            <template x-if="day.isImportant && !day.isToday">
+                                <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mt-0.5"></span>
+                            </template>
+                            <template x-if="day.isImportant && day.isToday">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white/80 mt-0.5"></span>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+            </template>
+        </div>
+
+        <template x-if="importantDatesInView.length > 0">
+            <div class="mt-4 pt-4 border-t border-slate-200/80 dark:border-slate-700/50">
+                <div class="flex flex-wrap gap-2">
+                    <template x-for="ev in importantDatesInView" :key="ev.key">
+                        <span class="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-lg bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 border border-amber-200/80 dark:border-amber-700/50">
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                            <span x-text="ev.display"></span>
+                        </span>
+                    </template>
+                </div>
+            </div>
+        </template>
+    </div>
+
     <div class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200/80 dark:border-slate-700/50 p-6">
         <h3 class="text-lg font-semibold text-slate-800 dark:text-white mb-4">Bulan Hijriyah</h3>
         <div class="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
@@ -102,7 +201,10 @@
                     <span class="w-7 h-7 rounded-lg bg-white/20 text-white flex items-center justify-center text-xs font-bold">{{.Number}}</span>
                     <span class="text-sm font-semibold text-white">{{.Name}}</span>
                 </div>
-                <span class="text-xs font-medium text-white/70">{{.Days}} hari</span>
+                <div class="flex items-center gap-2">
+                    {{if .IsHaram}}<span class="text-[10px] font-medium text-white/70 bg-white/15 px-1.5 py-0.5 rounded">Haram</span>{{end}}
+                    <span class="text-xs font-medium text-white/70">{{.Days}} hari</span>
+                </div>
             </div>
             {{else}}
             <div class="flex items-center justify-between px-4 py-3 rounded-2xl border border-slate-200/80 dark:border-slate-600 bg-white dark:bg-slate-700/50">
@@ -110,11 +212,15 @@
                     <span class="w-7 h-7 rounded-lg bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xs font-bold">{{.Number}}</span>
                     <span class="text-sm font-medium text-slate-700 dark:text-slate-200">{{.Name}}</span>
                 </div>
-                <span class="text-xs text-slate-500 dark:text-slate-400">{{.Days}} hari</span>
+                <div class="flex items-center gap-2">
+                    {{if .IsHaram}}<span class="text-[10px] font-medium text-amber-600 dark:text-amber-400 bg-amber-500/10 dark:bg-amber-500/20 px-1.5 py-0.5 rounded">Haram</span>{{end}}
+                    <span class="text-xs text-slate-500 dark:text-slate-400">{{.Days}} hari</span>
+                </div>
             </div>
             {{end}}
             {{end}}
         </div>
+        <p class="mt-4 text-xs text-slate-400 dark:text-slate-500">4 bulan haram (QS. At-Taubah: 36): Dzulqa'dah, Dzulhijjah, Muharram, dan Rajab.</p>
     </div>
 
     <p class="mt-6 text-xs text-slate-400 dark:text-slate-500 text-center">
@@ -129,6 +235,14 @@ function hisab() {
     var hijriMonths = ["","Muharram","Safar","Rabiul Awal","Rabiul Akhir","Jumadil Awal","Jumadil Akhir","Rajab","Sya'ban","Ramadhan","Syawal","Dzulqa'dah","Dzulhijjah"];
     var masehiMonths = ["","Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
     var dayNames = ["Ahad","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
+    var importantDatesList = [
+        { month: 1, day: 1, label: 'Tahun Baru Islam' },
+        { month: 1, day: 10, label: 'Hari Asyura' },
+        { month: 9, day: 1, label: 'Awal Ramadhan' },
+        { month: 10, day: 1, label: 'Idul Fitri' },
+        { month: 12, day: 9, label: 'Hari Arafah' },
+        { month: 12, day: 10, label: 'Idul Adha' }
+    ];
 
     function gregorianToJDN(y, m, d) {
         var a = Math.floor((14 - m) / 12);
@@ -167,6 +281,27 @@ function hisab() {
         return dayNames[(jd + 1) % 7];
     }
 
+    function daysInHijriMonth(y, m) {
+        var start = hijriToJDN(y, m, 1);
+        var nextStart;
+        if (m < 12) { nextStart = hijriToJDN(y, m + 1, 1); }
+        else { nextStart = hijriToJDN(y + 1, 1, 1); }
+        return nextStart - start;
+    }
+
+    function getImportantLabel(month, day) {
+        for (var i = 0; i < importantDatesList.length; i++) {
+            if (importantDatesList[i].month === month && importantDatesList[i].day === day) {
+                return importantDatesList[i].label;
+            }
+        }
+        return '';
+    }
+
+    var now = new Date();
+    var todayJDN = gregorianToJDN(now.getFullYear(), now.getMonth() + 1, now.getDate());
+    var todayH = jdnToHijri(todayJDN);
+
     return {
         hijriDay: '',
         hijriMonth: '',
@@ -177,6 +312,242 @@ function hisab() {
         result: '',
         resultSub: '',
         error: '',
+
+        calendarMode: 'hijri',
+        currentMonth: todayH.month,
+        currentYear: todayH.year,
+        currentGregMonth: now.getMonth() + 1,
+        currentGregYear: now.getFullYear(),
+        todayJDN: todayJDN,
+        todayHijriMonth: todayH.month,
+        todayHijriYear: todayH.year,
+        todayHijriDay: todayH.day,
+        todayGregMonth: now.getMonth() + 1,
+        todayGregYear: now.getFullYear(),
+        monthNames: hijriMonths,
+
+        get isCurrentMonth() {
+            if (this.calendarMode === 'hijri') {
+                return this.currentMonth === this.todayHijriMonth && this.currentYear === this.todayHijriYear;
+            }
+            return this.currentGregMonth === this.todayGregMonth && this.currentGregYear === this.todayGregYear;
+        },
+
+        get monthTitle() {
+            if (this.calendarMode === 'hijri') {
+                return hijriMonths[this.currentMonth] + ' ' + this.currentYear + ' H';
+            }
+            return masehiMonths[this.currentGregMonth] + ' ' + this.currentGregYear;
+        },
+
+        get monthSubTitle() {
+            if (this.calendarMode === 'hijri') {
+                var numDays = daysInHijriMonth(this.currentYear, this.currentMonth);
+                var firstJDN = hijriToJDN(this.currentYear, this.currentMonth, 1);
+                var lastJDN = hijriToJDN(this.currentYear, this.currentMonth, numDays);
+                var first = jdnToGregorian(firstJDN);
+                var last = jdnToGregorian(lastJDN);
+                if (first.month === last.month) {
+                    return first.day + '–' + last.day + ' ' + masehiMonths[first.month] + ' ' + first.year;
+                }
+                if (first.year === last.year) {
+                    return first.day + ' ' + masehiMonths[first.month] + ' – ' + last.day + ' ' + masehiMonths[last.month] + ' ' + last.year;
+                }
+                return first.day + ' ' + masehiMonths[first.month] + ' ' + first.year + ' – ' + last.day + ' ' + masehiMonths[last.month] + ' ' + last.year;
+            }
+            var daysInMonth = new Date(this.currentGregYear, this.currentGregMonth, 0).getDate();
+            var firstJDN = gregorianToJDN(this.currentGregYear, this.currentGregMonth, 1);
+            var lastJDN = gregorianToJDN(this.currentGregYear, this.currentGregMonth, daysInMonth);
+            var firstH = jdnToHijri(firstJDN);
+            var lastH = jdnToHijri(lastJDN);
+            if (firstH.month === lastH.month && firstH.year === lastH.year) {
+                return firstH.day + '–' + lastH.day + ' ' + hijriMonths[firstH.month] + ' ' + firstH.year + ' H';
+            }
+            if (firstH.year === lastH.year) {
+                return firstH.day + ' ' + hijriMonths[firstH.month] + ' – ' + lastH.day + ' ' + hijriMonths[lastH.month] + ' ' + lastH.year + ' H';
+            }
+            return firstH.day + ' ' + hijriMonths[firstH.month] + ' ' + firstH.year + ' H – ' + lastH.day + ' ' + hijriMonths[lastH.month] + ' ' + lastH.year + ' H';
+        },
+
+        get calendarGrid() {
+            return this.calendarMode === 'hijri' ? this.hijriGrid : this.masehiGrid;
+        },
+
+        get hijriGrid() {
+            var grid = [];
+            var startJDN = hijriToJDN(this.currentYear, this.currentMonth, 1);
+            var startWeekday = (startJDN + 1) % 7;
+            var numDays = daysInHijriMonth(this.currentYear, this.currentMonth);
+            for (var i = 0; i < startWeekday; i++) { grid.push(null); }
+            for (var d = 1; d <= numDays; d++) {
+                var jd = hijriToJDN(this.currentYear, this.currentMonth, d);
+                var g = jdnToGregorian(jd);
+                var impLabel = getImportantLabel(this.currentMonth, d);
+                grid.push({
+                    primary: d,
+                    secondary: g.day,
+                    isJumat: (jd + 1) % 7 === 5,
+                    isImportant: !!impLabel,
+                    importantLabel: impLabel,
+                    isToday: jd === this.todayJDN,
+                    hDay: d, hMonth: this.currentMonth, hYear: this.currentYear,
+                    gDay: g.day, gMonth: g.month, gYear: g.year
+                });
+            }
+            return grid;
+        },
+
+        get masehiGrid() {
+            var grid = [];
+            var firstDay = new Date(this.currentGregYear, this.currentGregMonth - 1, 1).getDay();
+            var daysInMonth = new Date(this.currentGregYear, this.currentGregMonth, 0).getDate();
+            for (var i = 0; i < firstDay; i++) { grid.push(null); }
+            for (var d = 1; d <= daysInMonth; d++) {
+                var jd = gregorianToJDN(this.currentGregYear, this.currentGregMonth, d);
+                var h = jdnToHijri(jd);
+                var impLabel = getImportantLabel(h.month, h.day);
+                grid.push({
+                    primary: d,
+                    secondary: h.day,
+                    isJumat: (jd + 1) % 7 === 5,
+                    isImportant: !!impLabel,
+                    importantLabel: impLabel,
+                    isToday: jd === this.todayJDN,
+                    hDay: h.day, hMonth: h.month, hYear: h.year,
+                    gDay: d, gMonth: this.currentGregMonth, gYear: this.currentGregYear
+                });
+            }
+            return grid;
+        },
+
+        get nextEvent() {
+            for (var yr = this.todayHijriYear; yr <= this.todayHijriYear + 2; yr++) {
+                for (var i = 0; i < importantDatesList.length; i++) {
+                    var ev = importantDatesList[i];
+                    var jd = hijriToJDN(yr, ev.month, ev.day);
+                    if (jd >= this.todayJDN) {
+                        var g = jdnToGregorian(jd);
+                        var wd = jdnToWeekday(jd);
+                        var daysAway = jd - this.todayJDN;
+                        return {
+                            label: ev.label,
+                            hijri: ev.day + ' ' + hijriMonths[ev.month] + ' ' + yr + ' H',
+                            gregorian: wd + ', ' + g.day + ' ' + masehiMonths[g.month] + ' ' + g.year,
+                            daysAway: daysAway,
+                            isToday: daysAway === 0
+                        };
+                    }
+                }
+            }
+            return null;
+        },
+
+        get importantDatesInView() {
+            if (this.calendarMode === 'hijri') { return this.hijriMonthImportantDates; }
+            return this.masehiMonthImportantDates;
+        },
+
+        get hijriMonthImportantDates() {
+            var result = [];
+            for (var i = 0; i < importantDatesList.length; i++) {
+                var ev = importantDatesList[i];
+                if (ev.month === this.currentMonth) {
+                    var jd = hijriToJDN(this.currentYear, ev.month, ev.day);
+                    var g = jdnToGregorian(jd);
+                    var wd = jdnToWeekday(jd);
+                    result.push({
+                        key: ev.month + '-' + ev.day,
+                        display: ev.day + ' ' + hijriMonths[ev.month] + ' · ' + ev.label + ' (' + wd + ', ' + g.day + ' ' + masehiMonths[g.month] + ')'
+                    });
+                }
+            }
+            return result;
+        },
+
+        get masehiMonthImportantDates() {
+            var result = [];
+            var seen = {};
+            var daysInMonth = new Date(this.currentGregYear, this.currentGregMonth, 0).getDate();
+            for (var d = 1; d <= daysInMonth; d++) {
+                var jd = gregorianToJDN(this.currentGregYear, this.currentGregMonth, d);
+                var h = jdnToHijri(jd);
+                var label = getImportantLabel(h.month, h.day);
+                if (label) {
+                    var key = h.month + '-' + h.day;
+                    if (!seen[key]) {
+                        seen[key] = true;
+                        var wd = jdnToWeekday(jd);
+                        result.push({
+                            key: key,
+                            display: d + ' ' + masehiMonths[this.currentGregMonth] + ' · ' + label + ' (' + h.day + ' ' + hijriMonths[h.month] + ')'
+                        });
+                    }
+                }
+            }
+            return result;
+        },
+
+        switchToHijri() {
+            var jd = gregorianToJDN(this.currentGregYear, this.currentGregMonth, 1);
+            var h = jdnToHijri(jd);
+            this.currentMonth = h.month;
+            this.currentYear = h.year;
+            this.calendarMode = 'hijri';
+        },
+
+        switchToMasehi() {
+            var jd = hijriToJDN(this.currentYear, this.currentMonth, 1);
+            var g = jdnToGregorian(jd);
+            this.currentGregMonth = g.month;
+            this.currentGregYear = g.year;
+            this.calendarMode = 'masehi';
+        },
+
+        prevMonth() {
+            if (this.calendarMode === 'hijri') {
+                this.currentMonth--;
+                if (this.currentMonth < 1) { this.currentMonth = 12; this.currentYear--; }
+            } else {
+                this.currentGregMonth--;
+                if (this.currentGregMonth < 1) { this.currentGregMonth = 12; this.currentGregYear--; }
+            }
+        },
+
+        nextMonth() {
+            if (this.calendarMode === 'hijri') {
+                this.currentMonth++;
+                if (this.currentMonth > 12) { this.currentMonth = 1; this.currentYear++; }
+            } else {
+                this.currentGregMonth++;
+                if (this.currentGregMonth > 12) { this.currentGregMonth = 1; this.currentGregYear++; }
+            }
+        },
+
+        resetToToday() {
+            if (this.calendarMode === 'hijri') {
+                this.currentMonth = this.todayHijriMonth;
+                this.currentYear = this.todayHijriYear;
+            } else {
+                this.currentGregMonth = this.todayGregMonth;
+                this.currentGregYear = this.todayGregYear;
+            }
+        },
+
+        selectDay(day) {
+            this.hijriDay = String(day.hDay);
+            this.hijriMonth = String(day.hMonth);
+            this.hijriYear = String(day.hYear);
+            this.masehiDay = String(day.gDay);
+            this.masehiMonth = String(day.gMonth);
+            this.masehiYear = String(day.gYear);
+            this.error = '';
+            if (this.calendarMode === 'hijri') {
+                this.hijriToMasehi();
+            } else {
+                this.masehiToHijri();
+            }
+            document.getElementById('converter').scrollIntoView({ behavior: 'smooth' });
+        },
 
         hijriToMasehi: function() {
             this.error = '';
