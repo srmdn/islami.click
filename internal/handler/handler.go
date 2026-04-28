@@ -11,6 +11,7 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/srmdn/islami.click/internal/hijri"
@@ -289,7 +290,6 @@ func (h *Handler) QuranSearch(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) smartQuranSearch(ctx context.Context, query string) ([]model.QuranSearchResult, error) {
-	normalized := strings.ToLower(query)
 	seen := make(map[string]bool)
 	var results []model.QuranSearchResult
 
@@ -301,69 +301,54 @@ func (h *Handler) smartQuranSearch(ctx context.Context, query string) ([]model.Q
 		}
 	}
 
-	// Strategy 1: Direct reference patterns (5:7, 5/7, QS 5:7, QS. 5:7)
-	if m := parseDirectReference(normalized); m != nil {
-		r, err := h.contentStore.GetQuranAyah(ctx, m.surah, m.ayah)
+	surahNum, ayahNum, cleanedQuery, err := h.extractQuranReference(ctx, query)
+	if err != nil {
+		return nil, err
+	}
+
+	if surahNum > 0 && ayahNum > 0 {
+		r, err := h.contentStore.GetQuranAyah(ctx, surahNum, ayahNum)
 		if err != nil {
 			return nil, err
 		}
 		if r != nil {
 			add(*r)
-			return results, nil
 		}
 	}
 
-	// Strategy 2: Extract ayah number + surah name from natural language
-	// e.g. "ayat 7 al maidah", "surah al baqarah ayat 255", "al fatihah ayat 1"
-	if ref := parseNaturalLanguageReference(normalized); ref != nil {
-		// Try to find surah by name
-		surahNum, err := h.findSurahNumber(ctx, ref.surahName)
+	if surahNum > 0 && ayahNum == 0 {
+		ayahs, err := h.contentStore.QuranAyahs(ctx, surahNum)
 		if err != nil {
 			return nil, err
 		}
-		if surahNum > 0 {
-			if ref.ayah > 0 {
-				r, err := h.contentStore.GetQuranAyah(ctx, surahNum, ref.ayah)
-				if err != nil {
-					return nil, err
-				}
-				if r != nil {
-					add(*r)
-				}
-			} else {
-				// No ayah specified, return first few ayahs of surah
-				ayahs, err := h.contentStore.QuranAyahsByMushafPage(ctx, surahNum, 0)
-				if err != nil {
-					return nil, err
-				}
-				if len(ayahs) == 0 {
-					ayahs, err = h.contentStore.QuranAyahs(ctx, surahNum)
-					if err != nil {
-						return nil, err
-					}
-				}
-				for _, a := range ayahs {
-					if a.Number > 3 {
-						break
-					}
-					add(model.QuranSearchResult{
-						SurahNumber: surahNum,
-						AyahNumber:  a.Number,
-						Arabic:      a.Arabic,
-						Translation: a.Translation,
-					})
-				}
+		for _, a := range ayahs {
+			if a.Number > 3 {
+				break
 			}
+			add(model.QuranSearchResult{
+				SurahNumber: surahNum,
+				AyahNumber:  a.Number,
+				Arabic:      a.Arabic,
+				Translation: a.Translation,
+			})
 		}
 	}
 
-	// Strategy 3: Search surah names
+	if strings.TrimSpace(cleanedQuery) != "" {
+		contentResults, err := h.contentStore.SearchQuran(ctx, cleanedQuery, 50)
+		if err != nil {
+			return nil, err
+		}
+		for _, cr := range contentResults {
+			add(cr)
+		}
+	}
+
 	surahResults, err := h.contentStore.SearchQuranSurahs(ctx, query)
 	if err != nil {
 		return nil, err
 	}
 	for _, sr := range surahResults {
-		// For surah name matches, return the first ayah as a preview
 		ayahs, err := h.contentStore.QuranAyahs(ctx, sr.SurahNumber)
 		if err != nil {
 			return nil, err
@@ -379,112 +364,152 @@ func (h *Handler) smartQuranSearch(ctx context.Context, query string) ([]model.Q
 		}
 	}
 
-	// Strategy 4: Content search (existing LIKE on ayah text)
-	contentResults, err := h.contentStore.SearchQuran(ctx, query, 50)
-	if err != nil {
-		return nil, err
-	}
-	for _, cr := range contentResults {
-		add(cr)
-	}
-
 	return results, nil
 }
 
-type quranRef struct {
-	surah int
-	ayah  int
-}
-
-func parseDirectReference(s string) *quranRef {
-	// Pattern: 5:7 or 5/7
-	var surah, ayah int
-	if _, err := fmt.Sscanf(s, "%d:%d", &surah, &ayah); err == nil {
-		if surah >= 1 && surah <= 114 && ayah >= 1 {
-			return &quranRef{surah: surah, ayah: ayah}
-		}
-	}
-	if _, err := fmt.Sscanf(s, "%d/%d", &surah, &ayah); err == nil {
-		if surah >= 1 && surah <= 114 && ayah >= 1 {
-			return &quranRef{surah: surah, ayah: ayah}
-		}
-	}
-	// Pattern: QS 5:7 or QS. 5:7 or QS 5
-	if strings.HasPrefix(s, "qs") {
-		rest := strings.TrimSpace(strings.TrimPrefix(s, "qs"))
-		rest = strings.TrimPrefix(rest, ".")
-		rest = strings.TrimSpace(rest)
-		if _, err := fmt.Sscanf(rest, "%d:%d", &surah, &ayah); err == nil {
-			if surah >= 1 && surah <= 114 && ayah >= 1 {
-				return &quranRef{surah: surah, ayah: ayah}
-			}
-		}
-		if _, err := fmt.Sscanf(rest, "%d", &surah); err == nil {
-			if surah >= 1 && surah <= 114 {
-				return &quranRef{surah: surah}
-			}
-		}
-	}
-	return nil
-}
-
-type naturalRef struct {
-	surahName string
-	ayah      int
-}
-
-func parseNaturalLanguageReference(s string) *naturalRef {
-	// Remove common prefixes
-	s = strings.ReplaceAll(s, "surah", "")
-	s = strings.ReplaceAll(s, "surat", "")
-	s = strings.TrimSpace(s)
-
-	// Pattern: "ayat 7 ..." or "... ayat 7"
-	ayahNum := 0
-	var nameParts []string
-
+func stripNoiseWords(s string) string {
+	noise := []string{"qs.", "qs", "surah", "surat", "ayat", "ayah"}
 	words := strings.Fields(s)
+	result := make([]string, 0, len(words))
+	for _, w := range words {
+		isNoise := false
+		for _, n := range noise {
+			if w == n {
+				isNoise = true
+				break
+			}
+		}
+		if !isNoise {
+			result = append(result, w)
+		}
+	}
+	return strings.Join(result, " ")
+}
+
+func (h *Handler) extractQuranReference(ctx context.Context, query string) (surah int, ayah int, cleaned string, err error) {
+	normalized := strings.ToLower(strings.TrimSpace(query))
+
+	words := strings.Fields(normalized)
 	for i, w := range words {
-		if w == "ayat" && i+1 < len(words) {
-			if n, err := strconv.Atoi(words[i+1]); err == nil && n > 0 {
-				ayahNum = n
-				// Collect words before and after "ayat N"
-				for j, pw := range words {
-					if j != i && j != i+1 {
-						nameParts = append(nameParts, pw)
+		for _, sep := range []string{":", "/"} {
+			parts := strings.Split(w, sep)
+			if len(parts) == 2 {
+				if s, err1 := strconv.Atoi(parts[0]); err1 == nil && s >= 1 && s <= 114 {
+					if a, err2 := strconv.Atoi(parts[1]); err2 == nil && a >= 1 {
+						cleanedWords := make([]string, 0, len(words)-1)
+						cleanedWords = append(cleanedWords, words[:i]...)
+						cleanedWords = append(cleanedWords, words[i+1:]...)
+						cleaned = stripNoiseWords(strings.Join(cleanedWords, " "))
+						return s, a, cleaned, nil
 					}
 				}
+			}
+		}
+	}
+
+	punctNormalized := normalized
+	for _, p := range []string{":", "/", ".", ",", ";", "!", "?", "'", "\"", "(", ")", "[", "]"} {
+		punctNormalized = strings.ReplaceAll(punctNormalized, p, " ")
+	}
+
+	stripped := stripNoiseWords(punctNormalized)
+	strippedWords := strings.Fields(stripped)
+
+	surahNum := 0
+	surahStart, surahEnd := -1, -1
+
+	for i := 0; i < len(strippedWords)-1; i++ {
+		candidate := strippedWords[i] + " " + strippedWords[i+1]
+		num, err := h.findSurahNumber(ctx, candidate)
+		if err != nil {
+			return 0, 0, "", err
+		}
+		if num > 0 {
+			surahNum = num
+			surahStart, surahEnd = i, i+2
+			break
+		}
+	}
+
+	if surahNum == 0 {
+		for i, w := range strippedWords {
+			if _, err := strconv.Atoi(w); err == nil {
+				continue
+			}
+			num, err := h.findSurahNumber(ctx, w)
+			if err != nil {
+				return 0, 0, "", err
+			}
+			if num > 0 {
+				surahNum = num
+				surahStart, surahEnd = i, i+1
 				break
 			}
 		}
 	}
 
-	if ayahNum > 0 && len(nameParts) > 0 {
-		return &naturalRef{surahName: strings.Join(nameParts, " "), ayah: ayahNum}
+	if surahNum == 0 {
+		return 0, 0, stripped, nil
 	}
 
-	// If no "ayat" keyword, try to find a lone number that might be an ayah reference
-	// e.g. "al maidah 7" → surah "al maidah", ayah 7
-	if len(words) >= 2 {
-		lastWord := words[len(words)-1]
-		if n, err := strconv.Atoi(lastWord); err == nil && n > 0 {
-			return &naturalRef{
-				surahName: strings.Join(words[:len(words)-1], " "),
-				ayah:      n,
-			}
+	remaining := make([]string, 0, len(strippedWords))
+	for i := 0; i < len(strippedWords); i++ {
+		if i < surahStart || i >= surahEnd {
+			remaining = append(remaining, strippedWords[i])
 		}
 	}
 
-	// Just a surah name without ayah
-	if len(words) > 0 {
-		return &naturalRef{surahName: strings.Join(words, " ")}
+	for i := 0; i < len(remaining); i++ {
+		if a, err := strconv.Atoi(remaining[i]); err == nil && a >= 1 {
+			final := make([]string, 0, len(remaining)-1)
+			final = append(final, remaining[:i]...)
+			final = append(final, remaining[i+1:]...)
+			cleaned = strings.Join(final, " ")
+			return surahNum, a, cleaned, nil
+		}
 	}
 
-	return nil
+	cleaned = strings.Join(remaining, " ")
+	return surahNum, 0, cleaned, nil
+}
+
+var (
+	surahNameCache     map[string]int
+	surahNameCacheOnce sync.Once
+	surahNameCacheErr  error
+)
+
+func (h *Handler) loadSurahNameCache(ctx context.Context) (map[string]int, error) {
+	surahNameCacheOnce.Do(func() {
+		surahs, err := h.contentStore.QuranSurahs(ctx)
+		if err != nil {
+			surahNameCacheErr = err
+			return
+		}
+		surahNameCache = make(map[string]int)
+		for _, s := range surahs {
+			base := strings.ToLower(s.Name)
+			variations := []string{
+				base,
+				strings.ReplaceAll(base, "-", " "),
+				strings.ReplaceAll(base, "-", ""),
+				strings.ReplaceAll(base, " ", "-"),
+				strings.ReplaceAll(base, " ", ""),
+				strings.ReplaceAll(base, "'", ""),
+				strings.ReplaceAll(strings.ReplaceAll(base, "-", ""), "'", ""),
+			}
+			for _, v := range variations {
+				surahNameCache[v] = s.Number
+			}
+		}
+	})
+	if surahNameCacheErr != nil {
+		return nil, surahNameCacheErr
+	}
+	return surahNameCache, nil
 }
 
 func (h *Handler) findSurahNumber(ctx context.Context, name string) (int, error) {
-	// Try exact-ish match first
 	results, err := h.contentStore.SearchQuranSurahs(ctx, name)
 	if err != nil {
 		return 0, err
@@ -493,7 +518,6 @@ func (h *Handler) findSurahNumber(ctx context.Context, name string) (int, error)
 		return results[0].SurahNumber, nil
 	}
 
-	// Try with normalized name (remove hyphens, apostrophes)
 	normalizedName := strings.ReplaceAll(name, "-", " ")
 	normalizedName = strings.ReplaceAll(normalizedName, "'", "")
 	normalizedName = strings.ReplaceAll(normalizedName, "`", "")
@@ -505,6 +529,22 @@ func (h *Handler) findSurahNumber(ctx context.Context, name string) (int, error)
 		return results[0].SurahNumber, nil
 	}
 
+	cache, err := h.loadSurahNameCache(ctx)
+	if err != nil {
+		return 0, err
+	}
+
+	keys := []string{
+		strings.ToLower(name),
+		strings.ToLower(strings.ReplaceAll(name, "-", "")),
+		strings.ToLower(strings.ReplaceAll(name, " ", "")),
+		strings.ToLower(strings.ReplaceAll(strings.ReplaceAll(name, "-", ""), " ", "")),
+	}
+	for _, k := range keys {
+		if n, ok := cache[k]; ok {
+			return n, nil
+		}
+	}
 	return 0, nil
 }
 
