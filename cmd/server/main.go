@@ -56,6 +56,9 @@ func main() {
 		"asmaul-husna.html",
 		"kiblat.html",
 		"hisab.html",
+		"quran.html",
+		"quran-surah.html",
+		"quran-search.html",
 	}
 
 	tmpls := make(map[string]*template.Template)
@@ -90,6 +93,14 @@ func main() {
 		}
 		partialTmpls["doa-more"] = tpl
 	}
+	{
+		tpl := template.New("quran-ayahs").Funcs(funcMap)
+		tpl, err := tpl.ParseFS(islamiclick.TemplateFS, "templates/partials/quran-ayahs.html")
+		if err != nil {
+			log.Fatalf("parse quran-ayahs: %v", err)
+		}
+		partialTmpls["quran-ayahs"] = tpl
+	}
 
 	h := handler.New(tmpls, partialTmpls, contentStore)
 
@@ -107,6 +118,9 @@ func main() {
 	http.HandleFunc("/hisab", h.Hisab)
 	http.HandleFunc("/shalat", h.Shalat)
 	http.HandleFunc("/shalat/mini", h.ShalatMini)
+	http.HandleFunc("/quran", h.Quran)
+	http.HandleFunc("/quran/search", h.QuranSearch)
+	http.HandleFunc("/quran/", h.QuranSurah)
 
 	log.Printf("islami.click listening on :%s", port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))

@@ -39,6 +39,18 @@ go build -o islami.click ./cmd/server
 
 **`/hisab`** — Hijri ↔ Masehi date converter with full calendar grid. Bidirectional conversion, important Islamic dates (Tahun Baru Islam, Asyura, Awal Ramadhan, Idul Fitri, Hari Arafah, Idul Adha), next event countdown, Hijriyah/Masehi month toggle, and Jumat (Friday) highlight.
 
+**`/quran`** — Quran reader with per-surah browsing, Madinah mushaf pagination, smart search, and audio recitation.
+
+## Quran detail
+
+**Per-surah browsing** — `/quran` lists all 114 surahs with Arabic name, revelation type (Makkiyah/Madaniyah), and ayah count. `/quran/:surah` renders the surah with Arabic text (Madinah mushaf) and Indonesian translation (Kemenag).
+
+**Mushaf pagination** — Ayahs are paginated by real Madinah mushaf page numbers, not arbitrary chunk sizes. Data sourced from quran.com API v4. htmx "Muat ayat berikutnya" loads the next mushaf page inline.
+
+**Smart search** (`/quran/search`) — Four search strategies: direct references (`5:7`, `QS 36:1`), natural language (`ayat 7 al maidah`, `surah al baqarah ayat 255`), surah name lookup (`ar rahman`, `yasin`), and content search (`الحمد لله`, `segumpal darah`). Surah name normalization handles hyphens, apostrophes, and Indonesian translations.
+
+**Audio** — Per-surah MP3 recitation by Mishari Rashid Alafasy via quranicaudio.com CDN. HTML5 `<audio>` element with Alpine.js play/pause toggle.
+
 ## Project layout
 
 ```
@@ -55,15 +67,10 @@ static/css/               Tailwind input + compiled output
 static/js/                vendored htmx, Alpine.js
 static/fonts/             self-hosted Arabic fonts (Amiri)
 static/favicon.svg        SVG favicon (Rub el Hizb star)
-content/                  JSON data (almatsurat, doa-harian, ayat-doa-ruqyah)
+content/                  JSON data (almatsurat, doa-harian, ayat-doa-ruqyah, quran-surahs, quran-pages)
+scripts/                  One-off utilities (fetch-quran, fetch-quran-pages)
 deploy/                   nginx + systemd configs
 ```
-
-## Phase status
-
-- **Phase 1** ✅ — Landing page, almatsurat, doa, shalat
-- **Phase 2** ✅ — asmaul-husna, kiblat, hisab
-- **Phase 3** 🔜 — `/quran` — Quran reader with per-surah browsing and audio
 
 ## Content rules
 

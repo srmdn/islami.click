@@ -1,0 +1,30 @@
+{
+  "number": 112,
+  "name": "Al-Ikhlas",
+  "arabic_name": "الإخلاص",
+  "translation": "Ikhlash",
+  "revelation_type": "meccan",
+  "ayah_count": 4,
+  "ayahs": [
+    {
+      "number": 1,
+      "arabic": "قُلۡ هُوَ ٱللَّهُ أَحَدٌ",
+      "translation": "Katakanlah (Muhammad), \"Dialah Allah, Yang Maha Esa"
+    },
+    {
+      "number": 2,
+      "arabic": "ٱللَّهُ ٱلصَّمَدُ",
+      "translation": "Allah tempat meminta segala sesuatu"
+    },
+    {
+      "number": 3,
+      "arabic": "لَمۡ يَلِدۡ وَلَمۡ يُولَدۡ",
+      "translation": "(Allah) tidak beranak dan tidak pula diperanakkan"
+    },
+    {
+      "number": 4,
+      "arabic": "وَلَمۡ يَكُن لَّهُۥ كُفُوًا أَحَدُۢ",
+      "translation": "Dan tidak ada sesuatu yang setara dengan Dia"
+    }
+  ]
+}

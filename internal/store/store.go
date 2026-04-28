@@ -123,6 +123,7 @@ func (s *Store) SeedContent(ctx context.Context, contentFS embed.FS) error {
 		{id: "doa-harian", path: "content/doa-harian.json", order: 30, seed: seedDoa},
 		{id: "ayat-doa-ruqyah", path: "content/ayat-doa-ruqyah.json", order: 40, seed: seedDoa},
 		{id: "asmaul-husna", path: "content/asmaul-husna.json", order: 50, seed: seedAsmaulHusna},
+		{id: "quran", path: "content/quran-surahs.json", order: 60, seed: seedQuran},
 	}
 
 	for _, col := range collections {

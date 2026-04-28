@@ -1,0 +1,40 @@
+{
+  "number": 109,
+  "name": "Al-Kafirun",
+  "arabic_name": "الكافرون",
+  "translation": "Orang-orang Kafir",
+  "revelation_type": "meccan",
+  "ayah_count": 6,
+  "ayahs": [
+    {
+      "number": 1,
+      "arabic": "قُلۡ يَـٰٓأَيُّهَا ٱلۡكَٰفِرُونَ",
+      "translation": "Katakanlah (Muhammad), \"Wahai orang-orang kafir"
+    },
+    {
+      "number": 2,
+      "arabic": "لَآ أَعۡبُدُ مَا تَعۡبُدُونَ",
+      "translation": "aku tidak akan menyembah apa yang kamu sembah"
+    },
+    {
+      "number": 3,
+      "arabic": "وَلَآ أَنتُمۡ عَٰبِدُونَ مَآ أَعۡبُدُ",
+      "translation": "dan kamu bukan penyembah apa yang aku sembah"
+    },
+    {
+      "number": 4,
+      "arabic": "وَلَآ أَنَا۠ عَابِدٞ مَّا عَبَدتُّمۡ",
+      "translation": "dan aku tidak pernah menjadi penyembah apa yang kamu sembah"
+    },
+    {
+      "number": 5,
+      "arabic": "وَلَآ أَنتُمۡ عَٰبِدُونَ مَآ أَعۡبُدُ",
+      "translation": "dan kamu tidak pernah (pula) menjadi penyembah apa yang aku sembah"
+    },
+    {
+      "number": 6,
+      "arabic": "لَكُمۡ دِينُكُمۡ وَلِيَ دِينِ",
+      "translation": "Untukmu agamamu, dan untukku agamaku"
+    }
+  ]
+}
