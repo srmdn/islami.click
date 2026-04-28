@@ -34,7 +34,8 @@ static/css/               — Tailwind input + compiled output
 static/js/                — Vendored JS (htmx, Alpine.js)
 static/fonts/             — Arabic fonts (self-hosted Amiri)
 static/favicon.svg        — SVG favicon (Rub el Hizb star)
-content/                  — JSON data (almatsurat-sugro, almatsurat-kubro, doa-harian, ayat-doa-ruqyah)
+content/                  — JSON data (almatsurat-sugro, almatsurat-kubro, doa-harian, ayat-doa-ruqyah, quran-surahs, quran-pages)
+scripts/                  — One-off utilities (fetch-quran, fetch-quran-pages)
 deploy/                   — nginx + systemd configs
 ```
 
@@ -93,30 +94,6 @@ Key rules:
   "source": "HR. Abu Dawud"
 }
 ```
-
-## Phase 1 scope (complete)
-
-- `/` — Landing page with Bismillah hero, feature cards, prayer times widget
-- `/almatsurat` — Sugro + Kubro with tap counter, progress resets on reload
-- `/doa` — 23 curated du'a across 7 categories, source filter, search, accordion, pagination, + ruqyah
-- `/shalat` — Prayer times with SQLite caching (method=20 Kemenag), city picker, Hijri date, next-prayer highlight, mini widget
-
-## Phase 2 scope (complete)
-
-- Cache prayer times in SQLite — on-demand per city, expires daily, stale fallback on API failure
-- Checksum-aware content seeding — starts up idempotently, only re-seeds changed JSON collections
-- `/asmaul-husna` — 99 Names of Allah with Arabic, transliteration, meaning
-- `/kiblat` — Qibla direction compass using device geolocation
-- `/hisab` — Hijri calendar converter with bidirectional date conversion and month reference
-
-## Deferred
-
-- User accounts, streak tracking, cross-device sync — useful for a platform, not a utility. `localStorage` suffices for progress tracking.
-- Auth (session-based) — no login wall for an Islamic content site. Speed of access beats identity.
-
-## Phase 3 scope (next)
-
-- `/quran` — Quran reader with per-surah browsing and audio
 
 ## Hard rules
 

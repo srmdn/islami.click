@@ -1,0 +1,25 @@
+{
+  "number": 108,
+  "name": "Al-Kawthar",
+  "arabic_name": "الكوثر",
+  "translation": "Nikmat Berlimpah",
+  "revelation_type": "meccan",
+  "ayah_count": 3,
+  "ayahs": [
+    {
+      "number": 1,
+      "arabic": "إِنَّآ أَعۡطَيۡنَٰكَ ٱلۡكَوۡثَرَ",
+      "translation": "Sungguh, Kami telah memberimu (Muhammad) nikmat yang banyak"
+    },
+    {
+      "number": 2,
+      "arabic": "فَصَلِّ لِرَبِّكَ وَٱنۡحَرۡ",
+      "translation": "Maka laksanakanlah salat karena Tuhanmu, dan berkurbanlah (sebagai ibadah dan mendekatkan diri kepada Allah)"
+    },
+    {
+      "number": 3,
+      "arabic": "إِنَّ شَانِئَكَ هُوَ ٱلۡأَبۡتَرُ",
+      "translation": "Sungguh, orang-orang yang membencimu dialah yang terputus (dari rahmat Allah)"
+    }
+  ]
+}

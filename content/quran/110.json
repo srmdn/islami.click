@@ -1,0 +1,25 @@
+{
+  "number": 110,
+  "name": "An-Nasr",
+  "arabic_name": "النصر",
+  "translation": "Pertolongan",
+  "revelation_type": "medinan",
+  "ayah_count": 3,
+  "ayahs": [
+    {
+      "number": 1,
+      "arabic": "إِذَا جَآءَ نَصۡرُ ٱللَّهِ وَٱلۡفَتۡحُ",
+      "translation": "Apabila telah datang pertolongan Allah dan kemenangan"
+    },
+    {
+      "number": 2,
+      "arabic": "وَرَأَيۡتَ ٱلنَّاسَ يَدۡخُلُونَ فِي دِينِ ٱللَّهِ أَفۡوَاجٗا",
+      "translation": "dan engkau melihat manusia berbondong-bondong masuk agama Allah"
+    },
+    {
+      "number": 3,
+      "arabic": "فَسَبِّحۡ بِحَمۡدِ رَبِّكَ وَٱسۡتَغۡفِرۡهُۚ إِنَّهُۥ كَانَ تَوَّابَۢا",
+      "translation": "maka bertasbihlah dengan memuji Tuhanmu dan mohonlah ampunan kepada-Nya. Sungguh, Dia Maha Penerima tobat"
+    }
+  ]
+}

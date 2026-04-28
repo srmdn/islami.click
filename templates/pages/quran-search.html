@@ -1,0 +1,60 @@
+{{define "title"}}{{.Title}}{{end}}
+{{define "description"}}{{.Description}}{{end}}
+
+{{define "content"}}
+<div class="max-w-3xl mx-auto px-4 py-8">
+    <nav class="text-sm text-[#5C7A84] dark:text-[#7AAAB5] mb-6">
+        <a href="/" class="hover:text-[#0E5C73] transition-colors">Beranda</a>
+        <span class="mx-2">/</span>
+        <a href="/quran" class="hover:text-[#0E5C73] transition-colors">Al-Qur'an</a>
+        <span class="mx-2">/</span>
+        <span class="text-[#1A2E35] dark:text-[#EEE8DF]">Pencarian</span>
+    </nav>
+
+    <div class="mb-8">
+        <h1 class="text-3xl font-semibold tracking-tight mb-2 text-[#1A2E35] dark:text-[#EEE8DF]">Pencarian Al-Qur'an</h1>
+        <p class="text-[#5C7A84] dark:text-[#7AAAB5] leading-relaxed">Cari ayat berdasarkan teks Arab atau terjemahan Bahasa Indonesia</p>
+    </div>
+
+    <form action="/quran/search" method="get" class="mb-8">
+        <div class="flex gap-3">
+            <input
+                type="text"
+                name="q"
+                value="{{.Query}}"
+                placeholder="Cari ayat..."
+                class="flex-1 px-4 py-3 bg-white dark:bg-[#122E38] border border-[#E2D9CE] dark:border-[#1E4458] rounded-xl text-[#1A2E35] dark:text-[#EEE8DF] placeholder-[#8AACB5] focus:outline-none focus:border-[#0E5C73] dark:focus:border-[#0E5C73] transition-colors"
+            >
+            <button
+                type="submit"
+                class="px-6 py-3 bg-[#0E5C73] text-[#FAF7F2] font-semibold rounded-xl hover:bg-[#0A4A5C] transition-colors"
+            >
+                Cari
+            </button>
+        </div>
+    </form>
+
+    {{if .Query}}
+        {{if eq .ResultCount 0}}
+        <div class="text-center py-12">
+            <p class="text-[#5C7A84] dark:text-[#7AAAB5]">Tidak ditemukan hasil untuk "<span class="font-medium text-[#1A2E35] dark:text-[#EEE8DF]">{{.Query}}</span>"</p>
+        </div>
+        {{else}}
+        <p class="text-sm text-[#5C7A84] dark:text-[#7AAAB5] mb-6">{{.ResultCount}} hasil ditemukan</p>
+        <div class="space-y-6">
+            {{range .Results}}
+            <a href="/quran/{{.SurahNumber}}#ayah-{{.AyahNumber}}" class="block bg-white dark:bg-[#122E38] rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] p-5 hover:border-[#0E5C73] dark:hover:border-[#0E5C73] transition-colors">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="text-xs font-semibold text-[#0E5C73] dark:text-[#7AAAB5]">{{.SurahName}}</span>
+                    <span class="text-[#8AACB5]">&middot;</span>
+                    <span class="text-xs text-[#5C7A84] dark:text-[#7AAAB5]">Ayat {{.AyahNumber}}</span>
+                </div>
+                <p class="font-arabic text-xl leading-[2.2] text-[#1A2E35] dark:text-white mb-2" dir="rtl">{{.Arabic}}</p>
+                <p class="text-[15px] leading-relaxed text-[#5C7A84] dark:text-[#7AAAB5]">{{.Translation}}</p>
+            </a>
+            {{end}}
+        </div>
+        {{end}}
+    {{end}}
+</div>
+{{end}}

@@ -1,0 +1,30 @@
+{
+  "number": 106,
+  "name": "Quraysh",
+  "arabic_name": "قريش",
+  "translation": "Suku Quraisy",
+  "revelation_type": "meccan",
+  "ayah_count": 4,
+  "ayahs": [
+    {
+      "number": 1,
+      "arabic": "لِإِيلَٰفِ قُرَيۡشٍ",
+      "translation": "Karena kebiasaan orang-orang Quraisy"
+    },
+    {
+      "number": 2,
+      "arabic": "إِۦلَٰفِهِمۡ رِحۡلَةَ ٱلشِّتَآءِ وَٱلصَّيۡفِ",
+      "translation": "(yaitu) kebiasaan mereka bepergian pada musim dingin dan musim panas"
+    },
+    {
+      "number": 3,
+      "arabic": "فَلۡيَعۡبُدُواْ رَبَّ هَٰذَا ٱلۡبَيۡتِ",
+      "translation": "Maka hendaklah mereka menyembah Tuhan (pemilik) rumah ini (Ka'bah)"
+    },
+    {
+      "number": 4,
+      "arabic": "ٱلَّذِيٓ أَطۡعَمَهُم مِّن جُوعٖ وَءَامَنَهُم مِّنۡ خَوۡفِۭ",
+      "translation": "yang telah memberi makanan kepada mereka untuk menghilangkan lapar dan mengamankan mereka dari rasa ketakutan"
+    }
+  ]
+}

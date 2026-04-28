@@ -1,0 +1,24 @@
+{{define "quran-ayahs"}}
+{{range .Ayahs}}
+<div class="group" id="ayah-{{.Number}}">
+    <div class="flex items-start gap-4">
+        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-[#E6F4F8] dark:bg-[#0E3D4D] flex items-center justify-center text-xs font-bold text-[#0E5C73] dark:text-[#7AAAB5] mt-1">{{.Number}}</span>
+        <div class="flex-1 min-w-0">
+            <p class="font-arabic text-2xl leading-[2.4] text-[#1A2E35] dark:text-white mb-3" dir="rtl">{{.Arabic}}</p>
+            <p class="text-[15px] leading-relaxed text-[#5C7A84] dark:text-[#7AAAB5]">{{.Translation}}</p>
+        </div>
+    </div>
+</div>
+{{end}}
+
+{{if lt .Page .TotalPages}}
+<button
+    hx-get="/quran/{{.Surah.Number}}?page={{add .Page 1}}"
+    hx-target="this"
+    hx-swap="outerHTML"
+    class="w-full py-3 border border-[#E2D9CE] dark:border-[#1E4458] rounded-xl text-[#5C7A84] dark:text-[#7AAAB5] hover:border-[#0E5C73] dark:hover:border-[#0E5C73] hover:text-[#0E5C73] dark:hover:text-[#7AAAB5] transition-colors font-medium text-sm"
+>
+    Muat ayat berikutnya
+</button>
+{{end}}
+{{end}}

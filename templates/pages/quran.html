@@ -1,0 +1,54 @@
+{{define "title"}}{{.Title}}{{end}}
+{{define "description"}}{{.Description}}{{end}}
+
+{{define "content"}}
+<div class="max-w-3xl mx-auto px-4 py-8">
+    <nav class="text-sm text-[#5C7A84] dark:text-[#7AAAB5] mb-6">
+        <a href="/" class="hover:text-[#0E5C73] transition-colors">Beranda</a>
+        <span class="mx-2">/</span>
+        <span class="text-[#1A2E35] dark:text-[#EEE8DF]">Al-Qur'an</span>
+    </nav>
+
+    <div class="mb-8">
+        <h1 class="text-3xl font-semibold tracking-tight mb-2 text-[#1A2E35] dark:text-[#EEE8DF]">{{.Title}}</h1>
+        <p class="text-[#5C7A84] dark:text-[#7AAAB5] leading-relaxed">{{.Description}}</p>
+    </div>
+
+    <form action="/quran/search" method="get" class="mb-8">
+        <div class="flex gap-3">
+            <input
+                type="text"
+                name="q"
+                placeholder="Cari ayat..."
+                class="flex-1 px-4 py-3 bg-white dark:bg-[#122E38] border border-[#E2D9CE] dark:border-[#1E4458] rounded-xl text-[#1A2E35] dark:text-[#EEE8DF] placeholder-[#8AACB5] focus:outline-none focus:border-[#0E5C73] dark:focus:border-[#0E5C73] transition-colors"
+            >
+            <button
+                type="submit"
+                class="px-6 py-3 bg-[#0E5C73] text-[#FAF7F2] font-semibold rounded-xl hover:bg-[#0A4A5C] transition-colors"
+            >
+                Cari
+            </button>
+        </div>
+    </form>
+
+    <div class="grid gap-3 sm:grid-cols-2">
+        {{range .Surahs}}
+        <a href="/quran/{{.Number}}" class="group block bg-white dark:bg-[#122E38] rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] p-4 hover:border-[#0E5C73] dark:hover:border-[#0E5C73] transition-colors duration-200">
+            <div class="flex items-start gap-3">
+                <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-[#E6F4F8] dark:bg-[#0E3D4D] flex items-center justify-center text-sm font-bold text-[#0E5C73] dark:text-[#7AAAB5]">{{.Number}}</span>
+                <div class="min-w-0 flex-1">
+                    <div class="flex items-center gap-2 mb-1">
+                        <p class="font-arabic text-lg leading-loose text-[#1A2E35] dark:text-white" dir="rtl">{{.ArabicName}}</p>
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold {{if eq .RevelationType "meccan"}}bg-[#FDF4DC] dark:bg-[#3A2A08] text-[#A88A38]{{else}}bg-[#E6F4F8] dark:bg-[#0E3D4D] text-[#0E5C73] dark:text-[#7AAAB5]{{end}}">
+                            {{if eq .RevelationType "meccan"}}Makkiyah{{else}}Madaniyah{{end}}
+                        </span>
+                    </div>
+                    <p class="text-sm font-medium text-[#1A2E35] dark:text-[#EEE8DF]">{{.Name}}</p>
+                    <p class="text-sm text-[#5C7A84] dark:text-[#7AAAB5]">{{.Translation}} &middot; {{.AyahCount}} Ayat</p>
+                </div>
+            </div>
+        </a>
+        {{end}}
+    </div>
+</div>
+{{end}}

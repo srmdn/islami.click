@@ -1,0 +1,65 @@
+{
+  "number": 101,
+  "name": "Al-Qari'ah",
+  "arabic_name": "القارعة",
+  "translation": "Hari Kiamat",
+  "revelation_type": "meccan",
+  "ayah_count": 11,
+  "ayahs": [
+    {
+      "number": 1,
+      "arabic": "ٱلۡقَارِعَةُ",
+      "translation": "Hari Kiamat"
+    },
+    {
+      "number": 2,
+      "arabic": "مَا ٱلۡقَارِعَةُ",
+      "translation": "Apakah hari Kiamat itu"
+    },
+    {
+      "number": 3,
+      "arabic": "وَمَآ أَدۡرَىٰكَ مَا ٱلۡقَارِعَةُ",
+      "translation": "Dan tahukah kamu apakah hari Kiamat itu"
+    },
+    {
+      "number": 4,
+      "arabic": "يَوۡمَ يَكُونُ ٱلنَّاسُ كَٱلۡفَرَاشِ ٱلۡمَبۡثُوثِ",
+      "translation": "Pada hari itu manusia seperti laron yang beterbangan"
+    },
+    {
+      "number": 5,
+      "arabic": "وَتَكُونُ ٱلۡجِبَالُ كَٱلۡعِهۡنِ ٱلۡمَنفُوشِ",
+      "translation": "dan gunung-gunung seperti bulu yang dihambur-hamburkan"
+    },
+    {
+      "number": 6,
+      "arabic": "فَأَمَّا مَن ثَقُلَتۡ مَوَٰزِينُهُۥ",
+      "translation": "Maka adapun orang yang berat timbangan (kebaikan)nya"
+    },
+    {
+      "number": 7,
+      "arabic": "فَهُوَ فِي عِيشَةٖ رَّاضِيَةٖ",
+      "translation": "maka dia berada dalam kehidupan yang memuaskan (senang)"
+    },
+    {
+      "number": 8,
+      "arabic": "وَأَمَّا مَنۡ خَفَّتۡ مَوَٰزِينُهُۥ",
+      "translation": "Dan adapun orang yang ringan timbangan (kebaikan)nya"
+    },
+    {
+      "number": 9,
+      "arabic": "فَأُمُّهُۥ هَاوِيَةٞ",
+      "translation": "maka tempat kembalinya adalah neraka Hāwiyah"
+    },
+    {
+      "number": 10,
+      "arabic": "وَمَآ أَدۡرَىٰكَ مَا هِيَهۡ",
+      "translation": "Dan tahukah kamu apakah neraka Hāwiyah itu"
+    },
+    {
+      "number": 11,
+      "arabic": "نَارٌ حَامِيَةُۢ",
+      "translation": "(Yaitu) api yang sangat panas"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "number": 104,
+  "name": "Al-Humazah",
+  "arabic_name": "الهمزة",
+  "translation": "Pengumpat",
+  "revelation_type": "meccan",
+  "ayah_count": 9,
+  "ayahs": [
+    {
+      "number": 1,
+      "arabic": "وَيۡلٞ لِّكُلِّ هُمَزَةٖ لُّمَزَةٍ",
+      "translation": "Celakalah bagi setiap pengumpat dan pencela"
+    },
+    {
+      "number": 2,
+      "arabic": "ٱلَّذِي جَمَعَ مَالٗا وَعَدَّدَهُۥ",
+      "translation": "yang mengumpulkan harta dan menghitung-hitungnya"
+    },
+    {
+      "number": 3,
+      "arabic": "يَحۡسَبُ أَنَّ مَالَهُۥٓ أَخۡلَدَهُۥ",
+      "translation": "dia (manusia) mengira bahwa hartanya itu dapat mengekalkannya"
+    },
+    {
+      "number": 4,
+      "arabic": "كَلَّاۖ لَيُنۢبَذَنَّ فِي ٱلۡحُطَمَةِ",
+      "translation": "Sekali-kali tidak! Pasti dia akan dilemparkan ke dalam (neraka) Ḥuṭamah"
+    },
+    {
+      "number": 5,
+      "arabic": "وَمَآ أَدۡرَىٰكَ مَا ٱلۡحُطَمَةُ",
+      "translation": "Dan tahukah kamu apakah (neraka) Ḥuṭamah itu"
+    },
+    {
+      "number": 6,
+      "arabic": "نَارُ ٱللَّهِ ٱلۡمُوقَدَةُ",
+      "translation": "(Yaitu) api (azab) Allah yang dinyalakan"
+    },
+    {
+      "number": 7,
+      "arabic": "ٱلَّتِي تَطَّلِعُ عَلَى ٱلۡأَفۡـِٔدَةِ",
+      "translation": "yang (membakar) sampai ke hati"
+    },
+    {
+      "number": 8,
+      "arabic": "إِنَّهَا عَلَيۡهِم مُّؤۡصَدَةٞ",
+      "translation": "Sungguh, api itu ditutup rapat atas (diri) mereka"
+    },
+    {
+      "number": 9,
+      "arabic": "فِي عَمَدٖ مُّمَدَّدَةِۭ",
+      "translation": "(sedang mereka itu) diikat pada tiang-tiang yang panjang"
+    }
+  ]
+}

@@ -161,6 +161,353 @@ func (h *Handler) AsmaulHusna(w http.ResponseWriter, r *http.Request) {
 	h.render(w, "asmaul-husna.html", content)
 }
 
+func (h *Handler) Quran(w http.ResponseWriter, r *http.Request) {
+	surahs, err := h.contentStore.QuranSurahs(r.Context())
+	if err != nil {
+		log.Printf("quran surahs: %v", err)
+		http.Error(w, "Failed to load content", http.StatusInternalServerError)
+		return
+	}
+
+	data := model.QuranPageData{
+		Title:       "Al-Qur'an",
+		Description: "Baca Al-Qur'an lengkap dengan terjemahan Bahasa Indonesia",
+		Surahs:      surahs,
+	}
+
+	h.render(w, "quran.html", data)
+}
+
+func audioURLForSurah(surahNumber int) string {
+	return fmt.Sprintf("https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/%03d.mp3", surahNumber)
+}
+
+func (h *Handler) QuranSurah(w http.ResponseWriter, r *http.Request) {
+	path := strings.TrimPrefix(r.URL.Path, "/quran/")
+	path = strings.TrimSpace(path)
+	if path == "" {
+		http.Redirect(w, r, "/quran", http.StatusSeeOther)
+		return
+	}
+
+	surahNumber, err := strconv.Atoi(path)
+	if err != nil || surahNumber < 1 || surahNumber > 114 {
+		http.Error(w, "Surah tidak ditemukan", http.StatusNotFound)
+		return
+	}
+
+	surah, err := h.contentStore.QuranSurah(r.Context(), surahNumber)
+	if err != nil {
+		log.Printf("quran surah %d: %v", surahNumber, err)
+		http.Error(w, "Failed to load content", http.StatusInternalServerError)
+		return
+	}
+
+	pages, err := h.contentStore.MushafPagesForSurah(r.Context(), surahNumber)
+	if err != nil {
+		log.Printf("mushaf pages for surah %d: %v", surahNumber, err)
+		http.Error(w, "Failed to load content", http.StatusInternalServerError)
+		return
+	}
+	if len(pages) == 0 {
+		http.Error(w, "Surah tidak ditemukan", http.StatusNotFound)
+		return
+	}
+
+	firstPage := pages[0]
+	lastPage := pages[len(pages)-1]
+
+	pageNum := firstPage
+	if p := r.URL.Query().Get("page"); p != "" {
+		if n, err := strconv.Atoi(p); err == nil {
+			if n >= firstPage && n <= lastPage {
+				pageNum = n
+			}
+		}
+	}
+
+	ayahs, err := h.contentStore.QuranAyahsByMushafPage(r.Context(), surahNumber, pageNum)
+	if err != nil {
+		log.Printf("quran ayahs %d page %d: %v", surahNumber, pageNum, err)
+		http.Error(w, "Failed to load content", http.StatusInternalServerError)
+		return
+	}
+
+	data := model.SurahReaderData{
+		Title:       fmt.Sprintf("%s - Al-Qur'an", surah.Name),
+		Description: fmt.Sprintf("Surah %s (%s) - %d Ayat", surah.Name, surah.ArabicName, surah.AyahCount),
+		Surah:       surah,
+		Ayahs:       ayahs,
+		Page:        pageNum,
+		PageSize:    0,
+		TotalPages:  lastPage,
+		AudioURL:    audioURLForSurah(surahNumber),
+	}
+
+	if surahNumber > 1 {
+		prev, err := h.contentStore.GetQuranSurahByNumber(r.Context(), surahNumber-1)
+		if err == nil && prev != nil {
+			data.PrevSurah = prev
+		}
+	}
+	if surahNumber < 114 {
+		next, err := h.contentStore.GetQuranSurahByNumber(r.Context(), surahNumber+1)
+		if err == nil && next != nil {
+			data.NextSurah = next
+		}
+	}
+
+	if r.Header.Get("HX-Request") == "true" {
+		h.renderPartial(w, "quran-ayahs", data)
+		return
+	}
+
+	h.render(w, "quran-surah.html", data)
+}
+
+func (h *Handler) QuranSearch(w http.ResponseWriter, r *http.Request) {
+	query := strings.TrimSpace(r.URL.Query().Get("q"))
+
+	data := model.QuranSearchData{
+		Title:       "Pencarian Al-Qur'an",
+		Description: "Cari ayat dalam Al-Qur'an",
+		Query:       query,
+	}
+
+	if query != "" {
+		results, err := h.smartQuranSearch(r.Context(), query)
+		if err != nil {
+			log.Printf("quran search %q: %v", query, err)
+			http.Error(w, "Gagal mencari", http.StatusInternalServerError)
+			return
+		}
+		data.Results = results
+		data.ResultCount = len(results)
+	}
+
+	h.render(w, "quran-search.html", data)
+}
+
+func (h *Handler) smartQuranSearch(ctx context.Context, query string) ([]model.QuranSearchResult, error) {
+	normalized := strings.ToLower(query)
+	seen := make(map[string]bool)
+	var results []model.QuranSearchResult
+
+	add := func(r model.QuranSearchResult) {
+		key := fmt.Sprintf("%d:%d", r.SurahNumber, r.AyahNumber)
+		if !seen[key] {
+			seen[key] = true
+			results = append(results, r)
+		}
+	}
+
+	// Strategy 1: Direct reference patterns (5:7, 5/7, QS 5:7, QS. 5:7)
+	if m := parseDirectReference(normalized); m != nil {
+		r, err := h.contentStore.GetQuranAyah(ctx, m.surah, m.ayah)
+		if err != nil {
+			return nil, err
+		}
+		if r != nil {
+			add(*r)
+			return results, nil
+		}
+	}
+
+	// Strategy 2: Extract ayah number + surah name from natural language
+	// e.g. "ayat 7 al maidah", "surah al baqarah ayat 255", "al fatihah ayat 1"
+	if ref := parseNaturalLanguageReference(normalized); ref != nil {
+		// Try to find surah by name
+		surahNum, err := h.findSurahNumber(ctx, ref.surahName)
+		if err != nil {
+			return nil, err
+		}
+		if surahNum > 0 {
+			if ref.ayah > 0 {
+				r, err := h.contentStore.GetQuranAyah(ctx, surahNum, ref.ayah)
+				if err != nil {
+					return nil, err
+				}
+				if r != nil {
+					add(*r)
+				}
+			} else {
+				// No ayah specified, return first few ayahs of surah
+				ayahs, err := h.contentStore.QuranAyahsByMushafPage(ctx, surahNum, 0)
+				if err != nil {
+					return nil, err
+				}
+				if len(ayahs) == 0 {
+					ayahs, err = h.contentStore.QuranAyahs(ctx, surahNum)
+					if err != nil {
+						return nil, err
+					}
+				}
+				for _, a := range ayahs {
+					if a.Number > 3 {
+						break
+					}
+					add(model.QuranSearchResult{
+						SurahNumber: surahNum,
+						AyahNumber:  a.Number,
+						Arabic:      a.Arabic,
+						Translation: a.Translation,
+					})
+				}
+			}
+		}
+	}
+
+	// Strategy 3: Search surah names
+	surahResults, err := h.contentStore.SearchQuranSurahs(ctx, query)
+	if err != nil {
+		return nil, err
+	}
+	for _, sr := range surahResults {
+		// For surah name matches, return the first ayah as a preview
+		ayahs, err := h.contentStore.QuranAyahs(ctx, sr.SurahNumber)
+		if err != nil {
+			return nil, err
+		}
+		if len(ayahs) > 0 {
+			add(model.QuranSearchResult{
+				SurahNumber: sr.SurahNumber,
+				SurahName:   sr.SurahName,
+				AyahNumber:  ayahs[0].Number,
+				Arabic:      ayahs[0].Arabic,
+				Translation: ayahs[0].Translation,
+			})
+		}
+	}
+
+	// Strategy 4: Content search (existing LIKE on ayah text)
+	contentResults, err := h.contentStore.SearchQuran(ctx, query, 50)
+	if err != nil {
+		return nil, err
+	}
+	for _, cr := range contentResults {
+		add(cr)
+	}
+
+	return results, nil
+}
+
+type quranRef struct {
+	surah int
+	ayah  int
+}
+
+func parseDirectReference(s string) *quranRef {
+	// Pattern: 5:7 or 5/7
+	var surah, ayah int
+	if _, err := fmt.Sscanf(s, "%d:%d", &surah, &ayah); err == nil {
+		if surah >= 1 && surah <= 114 && ayah >= 1 {
+			return &quranRef{surah: surah, ayah: ayah}
+		}
+	}
+	if _, err := fmt.Sscanf(s, "%d/%d", &surah, &ayah); err == nil {
+		if surah >= 1 && surah <= 114 && ayah >= 1 {
+			return &quranRef{surah: surah, ayah: ayah}
+		}
+	}
+	// Pattern: QS 5:7 or QS. 5:7 or QS 5
+	if strings.HasPrefix(s, "qs") {
+		rest := strings.TrimSpace(strings.TrimPrefix(s, "qs"))
+		rest = strings.TrimPrefix(rest, ".")
+		rest = strings.TrimSpace(rest)
+		if _, err := fmt.Sscanf(rest, "%d:%d", &surah, &ayah); err == nil {
+			if surah >= 1 && surah <= 114 && ayah >= 1 {
+				return &quranRef{surah: surah, ayah: ayah}
+			}
+		}
+		if _, err := fmt.Sscanf(rest, "%d", &surah); err == nil {
+			if surah >= 1 && surah <= 114 {
+				return &quranRef{surah: surah}
+			}
+		}
+	}
+	return nil
+}
+
+type naturalRef struct {
+	surahName string
+	ayah      int
+}
+
+func parseNaturalLanguageReference(s string) *naturalRef {
+	// Remove common prefixes
+	s = strings.ReplaceAll(s, "surah", "")
+	s = strings.ReplaceAll(s, "surat", "")
+	s = strings.TrimSpace(s)
+
+	// Pattern: "ayat 7 ..." or "... ayat 7"
+	ayahNum := 0
+	var nameParts []string
+
+	words := strings.Fields(s)
+	for i, w := range words {
+		if w == "ayat" && i+1 < len(words) {
+			if n, err := strconv.Atoi(words[i+1]); err == nil && n > 0 {
+				ayahNum = n
+				// Collect words before and after "ayat N"
+				for j, pw := range words {
+					if j != i && j != i+1 {
+						nameParts = append(nameParts, pw)
+					}
+				}
+				break
+			}
+		}
+	}
+
+	if ayahNum > 0 && len(nameParts) > 0 {
+		return &naturalRef{surahName: strings.Join(nameParts, " "), ayah: ayahNum}
+	}
+
+	// If no "ayat" keyword, try to find a lone number that might be an ayah reference
+	// e.g. "al maidah 7" → surah "al maidah", ayah 7
+	if len(words) >= 2 {
+		lastWord := words[len(words)-1]
+		if n, err := strconv.Atoi(lastWord); err == nil && n > 0 {
+			return &naturalRef{
+				surahName: strings.Join(words[:len(words)-1], " "),
+				ayah:      n,
+			}
+		}
+	}
+
+	// Just a surah name without ayah
+	if len(words) > 0 {
+		return &naturalRef{surahName: strings.Join(words, " ")}
+	}
+
+	return nil
+}
+
+func (h *Handler) findSurahNumber(ctx context.Context, name string) (int, error) {
+	// Try exact-ish match first
+	results, err := h.contentStore.SearchQuranSurahs(ctx, name)
+	if err != nil {
+		return 0, err
+	}
+	if len(results) > 0 {
+		return results[0].SurahNumber, nil
+	}
+
+	// Try with normalized name (remove hyphens, apostrophes)
+	normalizedName := strings.ReplaceAll(name, "-", " ")
+	normalizedName = strings.ReplaceAll(normalizedName, "'", "")
+	normalizedName = strings.ReplaceAll(normalizedName, "`", "")
+	results, err = h.contentStore.SearchQuranSurahs(ctx, normalizedName)
+	if err != nil {
+		return 0, err
+	}
+	if len(results) > 0 {
+		return results[0].SurahNumber, nil
+	}
+
+	return 0, nil
+}
+
 func (h *Handler) AlMatsuratSugro(w http.ResponseWriter, r *http.Request) {
 	content, err := h.contentStore.AlMatsurat(r.Context(), "almatsurat-sugro")
 	if err != nil {

@@ -1,0 +1,108 @@
+{{define "title"}}{{.Title}}{{end}}
+{{define "description"}}{{.Description}}{{end}}
+
+{{define "content"}}
+<div class="max-w-3xl mx-auto px-4 py-8">
+    <nav class="text-sm text-[#5C7A84] dark:text-[#7AAAB5] mb-6">
+        <a href="/" class="hover:text-[#0E5C73] transition-colors">Beranda</a>
+        <span class="mx-2">/</span>
+        <a href="/quran" class="hover:text-[#0E5C73] transition-colors">Al-Qur'an</a>
+        <span class="mx-2">/</span>
+        <span class="text-[#1A2E35] dark:text-[#EEE8DF]">{{.Surah.Name}}</span>
+    </nav>
+
+    <div class="text-center mb-8">
+        <p class="font-arabic text-3xl leading-loose text-[#1A2E35] dark:text-white mb-2" dir="rtl">{{.Surah.ArabicName}}</p>
+        <h1 class="text-xl font-semibold text-[#1A2E35] dark:text-[#EEE8DF] mb-1">{{.Surah.Name}}</h1>
+        <p class="text-[#5C7A84] dark:text-[#7AAAB5]">{{.Surah.Translation}} &middot; {{.Surah.AyahCount}} Ayat &middot; {{if eq .Surah.RevelationType "meccan"}}Makkiyah{{else}}Madaniyah{{end}}</p>
+        <p class="mt-2 inline-flex items-center px-3 py-1 rounded-full bg-[#E6F4F8] dark:bg-[#0E3D4D] text-xs font-semibold text-[#0E5C73] dark:text-[#7AAAB5]">Halaman {{.Page}}</p>
+    </div>
+
+    {{if .AudioURL}}
+    <div class="mb-8 bg-white dark:bg-[#122E38] rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] p-4" x-data="{ playing: false, currentTime: 0, duration: 0 }">
+        <div class="flex items-center gap-4">
+            <button
+                @click="playing = !playing; playing ? $refs.audio.play() : $refs.audio.pause()"
+                class="flex-shrink-0 w-12 h-12 rounded-full bg-[#0E5C73] text-[#FAF7F2] flex items-center justify-center hover:bg-[#0A4A5C] transition-colors"
+            >
+                <svg x-show="!playing" class="w-5 h-5 ml-0.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                <svg x-show="playing" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+            </button>
+            <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-[#1A2E35] dark:text-[#EEE8DF] mb-1">Murottal Surah {{.Surah.Name}}</p>
+                <p class="text-xs text-[#5C7A84] dark:text-[#7AAAB5]">Mishari Rashid Alafasy</p>
+            </div>
+        </div>
+        <audio
+            x-ref="audio"
+            :src="'{{.AudioURL}}'"
+            @play="playing = true"
+            @pause="playing = false"
+            @ended="playing = false"
+            @timeupdate="currentTime = $refs.audio.currentTime; duration = $refs.audio.duration || 0"
+            class="w-full mt-3"
+            preload="none"
+        ></audio>
+    </div>
+    {{end}}
+
+    {{if ne .Surah.Number 9}}
+    <div class="text-center mb-10 pb-8 border-b border-[#E2D9CE] dark:border-[#1E4458]">
+        <p class="font-arabic text-2xl leading-loose text-[#1A2E35] dark:text-white" dir="rtl">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>
+    </div>
+    {{end}}
+
+    <div class="space-y-8" id="ayahs-container">
+        {{range .Ayahs}}
+        <div class="group" id="ayah-{{.Number}}">
+            <div class="flex items-start gap-4">
+                <span class="flex-shrink-0 w-8 h-8 rounded-full bg-[#E6F4F8] dark:bg-[#0E3D4D] flex items-center justify-center text-xs font-bold text-[#0E5C73] dark:text-[#7AAAB5] mt-1">{{.Number}}</span>
+                <div class="flex-1 min-w-0">
+                    <p class="font-arabic text-2xl leading-[2.4] text-[#1A2E35] dark:text-white mb-3" dir="rtl">{{.Arabic}}</p>
+                    <p class="text-[15px] leading-relaxed text-[#5C7A84] dark:text-[#7AAAB5]">{{.Translation}}</p>
+                </div>
+            </div>
+        </div>
+        {{end}}
+
+        {{if lt .Page .TotalPages}}
+        <button
+            hx-get="/quran/{{.Surah.Number}}?page={{add .Page 1}}"
+            hx-target="this"
+            hx-swap="outerHTML"
+            class="w-full py-3 border border-[#E2D9CE] dark:border-[#1E4458] rounded-xl text-[#5C7A84] dark:text-[#7AAAB5] hover:border-[#0E5C73] dark:hover:border-[#0E5C73] hover:text-[#0E5C73] dark:hover:text-[#7AAAB5] transition-colors font-medium text-sm"
+        >
+            Muat ayat berikutnya
+        </button>
+        {{end}}
+    </div>
+
+    <div class="mt-12 pt-8 border-t border-[#E2D9CE] dark:border-[#1E4458]">
+        <div class="flex items-center justify-between gap-4">
+            {{if .PrevSurah}}
+            <a href="/quran/{{.PrevSurah.Number}}" class="inline-flex items-center gap-2 px-5 py-2.5 border border-[#E2D9CE] dark:border-[#1E4458] rounded-xl text-[#5C7A84] dark:text-[#7AAAB5] hover:border-[#0E5C73] dark:hover:border-[#0E5C73] hover:text-[#0E5C73] dark:hover:text-[#7AAAB5] transition-colors">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                <div class="text-left">
+                    <p class="text-xs text-[#8AACB5] dark:text-[#5C7A84]">Surah Sebelumnya</p>
+                    <p class="text-sm font-medium">{{.PrevSurah.Name}}</p>
+                </div>
+            </a>
+            {{else}}
+            <div></div>
+            {{end}}
+
+            {{if .NextSurah}}
+            <a href="/quran/{{.NextSurah.Number}}" class="inline-flex items-center gap-2 px-5 py-2.5 border border-[#E2D9CE] dark:border-[#1E4458] rounded-xl text-[#5C7A84] dark:text-[#7AAAB5] hover:border-[#0E5C73] dark:hover:border-[#0E5C73] hover:text-[#0E5C73] dark:hover:text-[#7AAAB5] transition-colors">
+                <div class="text-right">
+                    <p class="text-xs text-[#8AACB5] dark:text-[#5C7A84]">Surah Berikutnya</p>
+                    <p class="text-sm font-medium">{{.NextSurah.Name}}</p>
+                </div>
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            {{else}}
+            <div></div>
+            {{end}}
+        </div>
+    </div>
+</div>
+{{end}}

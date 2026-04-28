@@ -33,6 +33,24 @@ go build -o islami.click ./cmd/server
 
 **`/shalat`** — Prayer times with SQLite caching. Serves from cache after first daily fetch per city; falls back to stale cache if Aladhan API is down. Method=20 (Kemenag Indonesia), city picker, Hijri date, next-prayer highlight, mini widget for homepage. ±1–3 min variance from official Kemenag schedules.
 
+**`/asmaul-husna`** — 99 Names of Allah with Arabic, transliteration, meaning.
+
+**`/kiblat`** — Qibla direction compass using device geolocation.
+
+**`/hisab`** — Hijri calendar converter with bidirectional date conversion and month reference.
+
+**`/quran`** — Quran reader with per-surah browsing, Madinah mushaf pagination, smart search, and audio recitation.
+
+## Quran detail
+
+**Per-surah browsing** — `/quran` lists all 114 surahs with Arabic name, revelation type (Makkiyah/Madaniyah), and ayah count. `/quran/:surah` renders the surah with Arabic text (Madinah mushaf) and Indonesian translation (Kemenag).
+
+**Mushaf pagination** — Ayahs are paginated by real Madinah mushaf page numbers, not arbitrary chunk sizes. Data sourced from quran.com API v4. htmx "Muat ayat berikutnya" loads the next mushaf page inline.
+
+**Smart search** (`/quran/search`) — Four search strategies: direct references (`5:7`, `QS 36:1`), natural language (`ayat 7 al maidah`, `surah al baqarah ayat 255`), surah name lookup (`ar rahman`, `yasin`), and content search (`الحمد لله`, `segumpal darah`). Surah name normalization handles hyphens, apostrophes, and Indonesian translations.
+
+**Audio** — Per-surah MP3 recitation by Mishari Rashid Alafasy via quranicaudio.com CDN. HTML5 `<audio>` element with Alpine.js play/pause toggle.
+
 ## Project layout
 
 ```
@@ -48,7 +66,8 @@ static/css/               Tailwind input + compiled output
 static/js/                vendored htmx, Alpine.js
 static/fonts/             self-hosted Arabic fonts (Amiri)
 static/favicon.svg        SVG favicon (Rub el Hizb star)
-content/                  JSON data (almatsurat, doa-harian, ayat-doa-ruqyah)
+content/                  JSON data (almatsurat, doa-harian, ayat-doa-ruqyah, quran-surahs, quran-pages)
+scripts/                  One-off utilities (fetch-quran, fetch-quran-pages)
 deploy/                   nginx + systemd configs
 ```
 
