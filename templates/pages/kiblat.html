@@ -220,7 +220,7 @@ function kiblat() {
 
         attachOrientation() {
             var self = this;
-            window.addEventListener('deviceorientation', function(e) {
+            function onOrientation(e) {
                 if (e.webkitCompassHeading !== undefined) {
                     self.heading = e.webkitCompassHeading;
                     self.hasCompass = true;
@@ -228,7 +228,13 @@ function kiblat() {
                     self.heading = (360 - e.alpha) % 360;
                     self.hasCompass = true;
                 }
-            }, true);
+            }
+            // deviceorientationabsolute gives true-north alpha on Android Chrome;
+            // deviceorientation gives webkitCompassHeading on iOS.
+            // Both can coexist: Android deviceorientation has e.absolute=false so
+            // the handler ignores it, leaving deviceorientationabsolute to do the work.
+            window.addEventListener('deviceorientationabsolute', onOrientation, true);
+            window.addEventListener('deviceorientation', onOrientation, true);
         },
 
         init() {
