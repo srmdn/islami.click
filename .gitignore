@@ -24,6 +24,9 @@ docs/ref/
 .DS_Store
 Thumbs.db
 
+# Local plans
+.plans/
+
 # Editor
 .vscode/
 .idea/
