@@ -182,15 +182,6 @@ function kiblat() {
         requestPermission() {
             this.state = 'loading';
 
-            if (typeof DeviceOrientationEvent !== 'undefined' &&
-                typeof DeviceOrientationEvent.requestPermission === 'function') {
-                DeviceOrientationEvent.requestPermission()
-                    .then(function(resp) {
-                        if (resp === 'granted') this.attachOrientation();
-                    }.bind(this))
-                    .catch(function() {});
-            }
-
             if (!navigator.geolocation) {
                 this.state = 'error';
                 this.errorMsg = 'Browser Anda tidak mendukung geolokasi. Gunakan browser lain atau aktifkan lokasi.';
@@ -216,22 +207,39 @@ function kiblat() {
                 }.bind(this),
                 { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
             );
+
+            if (typeof DeviceOrientationEvent !== 'undefined' &&
+                typeof DeviceOrientationEvent.requestPermission === 'function') {
+                DeviceOrientationEvent.requestPermission()
+                    .then(function(resp) {
+                        if (resp === 'granted') this.attachOrientation();
+                    }.bind(this))
+                    .catch(function(err) { console.warn('Orientation permission error:', err); });
+            }
         },
 
         attachOrientation() {
             var self = this;
-            window.addEventListener('deviceorientation', function(e) {
+            function onOrientation(e) {
                 if (e.webkitCompassHeading !== undefined) {
                     self.heading = e.webkitCompassHeading;
                     self.hasCompass = true;
-                } else if (e.alpha !== null) {
+                } else if (e.alpha !== null && e.absolute) {
                     self.heading = (360 - e.alpha) % 360;
                     self.hasCompass = true;
                 }
-            }, true);
+            }
+            // deviceorientationabsolute gives true-north alpha on Android Chrome;
+            // deviceorientation gives webkitCompassHeading on iOS.
+            // Both can coexist: Android deviceorientation has e.absolute=false so
+            // the handler ignores it, leaving deviceorientationabsolute to do the work.
+            window.addEventListener('deviceorientationabsolute', onOrientation, true);
+            window.addEventListener('deviceorientation', onOrientation, true);
         },
 
         init() {
+            var self = this;
+
             if (typeof DeviceOrientationEvent !== 'undefined' &&
                 typeof DeviceOrientationEvent.requestPermission !== 'function') {
                 this.attachOrientation();
@@ -240,6 +248,11 @@ function kiblat() {
             if (typeof DeviceOrientationEvent === 'undefined' ||
                 typeof DeviceOrientationEvent.requestPermission !== 'function') {
                 this.requestPermission();
+            } else if (navigator.permissions) {
+                // iOS: auto-start if location is already granted (no gesture needed for geolocation)
+                navigator.permissions.query({ name: 'geolocation' }).then(function(result) {
+                    if (result.state === 'granted') self.requestPermission();
+                }).catch(function() {});
             }
         }
     };
