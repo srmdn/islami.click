@@ -82,6 +82,18 @@ func New(tmpls map[string]*template.Template, partialTmpls map[string]*template.
 	return &Handler{tmpls: tmpls, partialTmpls: partialTmpls, contentStore: contentStore}
 }
 
+const siteURL = "https://islami.click"
+const defaultOGImage = "https://islami.click/static/images/og-image.png"
+
+func pageMeta(r *http.Request, title, description string) model.PageMeta {
+	return model.PageMeta{
+		CanonicalURL:  siteURL + r.URL.Path,
+		OGTitle:       title + " | islami.click",
+		OGDescription: description,
+		OGImage:       defaultOGImage,
+	}
+}
+
 func (h *Handler) renderPartial(w http.ResponseWriter, name string, data any) {
 	t, ok := h.partialTmpls[name]
 	if !ok {
@@ -107,15 +119,21 @@ func (h *Handler) render(w http.ResponseWriter, page string, data any) {
 }
 
 func (h *Handler) Home(w http.ResponseWriter, r *http.Request) {
-	h.render(w, "home.html", nil)
+	h.render(w, "home.html", struct{ Meta model.PageMeta }{
+		Meta: pageMeta(r, "Beranda", "Portal islami lengkap: Al-Matsurat, jadwal shalat, Al-Quran, doa harian, Asmaul Husna, dan kiblat untuk Muslim Indonesia."),
+	})
 }
 
 func (h *Handler) AlMatsurat(w http.ResponseWriter, r *http.Request) {
-	h.render(w, "almatsurat.html", nil)
+	h.render(w, "almatsurat.html", struct{ Meta model.PageMeta }{
+		Meta: pageMeta(r, "Al-Matsurat", "Kumpulan dzikir pagi dan petang dari Al-Matsurat Sugro dan Kubro, panduan wirid harian Muslim."),
+	})
 }
 
 func (h *Handler) Kiblat(w http.ResponseWriter, r *http.Request) {
-	h.render(w, "kiblat.html", nil)
+	h.render(w, "kiblat.html", struct{ Meta model.PageMeta }{
+		Meta: pageMeta(r, "Arah Kiblat", "Cek arah kiblat dari lokasi Anda secara akurat menggunakan kompas berbasis GPS."),
+	})
 }
 
 func (h *Handler) Hisab(w http.ResponseWriter, r *http.Request) {
@@ -139,6 +157,7 @@ func (h *Handler) Hisab(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := model.HisabPageData{
+		Meta:           pageMeta(r, "Hisab Kalender Hijriyah", "Konversi tanggal Hijriyah dan Masehi, kalender bulan Hijriyah lengkap."),
 		HijriToday:     hijriDate.FormatID(),
 		MasehiToday:    hijri.FormatGregorianID(now),
 		HijriDay:       hijriDate.Day,
@@ -158,7 +177,7 @@ func (h *Handler) AsmaulHusna(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Failed to load content", http.StatusInternalServerError)
 		return
 	}
-
+	content.Meta = pageMeta(r, "Asmaul Husna", "99 Asmaul Husna lengkap dengan teks Arab, transliterasi Latin, dan terjemahan makna dalam bahasa Indonesia.")
 	h.render(w, "asmaul-husna.html", content)
 }
 
@@ -171,6 +190,7 @@ func (h *Handler) Quran(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := model.QuranPageData{
+		Meta:        pageMeta(r, "Al-Quran", "Baca Al-Quran 30 juz lengkap dengan teks Arab, terjemahan Indonesia, dan audio murottal per surah."),
 		Title:       "Al-Qur'an",
 		Description: "Baca Al-Qur'an lengkap dengan terjemahan Bahasa Indonesia",
 		Surahs:      surahs,
@@ -235,6 +255,7 @@ func (h *Handler) QuranSurah(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := model.SurahReaderData{
+		Meta:        pageMeta(r, fmt.Sprintf("Surah %s", surah.Name), fmt.Sprintf("Baca Surah %s lengkap dengan teks Arab, terjemahan Indonesia, dan audio murottal.", surah.Name)),
 		Title:       fmt.Sprintf("%s - Al-Qur'an", surah.Name),
 		Description: fmt.Sprintf("Surah %s (%s) - %d Ayat", surah.Name, surah.ArabicName, surah.AyahCount),
 		Surah:       surah,
@@ -270,6 +291,7 @@ func (h *Handler) QuranSearch(w http.ResponseWriter, r *http.Request) {
 	query := strings.TrimSpace(r.URL.Query().Get("q"))
 
 	data := model.QuranSearchData{
+		Meta:        pageMeta(r, "Pencarian Al-Qur'an", "Cari ayat dalam Al-Qur'an"),
 		Title:       "Pencarian Al-Qur'an",
 		Description: "Cari ayat dalam Al-Qur'an",
 		Query:       query,
@@ -555,7 +577,7 @@ func (h *Handler) AlMatsuratSugro(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Failed to load content", http.StatusInternalServerError)
 		return
 	}
-
+	content.Meta = pageMeta(r, "Al-Matsurat Sugro", "Dzikir pagi dan petang Al-Matsurat Sugro lengkap dengan teks Arab, transliterasi, dan terjemahan.")
 	h.render(w, "almatsurat-sugro.html", content)
 }
 
@@ -566,7 +588,7 @@ func (h *Handler) AlMatsuratKubro(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Failed to load content", http.StatusInternalServerError)
 		return
 	}
-
+	content.Meta = pageMeta(r, "Al-Matsurat Kubro", "Dzikir pagi dan petang Al-Matsurat Kubro lengkap dengan teks Arab, transliterasi, dan terjemahan.")
 	h.render(w, "almatsurat-kubro.html", content)
 }
 
@@ -579,7 +601,7 @@ func (h *Handler) Doa(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Failed to load content", http.StatusInternalServerError)
 		return
 	}
-
+	page.Meta = pageMeta(r, "Doa Harian", "Kumpulan doa harian Islam lengkap: doa makan, tidur, bepergian, masuk rumah, dan ratusan doa lainnya.")
 	h.render(w, "doa.html", page)
 }
 
@@ -608,6 +630,7 @@ func (h *Handler) Shalat(w http.ResponseWriter, r *http.Request) {
 	}
 
 	page := model.ShalatPageData{
+		Meta:   pageMeta(r, "Jadwal Shalat", "Jadwal shalat harian akurat berdasarkan lokasi kota di Indonesia, dilengkapi waktu imsak dan terbit."),
 		City:   city,
 		Cities: indonesianCities,
 	}
@@ -925,4 +948,78 @@ func addMinutes(t string, mins int) string {
 	m, _ := strconv.Atoi(parts[1])
 	total := h*60 + m + mins
 	return fmt.Sprintf("%02d:%02d", total/60%24, total%60)
+}
+
+func (h *Handler) RobotsTxt(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+	w.Header().Set("Cache-Control", "public, max-age=86400")
+	fmt.Fprintf(w, "User-agent: *\nAllow: /\n\nSitemap: https://islami.click/sitemap.xml\n")
+}
+
+func (h *Handler) Sitemap(w http.ResponseWriter, r *http.Request) {
+	staticURLs := []string{
+		"/",
+		"/almatsurat",
+		"/almatsurat/sugro",
+		"/almatsurat/kubro",
+		"/doa",
+		"/shalat",
+		"/asmaul-husna",
+		"/kiblat",
+		"/hisab",
+		"/quran",
+	}
+
+	surahs, err := h.contentStore.QuranSurahs(r.Context())
+	if err != nil {
+		log.Printf("sitemap: quran surahs: %v", err)
+		http.Error(w, "failed to generate sitemap", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/xml; charset=utf-8")
+	w.Header().Set("Cache-Control", "public, max-age=3600")
+	fmt.Fprint(w, `<?xml version="1.0" encoding="UTF-8"?>`)
+	fmt.Fprint(w, "\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n")
+
+	for _, path := range staticURLs {
+		fmt.Fprintf(w, "  <url><loc>%s%s</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>\n",
+			siteURL, path)
+	}
+
+	for _, s := range surahs {
+		fmt.Fprintf(w, "  <url><loc>%s/quran/%d</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>\n",
+			siteURL, s.Number)
+	}
+
+	fmt.Fprint(w, "</urlset>\n")
+}
+
+func (h *Handler) LLMsTxt(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+	w.Header().Set("Cache-Control", "public, max-age=86400")
+	content := `# islami.click
+> Portal islami lengkap untuk Muslim Indonesia.
+
+Author: srmdn
+Language: id
+Topics: Al-Quran, dzikir, doa Islam, jadwal shalat, Asmaul Husna, kiblat, kalender Hijriyah
+Content-Type: Islamic reference tools and content
+Update-Cadence: irregular
+
+## Key Pages
+- /: Beranda - portal islami utama
+- /quran: Al-Quran 30 juz dengan terjemahan Indonesia
+- /almatsurat: Al-Matsurat Sugro dan Kubro (dzikir pagi-petang)
+- /doa: Kumpulan doa harian Islam
+- /shalat: Jadwal shalat harian per kota Indonesia
+- /asmaul-husna: 99 Asmaul Husna dengan makna
+- /kiblat: Penunjuk arah kiblat berbasis GPS
+- /hisab: Kalender dan konversi Hijriyah-Masehi
+
+## About
+islami.click adalah referensi ibadah harian untuk Muslim Indonesia.
+Menyediakan bacaan Al-Quran, dzikir, doa, jadwal shalat, dan alat bantu ibadah lainnya.
+`
+	fmt.Fprint(w, content)
 }

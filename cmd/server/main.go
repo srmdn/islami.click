@@ -107,6 +107,10 @@ func main() {
 	fs := http.Dir("static")
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(fs)))
 
+	http.HandleFunc("/robots.txt", h.RobotsTxt)
+	http.HandleFunc("/sitemap.xml", h.Sitemap)
+	http.HandleFunc("/llms.txt", h.LLMsTxt)
+
 	http.HandleFunc("/", h.Home)
 	http.HandleFunc("/almatsurat", h.AlMatsurat)
 	http.HandleFunc("/almatsurat/sugro", h.AlMatsuratSugro)

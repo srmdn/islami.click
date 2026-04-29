@@ -1,6 +1,7 @@
 package model
 
 type HisabPageData struct {
+	Meta           PageMeta
 	HijriToday     string
 	MasehiToday    string
 	HijriDay       int

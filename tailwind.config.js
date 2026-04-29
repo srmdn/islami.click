@@ -5,6 +5,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
+        sans: ['"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         arabic: ['"Amiri"', '"Scheherazade New"', "serif"],
       },
       boxShadow: {

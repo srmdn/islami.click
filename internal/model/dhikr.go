@@ -13,6 +13,7 @@ type DhikrEntry struct {
 
 // AlMatsurat represents a collection of dhikr (sugro or kubro).
 type AlMatsurat struct {
+	Meta        PageMeta
 	Title       string       `json:"title"`
 	Description string       `json:"description"`
 	Sections    []DhikrEntry `json:"sections"`
@@ -51,6 +52,7 @@ type DoaSourceType struct {
 
 // DoaPageData represents the doa collection page.
 type DoaPageData struct {
+	Meta        PageMeta
 	Title       string          `json:"title"`
 	Description string          `json:"description"`
 	Categories  []DoaCategory   `json:"categories"`

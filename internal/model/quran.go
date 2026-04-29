@@ -16,12 +16,14 @@ type QuranAyah struct {
 }
 
 type QuranPageData struct {
+	Meta        PageMeta
 	Title       string
 	Description string
 	Surahs      []QuranSurah
 }
 
 type SurahReaderData struct {
+	Meta        PageMeta
 	Title       string
 	Description string
 	Surah       QuranSurah
@@ -43,6 +45,7 @@ type QuranSearchResult struct {
 }
 
 type QuranSearchData struct {
+	Meta        PageMeta
 	Title       string
 	Description string
 	Query       string

@@ -1,6 +1,6 @@
 module github.com/srmdn/islami.click
 
-go 1.25.6
+go 1.25.0
 
 require modernc.org/sqlite v1.49.1
 

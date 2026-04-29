@@ -10,6 +10,7 @@ type AsmaulHusnaEntry struct {
 }
 
 type AsmaulHusnaPage struct {
+	Meta        PageMeta
 	Title       string             `json:"title"`
 	Description string             `json:"description"`
 	Names       []AsmaulHusnaEntry `json:"names"`

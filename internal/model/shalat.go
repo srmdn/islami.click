@@ -19,6 +19,7 @@ type HijriDate struct {
 }
 
 type ShalatPageData struct {
+	Meta       PageMeta
 	City       string
 	Cities     []string
 	Times      PrayerTimes

@@ -6,10 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{template "title" .}} | islami.click</title>
     <meta name="description" content="{{template "description" .}}">
+    {{if .Meta.CanonicalURL}}<link rel="canonical" href="{{.Meta.CanonicalURL}}">{{end}}
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="islami.click">
+    {{if .Meta.OGTitle}}<meta property="og:title" content="{{.Meta.OGTitle}}">
+    {{else}}<meta property="og:title" content="{{template "title" .}} | islami.click">{{end}}
+    {{if .Meta.OGDescription}}<meta property="og:description" content="{{.Meta.OGDescription}}">
+    {{else}}<meta property="og:description" content="{{template "description" .}}">{{end}}
+    {{if .Meta.CanonicalURL}}<meta property="og:url" content="{{.Meta.CanonicalURL}}">{{end}}
+    <meta property="og:image" content="{{if .Meta.OGImage}}{{.Meta.OGImage}}{{else}}https://islami.click/static/images/og-image.png{{end}}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="islami.click - portal islami untuk Muslim Indonesia">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@msaidramadhan">
+    <meta name="twitter:title" content="{{if .Meta.OGTitle}}{{.Meta.OGTitle}}{{else}}{{template "title" .}} | islami.click{{end}}">
+    <meta name="twitter:description" content="{{if .Meta.OGDescription}}{{.Meta.OGDescription}}{{else}}{{template "description" .}}{{end}}">
+    <meta name="twitter:image" content="{{if .Meta.OGImage}}{{.Meta.OGImage}}{{else}}https://islami.click/static/images/og-image.png{{end}}">
     <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="/static/css/out.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script>
         (function() {
             var theme = localStorage.getItem('theme');
