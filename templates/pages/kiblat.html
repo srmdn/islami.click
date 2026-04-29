@@ -10,7 +10,72 @@
         <span class="text-slate-800 dark:text-slate-100">Arah Kiblat</span>
     </nav>
 
-    {{/* Permission & error states */}}
+    {{/* Calibration modal - mobile/tablet only */}}
+    <div x-show="showCalibration" style="display:none" class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="showCalibration = false"></div>
+        <div class="relative w-full sm:max-w-sm bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-2xl">
+            <div class="flex items-center justify-between mb-5">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-teal-500/10 flex items-center justify-center">
+                        <svg class="w-5 h-5 text-teal-600 dark:text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24M9.17 14.83l-4.24 4.24M19.07 4.93l-4.24 4.24"/>
+                        </svg>
+                    </div>
+                    <h2 class="text-lg font-bold text-slate-800 dark:text-white">Kalibrasi Kompas</h2>
+                </div>
+                <button @click="showCalibration = false" class="w-8 h-8 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="space-y-3 mb-6">
+                <div class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-700/50">
+                    <div class="w-8 h-8 flex-shrink-0 rounded-lg bg-teal-500/10 flex items-center justify-center">
+                        <span class="text-base font-black text-teal-600 dark:text-teal-400">8</span>
+                    </div>
+                    <p class="text-sm text-slate-600 dark:text-slate-300 pt-1 leading-relaxed">Gerakkan ponsel membentuk angka <strong class="text-slate-800 dark:text-white font-semibold">8</strong> di udara untuk mengkalibrasi kompas</p>
+                </div>
+                <div class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-700/50">
+                    <div class="w-8 h-8 flex-shrink-0 rounded-lg bg-amber-500/10 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                            <line x1="12" y1="9" x2="12" y2="13"/>
+                            <line x1="12" y1="17" x2="12.01" y2="17"/>
+                        </svg>
+                    </div>
+                    <p class="text-sm text-slate-600 dark:text-slate-300 pt-1 leading-relaxed">Jauhkan dari <strong class="text-slate-800 dark:text-white font-semibold">benda logam</strong> seperti meja besi atau perangkat elektronik</p>
+                </div>
+                <div class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-700/50">
+                    <div class="w-8 h-8 flex-shrink-0 rounded-lg bg-teal-500/10 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-teal-600 dark:text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M23 4v6h-6M1 20v-6h6"/>
+                            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                        </svg>
+                    </div>
+                    <p class="text-sm text-slate-600 dark:text-slate-300 pt-1 leading-relaxed">Putar ponsel membentuk angka <strong class="text-slate-800 dark:text-white font-semibold">8</strong> ke berbagai arah: horizontal, vertikal, dan miring</p>
+                </div>
+                <div class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-700/50">
+                    <div class="w-8 h-8 flex-shrink-0 rounded-lg bg-teal-500/10 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-teal-600 dark:text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="17 1 21 5 17 9"/>
+                            <path d="M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4"/>
+                            <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
+                        </svg>
+                    </div>
+                    <p class="text-sm text-slate-600 dark:text-slate-300 pt-1 leading-relaxed">Ulangi <strong class="text-slate-800 dark:text-white font-semibold">beberapa kali</strong> hingga kompas menunjukkan arah yang konsisten</p>
+                </div>
+            </div>
+
+            <button @click="showCalibration = false" class="w-full py-3 rounded-xl bg-[#14B8A6] hover:bg-[#0D9488] active:bg-[#0F766E] text-white font-semibold shadow-md shadow-[#14B8A6]/20 transition-colors">
+                Mulai Sekarang
+            </button>
+        </div>
+    </div>
+
+    {{/* Permission state */}}
     <div x-show="state === 'pending'" class="text-center py-16">
         <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-teal-500/10 flex items-center justify-center">
             <svg class="w-10 h-10 text-teal-600 dark:text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -44,80 +109,171 @@
         </button>
     </div>
 
-    {{/* Main compass view */}}
-    <div x-show="state === 'ready'" class="flex flex-col items-center">
-        <div class="relative w-72 h-72 sm:w-80 sm:h-80 mb-8">
-            <div class="absolute inset-0 rounded-full border-4 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 shadow-lg"></div>
+    {{/* Ready state */}}
+    <div x-show="state === 'ready'">
 
-            <svg class="absolute inset-0 w-full h-full" viewBox="0 0 320 320" fill="none">
-                <line x1="160" y1="14" x2="160" y2="30" stroke="currentColor" stroke-width="2.5" class="text-slate-800 dark:text-white"/>
-                <text x="160" y="48" text-anchor="middle" class="fill-slate-800 dark:fill-white" font-size="14" font-weight="700" font-family="Inter, system-ui, sans-serif">U</text>
+        {{/* Mobile & tablet: rotating compass */}}
+        <div class="lg:hidden flex flex-col items-center">
+            <div class="relative w-72 h-72 sm:w-80 sm:h-80 mb-8">
+                <div class="absolute inset-0 rounded-full border-4 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 shadow-lg"></div>
 
-                <line x1="223.5" y1="24.8" x2="216.6" y2="38.6" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
-                <line x1="284" y1="76" x2="272" y2="83" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
+                <svg class="absolute inset-0 w-full h-full" viewBox="0 0 320 320" fill="none">
+                    <line x1="160" y1="14" x2="160" y2="30" stroke="currentColor" stroke-width="2.5" class="text-slate-800 dark:text-white"/>
+                    <text x="160" y="48" text-anchor="middle" class="fill-slate-800 dark:fill-white" font-size="14" font-weight="700" font-family="Inter, system-ui, sans-serif">U</text>
 
-                <line x1="306" y1="160" x2="290" y2="160" stroke="currentColor" stroke-width="2.5" class="text-slate-800 dark:text-white"/>
-                <text x="274" y="165" text-anchor="middle" class="fill-slate-800 dark:fill-white" font-size="14" font-weight="700" font-family="Inter, system-ui, sans-serif">T</text>
+                    <line x1="223.5" y1="24.8" x2="216.6" y2="38.6" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
+                    <line x1="284" y1="76" x2="272" y2="83" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
 
-                <line x1="284" y1="244" x2="272" y2="237" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
-                <line x1="223.5" y1="295.2" x2="216.6" y2="281.4" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
+                    <line x1="306" y1="160" x2="290" y2="160" stroke="currentColor" stroke-width="2.5" class="text-slate-800 dark:text-white"/>
+                    <text x="274" y="165" text-anchor="middle" class="fill-slate-800 dark:fill-white" font-size="14" font-weight="700" font-family="Inter, system-ui, sans-serif">T</text>
 
-                <line x1="160" y1="306" x2="160" y2="290" stroke="currentColor" stroke-width="2.5" class="text-slate-800 dark:text-white"/>
-                <text x="160" y="284" text-anchor="middle" class="fill-slate-800 dark:fill-white" font-size="13" font-weight="700" font-family="Inter, system-ui, sans-serif">S</text>
+                    <line x1="284" y1="244" x2="272" y2="237" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
+                    <line x1="223.5" y1="295.2" x2="216.6" y2="281.4" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
 
-                <line x1="96.5" y1="295.2" x2="103.4" y2="281.4" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
-                <line x1="36" y1="244" x2="48" y2="237" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
+                    <line x1="160" y1="306" x2="160" y2="290" stroke="currentColor" stroke-width="2.5" class="text-slate-800 dark:text-white"/>
+                    <text x="160" y="284" text-anchor="middle" class="fill-slate-800 dark:fill-white" font-size="13" font-weight="700" font-family="Inter, system-ui, sans-serif">S</text>
 
-                <line x1="14" y1="160" x2="30" y2="160" stroke="currentColor" stroke-width="2.5" class="text-slate-800 dark:text-white"/>
-                <text x="46" y="165" text-anchor="middle" class="fill-slate-800 dark:fill-white" font-size="14" font-weight="700" font-family="Inter, system-ui, sans-serif">B</text>
+                    <line x1="96.5" y1="295.2" x2="103.4" y2="281.4" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
+                    <line x1="36" y1="244" x2="48" y2="237" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
 
-                <line x1="36" y1="76" x2="48" y2="83" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
-                <line x1="96.5" y1="24.8" x2="103.4" y2="38.6" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
+                    <line x1="14" y1="160" x2="30" y2="160" stroke="currentColor" stroke-width="2.5" class="text-slate-800 dark:text-white"/>
+                    <text x="46" y="165" text-anchor="middle" class="fill-slate-800 dark:fill-white" font-size="14" font-weight="700" font-family="Inter, system-ui, sans-serif">B</text>
 
-                <circle cx="160" cy="160" r="80" stroke="currentColor" stroke-width="0.5" class="text-slate-300 dark:text-slate-600"/>
-                <circle cx="160" cy="160" r="4" fill="currentColor" class="text-slate-400 dark:text-slate-500"/>
-            </svg>
+                    <line x1="36" y1="76" x2="48" y2="83" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
+                    <line x1="96.5" y1="24.8" x2="103.4" y2="38.6" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
 
-            <div class="absolute inset-0 flex items-center justify-center compass-needle" :style="needleStyle">
-                <div class="absolute top-4 left-1/2 -translate-x-1/2 flex flex-col items-center">
-                    <svg width="28" height="28" viewBox="0 0 28 28" class="text-[#14B8A6] dark:text-teal-400">
-                        <path d="M14 0L18 28H10L14 0Z" fill="currentColor"/>
-                    </svg>
-                    <span class="text-[10px] font-bold text-[#14B8A6] dark:text-teal-400 mt-0.5">Ka'bah</span>
+                    <circle cx="160" cy="160" r="80" stroke="currentColor" stroke-width="0.5" class="text-slate-300 dark:text-slate-600"/>
+                    <circle cx="160" cy="160" r="4" fill="currentColor" class="text-slate-400 dark:text-slate-500"/>
+                </svg>
+
+                <div class="absolute inset-0 flex items-center justify-center compass-needle" :style="needleStyle">
+                    <div class="absolute top-4 left-1/2 -translate-x-1/2 flex flex-col items-center">
+                        <svg width="28" height="28" viewBox="0 0 28 28" class="text-[#14B8A6] dark:text-teal-400">
+                            <path d="M14 0L18 28H10L14 0Z" fill="currentColor"/>
+                        </svg>
+                        <span class="text-[10px] font-bold text-[#14B8A6] dark:text-teal-400 mt-0.5">Ka'bah</span>
+                    </div>
+                    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center">
+                        <svg width="20" height="20" viewBox="0 0 20 20" class="text-[#C9A84C] dark:text-amber-400">
+                            <path d="M10 20L6 0H14L10 20Z" fill="currentColor" opacity="0.5"/>
+                        </svg>
+                    </div>
                 </div>
-                <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center">
-                    <svg width="20" height="20" viewBox="0 0 20 20" class="text-[#C9A84C] dark:text-amber-400">
-                        <path d="M10 20L6 0H14L10 20Z" fill="currentColor" opacity="0.5"/>
+            </div>
+
+            <div class="text-center mb-6">
+                <div class="text-4xl sm:text-5xl font-bold tracking-tight text-slate-800 dark:text-white">
+                    <span x-text="bearing.toFixed(1)">0</span>°
+                </div>
+                <div class="mt-1 text-base font-semibold text-[#14B8A6] dark:text-teal-400" x-text="cardinalLabel">—</div>
+            </div>
+
+            <div class="w-full max-w-sm space-y-3 mb-6">
+                <div class="flex items-center justify-between px-5 py-4 rounded-2xl border border-slate-200/80 dark:border-slate-700/50 bg-white dark:bg-slate-800/80">
+                    <span class="text-sm text-slate-500 dark:text-slate-400">Jarak ke Ka'bah</span>
+                    <span class="font-semibold text-slate-800 dark:text-white" x-text="distanceText">—</span>
+                </div>
+                <div class="flex items-center justify-between px-5 py-4 rounded-2xl border border-slate-200/80 dark:border-slate-700/50 bg-white dark:bg-slate-800/80">
+                    <span class="text-sm text-slate-500 dark:text-slate-400">Koordinat Anda</span>
+                    <span class="font-mono text-sm font-semibold text-slate-800 dark:text-white" x-text="coordsText">—</span>
+                </div>
+            </div>
+
+            <button @click="showCalibration = true" class="flex items-center gap-2 px-4 py-2.5 mb-5 rounded-xl text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-[#14B8A6] dark:hover:text-teal-400 border border-slate-200 dark:border-slate-700 hover:border-teal-300 dark:hover:border-teal-700 transition-colors">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M23 4v6h-6M1 20v-6h6"/>
+                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                </svg>
+                Kalibrasi Kompas
+            </button>
+
+            <p class="text-xs text-slate-400 dark:text-slate-500 text-center max-w-xs">
+                Lokasi Anda hanya dihitung di perangkat dan tidak dikirim ke server.
+            </p>
+        </div>
+
+        {{/* Desktop: static direction display */}}
+        <div class="hidden lg:flex justify-center py-4">
+            <div class="flex items-center gap-16">
+
+                {{/* Static compass - bearing only, no heading rotation */}}
+                <div class="relative w-72 h-72 flex-shrink-0">
+                    <div class="absolute inset-0 rounded-full border-4 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 shadow-lg"></div>
+
+                    <svg class="absolute inset-0 w-full h-full" viewBox="0 0 320 320" fill="none">
+                        <line x1="160" y1="14" x2="160" y2="30" stroke="currentColor" stroke-width="2.5" class="text-slate-800 dark:text-white"/>
+                        <text x="160" y="48" text-anchor="middle" class="fill-slate-800 dark:fill-white" font-size="14" font-weight="700" font-family="Inter, system-ui, sans-serif">U</text>
+
+                        <line x1="223.5" y1="24.8" x2="216.6" y2="38.6" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
+                        <line x1="284" y1="76" x2="272" y2="83" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
+
+                        <line x1="306" y1="160" x2="290" y2="160" stroke="currentColor" stroke-width="2.5" class="text-slate-800 dark:text-white"/>
+                        <text x="274" y="165" text-anchor="middle" class="fill-slate-800 dark:fill-white" font-size="14" font-weight="700" font-family="Inter, system-ui, sans-serif">T</text>
+
+                        <line x1="284" y1="244" x2="272" y2="237" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
+                        <line x1="223.5" y1="295.2" x2="216.6" y2="281.4" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
+
+                        <line x1="160" y1="306" x2="160" y2="290" stroke="currentColor" stroke-width="2.5" class="text-slate-800 dark:text-white"/>
+                        <text x="160" y="284" text-anchor="middle" class="fill-slate-800 dark:fill-white" font-size="13" font-weight="700" font-family="Inter, system-ui, sans-serif">S</text>
+
+                        <line x1="96.5" y1="295.2" x2="103.4" y2="281.4" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
+                        <line x1="36" y1="244" x2="48" y2="237" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
+
+                        <line x1="14" y1="160" x2="30" y2="160" stroke="currentColor" stroke-width="2.5" class="text-slate-800 dark:text-white"/>
+                        <text x="46" y="165" text-anchor="middle" class="fill-slate-800 dark:fill-white" font-size="14" font-weight="700" font-family="Inter, system-ui, sans-serif">B</text>
+
+                        <line x1="36" y1="76" x2="48" y2="83" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
+                        <line x1="96.5" y1="24.8" x2="103.4" y2="38.6" stroke="currentColor" stroke-width="1" class="text-slate-300 dark:text-slate-600"/>
+
+                        <circle cx="160" cy="160" r="80" stroke="currentColor" stroke-width="0.5" class="text-slate-300 dark:text-slate-600"/>
+                        <circle cx="160" cy="160" r="4" fill="currentColor" class="text-slate-400 dark:text-slate-500"/>
                     </svg>
+
+                    <div class="absolute inset-0 flex items-center justify-center" :style="`transform: rotate(${bearing}deg)`">
+                        <div class="absolute top-4 left-1/2 -translate-x-1/2 flex flex-col items-center">
+                            <svg width="28" height="28" viewBox="0 0 28 28" class="text-[#14B8A6] dark:text-teal-400">
+                                <path d="M14 0L18 28H10L14 0Z" fill="currentColor"/>
+                            </svg>
+                            <span class="text-[10px] font-bold text-[#14B8A6] dark:text-teal-400 mt-0.5">Ka'bah</span>
+                        </div>
+                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2">
+                            <svg width="20" height="20" viewBox="0 0 20 20" class="text-[#C9A84C] dark:text-amber-400">
+                                <path d="M10 20L6 0H14L10 20Z" fill="currentColor" opacity="0.5"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                {{/* Info panel */}}
+                <div class="flex flex-col gap-6 min-w-60">
+                    <div>
+                        <div class="text-6xl font-bold tracking-tight text-slate-800 dark:text-white">
+                            <span x-text="bearing.toFixed(1)">0</span>°
+                        </div>
+                        <div class="mt-2 text-xl font-semibold text-[#14B8A6] dark:text-teal-400" x-text="cardinalLabel">—</div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between px-5 py-4 rounded-2xl border border-slate-200/80 dark:border-slate-700/50 bg-white dark:bg-slate-800/80">
+                            <span class="text-sm text-slate-500 dark:text-slate-400">Jarak ke Ka'bah</span>
+                            <span class="font-semibold text-slate-800 dark:text-white ml-4" x-text="distanceText">—</span>
+                        </div>
+                        <div class="flex items-center justify-between px-5 py-4 rounded-2xl border border-slate-200/80 dark:border-slate-700/50 bg-white dark:bg-slate-800/80">
+                            <span class="text-sm text-slate-500 dark:text-slate-400">Koordinat Anda</span>
+                            <span class="font-mono text-sm font-semibold text-slate-800 dark:text-white ml-4" x-text="coordsText">—</span>
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-slate-400 dark:text-slate-500 leading-relaxed max-w-xs">
+                        Arah berdasarkan koordinat GPS. Gunakan perangkat mobile untuk kompas interaktif.
+                    </p>
+                    <p class="text-xs text-slate-400 dark:text-slate-500">
+                        Lokasi Anda hanya dihitung di perangkat dan tidak dikirim ke server.
+                    </p>
                 </div>
             </div>
         </div>
 
-        <div class="text-center mb-6">
-            <div class="text-4xl sm:text-5xl font-bold tracking-tight text-slate-800 dark:text-white">
-                <span x-text="bearing.toFixed(1)">0</span>°
-            </div>
-            <div class="mt-1 text-base font-semibold text-[#14B8A6] dark:text-teal-400" x-text="cardinalLabel">—</div>
-        </div>
-
-        <div class="w-full max-w-sm space-y-3 mb-6">
-            <div class="flex items-center justify-between px-5 py-4 rounded-2xl border border-slate-200/80 dark:border-slate-700/50 bg-white dark:bg-slate-800/80">
-                <span class="text-sm text-slate-500 dark:text-slate-400">Jarak ke Ka'bah</span>
-                <span class="font-semibold text-slate-800 dark:text-white" x-text="distanceText">—</span>
-            </div>
-            <div class="flex items-center justify-between px-5 py-4 rounded-2xl border border-slate-200/80 dark:border-slate-700/50 bg-white dark:bg-slate-800/80">
-                <span class="text-sm text-slate-500 dark:text-slate-400">Koordinat Anda</span>
-                <span class="font-mono text-sm font-semibold text-slate-800 dark:text-white" x-text="coordsText">—</span>
-            </div>
-        </div>
-
-        <div x-show="!hasCompass" class="w-full max-w-sm mb-6 px-4 py-3 rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50 text-sm text-amber-700 dark:text-amber-300 text-center">
-            Arah ditunjukkan berdasarkan perhitungan, bukan kompas perangkat. Putar perangkat untuk kompas real-time.
-        </div>
-
-        <p class="text-xs text-slate-400 dark:text-slate-500 text-center max-w-xs">
-            Lokasi Anda hanya dihitung di perangkat dan tidak dikirim ke server.
-        </p>
     </div>
 </div>
 {{end}}
@@ -161,6 +317,7 @@ function kiblat() {
         userLng: null,
         heading: 0,
         hasCompass: false,
+        showCalibration: false,
 
         get needleStyle() {
             return `transform: rotate(${this.bearing - this.heading}deg); transition: transform 0.3s ease-out;`;
