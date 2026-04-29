@@ -47,6 +47,7 @@
 }
 
 @import "tailwindcss";
+@source "../../templates";
 
 @custom-variant dark (&:where(.dark, .dark *));
 

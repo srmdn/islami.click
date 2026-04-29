@@ -117,7 +117,8 @@
             <div class="relative w-72 h-72 sm:w-80 sm:h-80 mb-8">
                 <div class="absolute inset-0 rounded-full border-4 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 shadow-lg"></div>
 
-                <svg class="absolute inset-0 w-full h-full" viewBox="0 0 320 320" fill="none">
+                <svg class="absolute inset-0 w-full h-full compass-needle" viewBox="0 0 320 320" fill="none"
+                     :style="`transform: rotate(${-heading}deg); transition: transform 0.3s ease-out;`">
                     <line x1="160" y1="14" x2="160" y2="30" stroke="currentColor" stroke-width="2.5" class="text-slate-800 dark:text-white"/>
                     <text x="160" y="48" text-anchor="middle" class="fill-slate-800 dark:fill-white" font-size="14" font-weight="700" font-family="Inter, system-ui, sans-serif">U</text>
 
