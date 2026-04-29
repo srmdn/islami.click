@@ -232,6 +232,8 @@ function kiblat() {
         },
 
         init() {
+            var self = this;
+
             if (typeof DeviceOrientationEvent !== 'undefined' &&
                 typeof DeviceOrientationEvent.requestPermission !== 'function') {
                 this.attachOrientation();
@@ -240,6 +242,11 @@ function kiblat() {
             if (typeof DeviceOrientationEvent === 'undefined' ||
                 typeof DeviceOrientationEvent.requestPermission !== 'function') {
                 this.requestPermission();
+            } else if (navigator.permissions) {
+                // iOS: auto-start if location is already granted (no gesture needed for geolocation)
+                navigator.permissions.query({ name: 'geolocation' }).then(function(result) {
+                    if (result.state === 'granted') self.requestPermission();
+                }).catch(function() {});
             }
         }
     };
