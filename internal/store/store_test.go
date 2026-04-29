@@ -76,6 +76,18 @@ func assertDoaMatchesJSON(t *testing.T, ctx context.Context, contentStore *store
 		totalFromJSON += len(cat.Items)
 	}
 
+	ruqyahData, err := islamiclick.ContentFS.ReadFile("content/ayat-doa-ruqyah.json")
+	if err != nil {
+		t.Fatalf("read ruqyah JSON: %v", err)
+	}
+	var ruqyahJSON model.DoaPageData
+	if err := json.Unmarshal(ruqyahData, &ruqyahJSON); err != nil {
+		t.Fatalf("parse ruqyah JSON: %v", err)
+	}
+	for _, cat := range ruqyahJSON.Categories {
+		totalFromJSON += len(cat.Items)
+	}
+
 	fromDB, err := contentStore.DoaPage(ctx, 1, 1000)
 	if err != nil {
 		t.Fatalf("read doa from db: %v", err)
