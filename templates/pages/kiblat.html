@@ -182,15 +182,6 @@ function kiblat() {
         requestPermission() {
             this.state = 'loading';
 
-            if (typeof DeviceOrientationEvent !== 'undefined' &&
-                typeof DeviceOrientationEvent.requestPermission === 'function') {
-                DeviceOrientationEvent.requestPermission()
-                    .then(function(resp) {
-                        if (resp === 'granted') this.attachOrientation();
-                    }.bind(this))
-                    .catch(function() {});
-            }
-
             if (!navigator.geolocation) {
                 this.state = 'error';
                 this.errorMsg = 'Browser Anda tidak mendukung geolokasi. Gunakan browser lain atau aktifkan lokasi.';
@@ -216,6 +207,15 @@ function kiblat() {
                 }.bind(this),
                 { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
             );
+
+            if (typeof DeviceOrientationEvent !== 'undefined' &&
+                typeof DeviceOrientationEvent.requestPermission === 'function') {
+                DeviceOrientationEvent.requestPermission()
+                    .then(function(resp) {
+                        if (resp === 'granted') this.attachOrientation();
+                    }.bind(this))
+                    .catch(function(err) { console.warn('Orientation permission error:', err); });
+            }
         },
 
         attachOrientation() {
@@ -224,7 +224,7 @@ function kiblat() {
                 if (e.webkitCompassHeading !== undefined) {
                     self.heading = e.webkitCompassHeading;
                     self.hasCompass = true;
-                } else if (e.alpha !== null) {
+                } else if (e.alpha !== null && e.absolute) {
                     self.heading = (360 - e.alpha) % 360;
                     self.hasCompass = true;
                 }
