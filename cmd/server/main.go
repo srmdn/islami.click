@@ -6,11 +6,14 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"regexp"
 
 	islamiclick "github.com/srmdn/islami.click"
 	"github.com/srmdn/islami.click/internal/handler"
 	"github.com/srmdn/islami.click/internal/store"
 )
+
+var arabicParenRe = regexp.MustCompile(`\(([^()]*)\)`)
 
 func main() {
 	port := os.Getenv("PORT")
@@ -26,6 +29,11 @@ func main() {
 
 	funcMap := template.FuncMap{
 		"add": func(a, b int) int { return a + b },
+		"arabicHTML": func(s string) template.HTML {
+			escaped := template.HTMLEscapeString(s)
+			result := arabicParenRe.ReplaceAllString(escaped, `<span dir="ltr">(<bdi>$1</bdi>)</span>`)
+			return template.HTML(result)
+		},
 		"js": func(s string) string {
 			var result []byte
 			for i := 0; i < len(s); i++ {
