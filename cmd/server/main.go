@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 
 	islamiclick "github.com/srmdn/islami.click"
 	"github.com/srmdn/islami.click/internal/handler"
@@ -26,6 +27,12 @@ func main() {
 
 	funcMap := template.FuncMap{
 		"add": func(a, b int) int { return a + b },
+		"arabicHTML": func(s string) template.HTML {
+			escaped := template.HTMLEscapeString(s)
+			escaped = strings.ReplaceAll(escaped, "(", `<span dir="ltr">(</span>`)
+			escaped = strings.ReplaceAll(escaped, ")", `<span dir="ltr">)</span>`)
+			return template.HTML(escaped)
+		},
 		"js": func(s string) string {
 			var result []byte
 			for i := 0; i < len(s); i++ {
