@@ -27,7 +27,7 @@ go build -o islami.click ./cmd/server
 
 **`/`** — Landing page with Bismillah hero, feature cards, prayer times widget.
 
-**`/almatsurat`** — Wazifah Sugro and Kubro with tap-to-count per dhikr and visual progress bars. Progress resets on page reload.
+**`/almatsurat`** — Wazifah Sugro and Kubro with tap-to-count per dhikr and visual progress bars. Progress resets on page reload. Adhkar sourced from Al-Ma'tsurat by [Hasan Al-Banna](https://id.wikipedia.org/wiki/Hasan_al-Banna).
 
 **`/doa`** — 23 curated du'a across 7 categories plus ayat ruqyah. Source filter (Al-Qur'an / Hadits), category filter, full-text search, accordion, and load-more pagination.
 
