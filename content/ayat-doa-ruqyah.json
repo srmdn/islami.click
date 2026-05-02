@@ -177,7 +177,7 @@
           "translation": "Dengan nama Allah aku meruqyahmu, dari segala sesuatu yang menyakitimu, dari kejahatan setiap jiwa atau mata orang yang dengki; semoga Allah menyembuhkanmu; dengan nama Allah aku meruqyahmu.",
           "source": "HR. Muslim no. 2186; Ibn Majah no. 3523; Musnad Ahmad no. 11225",
           "source_url": "https://sunnah.com/muslim:2186",
-          "verification": "Hadis Abu Hurairah RA bahwa Jibril AS mengajarkan ruqyah ini kepada Nabi ﷺ, dan Nabi ﷺ mengajarkan kepada Abu Hurairah"
+          "verification": "Hadis Abu Sa'id al-Khudri RA — Jibril AS meruqyah Nabi ﷺ saat beliau sakit dengan doa ini"
         },
         {
           "id": "isti'adzah-saat-sakit",
@@ -186,8 +186,8 @@
           "arabic": "بِسْمِ اللَّهِ (×٣) اَعُوذُ بِعِزَّةِ اللَّهِ وَقُدْرَتِهِ مِنْ شَرِّ مَا اَجِدُ وَاُحَاذِرُ (×٧)",
           "latin": "Bismillāhi (×3). A'ūdzu bi 'izzatillāhi wa qudratihi min syarri mā ajidu wa uḥāżiru (×7).",
           "translation": "Dengan nama Allah (3 kali). Aku berlindung dengan keperkasaan Allah dan kekuasaan-Nya, dari kejelekan yang aku rasakan dan yang aku khawatirkan (7 kali).",
-          "source": "HR. Muslim no. 5867; Ibnu Hibban no. 2964",
-          "source_url": "https://sunnah.com/muslim:5867",
+          "source": "HR. Muslim no. 2202; Ibnu Hibban no. 2964",
+          "source_url": "https://sunnah.com/muslim:2202",
           "verification": "Hadis Utsman bin Abil 'Ash RA — Rasulullah ﷺ mengajarkan untuk meletakkan tangan di bagian yang sakit dan membaca doa ini"
         },
         {
@@ -230,8 +230,8 @@
           "arabic": "اَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ",
           "latin": "A'ūdzu bikalimātillāhit-tāmmāti min syarri mā khalaq.",
           "translation": "Aku berlindung dengan kalimat-kalimat Allah yang sempurna dari kejahatan apa saja yang Dia ciptakan.",
-          "source": "HR. Muslim no. 2709; At-Tirmidzi no. 3604; Ibnu Majah no. 3547",
-          "source_url": "https://sunnah.com/muslim:2709",
+          "source": "HR. Muslim no. 2708; At-Tirmidzi no. 3604; Ibnu Majah no. 3547",
+          "source_url": "https://sunnah.com/ibnmajah:3547",
           "verification": "Sahih Muslim; dibaca tiga kali setiap petang sebagai perlindungan dari setan"
         },
         {
@@ -241,20 +241,20 @@
           "arabic": "مَنْ نَزَلَ مَنْزِلًا ثُمَّ قَالَ: اَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ، مَا يَضُرُّهُ شَيْءٌ حَتَّى يَرْتَحِلَ مِنْ مَنْزِلِهِ ذَلِكَ",
           "latin": "Man nazala manzilan ṭhumma qāla: A'ūdzu bikalimātillāhit-tāmmāti min syarri mā khalaq, mā yaḍurruhū syai'un ḥattā yartahiḥa min manzilatihī dzālik.",
           "translation": "Barang siapa tiba di suatu tempat baru lalu membaca: Aku berlindung dengan kalimat-kalimat Allah yang sempurna dari kejahatan apa saja yang diciptakan-Nya, maka tidak ada sesuatu pun yang akan membinasakannya hingga ia meninggalkan tempat itu.",
-          "source": "HR. Muslim",
-          "source_url": "https://sunnah.com/muslim:2709",
+          "source": "HR. Muslim no. 2708",
+          "source_url": "https://sunnah.com/muslim:2708",
           "verification": "Hadis Khaulah binti al-Hakim As-Salamiyyah RA — perlindungan saat perjalanan"
         },
         {
           "id": "doa-tawakal",
-          "source_type": "hadith",
+          "source_type": "quran",
           "title": "Doa Tawakal kepada Allah",
           "arabic": "حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ، نِعْمَ الْمَوْلَى وَنِعْمَ النَّصِيرُ",
           "latin": "Ḥasbunallāhu wa ni'mal-wakīl, ni'mal-maulā wa ni'man-naṣīr.",
           "translation": "Cukuplah Allah bagi kami dan Dia sebaik-baik pelindung. Sebaik-baik teman dan sebaik-baik penolong.",
-          "source": "HR. Bukhari no. 3023, Muslim no. 2733",
-          "source_url": "https://sunnah.com/bukhari:3023",
-          "verification": "Hadis Nabi ﷺ saat menghadapi kaum pada perang Khandaq"
+          "source": "QS. Ali 'Imran 3:173 + QS. Al-Anfal 8:40",
+          "source_url": "https://quran.com/3/173",
+          "verification": "Termaktub dalam Al-Qur'an Al-Karim. 'Hasbunallahu wa ni'mal wakil' dari QS. Ali 'Imran 3:173, diucapkan para sahabat setelah Perang Uhud. 'Ni'mal mawla wa ni'man nasir' dari QS. Al-Anfal 8:40."
         }
       ]
     }
