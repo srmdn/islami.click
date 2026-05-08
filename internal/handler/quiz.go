@@ -63,7 +63,7 @@ func (h *Handler) QuizQuestionsAPI(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	slug := parts[1]
+	slug := parts[2]
 	difficulty := r.URL.Query().Get("difficulty")
 	if difficulty == "" {
 		difficulty = "basic"
@@ -111,7 +111,7 @@ func (h *Handler) QuizLeaderboardAPI(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	slug := parts[1]
+	slug := parts[2]
 	difficulty := r.URL.Query().Get("difficulty")
 	if difficulty == "" {
 		difficulty = "basic"
@@ -162,7 +162,7 @@ func (h *Handler) QuizScoreAPI(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	slug := parts[1]
+	slug := parts[2]
 
 	var req struct {
 		PlayerName string `json:"player_name"`
