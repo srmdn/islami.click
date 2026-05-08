@@ -44,6 +44,10 @@ func Open(ctx context.Context, path string, migrationFS embed.FS, contentFS embe
 		_ = db.Close()
 		return nil, err
 	}
+	if err := store.SeedQuiz(ctx, contentFS); err != nil {
+		_ = db.Close()
+		return nil, err
+	}
 
 	return store, nil
 }

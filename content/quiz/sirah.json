@@ -1,0 +1,278 @@
+{
+  "slug": "sirah",
+  "label": "Sirah Nabawiyah",
+  "description": "Perjalanan hidup Nabi Muhammad SAW dan para sahabat",
+  "display_order": 5,
+  "questions": {
+    "basic": [
+      {
+        "q": "Nabi Muhammad SAW lahir di kota?",
+        "options": ["Madinah", "Thaif", "Makkah", "Yerusalem"],
+        "answer": 2,
+        "explanation": "Nabi Muhammad SAW lahir di kota Makkah pada tahun 570 M, yang dikenal sebagai Tahun Gajah (Am Al-Fil)."
+      },
+      {
+        "q": "Nama ayah Nabi Muhammad SAW adalah?",
+        "options": ["Abdullah bin Abdul Muthalib", "Abu Thalib bin Abdul Muthalib", "Abdul Muthalib bin Hasyim", "Hamzah bin Abdul Muthalib"],
+        "answer": 0,
+        "explanation": "Ayah Nabi Muhammad SAW adalah Abdullah bin Abdul Muthalib, yang wafat sebelum Nabi lahir."
+      },
+      {
+        "q": "Nabi Muhammad SAW diangkat sebagai nabi pada usia?",
+        "options": ["25 tahun", "30 tahun", "35 tahun", "40 tahun"],
+        "answer": 3,
+        "explanation": "Nabi Muhammad SAW menerima wahyu pertama dan diangkat sebagai nabi saat berusia 40 tahun."
+      },
+      {
+        "q": "Peristiwa hijrah Nabi SAW dari Makkah ke Madinah terjadi pada tahun?",
+        "options": ["1 sebelum Masehi", "570 M", "622 M", "632 M"],
+        "answer": 2,
+        "explanation": "Hijrah Nabi SAW dari Makkah ke Madinah terjadi pada tahun 622 M, yang kemudian dijadikan awal perhitungan kalender Hijriyah."
+      },
+      {
+        "q": "Sahabat yang menemani Nabi SAW saat hijrah ke Madinah adalah?",
+        "options": ["Ali bin Abi Thalib", "Abu Bakar As-Shiddiq", "Umar bin Khattab", "Utsman bin Affan"],
+        "answer": 1,
+        "explanation": "Abu Bakar As-Shiddiq RA adalah sahabat yang menemani Nabi SAW dalam perjalanan hijrah ke Madinah, bersembunyi di Gua Tsur selama 3 malam."
+      },
+      {
+        "q": "Nama ibu Nabi Muhammad SAW adalah?",
+        "options": ["Khadijah binti Khuwailid", "Aminah binti Wahab", "Fatimah binti Asad", "Halimah As-Sa'diyah"],
+        "answer": 1,
+        "explanation": "Ibu Nabi Muhammad SAW adalah Aminah binti Wahab. Beliau wafat ketika Nabi SAW berusia sekitar 6 tahun."
+      },
+      {
+        "q": "Perang pertama dalam sejarah Islam adalah?",
+        "options": ["Perang Uhud", "Perang Khandaq", "Perang Badar", "Perang Tabuk"],
+        "answer": 2,
+        "explanation": "Perang Badar (17 Ramadhan tahun 2 H) adalah perang besar pertama dalam Islam, di mana kaum Muslim menang melawan pasukan Quraisy meskipun kalah jumlah."
+      },
+      {
+        "q": "Nabi Muhammad SAW wafat pada usia?",
+        "options": ["55 tahun", "60 tahun", "63 tahun", "70 tahun"],
+        "answer": 2,
+        "explanation": "Nabi Muhammad SAW wafat pada usia 63 tahun, tepatnya pada tanggal 12 Rabi'ul Awal tahun 11 H (632 M) di Madinah."
+      },
+      {
+        "q": "Istri pertama Nabi Muhammad SAW adalah?",
+        "options": ["Aisyah binti Abu Bakar", "Hafshah binti Umar", "Khadijah binti Khuwailid", "Zainab binti Jahsy"],
+        "answer": 2,
+        "explanation": "Khadijah binti Khuwailid RA adalah istri pertama Nabi SAW. Mereka menikah ketika Nabi berusia 25 tahun dan Khadijah berusia 40 tahun."
+      },
+      {
+        "q": "Khalifah pertama setelah wafatnya Nabi Muhammad SAW adalah?",
+        "options": ["Umar bin Khattab", "Ali bin Abi Thalib", "Abu Bakar As-Shiddiq", "Utsman bin Affan"],
+        "answer": 2,
+        "explanation": "Abu Bakar As-Shiddiq RA adalah khalifah pertama (633-634 M) yang dipilih oleh para sahabat setelah wafatnya Nabi SAW."
+      },
+      {
+        "q": "Peristiwa Isra Mi'raj adalah?",
+        "options": ["Perjalanan Nabi SAW dari Makkah ke Madinah", "Perjalanan malam Nabi SAW dari Masjidil Haram ke Masjidil Aqsa lalu ke langit", "Perang melawan kaum kafir", "Pengangkatan Nabi SAW menjadi rasul"],
+        "answer": 1,
+        "explanation": "Isra Mi'raj adalah perjalanan malam Nabi SAW: Isra dari Masjidil Haram ke Masjidil Aqsa, dan Mi'raj naik ke langit bertemu Allah SWT, di mana shalat 5 waktu diwajibkan."
+      },
+      {
+        "q": "Perang Uhud terjadi pada tahun?",
+        "options": ["1 H", "2 H", "3 H", "5 H"],
+        "answer": 2,
+        "explanation": "Perang Uhud terjadi pada tahun 3 H di lereng Gunung Uhud dekat Madinah. Kaum Muslim mengalami kekalahan awal karena sebagian pasukan meninggalkan posisi."
+      },
+      {
+        "q": "Kota yang pertama kali menjadi ibu kota negara Islam adalah?",
+        "options": ["Makkah", "Madinah", "Kufah", "Damaskus"],
+        "answer": 1,
+        "explanation": "Madinah Al-Munawwarah adalah kota pertama yang menjadi pusat negara Islam setelah Nabi SAW hijrah dan mendirikan masyarakat Muslim di sana."
+      },
+      {
+        "q": "Paman Nabi SAW yang sangat mendukung dan melindunginya adalah?",
+        "options": ["Abu Jahal", "Abu Lahab", "Abu Thalib", "Abu Sufyan"],
+        "answer": 2,
+        "explanation": "Abu Thalib adalah paman Nabi SAW yang sangat melindunginya meski tidak masuk Islam. Beliau wafat sekitar 3 tahun sebelum hijrah."
+      },
+      {
+        "q": "Jumlah istri Nabi Muhammad SAW yang dinikahi semasa hidup beliau adalah?",
+        "options": ["4", "9", "11", "13"],
+        "answer": 2,
+        "explanation": "Nabi SAW menikahi 11 wanita semasa hidup beliau. Dari 11 istri tersebut, 9 masih hidup saat beliau wafat."
+      }
+    ],
+    "intermediate": [
+      {
+        "q": "Piagam Madinah (Shahifah Al-Madinah) adalah?",
+        "options": ["Kitab hadits pertama", "Konstitusi tertulis pertama negara Islam yang mengatur hubungan Muslim, Yahudi, dan suku-suku Madinah", "Perjanjian damai dengan Makkah", "Kumpulan hukum Islam pertama"],
+        "answer": 1,
+        "explanation": "Piagam Madinah adalah dokumen perjanjian yang dibuat Nabi SAW tidak lama setelah hijrah, mengatur hubungan antara kaum Muhajirin, Anshar, dan berbagai suku di Madinah termasuk Yahudi."
+      },
+      {
+        "q": "Peristiwa Fathu Makkah (Pembebasan Makkah) terjadi pada tahun?",
+        "options": ["6 H", "7 H", "8 H", "9 H"],
+        "answer": 2,
+        "explanation": "Fathu Makkah terjadi pada bulan Ramadhan tahun 8 H (630 M). Kaum Muslim memasuki Makkah nyaris tanpa pertumpahan darah, dan Nabi SAW memberikan amnesti umum."
+      },
+      {
+        "q": "Perjanjian Hudaibiyah antara kaum Muslim dan Quraisy berisi?",
+        "options": ["Kekalahan kaum Muslim", "Gencatan senjata 10 tahun dan hak kaum Muslim untuk umrah tahun berikutnya", "Penyerahan kota Makkah", "Persekutuan melawan Byzantium"],
+        "answer": 1,
+        "explanation": "Perjanjian Hudaibiyah (6 H) berisi: gencatan senjata 10 tahun, kaum Muslim kembali ke Madinah dan boleh umrah tahun depan. Al-Quran menyebutnya 'kemenangan nyata' (QS. Al-Fath: 1)."
+      },
+      {
+        "q": "Khalifah yang memerintahkan pengumpulan Al-Quran ke dalam satu mushaf adalah?",
+        "options": ["Abu Bakar As-Shiddiq (untuk pengumpulan awal)", "Umar bin Khattab", "Utsman bin Affan (untuk standarisasi)", "Ali bin Abi Thalib"],
+        "answer": 0,
+        "explanation": "Pengumpulan Al-Quran ke dalam satu mushaf pertama kali diperintahkan Abu Bakar RA. Standarisasi dan penyebaran mushaf resmi ke seluruh wilayah dilakukan oleh Utsman bin Affan RA."
+      },
+      {
+        "q": "Sahabat yang dijuluki 'Pedang Allah yang Terhunus' adalah?",
+        "options": ["Ali bin Abi Thalib", "Umar bin Khattab", "Zubair bin Awwam", "Khalid bin Walid"],
+        "answer": 3,
+        "explanation": "Khalid bin Walid RA dijuluki Saifullah Al-Maslul (Pedang Allah yang Terhunus) oleh Nabi SAW karena kehebatannya dalam memimpin pasukan Islam."
+      },
+      {
+        "q": "Perang Khandaq (Perang Parit) unik karena?",
+        "options": ["Terjadi di laut", "Kaum Muslim menggali parit sebagai strategi pertahanan atas saran Salman Al-Farisi", "Kaum Muslim menyerang duluan", "Pertempuran terjadi di dalam kota Madinah"],
+        "answer": 1,
+        "explanation": "Perang Khandaq (5 H) menggunakan strategi menggali parit (khandaq) di sekeliling Madinah atas saran Salman Al-Farisi (sahabat dari Persia), yang tidak dikenal dalam tradisi perang Arab."
+      },
+      {
+        "q": "Khulafaur Rasyidin dalam urutan yang benar adalah?",
+        "options": ["Abu Bakar, Umar, Ali, Utsman", "Umar, Abu Bakar, Utsman, Ali", "Abu Bakar, Umar, Utsman, Ali", "Ali, Utsman, Umar, Abu Bakar"],
+        "answer": 2,
+        "explanation": "Urutan Khulafaur Rasyidin: (1) Abu Bakar As-Shiddiq, (2) Umar bin Khattab, (3) Utsman bin Affan, (4) Ali bin Abi Thalib. Mereka memerintah sekitar 632-661 M."
+      },
+      {
+        "q": "Siapakah sahabat yang pertama kali masuk Islam dari kalangan pria merdeka dewasa?",
+        "options": ["Umar bin Khattab", "Ali bin Abi Thalib (anak-anak)", "Abu Bakar As-Shiddiq", "Utsman bin Affan"],
+        "answer": 2,
+        "explanation": "Abu Bakar As-Shiddiq RA adalah pria merdeka dewasa pertama yang masuk Islam. Dari kalangan anak-anak: Ali bin Abi Thalib. Dari kalangan wanita: Khadijah RA. Dari kalangan budak: Zaid bin Haritsah."
+      },
+      {
+        "q": "Masa paling berat bagi dakwah Nabi SAW di Makkah dikenal dengan?",
+        "options": ["Tahun Gajah", "Tahun Duka (Am Al-Huzn)", "Tahun Hijrah", "Tahun Perang"],
+        "answer": 1,
+        "explanation": "Am Al-Huzn (Tahun Duka) adalah tahun ke-10 kenabian di mana dua pelindung utama Nabi SAW wafat: istri beliau Khadijah RA dan paman beliau Abu Thalib."
+      },
+      {
+        "q": "Misi utama Nabi SAW ke kota Thaif berakhir dengan?",
+        "options": ["Keberhasilan besar, seluruh penduduk masuk Islam", "Penolakan dan pengusiran; penduduk melempari Nabi SAW dengan batu", "Perjanjian damai dengan pemimpin Thaif", "Perang singkat yang dimenangkan kaum Muslim"],
+        "answer": 1,
+        "explanation": "Nabi SAW pergi ke Thaif setelah Am Al-Huzn untuk mencari perlindungan dan mendakwahi penduduknya. Namun beliau ditolak dan dilempari batu hingga kaki beliau terluka."
+      },
+      {
+        "q": "Penaklukan wilayah mana yang memperluas Islam ke luar Jazirah Arabia pada masa Abu Bakar?",
+        "options": ["Afrika Utara dan Spanyol", "Persia dan Syam dimulai pada masa Abu Bakar", "Hanya di Jazirah Arabia", "India dan Asia Tengah"],
+        "answer": 1,
+        "explanation": "Pada masa Abu Bakar RA, ekspansi Islam mulai keluar Jazirah Arabia dengan penaklukan awal Persia (Irak) dan Syam (Suriah). Ekspansi penuh terjadi pada masa Umar bin Khattab."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'kaum Anshar' dalam sejarah Islam?",
+        "options": ["Kaum Muslim yang berhijrah dari Makkah ke Madinah", "Penduduk Madinah yang masuk Islam dan menyambut kaum Muhajirin", "Tentara Islam yang ikut Perang Badar", "Para sahabat yang paling dekat dengan Nabi SAW"],
+        "answer": 1,
+        "explanation": "Anshar (penolong) adalah penduduk Madinah (khususnya dari suku Aus dan Khazraj) yang masuk Islam dan menyambut serta membantu kaum Muhajirin yang hijrah dari Makkah."
+      },
+      {
+        "q": "Perang terakhir yang dipimpin langsung oleh Nabi SAW adalah?",
+        "options": ["Perang Badar", "Perang Tabuk", "Perang Hunain", "Perang Mu'tah"],
+        "answer": 1,
+        "explanation": "Perang Tabuk (9 H) adalah ekspedisi militer terakhir yang dipimpin langsung oleh Nabi SAW, menuju perbatasan Byzantium di utara Jazirah Arabia."
+      },
+      {
+        "q": "Sahabat yang dijuluki 'Al-Faruq' (pemisah antara hak dan batil) adalah?",
+        "options": ["Abu Bakar As-Shiddiq", "Umar bin Khattab", "Ali bin Abi Thalib", "Utsman bin Affan"],
+        "answer": 1,
+        "explanation": "Umar bin Khattab RA dijuluki Al-Faruq karena ketegasannya dalam membedakan hak dan batil, serta keberaniannya menyatakan keislamannya secara terang-terangan."
+      },
+      {
+        "q": "Haji Wada (Haji Perpisahan) dilakukan Nabi SAW pada tahun?",
+        "options": ["7 H", "8 H", "9 H", "10 H"],
+        "answer": 3,
+        "explanation": "Haji Wada dilaksanakan Nabi SAW pada tahun 10 H, sekitar 3 bulan sebelum beliau wafat. Dalam khutbahnya, Nabi SAW menyampaikan pesan-pesan terakhir yang mengguncang hati para sahabat."
+      }
+    ],
+    "advanced": [
+      {
+        "q": "Apa signifikansi strategis Piagam Madinah dalam konteks politik Islam awal?",
+        "options": ["Hanya dokumen agama, bukan politik", "Piagam Madinah meletakkan fondasi negara pluralistik dengan Nabi SAW sebagai pemimpin, mengakui hak komunitas non-Muslim namun dalam satu entitas politik", "Piagam ini hanya untuk mengusir kaum Yahudi", "Piagam ini langsung digantikan oleh hukum Islam setelah Badar"],
+        "answer": 1,
+        "explanation": "Piagam Madinah adalah dokumen konstitusional yang mendirikan 'ummah' sebagai entitas politik multietnis dan multireligius. Nabi SAW sebagai kepala negara, sementara komunitas Yahudi mendapat otonomi hukum internal dengan kewajiban pertahanan bersama."
+      },
+      {
+        "q": "Mengapa Al-Quran menyebut Perjanjian Hudaibiyah sebagai 'kemenangan nyata' meskipun tampak merugikan kaum Muslim?",
+        "options": ["Karena kaum Muslim sebenarnya menang dalam pertempuran", "Karena Hudaibiyah membuka jalan dakwah lebih luas: gencatan senjata memberi waktu rekrutmen, Nabi SAW bisa mengirim surat ke raja-raja, dan Quraisy mengakui eksistensi Muslim secara de facto", "Karena perjanjian ini membatalkan perjanjian sebelumnya yang merugikan", "Al-Quran hanya menyebutnya kemenangan untuk menghibur kaum Muslim"],
+        "answer": 1,
+        "explanation": "Hudaibiyah adalah kemenangan diplomatik dan strategis: selama 2 tahun gencatan senjata, jumlah Muslim berlipat ganda, Nabi SAW dapat berdakwah ke luar Arabia, dan Quraisy secara resmi mengakui entitas Muslim. Ini membuka jalan bagi Fathu Makkah 2 tahun kemudian."
+      },
+      {
+        "q": "Dalam periodisasi sejarah Islam, apa ciri khas fase Makkiyah dakwah Nabi SAW?",
+        "options": ["Fokus pada hukum-hukum fiqh dan syariat", "Fokus pada tauhid, menghancurkan berhala, membangun karakter, dan menghadapi tekanan tanpa perlawanan bersenjata (fase dakwah sirr kemudian jahriyyah)", "Fase perang melawan kaum Quraisy", "Pembangunan masjid dan institusi pemerintahan"],
+        "answer": 1,
+        "explanation": "Fase Makkiyah (sekitar 13 tahun): fokus pada pemurnian tauhid, pembangunan karakter generasi pertama Muslim, dan ketahanan menghadapi penganiayaan. Syariat praktis (shalat penuh, zakat, dll) belum diwajibkan pada fase ini."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'Al-Ayyam Al-Nabawiyah' dan mengapa pentingnya bagi sirah?",
+        "options": ["Hari-hari Nabi SAW di Makkah saja", "Catatan kronologis peristiwa-peristiwa penting dalam kehidupan Nabi SAW yang menjadi referensi utama untuk memahami konteks turunnya wahyu dan kebijakan beliau", "Hanya cerita-cerita legendaris tentang Nabi SAW", "Kalender shalat yang dibuat Nabi SAW"],
+        "answer": 1,
+        "explanation": "Al-Ayyam Al-Nabawiyah adalah rekonstruksi kronologis peristiwa sirah yang memungkinkan kita memahami turunnya wahyu, keputusan Nabi SAW, dan perkembangan hukum Islam dalam konteks historisnya yang tepat."
+      },
+      {
+        "q": "Kontribusi utama masa pemerintahan Umar bin Khattab dalam administrasi negara Islam adalah?",
+        "options": ["Hanya ekspansi militer", "Pembentukan sistem diwan (administrasi), kalender Hijriyah, pembagian wilayah, gaji tentara, dan berbagai inovasi administrasi negara", "Hanya kodifikasi hukum Islam", "Pembangunan masjid-masjid besar"],
+        "answer": 1,
+        "explanation": "Umar RA membangun fondasi administrasi negara Islam yang kokoh: sistem diwan (daftar/departemen), penetapan kalender Hijriyah (mulai 638 M), pembagian wilayah dengan gubernur, penggajian tentara, baitul maal (kas negara), dan lainnya."
+      },
+      {
+        "q": "Peristiwa 'Tahkim' (arbitrase) yang menyebabkan perpecahan besar pertama dalam Islam terjadi pada masa?",
+        "options": ["Abu Bakar RA", "Umar bin Khattab RA", "Utsman bin Affan RA", "Ali bin Abi Thalib RA"],
+        "answer": 3,
+        "explanation": "Tahkim Siffin terjadi pada masa Ali bin Abi Thalib RA setelah Perang Siffin (657 M). Arbitrase antara Ali dan Muawiyah mengakibatkan keluarnya kelompok Khawarij dari pasukan Ali, yang menjadi awal perpecahan politik besar dalam Islam."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'Ashabul Ukhdud' yang disebut dalam Al-Quran (QS. Al-Buruj)?",
+        "options": ["Sahabat Nabi SAW yang pertama masuk Islam", "Kaum beriman yang dibakar hidup-hidup dalam parit oleh penguasa zalim karena mempertahankan iman mereka", "Pejuang Islam dalam Perang Badar", "Penduduk Madinah yang menyambut Nabi SAW"],
+        "answer": 1,
+        "explanation": "Ashabul Ukhdud adalah kaum beriman (dalam sejarah pra-Islam, diyakini di Yaman atau Najran) yang dibakar hidup-hidup dalam parit (ukhdud) oleh raja zalim karena tidak mau meninggalkan keimanan mereka kepada Allah."
+      },
+      {
+        "q": "Apa keistimewaan penulisan sirah oleh Ibnu Hisyam dibanding sirah-sirah lainnya?",
+        "options": ["Ditulis paling awal sehingga paling otoritatif", "Merupakan ringkasan dan penyuntingan dari sirah Ibnu Ishaq (gurunya), dengan membuang riwayat yang dianggap lemah atau tidak relevan", "Ditulis berdasarkan pengalaman pribadi penulis", "Hanya memuat kisah perang-perang Nabi SAW"],
+        "answer": 1,
+        "explanation": "Sirah Ibnu Hisyam (w. 218 H) adalah versi yang sampai kepada kita dari sirah Ibnu Ishaq (w. 150 H), yang merupakan sirah paling awal. Ibnu Hisyam menyunting dengan menghilangkan beberapa bagian dan menambahkan penjelasan. Sirah Ibnu Ishaq asli tidak sampai secara utuh."
+      },
+      {
+        "q": "Apa peran 'Darul Arqam' dalam dakwah fase awal Islam di Makkah?",
+        "options": ["Masjid pertama yang dibangun di Makkah", "Rumah Arqam bin Abi Arqam yang menjadi pusat pertemuan dan pendidikan Muslim secara rahasia pada fase awal dakwah", "Tempat penyimpanan wahyu Al-Quran", "Rumah Khadijah RA sebagai markas dakwah"],
+        "answer": 1,
+        "explanation": "Darul Arqam (rumah Arqam bin Abi Arqam) adalah pusat dakwah sir (rahasia) pada fase awal Islam di Makkah, tempat Nabi SAW mengajarkan Islam kepada para pemeluk awal secara tersembunyi sebelum dakwah dibuka secara terang-terangan."
+      },
+      {
+        "q": "Apa yang disebut 'Baiat Al-Aqabah Al-Kubra' dalam sejarah Islam?",
+        "options": ["Baiat seluruh sahabat kepada Abu Bakar", "Baiat kedua di Aqabah oleh 70+ orang Madinah yang menjadi landasan hijrah dan perlindungan bagi Nabi SAW", "Baiat pertama kepada Nabi SAW di Makkah", "Baiat kepada Ali bin Abi Thalib"],
+        "answer": 1,
+        "explanation": "Baiat Aqabah Kubra (Kedua) dilakukan sekitar 73 pria dan 2 wanita dari Madinah yang berjanji melindungi Nabi SAW seperti melindungi diri sendiri. Ini menjadi landasan resmi hijrah Nabi SAW ke Madinah."
+      },
+      {
+        "q": "Dalam kajian sirah, apa yang dimaksud dengan peristiwa 'Shadr' (pembedahan dada) Nabi SAW?",
+        "options": ["Operasi bedah medis di zaman modern", "Peristiwa malaikat Jibril membelah dada Nabi SAW untuk membersihkan hati beliau, terjadi beberapa kali: waktu kecil dan sebelum Isra Mi'raj", "Nama penyakit yang pernah diderita Nabi SAW", "Peristiwa metaforis yang dilebih-lebihkan oleh perawi"],
+        "answer": 1,
+        "explanation": "Shadr Al-Shadr (pembelahan dada) adalah mukjizat nyata yang diriwayatkan dalam hadits shahih. Terjadi pertama kali saat Nabi SAW kecil bersama Halimah As-Sa'diyah, dan sebelum Isra Mi'raj. Jibril membersihkan hati dari bagian syaitan dengan hikmah dan iman."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'Sahifah' dalam konteks penulisan hadits dan sirah pertama?",
+        "options": ["Bab dalam kitab-kitab klasik", "Lembaran atau naskah tulisan awal yang memuat hadits atau sejarah, seperti Sahifah Hammam bin Munabbih", "Nama lain untuk surat dalam Al-Quran", "Cara Nabi SAW menyampaikan wahyu"],
+        "answer": 1,
+        "explanation": "Sahifah adalah lembaran tulisan awal. Sahifah Hammam bin Munabbih (murid Abu Hurairah, w. sekitar 101 H) adalah naskah hadits tertua yang ditemukan, membuktikan penulisan hadits dimulai sejak masa sahabat dan tabi'in awal."
+      },
+      {
+        "q": "Fitnah Kubra (Fitnah Besar Pertama) dalam sejarah Islam dimulai oleh peristiwa?",
+        "options": ["Perang Badar", "Pembunuhan Utsman bin Affan RA yang memicu konflik Ali vs Muawiyah", "Penaklukan Persia", "Wafatnya Nabi SAW"],
+        "answer": 1,
+        "explanation": "Fitnah Kubra dimulai dengan pembunuhan Utsman bin Affan RA (656 M) oleh pemberontak. Ini memicu konflik antara pendukung Ali bin Abi Thalib dan Muawiyah bin Abi Sufyan, menghasilkan Perang Jamal, Perang Siffin, dan munculnya Khawarij."
+      },
+      {
+        "q": "Mengapa masa pemerintahan Umar bin Abdul Aziz (Umar II dari Bani Umayyah) dianggap istimewa dalam sejarah Islam?",
+        "options": ["Ia memperluas wilayah Islam paling jauh", "Ia melakukan reformasi besar: menghapus praktik mencela Ali di mimbar, mengembalikan tanah rakyat yang dirampas, dan menjadi contoh pemerintahan adil sehingga disejajarkan dengan Khulafaur Rasyidin", "Ia membangun Masjidil Haram yang ada sekarang", "Ia menyatukan kembali seluruh Muslim setelah perpecahan"],
+        "answer": 1,
+        "explanation": "Umar bin Abdul Aziz (99-101 H) dikenal sebagai khalifah Umayyah paling adil: menghapus tradisi mencela Ali RA di khutbah, mengembalikan harta rakyat, hidup zuhud, mendistribusikan kekayaan hingga tidak ada yang layak menerima zakat. Beberapa ulama menyebutnya sebagai 'Khulafaur Rasyidin kelima'."
+      }
+    ]
+  }
+}

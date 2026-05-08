@@ -968,11 +968,19 @@ func (h *Handler) Sitemap(w http.ResponseWriter, r *http.Request) {
 		"/kiblat",
 		"/hisab",
 		"/quran",
+		"/quiz",
 	}
 
 	surahs, err := h.contentStore.QuranSurahs(r.Context())
 	if err != nil {
 		log.Printf("sitemap: quran surahs: %v", err)
+		http.Error(w, "failed to generate sitemap", http.StatusInternalServerError)
+		return
+	}
+
+	quizCats, err := h.contentStore.QuizCategories(r.Context())
+	if err != nil {
+		log.Printf("sitemap: quiz categories: %v", err)
 		http.Error(w, "failed to generate sitemap", http.StatusInternalServerError)
 		return
 	}
@@ -992,6 +1000,11 @@ func (h *Handler) Sitemap(w http.ResponseWriter, r *http.Request) {
 			siteURL, s.Number)
 	}
 
+	for _, c := range quizCats {
+		fmt.Fprintf(w, "  <url><loc>%s/quiz/%s</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>\n",
+			siteURL, c.Slug)
+	}
+
 	fmt.Fprint(w, "</urlset>\n")
 }
 
@@ -1003,7 +1016,7 @@ func (h *Handler) LLMsTxt(w http.ResponseWriter, r *http.Request) {
 
 Author: srmdn
 Language: id
-Topics: Al-Quran, dzikir, doa Islam, jadwal shalat, Asmaul Husna, kiblat, kalender Hijriyah
+Topics: Al-Quran, dzikir, doa Islam, jadwal shalat, Asmaul Husna, kiblat, kalender Hijriyah, quiz Islam
 Content-Type: Islamic reference tools and content
 Update-Cadence: irregular
 
@@ -1016,6 +1029,17 @@ Update-Cadence: irregular
 - /asmaul-husna: 99 Asmaul Husna dengan makna
 - /kiblat: Penunjuk arah kiblat berbasis GPS
 - /hisab: Kalender dan konversi Hijriyah-Masehi
+- /quiz: Quiz Islami interaktif dengan leaderboard bersama
+
+## Quiz Categories
+- /quiz/aqidah: Aqidah dan tauhid
+- /quiz/rukun-islam: Rukun Islam dan ibadah wajib
+- /quiz/alquran: Al-Quran dan ilmu Al-Quran
+- /quiz/hadits: Hadits dan ilmu hadits
+- /quiz/sirah: Sirah Nabawiyah
+- /quiz/fiqh: Fiqh dan hukum Islam
+- /quiz/sejarah-islam: Sejarah Islam
+- /quiz/akhlak: Akhlak dan adab Islami
 
 ## About
 islami.click adalah referensi ibadah harian untuk Muslim Indonesia.

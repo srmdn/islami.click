@@ -1,0 +1,284 @@
+{
+  "slug": "alquran",
+  "label": "Al-Quran",
+  "description": "Surah, ayat, tajwid, dan kandungan Al-Quran",
+  "display_order": 3,
+  "questions": {
+    "basic": [
+      {
+        "q": "Berapa jumlah surah dalam Al-Quran?",
+        "options": ["112", "113", "114", "115"],
+        "answer": 2,
+        "explanation": "Al-Quran terdiri dari 114 surah, dimulai dari Al-Fatihah hingga An-Nas."
+      },
+      {
+        "q": "Surah pertama dalam Al-Quran adalah?",
+        "options": ["Al-Baqarah", "Al-Fatihah", "Al-Ikhlas", "Al-Alaq"],
+        "answer": 1,
+        "explanation": "Surah pertama dalam Al-Quran adalah Al-Fatihah, yang terdiri dari 7 ayat dan disebut Ummul Kitab (induk Al-Quran)."
+      },
+      {
+        "q": "Surah terpanjang dalam Al-Quran adalah?",
+        "options": ["Ali Imran", "Al-Baqarah", "An-Nisa", "Al-Maidah"],
+        "answer": 1,
+        "explanation": "Surah Al-Baqarah adalah surah terpanjang dalam Al-Quran, terdiri dari 286 ayat."
+      },
+      {
+        "q": "Berapa jumlah juz dalam Al-Quran?",
+        "options": ["25", "28", "30", "32"],
+        "answer": 2,
+        "explanation": "Al-Quran dibagi menjadi 30 juz untuk memudahkan pembacaan, terutama di bulan Ramadhan."
+      },
+      {
+        "q": "Surah manakah yang disebut 'jantung Al-Quran'?",
+        "options": ["Al-Ikhlas", "Al-Fatihah", "Yasin", "Al-Kahfi"],
+        "answer": 2,
+        "explanation": "Surah Yasin disebut 'qalbul Quran' (jantung Al-Quran) berdasarkan hadits Nabi SAW."
+      },
+      {
+        "q": "Wahyu pertama yang diturunkan kepada Nabi Muhammad SAW adalah surah?",
+        "options": ["Al-Fatihah", "Al-Baqarah", "Al-Muddatstsir", "Al-Alaq ayat 1-5"],
+        "answer": 3,
+        "explanation": "Wahyu pertama adalah QS. Al-Alaq ayat 1-5, diturunkan di Gua Hira pada bulan Ramadhan tahun ke-40 Nabi SAW."
+      },
+      {
+        "q": "Berapa jumlah ayat dalam surah Al-Fatihah?",
+        "options": ["5", "6", "7", "8"],
+        "answer": 2,
+        "explanation": "Surah Al-Fatihah terdiri dari 7 ayat."
+      },
+      {
+        "q": "Surah terakhir dalam Al-Quran adalah?",
+        "options": ["Al-Ikhlas", "Al-Falaq", "An-Nas", "Al-Kautsar"],
+        "answer": 2,
+        "explanation": "Surah terakhir dalam Al-Quran (urutan mushaf) adalah An-Nas, terdiri dari 6 ayat."
+      },
+      {
+        "q": "Ayat terpanjang dalam Al-Quran disebut ayat?",
+        "options": ["Ayat Kursi", "Ayat Mudayanah", "Ayat Taubat", "Ayat Cahaya"],
+        "answer": 1,
+        "explanation": "Ayat Mudayanah (QS. Al-Baqarah: 282) tentang pencatatan hutang-piutang adalah ayat terpanjang dalam Al-Quran."
+      },
+      {
+        "q": "Surah manakah yang tidak diawali dengan basmalah?",
+        "options": ["Al-Ikhlas", "Al-Baqarah", "At-Taubah", "Al-Falaq"],
+        "answer": 2,
+        "explanation": "Surah At-Taubah (Al-Bara'ah) adalah satu-satunya surah yang tidak diawali dengan basmalah, karena isinya dimulai dengan pernyataan perang terhadap kaum musyrik."
+      },
+      {
+        "q": "Ayat Kursi terdapat dalam surah?",
+        "options": ["Ali Imran ayat 255", "Al-Baqarah ayat 255", "An-Nisa ayat 255", "Al-Maidah ayat 255"],
+        "answer": 1,
+        "explanation": "Ayat Kursi adalah QS. Al-Baqarah ayat 255, disebut ayat paling agung dalam Al-Quran."
+      },
+      {
+        "q": "Surah Al-Ikhlas memiliki berapa ayat?",
+        "options": ["3", "4", "5", "6"],
+        "answer": 1,
+        "explanation": "Surah Al-Ikhlas terdiri dari 4 ayat. Surah ini menegaskan keesaan Allah SWT dan disebut setara sepertiga Al-Quran."
+      },
+      {
+        "q": "Wahyu Al-Quran selesai diturunkan selama berapa tahun?",
+        "options": ["13 tahun", "17 tahun", "23 tahun", "25 tahun"],
+        "answer": 2,
+        "explanation": "Al-Quran diturunkan secara berangsur-angsur selama sekitar 23 tahun (13 tahun di Makkah, 10 tahun di Madinah)."
+      },
+      {
+        "q": "Surah yang dibaca dalam setiap rakaat shalat adalah?",
+        "options": ["Al-Ikhlas", "Al-Fatihah", "Al-Baqarah", "Al-Falaq"],
+        "answer": 1,
+        "explanation": "Al-Fatihah wajib dibaca dalam setiap rakaat shalat berdasarkan hadits Nabi SAW."
+      },
+      {
+        "q": "Berapa jumlah total ayat dalam Al-Quran?",
+        "options": ["5.000", "5.666", "6.236", "7.000"],
+        "answer": 2,
+        "explanation": "Al-Quran terdiri dari 6.236 ayat (menurut hitungan yang umum dipakai, termasuk basmalah di awal setiap surah kecuali At-Taubah)."
+      }
+    ],
+    "intermediate": [
+      {
+        "q": "Apa yang dimaksud dengan surah Makkiyah?",
+        "options": ["Surah yang diturunkan di kota Makkah saja", "Surah yang diturunkan sebelum hijrah Nabi ke Madinah, baik di Makkah maupun tempat lain", "Surah yang berisi hukum-hukum Islam", "Surah yang panjang dan terdiri dari banyak ayat"],
+        "answer": 1,
+        "explanation": "Makkiyah adalah surah yang diturunkan sebelum hijrah Nabi ke Madinah (bukan hanya di kota Makkah). Ciri khasnya: pendek, tema tauhid dan akhlak, sering diawali 'ya ayyuhan naas'."
+      },
+      {
+        "q": "Ilmu tajwid mempelajari?",
+        "options": ["Makna dan tafsir Al-Quran", "Tata cara membaca Al-Quran dengan benar sesuai makhraj dan sifat huruf", "Hafalan Al-Quran", "Penulisan mushaf Al-Quran"],
+        "answer": 1,
+        "explanation": "Tajwid adalah ilmu tentang tata cara membaca Al-Quran yang benar, meliputi makhraj huruf (tempat keluarnya huruf), sifat huruf, mad, waqaf, dan hukum-hukum bacaan lainnya."
+      },
+      {
+        "q": "Hukum bacaan 'nun mati bertemu ba' adalah?",
+        "options": ["Izhar halqi", "Idgham bighunnah", "Iqlab", "Ikhfa haqiqi"],
+        "answer": 2,
+        "explanation": "Nun mati atau tanwin bertemu huruf 'ba' hukumnya iqlab, yaitu nun mati diubah menjadi mim dengan disertai ghunnah (dengung)."
+      },
+      {
+        "q": "Surah Al-Kahfi dianjurkan dibaca pada hari?",
+        "options": ["Senin", "Selasa", "Jumat", "Sabtu"],
+        "answer": 2,
+        "explanation": "Membaca Surah Al-Kahfi pada hari Jumat hukumnya sunnah berdasarkan hadits shahih. Barang siapa membacanya akan mendapat cahaya antara dua Jumat."
+      },
+      {
+        "q": "Muqattha'at adalah?",
+        "options": ["Ayat-ayat hukum dalam Al-Quran", "Huruf-huruf terpisah di awal beberapa surah seperti Alif Lam Mim", "Nama lain Al-Quran", "Bacaan yang harus diwaqafkan"],
+        "answer": 1,
+        "explanation": "Muqattha'at (huruf-huruf fawatihus suwar) adalah huruf-huruf terpisah di awal beberapa surah seperti Alif Lam Mim (Al-Baqarah), Ha Mim (Ghafir), dan lainnya. Maknanya hanya Allah yang mengetahui (menurut banyak ulama)."
+      },
+      {
+        "q": "Tafsir bil ma'tsur adalah tafsir yang bersumber dari?",
+        "options": ["Pendapat dan ijtihad ulama modern", "Al-Quran itu sendiri, hadits Nabi, dan pendapat sahabat", "Logika dan akal semata", "Ilmu sains dan teknologi"],
+        "answer": 1,
+        "explanation": "Tafsir bil ma'tsur (riwayat) adalah metode tafsir yang bersumber dari Al-Quran (menafsirkan Al-Quran dengan Al-Quran), hadits Nabi SAW, dan pendapat para sahabat."
+      },
+      {
+        "q": "Berapa jumlah huruf hijaiyah yang ada dalam Al-Quran?",
+        "options": ["26", "28", "29", "30"],
+        "answer": 2,
+        "explanation": "Huruf hijaiyah berjumlah 29 huruf, dari Alif hingga Ya. Semua huruf ini terdapat dalam Al-Quran."
+      },
+      {
+        "q": "Surah yang berisi kisah Nabi Yusuf AS secara lengkap adalah?",
+        "options": ["Surah Ibrahim", "Surah Yusuf", "Surah Al-Anbiya", "Surah Al-Kahfi"],
+        "answer": 1,
+        "explanation": "Surah Yusuf (surah ke-12) berisi kisah lengkap Nabi Yusuf AS mulai dari mimpinya, dijual sebagai budak, diuji oleh Zulaikha, hingga menjadi pembesar Mesir."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'waqaf lazim' dalam ilmu tajwid?",
+        "options": ["Tempat boleh berhenti", "Tempat lebih baik tidak berhenti", "Tempat wajib berhenti karena jika dilanjutkan maknanya berubah", "Tempat tidak boleh berhenti sama sekali"],
+        "answer": 2,
+        "explanation": "Waqaf lazim (tanda mim/mad) adalah tempat yang wajib berhenti karena jika diteruskan dapat mengubah atau merusak makna ayat."
+      },
+      {
+        "q": "Nuzulul Quran diperingati setiap tanggal?",
+        "options": ["1 Ramadhan", "10 Ramadhan", "17 Ramadhan", "27 Ramadhan"],
+        "answer": 2,
+        "explanation": "Nuzulul Quran diperingati pada 17 Ramadhan, memperingati turunnya wahyu pertama Al-Quran kepada Nabi Muhammad SAW di Gua Hira."
+      },
+      {
+        "q": "Surah manakah yang memiliki dua basmalah (di awal dan di tengah)?",
+        "options": ["Al-Fatihah", "An-Naml", "At-Taubah", "Al-Baqarah"],
+        "answer": 1,
+        "explanation": "Surah An-Naml memiliki dua basmalah: di awal surah dan di ayat 30 (surat Nabi Sulaiman kepada Ratu Balqis yang diawali dengan basmalah)."
+      },
+      {
+        "q": "Mushaf Al-Quran pertama kali dikumpulkan secara resmi pada masa?",
+        "options": ["Nabi Muhammad SAW", "Abu Bakar As-Shiddiq", "Umar bin Khattab", "Ali bin Abi Thalib"],
+        "answer": 1,
+        "explanation": "Pengumpulan Al-Quran dalam satu mushaf pertama kali dilakukan pada masa Khalifah Abu Bakar atas usulan Umar bin Khattab, setelah banyak penghafal Al-Quran gugur dalam Perang Yamamah."
+      },
+      {
+        "q": "Mad thabi'i (mad asli) memiliki panjang bacaan?",
+        "options": ["1 harakat", "2 harakat", "4 harakat", "6 harakat"],
+        "answer": 1,
+        "explanation": "Mad thabi'i (mad asli) dipanjangkan 2 harakat (satu alif). Ini adalah panjang dasar sebelum ada faktor yang memanjangkan lebih."
+      },
+      {
+        "q": "Surah Al-Alaq mengandung perintah pertama yang diwahyukan yaitu?",
+        "options": ["Perintah shalat", "Perintah berpuasa", "Perintah membaca (iqra)", "Perintah berhaji"],
+        "answer": 2,
+        "explanation": "Perintah pertama dalam wahyu yang diturunkan adalah 'Iqra' (bacalah) dalam QS. Al-Alaq ayat 1, menegaskan pentingnya ilmu dalam Islam."
+      },
+      {
+        "q": "Apa nama ilmu yang mempelajari sebab-sebab turunnya ayat Al-Quran?",
+        "options": ["Ulumul Hadits", "Asbabun Nuzul", "Fiqhul Quran", "Tafsir Isyari"],
+        "answer": 1,
+        "explanation": "Asbabun Nuzul adalah ilmu yang mempelajari sebab-sebab turunnya ayat Al-Quran. Mengetahui asbabun nuzul membantu memahami konteks dan makna ayat secara lebih tepat."
+      }
+    ],
+    "advanced": [
+      {
+        "q": "Apa yang dimaksud dengan 'nasikh' dan 'mansukh' dalam ilmu Al-Quran?",
+        "options": ["Ayat Makkiyah dan Madaniyah", "Ayat yang menghapus hukum (nasikh) dan ayat yang dihapus hukumnya (mansukh)", "Ayat muhkam dan mutasyabih", "Ayat yang jelas dan yang tersembunyi maknanya"],
+        "answer": 1,
+        "explanation": "Naskh adalah penghapusan hukum syariat yang ditetapkan teks sebelumnya oleh teks yang datang kemudian. Nasikh adalah teks yang menghapus, mansukh adalah teks yang dihapus. Para ulama berbeda pendapat tentang jumlah dan ruang lingkup naskh."
+      },
+      {
+        "q": "Penyusunan mushaf Al-Quran secara resmi dengan satu rasm (tulisan) pada masa Utsman bin Affan dilatar-belakangi oleh?",
+        "options": ["Keinginan pribadi Utsman", "Perbedaan qiraat yang menimbulkan perselisihan antar daerah", "Perintah langsung dari Nabi SAW", "Permintaan kaum non-Muslim"],
+        "answer": 1,
+        "explanation": "Khalifah Utsman bin Affan menyatukan mushaf (rasm Utsmani) karena perbedaan cara baca (qiraat) di berbagai wilayah Islam menimbulkan perselisihan dan kekhawatiran perpecahan umat."
+      },
+      {
+        "q": "Qiraat sab'ah mengacu kepada?",
+        "options": ["7 cara menulis mushaf", "7 imam qiraat yang mutawatir: Nafi, Ibnu Katsir, Abu Amr, Ibnu Amir, Ashim, Hamzah, Al-Kisai", "7 jenis tafsir Al-Quran", "7 bahasa yang dipakai dalam Al-Quran"],
+        "answer": 1,
+        "explanation": "Qiraat sab'ah adalah 7 bacaan Al-Quran yang mutawatir, dinisbatkan kepada 7 imam qiraat: Nafi' (Madinah), Ibnu Katsir (Makkah), Abu Amr (Bashrah), Ibnu Amir (Syam), Ashim (Kufah), Hamzah (Kufah), Al-Kisai (Kufah)."
+      },
+      {
+        "q": "Metode tafsir isyari (sufistik) dikritik oleh ulama karena?",
+        "options": ["Terlalu menggunakan riwayat-riwayat hadits", "Menafsirkan ayat secara zhahir tanpa makna batin", "Bisa bertentangan dengan makna zhahir teks tanpa dalil yang valid jika tidak hati-hati", "Hanya dipakai oleh ulama fiqh"],
+        "answer": 2,
+        "explanation": "Tafsir isyari mengungkap makna batin ayat. Ulama mensyaratkan: (1) tidak bertentangan dengan makna zhahir, (2) ada dalil pendukung, (3) tidak mengklaim itu satu-satunya makna. Tanpa syarat ini, tafsir isyari rentan terhadap penyimpangan."
+      },
+      {
+        "q": "Apa perbedaan antara 'tafsir' dan 'takwil' dalam tradisi ilmu Al-Quran?",
+        "options": ["Tidak ada perbedaan keduanya sinonim", "Tafsir: penjelasan makna lahir teks berdasarkan riwayat; takwil: mengalihkan makna dari zhahir ke makna yang lebih sesuai konteks dengan didukung dalil", "Tafsir untuk para ulama, takwil untuk orang awam", "Takwil hanya digunakan dalam ilmu fiqh"],
+        "answer": 1,
+        "explanation": "Tafsir umumnya merujuk penjelasan makna ayat berdasarkan riwayat (atsar). Takwil adalah mengalihkan lafaz dari makna zhahirnya ke makna yang lebih jauh namun didukung dalil yang kuat. Para ulama berbeda dalam batasan kedua istilah ini."
+      },
+      {
+        "q": "I'jaz Al-Quran dari sisi 'i'jaz lughawi' (keajaiban bahasa) berarti?",
+        "options": ["Al-Quran mengandung ramalan ilmu pengetahuan modern", "Al-Quran memiliki keindahan bahasa dan uslub yang melampaui kemampuan manusia Arab terbaik sekalipun", "Al-Quran menggunakan bahasa yang mudah dipahami semua orang", "Al-Quran ditulis tanpa tanda baca awalnya"],
+        "answer": 1,
+        "explanation": "I'jaz lughawi adalah salah satu aspek kemukjizatan Al-Quran: keindahan, kefasihan, dan keunikan bahasanya melampaui kemampuan sastrawan Arab terbaik, sehingga tantangan Allah untuk membuat yang serupa tidak pernah terpenuhi."
+      },
+      {
+        "q": "Ulumul Quran mencakup ilmu-ilmu apa saja?",
+        "options": ["Hanya tajwid dan hafalan", "Hanya tafsir dan asbabun nuzul", "Berbagai ilmu yang berkaitan dengan Al-Quran: asbabun nuzul, makkiyah-madaniyah, naskh-mansukh, muhkam-mutasyabih, qiraat, dan lainnya", "Hanya fiqh dan aqidah yang bersumber dari Al-Quran"],
+        "answer": 2,
+        "explanation": "Ulumul Quran adalah disiplin ilmu yang membahas seluruh aspek yang berkaitan dengan Al-Quran: sejarah turunnya, pengumpulan, penulisan, qiraat, tafsir, asbabun nuzul, makkiyah-madaniyah, naskh-mansukh, dan lain-lain."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'ayat muhkam' dan 'ayat mutasyabih'?",
+        "options": ["Ayat pendek dan ayat panjang", "Ayat yang maknanya jelas dan pasti vs ayat yang maknanya mengandung kesamaran atau kemungkinan beberapa penafsiran", "Ayat Makkiyah dan ayat Madaniyah", "Ayat tentang hukum dan ayat tentang kisah"],
+        "answer": 1,
+        "explanation": "Muhkam: ayat yang maknanya jelas, tegas, tidak menimbulkan kesamaran. Mutasyabih: ayat yang mengandung kesamaran atau kemungkinan beberapa penafsiran, seperti ayat sifat Allah. QS. Ali Imran: 7 menyebut keduanya."
+      },
+      {
+        "q": "Tafsir At-Thabari (Jami' Al-Bayan) dikenal sebagai?",
+        "options": ["Tafsir modern pertama", "Tafsir bil ra'yi terbesar", "Salah satu tafsir bil ma'tsur paling komprehensif dalam literatur Islam klasik", "Tafsir yang hanya fokus pada aspek hukum"],
+        "answer": 2,
+        "explanation": "Tafsir Jami' Al-Bayan 'an Ta'wil Al-Quran karya Imam Muhammad bin Jarir At-Thabari (w. 310 H) adalah salah satu tafsir bil ma'tsur paling monumental, mengutip ribuan riwayat dari Nabi SAW, sahabat, dan tabi'in."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'al-ahruf al-sab'ah' (tujuh huruf) dalam hadits tentang Al-Quran?",
+        "options": ["7 surah pertama Al-Quran", "7 huruf hijaiyah yang paling sering muncul", "Rukhsah (kemudahan) bacaan Al-Quran dalam 7 lajnah dialek Arab yang diizinkan Allah", "7 cara menulis mushaf yang berbeda"],
+        "answer": 2,
+        "explanation": "Hadits 'Al-Quran diturunkan atas tujuh huruf' (HR. Bukhari-Muslim) merujuk pada rukhsah bacaan dalam 7 lahjah/dialek bahasa Arab yang berbeda untuk memudahkan masyarakat Arab yang beragam. Ulama berbeda pendapat tentang makna persisnya."
+      },
+      {
+        "q": "Surat Al-Fatihah disebut 'As-Sab'ul Matsani' yang berarti?",
+        "options": ["Tujuh surah terpanjang", "Tujuh ayat yang diulang-ulang (dibaca di setiap rakaat shalat)", "Tujuh nama Al-Quran", "Tujuh kategori doa"],
+        "answer": 1,
+        "explanation": "As-Sab'ul Matsani berarti 'tujuh yang diulang-ulang', merujuk pada Al-Fatihah yang memiliki 7 ayat dan selalu diulang dalam setiap rakaat shalat. Disebutkan dalam QS. Al-Hijr: 87."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'ijaz al-'adadi' (keajaiban numerik) Al-Quran dalam kajian modern?",
+        "options": ["Jumlah surah yang tepat 114", "Temuan keseimbangan jumlah kata dan huruf tertentu dalam Al-Quran yang dianggap sebagai tanda kemukjizatan", "Cara penomoran ayat yang konsisten", "Jumlah juz yang tepat 30"],
+        "answer": 1,
+        "explanation": "I'jaz 'adadi adalah kajian modern tentang keseimbangan numerik Al-Quran, seperti kata 'dunia' dan 'akhirat' masing-masing 115 kali, kata 'malaikat' dan 'syaitan' 88 kali, dll. Sebagian ulama menerima ini sebagai bagian i'jaz, sebagian bersikap hati-hati."
+      },
+      {
+        "q": "Perbedaan rasm Utsmani dan rasm imla'i dalam penulisan mushaf adalah?",
+        "options": ["Rasm Utsmani lebih baru dari rasm imla'i", "Rasm Utsmani: penulisan sesuai mushaf asli zaman Utsman yang kadang berbeda dari kaidah ejaan Arab baku; rasm imla'i: ejaan Arab standar modern", "Rasm imla'i lebih sering dipakai di seluruh dunia Islam", "Tidak ada perbedaan keduanya sama saja"],
+        "answer": 1,
+        "explanation": "Rasm Utsmani adalah penulisan mushaf mengikuti cara penulisan sahabat di zaman Utsman, yang kadang berbeda dari kaidah ejaan Arab (imla'i) karena aspek historis dan preservasi wahyu. Para ulama mewajibkan penggunaan rasm Utsmani dalam mushaf resmi."
+      },
+      {
+        "q": "Surah apakah yang dinamakan 'Umm Al-Quran' (induk Al-Quran) selain Al-Fatihah?",
+        "options": ["Al-Baqarah", "Al-Fatihah sudah cukup mewakili keseluruhan Al-Quran sehingga tidak ada surah lain bergelar demikian", "Al-Ikhlas", "Yasin"],
+        "answer": 1,
+        "explanation": "Gelar Umm Al-Quran (dan Umm Al-Kitab) secara khusus hanya disandang oleh Al-Fatihah. Ini karena Al-Fatihah mengandung inti seluruh ajaran Al-Quran: tauhid, ibadah, permohonan hidayah, dan lainnya."
+      },
+      {
+        "q": "Dalam kajian ulumul Quran, apa yang dimaksud dengan 'jam' Al-Quran zaman Abu Bakar berbeda dari standarisasi zaman Utsman?",
+        "options": ["Tidak ada perbedaan antara keduanya", "Abu Bakar: pengumpulan fisik lembaran wahyu ke dalam satu mushaf tanpa menyalin ulang; Utsman: penyalinan ulang dalam satu rasm resmi dan penghancuran naskah yang berbeda", "Utsman hanya mengurutkan surah saja", "Abu Bakar hanya mengumpulkan hafalan lisan"],
+        "answer": 1,
+        "explanation": "Jam' zaman Abu Bakar: mengumpulkan lembaran-lembaran wahyu yang tersebar ke satu tempat (hafalan dan tulisan). Jam' zaman Utsman: menyalin ulang dalam satu rasm (tulisan) resmi, mendistribusikan ke berbagai wilayah, dan membakar naskah yang berbeda rasm untuk mencegah perpecahan."
+      }
+    ]
+  }
+}

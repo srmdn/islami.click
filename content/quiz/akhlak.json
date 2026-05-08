@@ -1,0 +1,278 @@
+{
+  "slug": "akhlak",
+  "label": "Akhlak",
+  "description": "Etika Islam, karakter mulia, dan adab dalam kehidupan",
+  "display_order": 8,
+  "questions": {
+    "basic": [
+      {
+        "q": "Akhlak dalam Islam berarti?",
+        "options": ["Tata cara ibadah ritual", "Perilaku dan karakter yang menjadi sifat batin seseorang, terpancar dalam tindakan", "Hukum-hukum fiqh", "Pengetahuan tentang aqidah"],
+        "answer": 1,
+        "explanation": "Akhlak adalah sifat batin (karakter) yang tertanam dalam jiwa, yang dengan mudah dan tanpa dipikir panjang mendorong seseorang untuk melakukan atau meninggalkan suatu perbuatan."
+      },
+      {
+        "q": "Nabi Muhammad SAW diutus salah satunya untuk?",
+        "options": ["Mendirikan kerajaan besar", "Menyempurnakan akhlak mulia", "Menaklukkan bangsa-bangsa lain", "Mengumpulkan harta untuk umatnya"],
+        "answer": 1,
+        "explanation": "Nabi SAW bersabda: 'Sesungguhnya aku diutus untuk menyempurnakan akhlak yang mulia' (HR. Ahmad dan Al-Baihaqi). Ini menegaskan bahwa perbaikan akhlak adalah inti misi kenabian."
+      },
+      {
+        "q": "Sifat apakah yang disebut 'Ummul Akhlak' (induk akhlak) dalam Islam?",
+        "options": ["Sabar", "Ikhlas", "Tawadhu", "Amanah"],
+        "answer": 1,
+        "explanation": "Ikhlas (ketulusan karena Allah semata) sering disebut induk akhlak dalam Islam, karena semua amal baik harus dilandasi ikhlas agar diterima Allah SWT."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'husnuzan' (husnu zhann)?",
+        "options": ["Berprasangka buruk", "Berprasangka baik kepada Allah dan sesama manusia", "Sifat sombong", "Tidak peduli dengan orang lain"],
+        "answer": 1,
+        "explanation": "Husnuzan adalah berbaik sangka: kepada Allah (yakin bahwa semua ketetapan-Nya mengandung kebaikan) dan kepada sesama manusia (tidak mudah mencurigai tanpa bukti nyata)."
+      },
+      {
+        "q": "Lawan dari sifat sombong (takabbur) dalam Islam adalah?",
+        "options": ["Pemarah", "Tawadhu (rendah hati)", "Kikir", "Pengecut"],
+        "answer": 1,
+        "explanation": "Tawadhu (rendah hati) adalah lawan dari takabbur (sombong). Nabi SAW bersabda bahwa tidak akan masuk surga orang yang dalam hatinya ada kesombongan sebesar biji sawi."
+      },
+      {
+        "q": "Menurut Islam, bagaimana seharusnya sikap terhadap tetangga?",
+        "options": ["Tidak perlu peduli selama tidak mengganggu", "Menghormati, tidak mengganggu, dan berbagi kebaikan dengan tetangga", "Hanya bersikap baik jika tetangga juga Muslim", "Menghindari kontak dengan tetangga"],
+        "answer": 1,
+        "explanation": "Islam sangat menekankan hak tetangga. Jibril terus mewasiatkan Nabi SAW tentang tetangga hingga Nabi mengira tetangga akan diberi hak waris (HR. Bukhari-Muslim)."
+      },
+      {
+        "q": "Sifat 'shidq' dalam Islam berarti?",
+        "options": ["Berani", "Jujur dan benar dalam ucapan dan perbuatan", "Sabar dalam cobaan", "Dermawan"],
+        "answer": 1,
+        "explanation": "Shidq (kejujuran) adalah sifat mulia yang mendasar dalam Islam. Nabi SAW bersabda kejujuran membawa kepada kebaikan dan kebaikan membawa ke surga, sedangkan dusta membawa ke neraka (HR. Bukhari-Muslim)."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'amanah' sebagai akhlak Islam?",
+        "options": ["Sifat pengecut", "Dapat dipercaya dalam menjaga titipan, janji, dan tanggung jawab", "Sifat pemalas", "Tidak peduli dengan sekitar"],
+        "answer": 1,
+        "explanation": "Amanah adalah sifat dapat dipercaya: menjaga titipan orang lain, memenuhi janji, dan melaksanakan tanggung jawab dengan sepenuh hati. Ini adalah salah satu sifat wajib para nabi dan ciri orang beriman."
+      },
+      {
+        "q": "Dalam Islam, menjaga lisan (tidak ghibah, fitnah, dll) termasuk akhlak yang?",
+        "options": ["Tidak diperintahkan secara khusus", "Sangat penting dan termasuk hak sesama Muslim yang harus dijaga", "Hanya sunnah kecil saja", "Hanya dianjurkan di depan umum"],
+        "answer": 1,
+        "explanation": "Menjaga lisan sangat ditekankan dalam Islam. Ghibah (membicarakan keburukan orang lain) diharamkan dalam Al-Quran (QS. Al-Hujurat: 12). Nabi SAW bersabda: 'Muslim yang baik adalah yang kaum Muslim selamat dari lisan dan tangannya'."
+      },
+      {
+        "q": "Bagaimana Islam memandang sikap pemaaf?",
+        "options": ["Pemaaf berarti lemah", "Pemaaf adalah akhlak mulia yang sangat dianjurkan, bahkan diganjar pahala besar", "Pemaaf hanya untuk hal kecil", "Tidak perlu memaafkan jika sudah disakiti"],
+        "answer": 1,
+        "explanation": "Islam sangat menganjurkan sikap pemaaf. Al-Quran menyebut: 'Dan balasan suatu kejahatan adalah kejahatan yang serupa, maka barang siapa memaafkan dan berbuat baik, maka pahalanya atas Allah' (QS. Asy-Syura: 40)."
+      },
+      {
+        "q": "Akhlak terhadap Allah yang paling mendasar adalah?",
+        "options": ["Membaca Al-Quran setiap hari", "Tauhid, taat, tawakkal, syukur, dan sabar", "Shalat fardhu saja", "Berpuasa setiap hari"],
+        "answer": 1,
+        "explanation": "Akhlak kepada Allah mencakup: tauhid (mengesakan-Nya), taat perintah-Nya, tawakkal (berserah kepada-Nya), syukur atas nikmat-Nya, dan sabar atas ujian-Nya."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'tawakkal' dalam Islam?",
+        "options": ["Bermalas-malasan dan tidak berusaha", "Berserah diri kepada Allah setelah berusaha semaksimal mungkin", "Mengandalkan orang lain", "Tidak mau bekerja keras"],
+        "answer": 1,
+        "explanation": "Tawakkal adalah berserah dan bertumpu kepada Allah setelah berupaya semaksimal mungkin. Nabi SAW bersabda: 'Ikat dulu untamu, kemudian bertawakkallah kepada Allah' (HR. Tirmidzi)."
+      },
+      {
+        "q": "Apa yang dilarang dalam Islam terkait harta orang lain?",
+        "options": ["Meminjam sesuatu", "Ghasab (merampas atau menggunakan harta orang lain tanpa izin)", "Memberikan hadiah", "Berjual beli yang halal"],
+        "answer": 1,
+        "explanation": "Ghasab (mengambil atau menggunakan harta orang lain secara batil tanpa izin) diharamkan. Termasuk korupsi, pencurian, suap, dan penipuan. Al-Quran melarang memakan harta orang lain dengan cara batil (QS. Al-Baqarah: 188)."
+      },
+      {
+        "q": "Sifat 'wara'' dalam tasawuf dan akhlak Islam berarti?",
+        "options": ["Banyak beribadah di malam hari", "Berhati-hati dan menjauhi hal-hal yang syubhat (meragukan) demi menjaga diri dari yang haram", "Banyak berpuasa sunnah", "Tidak mau bergaul dengan siapapun"],
+        "answer": 1,
+        "explanation": "Wara' adalah sifat berhati-hati dalam menjauhi perkara-perkara syubhat (meragukan kehalalannya) agar tidak terjerumus ke yang haram. Nabi SAW bersabda: 'Tinggalkan apa yang meragukanmu kepada yang tidak meragukanmu'."
+      },
+      {
+        "q": "Bagaimana akhlak Islam mengajarkan sikap terhadap orang tua?",
+        "options": ["Cukup memberikan kebutuhan materi saja", "Birrul walidain: berbakti, menghormati, tidak menyakiti dengan ucapan sekecil apapun", "Menghormati hanya jika mereka Muslim", "Mengikuti semua perintahnya tanpa pengecualian"],
+        "answer": 1,
+        "explanation": "Birrul walidain (berbakti kepada orang tua) adalah kewajiban besar dalam Islam. Allah meletakkan perintah birrul walidain tepat setelah perintah tauhid dalam Al-Quran. Bahkan berkata 'ah' (uff) kepada orang tua pun dilarang (QS. Al-Isra: 23)."
+      }
+    ],
+    "intermediate": [
+      {
+        "q": "Konsep 'ihsan' dalam hadits Jibril adalah?",
+        "options": ["Sekadar melakukan ibadah minimal", "Beribadah kepada Allah seolah melihat-Nya, dan jika tidak bisa, meyakini Allah melihat kita", "Hanya shalat sunnah lebih banyak", "Melakukan semua perintah tanpa memahaminya"],
+        "answer": 1,
+        "explanation": "Ihsan dijelaskan Nabi SAW dalam hadits Jibril: 'Kamu beribadah kepada Allah seolah-olah kamu melihat-Nya. Jika kamu tidak bisa melihat-Nya, sesungguhnya Dia melihatmu' (HR. Bukhari-Muslim). Ini adalah tingkat tertinggi dalam beragama."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'zuhud' dalam akhlak Islam?",
+        "options": ["Miskin dan tidak punya apa-apa", "Tidak terikat hati pada dunia, meskipun memiliki kekayaan; mengutamakan akhirat", "Meninggalkan semua pekerjaan dunia", "Hanya makan sehari sekali"],
+        "answer": 1,
+        "explanation": "Zuhud bukan berarti tidak memiliki harta, melainkan hati yang tidak terikat pada dunia. Seorang kaya yang zuhud lebih baik dari yang faqir karena mengelola harta fi sabilillah. Umar bin Khattab kaya tapi zuhud."
+      },
+      {
+        "q": "Imam Al-Ghazali membagi nafsu manusia menjadi tiga tingkat dalam kitab Ihya Ulum Al-Din. Tingkat yang paling baik adalah?",
+        "options": ["Nafsu ammarah (mendorong kejahatan)", "Nafsu lawwamah (menyesali dosa)", "Nafsu muthmainnah (jiwa yang tenang dan tunduk kepada Allah)", "Nafsu mulhimah"],
+        "answer": 2,
+        "explanation": "Tiga tingkat nafsu: (1) ammarah bis-su' (mendorong ke kejahatan, QS. Yusuf: 53), (2) lawwamah (menyesali dosa, QS. Al-Qiyamah: 2), (3) muthmainnah (jiwa tenteram yang kembali kepada Allah dengan ridha, QS. Al-Fajr: 27-28)."
+      },
+      {
+        "q": "Apa yang membedakan 'akhlak' dari 'adab' dalam tradisi Islam?",
+        "options": ["Tidak ada perbedaan keduanya sinonim", "Akhlak: karakter batin yang lebih dalam dan permanen; adab: perilaku lahiriah dan tata krama yang mencerminkan akhlak", "Adab lebih penting dari akhlak", "Akhlak hanya untuk ulama, adab untuk semua orang"],
+        "answer": 1,
+        "explanation": "Akhlak adalah karakter batin yang mendorong perbuatan secara spontan. Adab adalah tata cara lahiriah dan perilaku yang mencerminkan akhlak tersebut. Adab yang baik adalah buah dari akhlak yang baik. Para ulama menekankan: 'Belajarlah adab sebelum belajar ilmu'."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'haya'' (rasa malu) dalam Islam?",
+        "options": ["Sifat pengecut dan tidak percaya diri", "Sifat mulia yang menahan seseorang dari perbuatan buruk karena rasa malu kepada Allah dan manusia", "Tidak mau tampil di depan umum", "Menolak berbicara dengan lawan jenis"],
+        "answer": 1,
+        "explanation": "Haya' (rasa malu) adalah akhlak mulia yang menahan dari perbuatan yang buruk atau tidak pantas. Nabi SAW bersabda: 'Malu itu seluruhnya baik' dan 'Jika kamu tidak malu, lakukan apa yang kamu mau' (maknanya: jika tidak ada malu, tidak ada penghalang dari dosa)."
+      },
+      {
+        "q": "Ghibah (gossip/membicarakan keburukan orang lain) disamakan dalam Al-Quran dengan?",
+        "options": ["Minum minuman keras", "Memakan daging saudara sendiri yang sudah mati", "Mencuri harta orang lain", "Shalat tanpa wudhu"],
+        "answer": 1,
+        "explanation": "QS. Al-Hujurat: 12 mengungkapkan: 'Apakah ada di antara kamu yang suka memakan daging saudaranya yang sudah mati?' sebagai gambaran ghibah yang sangat menjijikkan, menunjukkan betapa seriusnya dosa ghibah."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'ukhuwah Islamiyah' (persaudaraan Islam)?",
+        "options": ["Persaudaraan hanya untuk sesama anggota organisasi Islam", "Persaudaraan sejati sesama Muslim berdasarkan iman, yang mengharuskan saling mencintai, tolong-menolong, dan tidak menzalimi sesama Muslim", "Hubungan diplomatik antar negara Islam", "Kesamaan madzhab fiqh"],
+        "answer": 1,
+        "explanation": "Ukhuwah Islamiyah dibangun atas dasar iman, bukan darah, suku, atau negara. QS. Al-Hujurat: 10 menyatakan orang-orang mukmin bersaudara. Konsekuensinya: saling mencintai, tolong-menolong, menutup aib, dan tidak saling menzalimi."
+      },
+      {
+        "q": "Sifat 'qana'ah' dalam Islam berarti?",
+        "options": ["Tidak mau bekerja keras", "Merasa cukup dan puas dengan apa yang dimiliki, tanpa tamak terhadap dunia", "Meminta-minta kepada orang lain", "Tidak berusaha meningkatkan diri"],
+        "answer": 1,
+        "explanation": "Qana'ah adalah merasa cukup (ridha) dengan apa yang Allah berikan, tanpa keserakahan. Nabi SAW bersabda: 'Sungguh beruntung orang yang masuk Islam, diberi rezeki yang cukup, dan Allah menjadikannya qana'ah dengan yang diberikan kepadanya' (HR. Muslim)."
+      },
+      {
+        "q": "Apa hubungan antara ilmu dan akhlak dalam Islam?",
+        "options": ["Ilmu dan akhlak tidak berhubungan", "Ilmu tanpa akhlak adalah berbahaya; akhlak adalah buah dari ilmu yang benar. Ulama Islam menekankan: 'Ilmu tanpa adab adalah api'", "Akhlak tidak perlu dipelajari, cukup bawaan lahir", "Ilmu lebih penting dari akhlak"],
+        "answer": 1,
+        "explanation": "Dalam tradisi Islam, adab dan akhlak harus mendahului ilmu: 'Pelajarilah adab sebelum mempelajari ilmu'. Ilmu yang benar akan menghasilkan akhlak yang baik (taqwa). Ilmu tanpa akhlak justru bisa digunakan untuk kejahatan."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'muraqabah' dalam akhlak dan tasawuf Islam?",
+        "options": ["Mengawasi perilaku orang lain", "Kesadaran bahwa Allah selalu mengawasi setiap perbuatan, ucapan, dan niat kita, sehingga mendorong konsistensi dalam kebaikan", "Meditasi tanpa mengingat Allah", "Menghitung amal baik dan buruk"],
+        "answer": 1,
+        "explanation": "Muraqabah adalah kesadaran penuh bahwa Allah SWT senantiasa melihat, mendengar, dan mengetahui segala sesuatu. Ini adalah fondasi ihsan: 'Beribadahlah seolah melihat Allah; jika tidak bisa, sesungguhnya Allah melihatmu'."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'hak-hak sesama Muslim' yang disebutkan Nabi SAW dalam hadits?",
+        "options": ["5 hak: salam, menjenguk sakit, mengantar jenazah, menerima undangan, mendoakan yang bersin", "Hanya 2: salam dan mendoakan", "10 hak yang rumit", "Tidak ada rincian khusus dalam hadits"],
+        "answer": 0,
+        "explanation": "Dalam hadits Bukhari-Muslim: hak Muslim atas Muslim ada 6 (versi lain 5): menjawab salam, menjenguk yang sakit, mengantar jenazah, menerima undangan, mendoakan saudara yang bersin (yarhakamullahu), dan menasihati yang meminta nasihat."
+      },
+      {
+        "q": "Bagaimana Islam memandang 'hasad' (dengki/iri)?",
+        "options": ["Hasad dibolehkan jika wajar", "Hasad diharamkan karena bisa memakan amal baik seperti api memakan kayu bakar", "Hasad hanya makruh", "Hasad tidak ada dalam hati orang beriman"],
+        "answer": 1,
+        "explanation": "Nabi SAW bersabda: 'Jauhilah hasad, karena sesungguhnya hasad memakan amal kebaikan seperti api memakan kayu bakar' (HR. Abu Dawud). Hasad adalah iri yang disertai keinginan agar nikmat orang lain hilang."
+      },
+      {
+        "q": "Apa perbedaan antara 'ghirah' (kecemburuan positif) dan 'hasad' dalam Islam?",
+        "options": ["Tidak ada perbedaan, keduanya buruk", "Ghirah: semangat melindungi kehormatan dan agama yang terpuji; hasad: iri yang menginginkan hilangnya nikmat orang lain yang tercela", "Hasad lebih positif dari ghirah", "Ghirah hanya untuk suami-istri"],
+        "answer": 1,
+        "explanation": "Ghirah terpuji: kecemburuan dalam melindungi kehormatan, agama, dan hak-hak yang syar'i. Ghirah tercela: kecemburuan berlebihan yang zalim. Hasad adalah penyakit hati yang terlarang. Gibthah (ingin nikmat serupa tanpa ingin nikmat orang lain hilang) dibolehkan bahkan dalam hal tertentu."
+      },
+      {
+        "q": "Konsep 'rahmatan lil alamin' dalam akhlak Islam berarti?",
+        "options": ["Islam hanya untuk orang Arab", "Islam dan akhlaknya adalah rahmat bagi seluruh alam semesta, bukan hanya umat Islam", "Hanya kaum Muslim yang bisa mendapat rahmat", "Rahmat hanya untuk orang bertaqwa"],
+        "answer": 1,
+        "explanation": "QS. Al-Anbiya: 107 menyatakan Nabi SAW diutus sebagai 'rahmatan lil alamin' (rahmat bagi seluruh alam). Akhlak Islam yang baik adalah bukti rahmat tersebut: keadilan, kasih sayang, kejujuran berlaku untuk semua manusia bahkan makhluk lainnya."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'istiqamah' sebagai akhlak?",
+        "options": ["Melakukan amal kebaikan sebanyak-banyaknya dalam waktu singkat", "Konsisten dan lurus dalam kebenaran, ketaatan, dan akhlak yang baik sepanjang waktu", "Hanya rajin shalat di bulan Ramadhan", "Berubah-ubah sesuai keadaan"],
+        "answer": 1,
+        "explanation": "Istiqamah adalah konsistensi dalam ketaatan kepada Allah tanpa menyimpang. Nabi SAW bersabda: 'Amalan yang paling dicintai Allah adalah yang paling istiqamah meskipun sedikit' (HR. Bukhari-Muslim)."
+      }
+    ],
+    "advanced": [
+      {
+        "q": "Apa yang dimaksud dengan 'maqamat' dalam tradisi tasawuf Islam?",
+        "options": ["Jabatan spiritual yang diperoleh secara warisan", "Stasiun-stasiun atau tahap-tahap spiritual yang dicapai melalui usaha dan latihan jiwa menuju Allah", "Tempat-tempat suci yang dikunjungi", "Nama-nama Allah yang digunakan dalam dzikir"],
+        "answer": 1,
+        "explanation": "Maqamat (jamak dari maqam) adalah tahapan-tahapan spiritual dalam perjalanan menuju Allah. Urutan umum: taubah, wara', zuhud, faqr (kefakiran spiritual), shabr, tawakkal, ridha. Berbeda dari ahwal (kondisi yang diberikan Allah tanpa usaha)."
+      },
+      {
+        "q": "Apa kritik Imam Al-Ghazali terhadap para filsuf Muslim seperti Ibnu Sina dalam kitab 'Tahafut Al-Falasifah'?",
+        "options": ["Mereka tidak hafal Al-Quran", "Tiga pendapat mereka dianggap kufur: alam kekal (tidak bermula), Allah tidak mengetahui hal-hal parsial, dan tidak adanya kebangkitan jasad", "Mereka menulis dalam bahasa Yunani", "Mereka tidak pernah shalat"],
+        "answer": 1,
+        "explanation": "Al-Ghazali mengkritisi para filsuf dalam Tahafut Al-Falasifah: menganggap tiga pendapat mereka kafir (qadamnya alam, ketidaktahuan Allah tentang juz'iyyat, tidak adanya kebangkitan jasadi) dan tujuh belas pendapat lainnya sebagai bid'ah."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'tazkiyatun nafs' dalam Islam?",
+        "options": ["Membersihkan tempat ibadah", "Penyucian jiwa dari penyakit-penyakit hati melalui muhasabah, ibadah, dan melawan hawa nafsu", "Menghafal Al-Quran", "Memberikan sedekah sebanyak-banyaknya"],
+        "answer": 1,
+        "explanation": "Tazkiyatun nafs adalah proses membersihkan dan mensucikan jiwa dari penyakit hati (hasad, riya, kibr, dll.) dan mengisinya dengan sifat-sifat terpuji melalui muhasabah (introspeksi), ibadah yang khusyu', dan perjuangan melawan nafsu."
+      },
+      {
+        "q": "Apa perbedaan antara 'khauf' (takut) dan 'raja'' (harap) dalam akhlak kepada Allah?",
+        "options": ["Khauf lebih utama dari raja' secara mutlak", "Raja' lebih utama secara mutlak", "Keduanya harus seimbang dalam kondisi normal; khauf didahulukan saat lalai, raja' didahulukan saat berputus asa dari rahmat Allah", "Tidak ada perbedaan pentingnya"],
+        "answer": 2,
+        "explanation": "Ibnu Qayyim Al-Jauziyyah: seorang mukmin harus seperti burung dengan dua sayap khauf dan raja'; jika salah satu hilang ia tak bisa terbang. Seimbangkan keduanya; saat cenderung lalai, perkuat khauf; saat berputus asa dari rahmat, perkuat raja'."
+      },
+      {
+        "q": "Konsep 'fana'' dalam tasawuf (seperti pada Al-Hallaj dan Al-Bistami) dikritisi ulama karena?",
+        "options": ["Karena menganggap Allah terlalu jauh", "Ungkapan-ungkapan syatahat (kata-kata dalam kondisi ekstase) bisa mengarah pada paham hulul (Allah menitis ke dalam manusia) atau ittihad (menyatunya hamba dengan Allah) yang bertentangan dengan tauhid", "Karena tidak ada dalilnya sama sekali", "Karena hanya untuk kalangan tertentu saja"],
+        "answer": 1,
+        "explanation": "Fana' (peleburan diri) dan ungkapan seperti 'Ana Al-Haqq' (Aku adalah Al-Haq) Al-Hallaj dikritisi karena berpotensi mengarah pada hulul atau ittihad yang bertentangan dengan tauhid. Ulama seperti Ibnu Taimiyah mengkritisi keras konsep ini."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'muhasabah' sebagai amalan akhlak?",
+        "options": ["Menghitung kekayaan untuk zakat", "Introspeksi diri: menghitung, mengevaluasi, dan mempertanggungjawabkan amal perbuatan kepada diri sendiri sebelum dihisab Allah", "Membaca wirid tertentu", "Meminta nasihat dari ulama"],
+        "answer": 1,
+        "explanation": "Muhasabah adalah introspeksi mendalam: 'Hisablah dirimu sebelum dihisab, dan timbanglah amalmu sebelum ditimbang' (ucapan Umar bin Khattab). Ini adalah sarana penting dalam tazkiyatun nafs."
+      },
+      {
+        "q": "Dalam etika Islam, apa yang dimaksud dengan 'masuliyyah' (tanggung jawab) yang disebutkan Nabi SAW?",
+        "options": ["Hanya pemimpin yang bertanggung jawab", "Setiap orang adalah pemimpin dan akan dimintai pertanggungjawaban atas apa yang dipimpinnya (HR. Bukhari-Muslim)", "Tanggung jawab hanya di hadapan manusia", "Tidak ada konsep tanggung jawab personal dalam Islam"],
+        "answer": 1,
+        "explanation": "Nabi SAW bersabda: 'Setiap kamu adalah pemimpin (ra'in) dan setiap kamu akan dimintai pertanggungjawaban atas kepemimpinannya.' Suami bertanggung jawab atas keluarganya, istri atas rumah suaminya, anak atas harta orang tuanya, dll. (HR. Bukhari-Muslim)."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'tawadu' yang merupakan kerendahan hati sejati, bukan kepura-puraan?",
+        "options": ["Menampilkan kerendahan di depan orang penting saja", "Kerendahan hati yang lahir dari kesadaran mendalam akan keagungan Allah dan keterbatasan diri, yang konsisten baik ada maupun tidak ada yang melihat", "Tidak mau memimpin apapun", "Menolak semua pujian dari siapapun"],
+        "answer": 1,
+        "explanation": "Tawadhu sejati bukan performance; ia lahir dari ma'rifatullah (mengenal Allah) yang mendalam sehingga seseorang merasa kecil di hadapan kebesaran Allah. Berbeda dari tadzallul (merendahkan diri di hadapan orang kuat karena kepentingan)."
+      },
+      {
+        "q": "Apa perbedaan antara 'riya'' dan 'sum'ah' sebagai penyakit akhlak?",
+        "options": ["Tidak ada perbedaan keduanya sama saja", "Riya': beramal untuk dilihat orang; sum'ah: beramal untuk didengar pujiannya oleh orang lain. Keduanya termasuk syirik kecil", "Sum'ah lebih berat dari riya'", "Riya' hanya dalam ibadah, sum'ah dalam perkataan saja"],
+        "answer": 1,
+        "explanation": "Riya' (akar: rau/melihat) adalah beramal agar dilihat dan dikagumi orang. Sum'ah (akar: sami'/mendengar) adalah menceritakan amal agar didengar dan dipuji. Keduanya disebut Nabi SAW sebagai 'syirik kecil' yang bisa menghapus amal."
+      },
+      {
+        "q": "Dalam perspektif akhlak Islam, apa yang dimaksud dengan 'adab al-ikhtilaf' (etika berselisih pendapat)?",
+        "options": ["Menghindari semua perdebatan", "Tatakrama dalam perbedaan pendapat: menghormati lawan berdiskusi, berpegang pada argumen bukan serangan personal, siap menerima kebenaran, dan tidak memperkeruh ukhuwah", "Hanya boleh berbeda pendapat dengan orang yang setingkat ilmunya", "Mengalah selalu demi menjaga hubungan"],
+        "answer": 1,
+        "explanation": "Adab al-ikhtilaf adalah prinsip etis dalam menghadapi perbedaan: tidak mencaci, tidak mengkafirkan tanpa dalil, mendasarkan argumen pada ilmu, siap menerima kebenaran dari siapapun, dan membedakan antara ikhtilaf yang dimaklumi dengan yang tidak."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'waqt' (waktu) sebagai konsep spiritual dalam akhlak Islam?",
+        "options": ["Jadwal ibadah harian saja", "Waktu adalah amanah yang paling berharga; dalam tasawuf, 'Ibnul waqt' (anak waktu) adalah orang yang hadir penuh dalam setiap momen bersama Allah tanpa terganggu masa lalu atau masa depan", "Waktu yang digunakan untuk menghasilkan uang", "Waktu shalat yang harus dijaga"],
+        "answer": 1,
+        "explanation": "Dalam akhlak Islam, waktu adalah amanah yang akan dipertanggungjawabkan: 'Tidak bergerak dua kaki seorang hamba pada hari kiamat hingga ditanya tentang empat hal, di antaranya tentang umurnya untuk apa dihabiskan' (HR. Tirmidzi). 'Ibnul waqt' adalah konsep hadir penuh (present) dalam tasawuf."
+      },
+      {
+        "q": "Dalam diskursus etika Islam kontemporer, bagaimana memahami hubungan antara akhlak individu dan tanggung jawab sosial?",
+        "options": ["Akhlak hanya urusan pribadi antara individu dan Allah", "Akhlak Islam berdimensi individual (hubungan dengan Allah) sekaligus sosial (hablum minannas): keadilan, amar ma'ruf nahi munkar, dan kepedulian terhadap kemashlahatan bersama", "Tanggung jawab sosial adalah tugas negara, bukan individu", "Akhlak sosial hanya diwajibkan bagi ulama dan pemimpin"],
+        "answer": 1,
+        "explanation": "Islam tidak memisahkan akhlak individual dari sosial. Zakat, amar ma'ruf nahi munkar, keadilan sosial adalah dimensi akhlak kolektif. Al-Quran menegaskan: orang yang mendustakan agama adalah yang mengabaikan anak yatim dan tidak mendorong memberi makan orang miskin (QS. Al-Ma'un)."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'mahabbah' (cinta kepada Allah) sebagai puncak akhlak dalam tasawuf?",
+        "options": ["Perasaan sentimental biasa", "Cinta yang mendorong pelaksanaan perintah Allah dan menjauhi larangan-Nya, dengan keridhaannya menjadi prioritas di atas segalanya; ditandai dengan kerinduan dan ketundukan total", "Hanya ungkapan verbal tanpa konsekuensi", "Cinta yang mengabaikan syariat karena merasa dekat dengan Allah"],
+        "answer": 1,
+        "explanation": "Mahabbah adalah puncak perjalanan spiritual. Ibnu Qayyim: tanda cinta kepada Allah adalah mengutamakan ridha-Nya di atas segalanya, merasakan manisnya ibadah, merasakan beratnya meninggalkan-Nya, dan senang berzikir menyebut nama-Nya."
+      },
+      {
+        "q": "Apa implikasi etis dari prinsip 'la dharara wa la dhirar' (tidak membahayakan diri sendiri dan orang lain) dalam akhlak Islam?",
+        "options": ["Hanya berlaku dalam konteks medis", "Prinsip ini menjadi fondasi etika lingkungan, etika bisnis, etika sosial: setiap tindakan yang merugikan diri atau orang lain tanpa dasar syar'i adalah terlarang, meletakkan tanggung jawab pada pelaku kerusakan", "Hanya berlaku dalam perang", "Prinsip ini kurang penting dibanding ibadah ritual"],
+        "answer": 1,
+        "explanation": "Hadits 'la dharara wa la dhirar' (HR. Ibnu Majah, dinilai shahih li ghairihi) adalah kaidah fundamental dalam fiqh dan etika Islam. Implikasinya luas: etika lingkungan (tidak merusak alam), etika bisnis (tidak menipu), etika sosial (tidak menindas), etika medis (primum non nocere/pertama tidak membahayakan)."
+      }
+    ]
+  }
+}

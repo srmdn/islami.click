@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"regexp"
+	"strings"
 
 	islamiclick "github.com/srmdn/islami.click"
 	"github.com/srmdn/islami.click/internal/handler"
@@ -67,6 +68,8 @@ func main() {
 		"quran.html",
 		"quran-surah.html",
 		"quran-search.html",
+		"quiz.html",
+		"quiz-category.html",
 	}
 
 	tmpls := make(map[string]*template.Template)
@@ -133,6 +136,21 @@ func main() {
 	http.HandleFunc("/quran", h.Quran)
 	http.HandleFunc("/quran/search", h.QuranSearch)
 	http.HandleFunc("/quran/", h.QuranSurah)
+
+	http.HandleFunc("/quiz", h.QuizHome)
+	http.HandleFunc("/api/quiz/", func(w http.ResponseWriter, r *http.Request) {
+		path := r.URL.Path
+		if strings.HasSuffix(path, "/questions") {
+			h.QuizQuestionsAPI(w, r)
+		} else if strings.HasSuffix(path, "/leaderboard") {
+			h.QuizLeaderboardAPI(w, r)
+		} else if strings.HasSuffix(path, "/score") {
+			h.QuizScoreAPI(w, r)
+		} else {
+			http.NotFound(w, r)
+		}
+	})
+	http.HandleFunc("/quiz/", h.QuizCategory)
 
 	log.Printf("islami.click listening on :%s", port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))

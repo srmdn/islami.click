@@ -1,0 +1,37 @@
+{{define "title"}}Quiz Islami{{end}}
+{{define "description"}}Uji pengetahuan Islammu dengan kuis interaktif: aqidah, Al-Quran, hadits, sirah, fiqh, sejarah Islam, dan akhlak. 3 tingkat kesulitan dengan leaderboard bersama.{{end}}
+
+{{define "content"}}
+<div class="max-w-3xl mx-auto px-4 py-10">
+
+  <div class="mb-10 text-center">
+    <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-amber-500/10 dark:bg-amber-500/20 mb-4">
+      <svg class="w-7 h-7 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/>
+      </svg>
+    </div>
+    <h1 class="text-3xl font-bold text-slate-800 dark:text-white mb-2">Quiz Islami</h1>
+    <p class="text-slate-500 dark:text-slate-400 text-base max-w-md mx-auto">Pilih kategori dan uji pengetahuan Islammu. Tersedia 3 tingkat kesulitan dengan leaderboard bersama.</p>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    {{range .Categories}}
+    <a href="/quiz/{{.Slug}}" class="group flex flex-col gap-3 p-5 rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] bg-white dark:bg-[#0C1E26] hover:border-[#C9A84C] dark:hover:border-[#C9A84C] hover:shadow-md transition-all">
+      <div class="flex items-center justify-between">
+        <span class="text-lg font-semibold text-slate-800 dark:text-white group-hover:text-[#0E5C73] dark:group-hover:text-[#14B8A6] transition-colors">{{.Label}}</span>
+        <svg class="w-5 h-5 text-slate-300 dark:text-slate-600 group-hover:text-[#C9A84C] transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 18l6-6-6-6"/>
+        </svg>
+      </div>
+      <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">{{.Description}}</p>
+      <div class="flex gap-2 mt-1">
+        <span class="text-xs px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 font-medium">Basic</span>
+        <span class="text-xs px-2.5 py-1 rounded-full bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 font-medium">Intermediate</span>
+        <span class="text-xs px-2.5 py-1 rounded-full bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 font-medium">Advanced</span>
+      </div>
+    </a>
+    {{end}}
+  </div>
+
+</div>
+{{end}}

@@ -1,0 +1,405 @@
+{{define "title"}}Quiz {{.Category.Label}}{{end}}
+{{define "description"}}Uji pengetahuan Islammu tentang {{.Category.Label}}. Pilih tingkat kesulitan dan mulai kuis interaktif dengan leaderboard bersama.{{end}}
+
+{{define "content"}}
+<div class="max-w-2xl mx-auto px-4 py-8"
+  x-data="quizApp('{{.Category.Slug}}')"
+  x-init="init()"
+>
+
+  <!-- Idle: start screen -->
+  <div x-show="state === 'idle'" x-cloak>
+    <div class="mb-6 text-center">
+      <a href="/quiz" class="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400 hover:text-[#0E5C73] dark:hover:text-[#14B8A6] mb-6 transition-colors">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        Semua Kategori
+      </a>
+      <h1 class="text-2xl font-bold text-slate-800 dark:text-white mt-2">Quiz {{.Category.Label}}</h1>
+      <p class="text-slate-500 dark:text-slate-400 text-sm mt-1.5">{{.Category.Description}}</p>
+    </div>
+
+    <div class="rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] bg-white dark:bg-[#0C1E26] p-6 space-y-6">
+
+      <div>
+        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Nama Kamu</label>
+        <input
+          type="text"
+          x-model="playerName"
+          maxlength="30"
+          placeholder="Masukkan nama (maks 30 karakter)"
+          class="w-full px-4 py-3 rounded-xl border border-[#E2D9CE] dark:border-[#1E4458] bg-[#FAF7F2] dark:bg-[#0B1120] text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0E5C73] transition text-sm"
+        />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Tingkat Kesulitan</label>
+        <div class="grid grid-cols-3 gap-3">
+          <button
+            @click="difficulty = 'basic'"
+            :class="difficulty === 'basic' ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400' : 'border-[#E2D9CE] dark:border-[#1E4458] text-slate-600 dark:text-slate-300 hover:border-emerald-400'"
+            class="flex flex-col items-center gap-1 px-3 py-3 rounded-xl border-2 transition-all text-sm font-medium cursor-pointer"
+          >
+            <span class="text-lg">🟢</span>
+            <span>Basic</span>
+            <span class="text-xs opacity-70">10 soal</span>
+          </button>
+          <button
+            @click="difficulty = 'intermediate'"
+            :class="difficulty === 'intermediate' ? 'border-amber-500 bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400' : 'border-[#E2D9CE] dark:border-[#1E4458] text-slate-600 dark:text-slate-300 hover:border-amber-400'"
+            class="flex flex-col items-center gap-1 px-3 py-3 rounded-xl border-2 transition-all text-sm font-medium cursor-pointer"
+          >
+            <span class="text-lg">🟡</span>
+            <span>Intermediate</span>
+            <span class="text-xs opacity-70">15 soal</span>
+          </button>
+          <button
+            @click="difficulty = 'advanced'"
+            :class="difficulty === 'advanced' ? 'border-red-500 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400' : 'border-[#E2D9CE] dark:border-[#1E4458] text-slate-600 dark:text-slate-300 hover:border-red-400'"
+            class="flex flex-col items-center gap-1 px-3 py-3 rounded-xl border-2 transition-all text-sm font-medium cursor-pointer"
+          >
+            <span class="text-lg">🔴</span>
+            <span>Advanced</span>
+            <span class="text-xs opacity-70">15 soal</span>
+          </button>
+        </div>
+      </div>
+
+      <button
+        @click="startQuiz()"
+        :disabled="playerName.trim().length === 0"
+        class="w-full py-3.5 rounded-xl bg-[#0E5C73] hover:bg-[#0c4f63] disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold transition-colors"
+      >
+        Mulai Quiz
+      </button>
+    </div>
+
+    <!-- Leaderboard preview on idle -->
+    <div class="mt-8" x-show="leaderboard.length > 0">
+      <h2 class="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-3 uppercase tracking-wide">Leaderboard — <span x-text="difficultyLabel()"></span></h2>
+      <div class="rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] overflow-hidden">
+        <template x-for="(sc, i) in leaderboard" :key="sc.rank">
+          <div class="flex items-center gap-3 px-4 py-3 border-b border-[#E2D9CE]/50 dark:border-[#1E4458]/50 last:border-0">
+            <span class="w-6 text-center text-sm font-bold" :class="i === 0 ? 'text-amber-500' : i === 1 ? 'text-slate-400' : i === 2 ? 'text-amber-700' : 'text-slate-400'" x-text="i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i+1)"></span>
+            <span class="flex-1 text-sm font-medium text-slate-700 dark:text-slate-200" x-text="sc.player_name"></span>
+            <span class="text-sm font-semibold text-[#0E5C73] dark:text-[#14B8A6]" x-text="sc.score + ' pts'"></span>
+            <span class="text-xs text-slate-400" x-text="sc.correct + '/' + sc.total"></span>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div x-show="state === 'loading'" x-cloak class="flex flex-col items-center justify-center py-24 gap-4">
+    <div class="w-10 h-10 rounded-full border-4 border-[#0E5C73]/20 border-t-[#0E5C73] animate-spin"></div>
+    <p class="text-slate-500 dark:text-slate-400 text-sm">Memuat soal...</p>
+  </div>
+
+  <!-- Playing & Answered -->
+  <div x-show="state === 'playing' || state === 'answered'" x-cloak>
+
+    <!-- Header bar -->
+    <div class="flex items-center justify-between mb-5">
+      <div class="text-sm text-slate-500 dark:text-slate-400">
+        Soal <span class="font-semibold text-slate-700 dark:text-slate-200" x-text="currentIndex + 1"></span> / <span x-text="questions.length"></span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-sm font-semibold text-[#0E5C73] dark:text-[#14B8A6]" x-text="score + ' pts'"></span>
+        <!-- Timer -->
+        <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-mono font-semibold"
+          :class="timeLeft <= 5 ? 'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'"
+        >
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          <span x-text="timeLeft + 's'"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress bar -->
+    <div class="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full mb-6 overflow-hidden">
+      <div class="h-full bg-[#0E5C73] rounded-full transition-all duration-300"
+        :style="'width: ' + ((currentIndex) / questions.length * 100) + '%'"
+      ></div>
+    </div>
+
+    <!-- Question -->
+    <div class="rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] bg-white dark:bg-[#0C1E26] p-6 mb-4">
+      <p class="text-base font-medium text-slate-800 dark:text-white leading-relaxed" x-text="currentQuestion().question"></p>
+    </div>
+
+    <!-- Options -->
+    <div class="space-y-3 mb-5">
+      <template x-for="(opt, idx) in currentQuestion().options" :key="idx">
+        <button
+          @click="selectAnswer(idx)"
+          :disabled="state === 'answered'"
+          :class="optionClass(idx)"
+          class="w-full text-left px-4 py-3.5 rounded-xl border-2 transition-all text-sm font-medium leading-snug disabled:cursor-default"
+          x-text="opt"
+        ></button>
+      </template>
+    </div>
+
+    <!-- Explanation (after answered) -->
+    <div x-show="state === 'answered'" x-cloak class="rounded-xl p-4 mb-5"
+      :class="lastAnswerCorrect ? 'bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800' : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'"
+    >
+      <div class="flex items-start gap-2">
+        <span class="text-lg mt-0.5" x-text="lastAnswerCorrect ? '✅' : '❌'"></span>
+        <div>
+          <p class="text-sm font-semibold mb-1"
+            :class="lastAnswerCorrect ? 'text-emerald-700 dark:text-emerald-400' : 'text-red-700 dark:text-red-400'"
+            x-text="lastAnswerCorrect ? 'Benar!' : 'Salah!'"
+          ></p>
+          <p class="text-sm text-slate-600 dark:text-slate-400" x-text="currentQuestion().explanation"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Next button -->
+    <div x-show="state === 'answered'" x-cloak class="text-center">
+      <button
+        @click="nextQuestion()"
+        class="px-8 py-3 rounded-xl bg-[#0E5C73] hover:bg-[#0c4f63] text-white font-semibold transition-colors"
+        x-text="currentIndex + 1 < questions.length ? 'Soal Berikutnya' : 'Lihat Hasil'"
+      ></button>
+    </div>
+  </div>
+
+  <!-- Finished: results -->
+  <div x-show="state === 'finished'" x-cloak>
+    <div class="text-center mb-8">
+      <div class="text-5xl mb-3" x-text="resultEmoji()"></div>
+      <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-1">Quiz Selesai!</h2>
+      <p class="text-slate-500 dark:text-slate-400 text-sm" x-text="'Kategori: {{.Category.Label}} — ' + difficultyLabel()"></p>
+    </div>
+
+    <div class="grid grid-cols-3 gap-3 mb-8">
+      <div class="text-center rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] bg-white dark:bg-[#0C1E26] p-4">
+        <div class="text-2xl font-bold text-[#0E5C73] dark:text-[#14B8A6]" x-text="score"></div>
+        <div class="text-xs text-slate-500 mt-0.5">Poin</div>
+      </div>
+      <div class="text-center rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] bg-white dark:bg-[#0C1E26] p-4">
+        <div class="text-2xl font-bold text-emerald-500" x-text="correctCount + '/' + questions.length"></div>
+        <div class="text-xs text-slate-500 mt-0.5">Benar</div>
+      </div>
+      <div class="text-center rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] bg-white dark:bg-[#0C1E26] p-4">
+        <div class="text-2xl font-bold text-amber-500" x-text="Math.round(correctCount / questions.length * 100) + '%'"></div>
+        <div class="text-xs text-slate-500 mt-0.5">Akurasi</div>
+      </div>
+    </div>
+
+    <!-- Submit score -->
+    <div x-show="!scoreSaved" class="rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] bg-white dark:bg-[#0C1E26] p-5 mb-6">
+      <h3 class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Simpan ke Leaderboard</h3>
+      <div class="flex gap-3">
+        <input type="text" x-model="playerName" maxlength="30" placeholder="Nama kamu"
+          class="flex-1 px-3 py-2.5 rounded-xl border border-[#E2D9CE] dark:border-[#1E4458] bg-[#FAF7F2] dark:bg-[#0B1120] text-sm text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#0E5C73]"
+        />
+        <button @click="saveScore()" :disabled="playerName.trim().length === 0 || savingScore"
+          class="px-5 py-2.5 rounded-xl bg-[#C9A84C] hover:bg-[#b8953f] disabled:opacity-40 text-white font-semibold text-sm transition-colors whitespace-nowrap"
+          x-text="savingScore ? 'Menyimpan...' : 'Simpan'"
+        ></button>
+      </div>
+    </div>
+
+    <!-- Leaderboard -->
+    <div x-show="leaderboard.length > 0">
+      <h2 class="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-3 uppercase tracking-wide">Leaderboard — <span x-text="difficultyLabel()"></span></h2>
+      <div class="rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] overflow-hidden mb-6">
+        <template x-for="(sc, i) in leaderboard" :key="sc.rank">
+          <div class="flex items-center gap-3 px-4 py-3 border-b border-[#E2D9CE]/50 dark:border-[#1E4458]/50 last:border-0"
+            :class="sc.player_name === playerName && sc.score === score ? 'bg-amber-50/50 dark:bg-amber-900/10' : ''"
+          >
+            <span class="w-6 text-center text-sm font-bold" :class="i === 0 ? 'text-amber-500' : i === 1 ? 'text-slate-400' : i === 2 ? 'text-amber-700' : 'text-slate-400'" x-text="i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i+1)"></span>
+            <span class="flex-1 text-sm font-medium text-slate-700 dark:text-slate-200" x-text="sc.player_name"></span>
+            <span class="text-sm font-semibold text-[#0E5C73] dark:text-[#14B8A6]" x-text="sc.score + ' pts'"></span>
+            <span class="text-xs text-slate-400" x-text="sc.correct + '/' + sc.total"></span>
+          </div>
+        </template>
+      </div>
+    </div>
+
+    <div class="flex gap-3">
+      <button @click="restart()" class="flex-1 py-3 rounded-xl border-2 border-[#0E5C73] text-[#0E5C73] dark:text-[#14B8A6] dark:border-[#14B8A6] font-semibold text-sm hover:bg-[#0E5C73]/5 transition-colors">
+        Main Lagi
+      </button>
+      <a href="/quiz" class="flex-1 py-3 rounded-xl bg-[#0E5C73] hover:bg-[#0c4f63] text-white font-semibold text-sm text-center transition-colors">
+        Kategori Lain
+      </a>
+    </div>
+  </div>
+
+</div>
+{{end}}
+
+{{define "scripts"}}
+<script>
+function quizApp(categorySlug) {
+  const TIMER = 30;
+  const QUESTION_COUNT = { basic: 10, intermediate: 15, advanced: 15 };
+  const SCORE_PER_CORRECT = 10;
+  const TIME_BONUS_MAX = 10;
+
+  return {
+    categorySlug,
+    state: 'idle',
+    playerName: '',
+    difficulty: 'basic',
+    questions: [],
+    currentIndex: 0,
+    score: 0,
+    correctCount: 0,
+    selectedAnswer: null,
+    lastAnswerCorrect: false,
+    timeLeft: TIMER,
+    timerInterval: null,
+    leaderboard: [],
+    scoreSaved: false,
+    savingScore: false,
+
+    init() {
+      this.loadLeaderboard();
+    },
+
+    async loadLeaderboard() {
+      try {
+        const res = await fetch(`/api/quiz/${this.categorySlug}/leaderboard?difficulty=${this.difficulty}`);
+        if (res.ok) this.leaderboard = await res.json();
+      } catch (_) {}
+    },
+
+    async startQuiz() {
+      if (this.playerName.trim().length === 0) return;
+      this.state = 'loading';
+      this.questions = [];
+      this.currentIndex = 0;
+      this.score = 0;
+      this.correctCount = 0;
+      this.scoreSaved = false;
+
+      try {
+        const res = await fetch(`/api/quiz/${this.categorySlug}/questions?difficulty=${this.difficulty}`);
+        if (!res.ok) throw new Error('fetch failed');
+        const all = await res.json();
+        const count = QUESTION_COUNT[this.difficulty] || 10;
+        this.questions = all.slice(0, count);
+        if (this.questions.length === 0) throw new Error('no questions');
+        this.state = 'playing';
+        this.startTimer();
+      } catch (_) {
+        this.state = 'idle';
+        alert('Gagal memuat soal. Coba lagi.');
+      }
+    },
+
+    currentQuestion() {
+      return this.questions[this.currentIndex] || {};
+    },
+
+    startTimer() {
+      this.timeLeft = TIMER;
+      clearInterval(this.timerInterval);
+      this.timerInterval = setInterval(() => {
+        if (this.state !== 'playing') { clearInterval(this.timerInterval); return; }
+        this.timeLeft--;
+        if (this.timeLeft <= 0) {
+          clearInterval(this.timerInterval);
+          this.handleTimeout();
+        }
+      }, 1000);
+    },
+
+    handleTimeout() {
+      this.selectedAnswer = -1;
+      this.lastAnswerCorrect = false;
+      this.state = 'answered';
+    },
+
+    selectAnswer(idx) {
+      if (this.state !== 'playing') return;
+      clearInterval(this.timerInterval);
+      this.selectedAnswer = idx;
+      const correct = this.currentQuestion().answer;
+      this.lastAnswerCorrect = idx === correct;
+      if (this.lastAnswerCorrect) {
+        this.correctCount++;
+        const timeBonus = Math.round((this.timeLeft / TIMER) * TIME_BONUS_MAX);
+        this.score += SCORE_PER_CORRECT + timeBonus;
+      }
+      this.state = 'answered';
+    },
+
+    nextQuestion() {
+      if (this.currentIndex + 1 < this.questions.length) {
+        this.currentIndex++;
+        this.selectedAnswer = null;
+        this.state = 'playing';
+        this.startTimer();
+      } else {
+        clearInterval(this.timerInterval);
+        this.state = 'finished';
+        this.loadLeaderboard();
+      }
+    },
+
+    optionClass(idx) {
+      if (this.state === 'playing') {
+        return 'border-[#E2D9CE] dark:border-[#1E4458] text-slate-700 dark:text-slate-200 hover:border-[#0E5C73] hover:bg-[#0E5C73]/5';
+      }
+      const correct = this.currentQuestion().answer;
+      if (idx === correct) return 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400';
+      if (idx === this.selectedAnswer && idx !== correct) return 'border-red-500 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400';
+      return 'border-[#E2D9CE] dark:border-[#1E4458] text-slate-400 dark:text-slate-500 opacity-60';
+    },
+
+    async saveScore() {
+      if (this.playerName.trim().length === 0 || this.savingScore) return;
+      this.savingScore = true;
+      try {
+        const res = await fetch(`/api/quiz/${this.categorySlug}/score`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            player_name: this.playerName.trim(),
+            score: this.score,
+            correct: this.correctCount,
+            total: this.questions.length,
+            difficulty: this.difficulty,
+          }),
+        });
+        if (res.ok) {
+          this.leaderboard = await res.json();
+          this.scoreSaved = true;
+        }
+      } catch (_) {}
+      this.savingScore = false;
+    },
+
+    restart() {
+      clearInterval(this.timerInterval);
+      this.state = 'idle';
+      this.questions = [];
+      this.currentIndex = 0;
+      this.score = 0;
+      this.correctCount = 0;
+      this.selectedAnswer = null;
+      this.scoreSaved = false;
+      this.loadLeaderboard();
+    },
+
+    difficultyLabel() {
+      return { basic: 'Basic', intermediate: 'Intermediate', advanced: 'Advanced' }[this.difficulty] || '';
+    },
+
+    resultEmoji() {
+      const pct = this.questions.length > 0 ? this.correctCount / this.questions.length : 0;
+      if (pct >= 0.9) return '🏆';
+      if (pct >= 0.7) return '⭐';
+      if (pct >= 0.5) return '👍';
+      return '📚';
+    },
+  };
+}
+</script>
+{{end}}

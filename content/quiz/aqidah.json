@@ -1,0 +1,284 @@
+{
+  "slug": "aqidah",
+  "label": "Aqidah",
+  "description": "Tauhid, Rukun Iman, dan dasar keyakinan Islam",
+  "display_order": 1,
+  "questions": {
+    "basic": [
+      {
+        "q": "Berapa jumlah Rukun Iman?",
+        "options": ["4", "5", "6", "7"],
+        "answer": 2,
+        "explanation": "Rukun Iman ada 6: iman kepada Allah, malaikat, kitab-kitab, rasul-rasul, hari kiamat, dan qada-qadar."
+      },
+      {
+        "q": "Apa arti kata 'tauhid'?",
+        "options": ["Ibadah", "Mengesakan", "Berserah diri", "Berdoa"],
+        "answer": 1,
+        "explanation": "Tauhid berarti mengesakan Allah SWT, yaitu meyakini bahwa Allah itu Esa, tidak ada sekutu bagi-Nya."
+      },
+      {
+        "q": "Siapakah malaikat yang bertugas menyampaikan wahyu kepada para nabi?",
+        "options": ["Mikail", "Israfil", "Jibril", "Izrail"],
+        "answer": 2,
+        "explanation": "Malaikat Jibril (Jibra'il) bertugas menyampaikan wahyu dari Allah SWT kepada para nabi dan rasul."
+      },
+      {
+        "q": "Berapa jumlah malaikat yang wajib diketahui?",
+        "options": ["8", "10", "12", "20"],
+        "answer": 1,
+        "explanation": "Malaikat yang wajib kita ketahui ada 10: Jibril, Mikail, Israfil, Izrail, Munkar, Nakir, Raqib, Atid, Malik, dan Ridwan."
+      },
+      {
+        "q": "Apa nama kitab suci yang diturunkan kepada Nabi Musa AS?",
+        "options": ["Injil", "Zabur", "Taurat", "Al-Quran"],
+        "answer": 2,
+        "explanation": "Kitab Taurat diturunkan kepada Nabi Musa AS sebagai petunjuk bagi Bani Israil."
+      },
+      {
+        "q": "Iman kepada hari kiamat termasuk rukun iman ke berapa?",
+        "options": ["3", "4", "5", "6"],
+        "answer": 2,
+        "explanation": "Iman kepada hari kiamat (yaumul akhir) adalah rukun iman yang kelima."
+      },
+      {
+        "q": "Apa yang dimaksud dengan qada dan qadar?",
+        "options": ["Dosa dan pahala", "Surga dan neraka", "Ketentuan dan ketetapan Allah", "Rezeki dan ajal"],
+        "answer": 2,
+        "explanation": "Qada adalah ketetapan Allah sejak azali, sedangkan qadar adalah pelaksanaan ketentuan tersebut. Keduanya disebut takdir."
+      },
+      {
+        "q": "Kitab Zabur diturunkan kepada nabi siapa?",
+        "options": ["Nabi Ibrahim AS", "Nabi Dawud AS", "Nabi Isa AS", "Nabi Sulaiman AS"],
+        "answer": 1,
+        "explanation": "Kitab Zabur diturunkan kepada Nabi Dawud AS."
+      },
+      {
+        "q": "Siapakah malaikat yang bertugas mencabut nyawa?",
+        "options": ["Jibril", "Mikail", "Israfil", "Izrail"],
+        "answer": 3,
+        "explanation": "Malaikat Izrail (Malakul Maut) bertugas mencabut nyawa seluruh makhluk hidup atas perintah Allah SWT."
+      },
+      {
+        "q": "Berapa jumlah rasul yang wajib diketahui?",
+        "options": ["10", "20", "25", "30"],
+        "answer": 2,
+        "explanation": "Ada 25 nabi dan rasul yang wajib kita ketahui, mulai dari Nabi Adam AS hingga Nabi Muhammad SAW."
+      },
+      {
+        "q": "Apa arti 'iman' secara bahasa?",
+        "options": ["Taat", "Percaya atau membenarkan", "Menyembah", "Berdoa"],
+        "answer": 1,
+        "explanation": "Iman secara bahasa berarti percaya atau membenarkan (tashdiq). Secara istilah, iman adalah membenarkan dalam hati, mengucapkan dengan lisan, dan mengamalkan dengan perbuatan."
+      },
+      {
+        "q": "Kitab Injil diturunkan kepada nabi siapa?",
+        "options": ["Nabi Musa AS", "Nabi Ibrahim AS", "Nabi Isa AS", "Nabi Muhammad SAW"],
+        "answer": 2,
+        "explanation": "Kitab Injil diturunkan kepada Nabi Isa AS (Yesus) sebagai petunjuk bagi umat pada masanya."
+      },
+      {
+        "q": "Malaikat yang bertugas meniup sangkakala pada hari kiamat adalah?",
+        "options": ["Jibril", "Mikail", "Israfil", "Izrail"],
+        "answer": 2,
+        "explanation": "Malaikat Israfil bertugas meniup sangkakala (sur) pada hari kiamat dan hari kebangkitan."
+      },
+      {
+        "q": "Nabi terakhir yang diutus Allah SWT adalah?",
+        "options": ["Nabi Isa AS", "Nabi Ibrahim AS", "Nabi Musa AS", "Nabi Muhammad SAW"],
+        "answer": 3,
+        "explanation": "Nabi Muhammad SAW adalah nabi dan rasul terakhir (khatamul anbiya), tidak ada nabi setelah beliau."
+      },
+      {
+        "q": "Apa makna syahadat 'Asyhadu an laa ilaaha illallah'?",
+        "options": ["Aku bersaksi tiada tuhan selain Allah", "Aku beriman kepada Allah", "Aku taat kepada Allah", "Aku menyembah Allah"],
+        "answer": 0,
+        "explanation": "Kalimat syahadat ini berarti 'Aku bersaksi bahwa tidak ada tuhan yang berhak disembah selain Allah'."
+      }
+    ],
+    "intermediate": [
+      {
+        "q": "Tauhid dibagi menjadi tiga. Yang BUKAN termasuk pembagian tauhid adalah?",
+        "options": ["Tauhid Rububiyah", "Tauhid Uluhiyah", "Tauhid Asma wa Sifat", "Tauhid Mulkiyah"],
+        "answer": 3,
+        "explanation": "Tauhid dibagi tiga: Rububiyah (mengesakan Allah dalam penciptaan), Uluhiyah (mengesakan Allah dalam ibadah), dan Asma wa Sifat (mengesakan nama dan sifat Allah)."
+      },
+      {
+        "q": "Apa yang dimaksud dengan tauhid Rububiyah?",
+        "options": ["Mengesakan Allah dalam nama dan sifat-Nya", "Mengesakan Allah dalam penciptaan dan pengaturan alam", "Mengesakan Allah dalam ibadah", "Mengesakan Allah dalam hukum"],
+        "answer": 1,
+        "explanation": "Tauhid Rububiyah adalah meyakini bahwa hanya Allah yang menciptakan, memiliki, dan mengatur seluruh alam semesta."
+      },
+      {
+        "q": "Sikap seorang Muslim terhadap takdir Allah yang buruk adalah?",
+        "options": ["Mengeluh dan marah", "Bersabar dan berbaik sangka kepada Allah", "Menerima secara pasif tanpa ikhtiar", "Menolak takdir tersebut"],
+        "answer": 1,
+        "explanation": "Seorang Muslim wajib bersabar, berbaik sangka kepada Allah, tetap berikhtiar, dan yakin bahwa setiap ketetapan Allah mengandung hikmah."
+      },
+      {
+        "q": "Manakah yang termasuk sifat mustahil bagi Allah?",
+        "options": ["Wujud", "Qidam", "Baqa", "Fana"],
+        "answer": 3,
+        "explanation": "Fana (binasa/berakhir) adalah sifat mustahil bagi Allah. Allah bersifat Baqa (kekal, tidak akan berakhir)."
+      },
+      {
+        "q": "Apa perbedaan nabi dan rasul?",
+        "options": ["Tidak ada perbedaan", "Rasul menerima syariat baru, nabi mengikuti syariat sebelumnya", "Nabi lebih tinggi derajatnya dari rasul", "Rasul tidak menerima wahyu"],
+        "answer": 1,
+        "explanation": "Rasul menerima wahyu dan diperintahkan menyampaikan syariat baru kepada umat. Nabi menerima wahyu namun tidak selalu membawa syariat baru; bisa mengikuti syariat rasul sebelumnya."
+      },
+      {
+        "q": "Sifat wajib bagi rasul ada empat. Manakah yang termasuk salah satunya?",
+        "options": ["Kidzib", "Khianat", "Amanah", "Baladah"],
+        "answer": 2,
+        "explanation": "Sifat wajib rasul ada 4: Shiddiq (jujur), Amanah (terpercaya), Tabligh (menyampaikan), Fathanah (cerdas). Lawannya adalah sifat mustahil."
+      },
+      {
+        "q": "Malaikat Raqib dan Atid bertugas untuk?",
+        "options": ["Menjaga surga dan neraka", "Mencatat amal baik dan buruk manusia", "Menanyai manusia di alam kubur", "Membagi rezeki"],
+        "answer": 1,
+        "explanation": "Raqib bertugas mencatat amal kebaikan dan Atid mencatat amal keburukan manusia selama hidup di dunia."
+      },
+      {
+        "q": "Nabi Ulul Azmi adalah nabi-nabi yang memiliki?",
+        "options": ["Mukjizat terbanyak", "Keteguhan dan kesabaran luar biasa dalam berdakwah", "Kitab suci yang diturunkan", "Ummat terbanyak"],
+        "answer": 1,
+        "explanation": "Ulul Azmi berarti pemilik keteguhan hati. Mereka adalah 5 nabi: Nuh, Ibrahim, Musa, Isa, dan Muhammad SAW."
+      },
+      {
+        "q": "Apa yang dimaksud dengan iman kepada kitab-kitab Allah?",
+        "options": ["Membaca semua kitab suci", "Meyakini bahwa Allah menurunkan kitab suci kepada para rasul-Nya", "Menghafal isi kitab suci", "Mengamalkan semua ajaran kitab terdahulu"],
+        "answer": 1,
+        "explanation": "Iman kepada kitab Allah berarti meyakini bahwa Allah telah menurunkan kitab suci sebagai pedoman kepada para rasul-Nya: Taurat, Zabur, Injil, dan Al-Quran."
+      },
+      {
+        "q": "Berapa jumlah sifat wajib Allah yang populer dipelajari?",
+        "options": ["13", "15", "20", "25"],
+        "answer": 2,
+        "explanation": "Ulama menetapkan 20 sifat wajib bagi Allah, seperti Wujud, Qidam, Baqa, Mukhalafatu lil hawadits, Qiyamuhu binafsihi, Wahdaniyah, Qudrah, Iradah, Ilmu, Hayah, Sama', Bashar, Kalam, dan lain-lain."
+      },
+      {
+        "q": "Apa arti sifat 'Qidam' bagi Allah?",
+        "options": ["Maha Kuasa", "Maha Terdahulu (tidak berawal)", "Maha Kekal", "Maha Mengetahui"],
+        "answer": 1,
+        "explanation": "Qidam berarti Allah tidak berawal (azali), tidak ada sesuatu sebelum-Nya. Allah ada sebelum segala sesuatu ada."
+      },
+      {
+        "q": "Apa arti kalimat 'Laa haula walaa quwwata illa billah'?",
+        "options": ["Tiada daya dan kekuatan kecuali dengan pertolongan Allah", "Segala puji bagi Allah", "Allah Maha Besar", "Maha Suci Allah"],
+        "answer": 0,
+        "explanation": "Kalimat hauqalah ini berarti 'tidak ada daya upaya dan tidak ada kekuatan melainkan dengan pertolongan Allah'. Diucapkan saat menghadapi kesulitan."
+      },
+      {
+        "q": "Syirik besar (syirik akbar) menyebabkan?",
+        "options": ["Dosa besar yang masih bisa diampuni", "Keluarnya seseorang dari Islam (murtad)", "Berkurangnya iman", "Diwajibkan membayar kafarat"],
+        "answer": 1,
+        "explanation": "Syirik akbar adalah mempersekutukan Allah dengan sesuatu yang lain dalam hal ibadah. Ini merupakan dosa yang paling besar dan pelakunya keluar dari Islam jika tidak bertaubat."
+      },
+      {
+        "q": "Nabi yang diberi gelar 'Khalilullah' (kekasih Allah) adalah?",
+        "options": ["Nabi Muhammad SAW", "Nabi Musa AS", "Nabi Ibrahim AS", "Nabi Isa AS"],
+        "answer": 2,
+        "explanation": "Nabi Ibrahim AS diberi gelar Khalilullah (kekasih Allah) karena keteguhannya dalam tauhid dan kecintaannya yang luar biasa kepada Allah SWT."
+      },
+      {
+        "q": "Dalam aqidah Islam, alam jin dan malaikat termasuk?",
+        "options": ["Alam nyata yang bisa dilihat semua orang", "Alam gaib yang diyakini keberadaannya berdasarkan wahyu", "Alam imajinasi manusia", "Bagian dari alam manusia"],
+        "answer": 1,
+        "explanation": "Jin dan malaikat adalah makhluk gaib (alam ghaib). Keberadaannya diyakini bukan karena dapat dilihat dengan mata, melainkan karena ditetapkan dalam Al-Quran dan hadits."
+      }
+    ],
+    "advanced": [
+      {
+        "q": "Apa perbedaan antara 'ilmu kalam' dan 'aqidah' sebagai disiplin ilmu?",
+        "options": ["Tidak ada perbedaan sama sekali", "Ilmu kalam menggunakan pendekatan logika-filosofis untuk mempertahankan aqidah, aqidah lebih bersifat tekstual-naqliyah", "Aqidah lebih tinggi derajatnya dari ilmu kalam", "Ilmu kalam hanya mempelajari sifat Allah"],
+        "answer": 1,
+        "explanation": "Aqidah secara umum merujuk pada keyakinan yang bersumber dari Al-Quran dan sunnah. Ilmu kalam (teologi skolastik Islam) menggunakan logika dan argumentasi rasional untuk membuktikan dan mempertahankan keyakinan tersebut dari serangan pemikiran."
+      },
+      {
+        "q": "Madzhab aqidah Ahlus Sunnah wal Jamaah yang paling tersebar di dunia Islam adalah?",
+        "options": ["Muktazilah dan Khawarij", "Asy'ariyah dan Maturidiyah", "Jabariyah dan Qadariyah", "Syiah Dua Belas dan Ismaili"],
+        "answer": 1,
+        "explanation": "Mayoritas Ahlus Sunnah wal Jamaah mengikuti madzhab Asy'ariyah (dinisbatkan kepada Imam Abul Hasan al-Asy'ari) dan Maturidiyah (dinisbatkan kepada Imam Abu Mansur al-Maturidi)."
+      },
+      {
+        "q": "Konsep 'Al-Wala wal Bara' dalam aqidah Islam berarti?",
+        "options": ["Cinta kepada sesama manusia tanpa terkecuali", "Loyalitas kepada Allah dan berlepas diri dari kesyirikan dan musuh Islam", "Netralitas dalam semua urusan dunia", "Larangan bergaul dengan non-Muslim"],
+        "answer": 1,
+        "explanation": "Al-Wala wal Bara adalah konsep loyalitas (wala) kepada Allah, Rasul, dan orang-orang beriman, serta berlepas diri (bara) dari kesyirikan, kekufuran, dan segala yang bertentangan dengan tauhid. Ini bukan berarti larangan berinteraksi sosial dengan non-Muslim."
+      },
+      {
+        "q": "Dalam perdebatan klasik tentang qadar, aliran Jabariyah berpendapat bahwa?",
+        "options": ["Manusia bebas sepenuhnya menentukan perbuatannya", "Manusia tidak memiliki daya sama sekali; semua perbuatan adalah paksaan Allah", "Manusia dan Allah berbagi peran dalam perbuatan", "Allah tidak mengetahui perbuatan manusia sebelum terjadi"],
+        "answer": 1,
+        "explanation": "Jabariyah (dari jabr = paksaan) berpendapat bahwa manusia tidak memiliki kehendak bebas; semua tindakannya adalah paksaan (majbur) dari Allah. Ahlus Sunnah menolak ini dan menegaskan adanya kasb (usaha manusia) dalam bingkai takdir Allah."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'mukjizat hissiyah' dan 'mukjizat maknawiyah' pada nabi?",
+        "options": ["Mukjizat yang terlihat vs mukjizat yang dirasakan di hati", "Mukjizat yang dapat disaksikan secara inderawi vs mukjizat yang bersifat intelektual-maknawi seperti Al-Quran", "Mukjizat kecil vs mukjizat besar", "Mukjizat nabi zaman dahulu vs sekarang"],
+        "answer": 1,
+        "explanation": "Mukjizat hissiyah adalah mukjizat yang dapat ditangkap indera (seperti tongkat Nabi Musa yang menjadi ular). Mukjizat maknawiyah bersifat abadi dan menyentuh akal, contoh terbesar adalah Al-Quran yang ditujukan kepada umat manusia sepanjang zaman."
+      },
+      {
+        "q": "Aliran Muktazilah menekankan penggunaan akal dalam aqidah. Apa pendapat mereka tentang sifat Allah?",
+        "options": ["Allah memiliki sifat-sifat yang berdiri sendiri di luar Dzat-Nya", "Allah tidak memiliki sifat yang terpisah dari Dzat-Nya (nafi al-sifat)", "Sifat Allah identik dengan makhluk", "Allah tidak dapat didekati dengan akal"],
+        "answer": 1,
+        "explanation": "Muktazilah menafikan sifat-sifat berdiri di luar dzat Allah untuk menghindari kesan ta'addud al-qudama (kemajemukan yang azali). Ahlus Sunnah menetapkan sifat Allah tanpa menyerupakan dengan makhluk (tanpa tasybih dan ta'thil)."
+      },
+      {
+        "q": "Konsep 'fithrah' dalam aqidah Islam mengacu kepada?",
+        "options": ["Kemampuan akal manusia", "Naluri dasar manusia yang mengakui keberadaan dan keesaan Allah", "Tradisi dan budaya masyarakat", "Syariat yang diturunkan kepada Nabi Adam AS"],
+        "answer": 1,
+        "explanation": "Fithrah adalah disposisi bawaan manusia yang condong kepada tauhid dan pengakuan akan Allah. Nabi SAW bersabda bahwa setiap anak lahir dalam keadaan fithrah (HR. Bukhari-Muslim)."
+      },
+      {
+        "q": "Apa yang membedakan 'kufur juhud' dengan 'kufur inkari'?",
+        "options": ["Tidak ada perbedaan, keduanya sama", "Kufur juhud: mengingkari dengan hati meski tahu kebenaran; kufur inkari: tidak mengakui sama sekali karena tidak sampai dakwah", "Kufur juhud lebih ringan dari kufur inkari", "Kufur inkari adalah syirik, kufur juhud bukan"],
+        "answer": 1,
+        "explanation": "Kufur juhud (pengingkaran) adalah menolak kebenaran padahal mengetahuinya dalam hati, seperti Firaun. Kufur inkari secara umum merujuk pada pengingkaran secara total. Para ulama mengklasifikasikan kufur menjadi beberapa jenis dengan hukum yang berbeda."
+      },
+      {
+        "q": "Dalam aqidah Ahlus Sunnah, bagaimana menyikapi ayat-ayat mutasyabihat (yang zhahirnya seperti sifat manusia)?",
+        "options": ["Ditafsirkan secara harfiah sepenuhnya", "Ditolak dan dianggap tidak ada maknanya", "Ditetapkan maknanya sambil menyucikan Allah dari keserupaan makhluk (tanzih), tanpa takyif dan ta'thil", "Diserahkan seluruhnya kepada filsafat untuk ditafsirkan"],
+        "answer": 2,
+        "explanation": "Ahlus Sunnah mengikuti metode tafwidh (menyerahkan makna hakikatnya kepada Allah) atau takwil yang tepat, sambil menegaskan tanzih (tidak menyerupakan Allah dengan makhluk), menghindari tasybih (penyerupaan) dan ta'thil (penafian total)."
+      },
+      {
+        "q": "Siapakah tokoh yang dianggap perumus utama ilmu aqidah Ahlus Sunnah dalam menghadapi Muktazilah?",
+        "options": ["Imam Syafi'i dan Imam Hanafi", "Imam Al-Ghazali dan Ibnu Taimiyah", "Imam Abul Hasan Al-Asy'ari dan Imam Abu Mansur Al-Maturidi", "Imam Bukhari dan Imam Muslim"],
+        "answer": 2,
+        "explanation": "Imam Abul Hasan Al-Asy'ari (260-324 H) dan Imam Abu Mansur Al-Maturidi (238-333 H) adalah dua tokoh utama perumus dan pembela aqidah Ahlus Sunnah wal Jamaah secara sistematis dan argumentatif."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'nifaq i'tiqadi' (kemunafikan dalam keyakinan)?",
+        "options": ["Menampakkan keimanan di luar tetapi menyembunyikan kekufuran di dalam hati", "Melakukan dosa besar secara diam-diam", "Ragu-ragu dalam ibadah", "Tidak konsisten dalam beramal"],
+        "answer": 0,
+        "explanation": "Nifaq i'tiqadi adalah menampakkan keimanan di lisan dan perbuatan dhahir, sementara di dalam hati menyembunyikan kekufuran. Ini adalah kufur yang paling berbahaya karena tersembunyi."
+      },
+      {
+        "q": "Dalam konsep aqidah, apa yang dimaksud dengan 'barzakh'?",
+        "options": ["Hari kiamat", "Surga tingkat pertama", "Alam antara kematian dan kebangkitan di hari kiamat", "Neraka untuk pendosa"],
+        "answer": 2,
+        "explanation": "Barzakh adalah alam perantara antara dunia (saat kematian seseorang) dan akhirat (saat hari kiamat dan kebangkitan). Di sini roh mengalami nikmat atau azab kubur."
+      },
+      {
+        "q": "Konsep 'manzilah bayna manzilatayn' adalah pendapat aliran mana?",
+        "options": ["Khawarij", "Muktazilah", "Murjiah", "Asy'ariyah"],
+        "answer": 1,
+        "explanation": "Muktazilah berpendapat bahwa pelaku dosa besar berada di 'posisi antara dua posisi' (manzilah bayna manzilatayn): tidak mukmin, tidak kafir. Khawarij mengkafirkannya, Murjiah menganggapnya tetap mukmin penuh."
+      },
+      {
+        "q": "Apa yang dimaksud 'kasb' (perolehan) dalam konteks perbuatan manusia menurut Asy'ariyah?",
+        "options": ["Manusia menciptakan perbuatannya sendiri secara mandiri", "Perbuatan manusia diciptakan Allah tetapi manusia memiliki kehendak dan pilihan yang menjadi dasar pertanggungjawaban", "Manusia dan Allah bekerja sama menciptakan perbuatan", "Manusia hanya cerminan perbuatan Allah"],
+        "answer": 1,
+        "explanation": "Asy'ariyah menyatakan bahwa perbuatan manusia diciptakan oleh Allah, namun manusia memiliki kasb (perolehan/ikhtiar) yang menjadi dasar pahala dan dosa. Ini adalah jalan tengah antara Jabariyah dan Qadariyah."
+      },
+      {
+        "q": "Salah satu dalil naqli tentang keberadaan hari akhir adalah?",
+        "options": ["QS. Al-Ikhlas: 1", "QS. Al-Zalzalah: 1-2", "QS. Al-Fatihah: 1", "QS. An-Nas: 1"],
+        "answer": 1,
+        "explanation": "QS. Al-Zalzalah ayat 1-2 menyatakan: 'Apabila bumi diguncangkan dengan guncangan yang dahsyat, dan bumi telah mengeluarkan beban-beban berat yang dikandungnya.' Ini adalah gambaran awal hari kiamat."
+      }
+    ]
+  }
+}

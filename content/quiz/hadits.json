@@ -1,0 +1,284 @@
+{
+  "slug": "hadits",
+  "label": "Hadits",
+  "description": "Hadits Nabi, perawi, dan ilmu musthalah hadits",
+  "display_order": 4,
+  "questions": {
+    "basic": [
+      {
+        "q": "Apa yang dimaksud dengan hadits?",
+        "options": ["Hanya ucapan Nabi Muhammad SAW", "Segala sesuatu yang disandarkan kepada Nabi SAW berupa ucapan, perbuatan, ketetapan, dan sifat beliau", "Kitab yang ditulis oleh sahabat", "Tafsir Al-Quran karya ulama"],
+        "answer": 1,
+        "explanation": "Hadits adalah segala sesuatu yang disandarkan kepada Nabi Muhammad SAW berupa perkataan (qaul), perbuatan (fi'l), ketetapan (taqrir), dan sifat beliau (washf)."
+      },
+      {
+        "q": "Kitab hadits paling sahih menurut mayoritas ulama adalah?",
+        "options": ["Shahih Muslim", "Shahih Bukhari", "Sunan Abu Dawud", "Sunan Nasa'i"],
+        "answer": 1,
+        "explanation": "Shahih Bukhari karya Imam Muhammad bin Ismail Al-Bukhari (w. 256 H) diakui sebagai kitab hadits paling sahih setelah Al-Quran."
+      },
+      {
+        "q": "Sanad dalam ilmu hadits adalah?",
+        "options": ["Isi atau teks hadits", "Rangkaian perawi yang menyampaikan hadits dari sumbernya hingga kita", "Komentar ulama tentang hadits", "Bab-bab dalam kitab hadits"],
+        "answer": 1,
+        "explanation": "Sanad (isnad) adalah rangkaian para perawi yang menyampaikan matan hadits dari generasi ke generasi hingga sampai kepada kita."
+      },
+      {
+        "q": "Hadits yang diriwayatkan oleh banyak perawi yang tidak mungkin bersepakat untuk berdusta disebut?",
+        "options": ["Hadits Hasan", "Hadits Gharib", "Hadits Dhaif", "Hadits Mutawatir"],
+        "answer": 3,
+        "explanation": "Hadits Mutawatir adalah hadits yang diriwayatkan oleh banyak perawi di setiap tingkatan sanad, sehingga secara akal mustahil mereka semua bersepakat untuk berdusta."
+      },
+      {
+        "q": "Siapakah perawi wanita yang paling banyak meriwayatkan hadits Nabi SAW?",
+        "options": ["Khadijah binti Khuwailid", "Aisyah binti Abu Bakar", "Fatimah Az-Zahra", "Ummu Salamah"],
+        "answer": 1,
+        "explanation": "Aisyah binti Abu Bakar RA adalah perawi wanita yang paling banyak meriwayatkan hadits Nabi SAW, dengan sekitar 2.210 hadits yang tercatat."
+      },
+      {
+        "q": "Matan dalam ilmu hadits adalah?",
+        "options": ["Rangkaian perawi", "Komentar ulama", "Isi atau teks hadits itu sendiri", "Bab dalam kitab hadits"],
+        "answer": 2,
+        "explanation": "Matan adalah isi atau teks hadits, yaitu ucapan, perbuatan, atau ketetapan Nabi SAW yang dinukil melalui sanad."
+      },
+      {
+        "q": "Kitab 'Al-Kutub Al-Sittah' (enam kitab hadits utama) terdiri dari?",
+        "options": ["Bukhari, Muslim, Abu Dawud, Tirmidzi, Nasa'i, Ibnu Majah", "Hanya Bukhari dan Muslim", "Bukhari, Muslim, Malik, Syafi'i, Ahmad, Tirmidzi", "Bukhari, Muslim, Baihaqi, Hakim, Darimi, Daraquthni"],
+        "answer": 0,
+        "explanation": "Al-Kutub Al-Sittah (enam kitab hadits utama) adalah: Shahih Bukhari, Shahih Muslim, Sunan Abu Dawud, Sunan Tirmidzi (Jami'), Sunan Nasa'i, dan Sunan Ibnu Majah."
+      },
+      {
+        "q": "Hadits dhaif adalah hadits yang?",
+        "options": ["Diriwayatkan oleh banyak perawi", "Tidak memenuhi syarat hadits shahih maupun hasan karena ada cacat pada sanad atau perawinya", "Sangat populer di kalangan umat Islam", "Hanya diriwayatkan oleh satu sahabat"],
+        "answer": 1,
+        "explanation": "Hadits dhaif (lemah) adalah hadits yang tidak memenuhi syarat hadits shahih maupun hasan, karena ada kecacatan pada sanad (terputus) atau perawinya (tidak tsiqah/terpercaya)."
+      },
+      {
+        "q": "Siapakah sahabat yang paling banyak meriwayatkan hadits Nabi SAW?",
+        "options": ["Umar bin Khattab", "Ali bin Abi Thalib", "Abu Hurairah", "Abdullah bin Mas'ud"],
+        "answer": 2,
+        "explanation": "Abu Hurairah RA adalah sahabat yang paling banyak meriwayatkan hadits Nabi SAW, dengan lebih dari 5.300 hadits yang tercatat."
+      },
+      {
+        "q": "Hadits Qudsi adalah?",
+        "options": ["Hadits yang diriwayatkan di Masjidil Haram", "Firman Allah yang diriwayatkan melalui Nabi SAW namun bukan bagian dari Al-Quran", "Hadits yang paling sahih", "Hadits yang berasal dari Mekkah dan Madinah"],
+        "answer": 1,
+        "explanation": "Hadits Qudsi adalah firman Allah SWT yang disampaikan melalui lisan Nabi Muhammad SAW, namun tidak termasuk Al-Quran dari sisi kemukjizatan bahasa dan tata cara membacanya."
+      },
+      {
+        "q": "Imam Al-Bukhari menulis Shahih Bukhari selama berapa tahun?",
+        "options": ["6 tahun", "10 tahun", "16 tahun", "20 tahun"],
+        "answer": 2,
+        "explanation": "Imam Al-Bukhari menghabiskan waktu 16 tahun untuk menyusun kitab Shahih Bukhari, memilih sekitar 7.275 hadits (dengan pengulangan) dari 600.000 hadits yang ia hafal."
+      },
+      {
+        "q": "Tabi'in adalah?",
+        "options": ["Para nabi setelah Nabi Muhammad SAW", "Generasi Muslim yang bertemu dengan sahabat Nabi SAW namun tidak bertemu langsung dengan Nabi", "Ulama hadits abad ke-3 Hijriyah", "Para penghafal Al-Quran pertama"],
+        "answer": 1,
+        "explanation": "Tabi'in adalah generasi Muslim yang hidup setelah generasi sahabat; mereka bertemu, belajar, dan meriwayatkan hadits dari para sahabat Nabi SAW, namun tidak sempat bertemu langsung dengan Nabi SAW."
+      },
+      {
+        "q": "Hadits Arbain (40 hadits) yang terkenal disusun oleh?",
+        "options": ["Imam Bukhari", "Imam Muslim", "Imam Nawawi", "Imam Tirmidzi"],
+        "answer": 2,
+        "explanation": "Al-Arba'in An-Nawawiyah disusun oleh Imam Yahya bin Syaraf An-Nawawi (w. 676 H), berisi 42 hadits (awalnya 42 meski disebut 40) yang mencakup pokok-pokok ajaran Islam."
+      },
+      {
+        "q": "Perawi hadits yang dikenal dengan julukan 'Amirul Mukminin fil Hadits' adalah?",
+        "options": ["Imam Muslim", "Imam Bukhari", "Imam Tirmidzi", "Imam Ahmad"],
+        "answer": 1,
+        "explanation": "Imam Bukhari mendapat julukan 'Amirul Mukminin fil Hadits' (pemimpin orang-orang beriman dalam bidang hadits) atas keahliannya yang luar biasa dalam ilmu hadits."
+      },
+      {
+        "q": "Hadits marfu' adalah hadits yang?",
+        "options": ["Berakhir pada tabi'in", "Berakhir pada sahabat saja", "Disandarkan langsung kepada Nabi Muhammad SAW", "Tidak diketahui sanadnya"],
+        "answer": 2,
+        "explanation": "Hadits marfu' adalah hadits yang disandarkan kepada Nabi Muhammad SAW, baik berupa ucapan, perbuatan, ketetapan, maupun sifat beliau."
+      }
+    ],
+    "intermediate": [
+      {
+        "q": "Syarat hadits shahih ada lima. Manakah yang BUKAN syarat shahih?",
+        "options": ["Sanad bersambung", "Perawinya adil dan dhabith", "Tidak ada syadz dan illat", "Diriwayatkan di Makkah atau Madinah"],
+        "answer": 3,
+        "explanation": "Lima syarat hadits shahih: (1) sanad muttashil/bersambung, (2) perawi adil, (3) perawi dhabith (kuat hafalannya), (4) tidak syadz (tidak menyalahi riwayat yang lebih tsiqah), (5) tidak ber-illat (tidak ada cacat tersembunyi). Tempat periwayatan bukan syarat."
+      },
+      {
+        "q": "Perbedaan hadits shahih dan hadits hasan dari sisi kualitas perawi adalah?",
+        "options": ["Tidak ada perbedaan sama sekali", "Hadits hasan: perawinya memiliki ke-dhabith-an yang sedikit lebih rendah dari syarat shahih, namun tetap dapat diterima", "Hadits hasan perawinya tidak adil", "Hadits hasan sanadnya selalu terputus"],
+        "answer": 1,
+        "explanation": "Perbedaan utama: hadits hasan perawinya memiliki kedhabitan (kekuatan hafalan) yang sedikit di bawah standar hadits shahih, namun tetap masuk kategori hadits maqbul (diterima) yang dapat dijadikan hujjah."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'jarh wa ta'dil' dalam ilmu hadits?",
+        "options": ["Cara menulis hadits", "Ilmu tentang kritik perawi: menilai cacat (jarh) atau terpercaya (ta'dil) seorang perawi", "Cara menghafal hadits", "Metode membandingkan dua hadits yang bertentangan"],
+        "answer": 1,
+        "explanation": "Jarh wa ta'dil adalah ilmu yang membahas penilaian terhadap para perawi hadits, apakah mereka memiliki cacat (jarh) yang melemahkan hadits atau terpercaya (ta'dil) sehingga haditsnya diterima."
+      },
+      {
+        "q": "Hadits yang sanadnya terputus karena ada perawi yang dihilangkan di tengah sanad disebut?",
+        "options": ["Hadits munqathi'", "Hadits mursal", "Hadits mauquf", "Hadits mu'allaq"],
+        "answer": 0,
+        "explanation": "Hadits munqathi' adalah hadits yang sanadnya terputus di suatu tempat dalam rangkaian perawi (seorang perawi dihilangkan di tengah sanad, bukan di awal atau akhir)."
+      },
+      {
+        "q": "Kitab Al-Muwaththa' karya Imam Malik termasuk kitab?",
+        "options": ["Hanya kitab fiqh", "Musnad yang berisi hadits berdasarkan nama perawi", "Salah satu kitab hadits tertua yang juga memuat fatwa sahabat dan tabi'in", "Kitab tafsir Al-Quran"],
+        "answer": 2,
+        "explanation": "Al-Muwaththa' karya Imam Malik bin Anas (w. 179 H) adalah salah satu kitab hadits tertua dan paling otoritatif, memuat hadits Nabi SAW beserta fatwa-fatwa sahabat dan tabi'in."
+      },
+      {
+        "q": "Apa yang dimaksud dengan hadits ahad?",
+        "options": ["Hadits yang hanya satu baris teksnya", "Hadits yang tidak mencapai derajat mutawatir dari sisi jumlah perawinya", "Hadits tentang satu topik saja", "Hadits yang diriwayatkan satu orang di semua tingkatan"],
+        "answer": 1,
+        "explanation": "Hadits ahad adalah hadits yang tidak mencapai syarat mutawatir dari sisi jumlah perawi. Ahad terbagi menjadi aziz (min. 2 perawi), masyhur (min. 3 perawi), dan gharib (hanya 1 perawi di satu tingkatan)."
+      },
+      {
+        "q": "Musnad Imam Ahmad merupakan kitab hadits yang disusun berdasarkan?",
+        "options": ["Urutan topik fiqh", "Nama sahabat yang meriwayatkan hadits", "Urutan surah Al-Quran", "Kualitas hadits dari yang paling shahih"],
+        "answer": 1,
+        "explanation": "Musnad Imam Ahmad bin Hanbal disusun berdasarkan nama sahabat perawi hadits. Ini berbeda dengan kitab seperti Shahih Bukhari yang disusun berdasarkan bab topik (mushanaf)."
+      },
+      {
+        "q": "Perawi yang disebut 'tsiqah' berarti?",
+        "options": ["Perawi yang hafalan haditsnya kurang", "Perawi yang adil dan dhabith (terpercaya dan kuat hafalannya)", "Perawi yang sanadnya sering terputus", "Perawi yang hanya meriwayatkan hadits dari satu guru"],
+        "answer": 1,
+        "explanation": "Tsiqah adalah istilah pujian tertinggi dalam jarh wa ta'dil, yang berarti perawi tersebut memenuhi dua syarat utama: adil (tidak fasik) dan dhabith (kuat hafalan atau tulisannya)."
+      },
+      {
+        "q": "Hadits mursal adalah hadits yang?",
+        "options": ["Diriwayatkan oleh banyak sahabat", "Sanadnya terputus di bagian bawah, yaitu tabi'in langsung menyandarkan kepada Nabi SAW tanpa menyebut sahabat", "Tidak diketahui perawinya sama sekali", "Sanadnya bersambung tapi perawinya lemah"],
+        "answer": 1,
+        "explanation": "Hadits mursal: tabi'in langsung meriwayatkan dari Nabi SAW tanpa menyebut sahabat. Sanadnya terputus di tingkat bawah (hilangnya sahabat). Mayoritas ulama menganggapnya dhaif, kecuali ulama tertentu seperti Abu Hanifah."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'tahammul wa ada' al-hadits'?",
+        "options": ["Cara menulis dan mencetak kitab hadits", "Cara menerima hadits (tahammul) dari guru dan cara menyampaikan hadits (ada') kepada murid", "Cara menghafal hadits yang paling efektif", "Cara memilah hadits shahih dari yang lemah"],
+        "answer": 1,
+        "explanation": "Tahammul adalah cara seseorang menerima hadits dari gurunya (seperti: sama', qira'ah, ijazah, munawalah, dll). Ada' adalah cara menyampaikan hadits yang telah diterima kepada murid atau lainnya."
+      },
+      {
+        "q": "Kriteria 'adil' pada seorang perawi hadits mencakup?",
+        "options": ["Hanya tidak berbohong", "Muslim, baligh, berakal, tidak fasik, dan menjaga muru'ah (kehormatan diri)", "Hanya orang Arab saja", "Harus hafal Al-Quran 30 juz"],
+        "answer": 1,
+        "explanation": "Syarat keadilan perawi: Muslim, baligh, berakal, tidak melakukan kefasikan (dosa besar atau terus-menerus dosa kecil), dan tidak melakukan hal-hal yang merusak muru'ah (martabat)."
+      },
+      {
+        "q": "Apa perbedaan antara hadits mauquf dan hadits marfu'?",
+        "options": ["Tidak ada perbedaan", "Mauquf: disandarkan kepada sahabat (bukan Nabi); marfu': disandarkan langsung kepada Nabi SAW", "Mauquf lebih shahih dari marfu'", "Marfu' disandarkan kepada tabi'in"],
+        "answer": 1,
+        "explanation": "Hadits marfu': sanadnya berakhir pada Nabi Muhammad SAW. Hadits mauquf: sanadnya berakhir pada sahabat Nabi SAW (ucapan atau perbuatan sahabat). Hadits mauquf bisa memiliki kualitas shahih jika sanadnya kuat."
+      },
+      {
+        "q": "Ilmu 'rijalul hadits' adalah ilmu yang mempelajari?",
+        "options": ["Isi dan makna hadits", "Biografi dan kualitas para perawi hadits", "Cara penulisan mushaf hadits", "Hukum-hukum yang terkandung dalam hadits"],
+        "answer": 1,
+        "explanation": "Ilmu rijalul hadits adalah ilmu yang mempelajari biografi para perawi: identitas, tahun lahir-wafat, guru-murid, kualitas (tsiqah atau lemah), dan informasi lain yang berkaitan dengan keandalan perawi."
+      },
+      {
+        "q": "Hadits yang bertentangan dengan akal sehat atau fakta ilmiah yang pasti dikategorikan sebagai?",
+        "options": ["Hadits mutawatir", "Hadits hasan", "Sangat mungkin hadits palsu (maudhu') atau dhaif jiddan", "Hadits shahih yang perlu ditafsirkan ulang"],
+        "answer": 2,
+        "explanation": "Salah satu tanda hadits maudhu' (palsu) adalah matannya bertentangan dengan akal sehat yang pasti, fakta ilmiah yang tidak terbantahkan, atau bertentangan dengan Al-Quran. Meski demikian, tidak semua hadits aneh otomatis palsu."
+      },
+      {
+        "q": "Imam Muslim bin Al-Hajjaj wafat pada tahun berapa Hijriyah?",
+        "options": ["256 H", "261 H", "275 H", "303 H"],
+        "answer": 1,
+        "explanation": "Imam Muslim bin Al-Hajjaj Al-Qusyairi An-Naisaburi wafat pada tahun 261 H (875 M). Shahih Muslim-nya adalah kitab hadits paling shahih kedua setelah Shahih Bukhari."
+      }
+    ],
+    "advanced": [
+      {
+        "q": "Perbedaan antara 'illat' dan 'syadz' sebagai cacat hadits adalah?",
+        "options": ["Keduanya identik dan sinonim", "Illat: cacat tersembunyi yang merusak keshahihan meski zhahirnya tampak baik; syadz: riwayat perawi tsiqah yang bertentangan dengan yang lebih tsiqah", "Syadz lebih berat dari illat", "Illat hanya pada matan, syadz hanya pada sanad"],
+        "answer": 1,
+        "explanation": "Illat adalah cacat tersembunyi dalam sanad atau matan yang hanya dapat dideteksi oleh ahli hadits. Syadz terjadi ketika perawi tsiqah meriwayatkan sesuatu yang bertentangan dengan riwayat yang lebih tsiqah atau lebih banyak."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'tadlis' dalam ilmu hadits?",
+        "options": ["Pemalsuan hadits secara terang-terangan", "Menyembunyikan kecacatan sanad, seperti meriwayatkan dari orang yang tidak pernah ia temui seolah-olah bertemu", "Meriwayatkan hadits dari hafalan yang lemah", "Kesalahan dalam penulisan teks hadits"],
+        "answer": 1,
+        "explanation": "Tadlis adalah praktik menyembunyikan kecacatan dalam sanad. Contoh: tadlis isnad (meriwayatkan dari orang yang tidak pernah ditemui seolah bertemu) dan tadlis syuyukh (menyebut guru dengan nama lain yang tidak dikenal untuk menyembunyikan kelemahannya)."
+      },
+      {
+        "q": "Konsep 'i'tibar' dalam ilmu hadits digunakan untuk?",
+        "options": ["Menentukan kualitas hafalan perawi", "Menelusuri apakah ada perawi lain (mutabi' atau syahid) yang memperkuat hadits yang tampaknya lemah", "Membandingkan dua versi teks hadits yang berbeda", "Menentukan apakah hadits dapat dijadikan hujjah hukum"],
+        "answer": 1,
+        "explanation": "I'tibar adalah metode menelusuri jalur-jalur sanad lain untuk suatu hadits guna mencari mutabi' (penguat di tingkatan sanad yang sama) atau syahid (penguat dari sahabat lain), yang bisa meningkatkan derajat hadits."
+      },
+      {
+        "q": "Apa yang membedakan mazhab Hanafi dalam menerima hadits ahad dibanding jumhur?",
+        "options": ["Hanafi menolak semua hadits ahad", "Hanafi mensyaratkan tambahan: hadits ahad tidak boleh bertentangan dengan qiyas jika perawi bukan faqih (ahli fiqh)", "Hanafi lebih mudah menerima hadits ahad dari siapapun", "Tidak ada perbedaan metodologi antara Hanafi dan jumhur"],
+        "answer": 1,
+        "explanation": "Salah satu keunikan metodologi Hanafi: jika perawi bukan faqih dan haditsnya bertentangan dengan qiyas, maka qiyas didahulukan. Jumhur (Maliki, Syafi'i, Hanbali) secara umum mendahulukan hadits ahad atas qiyas."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'hadits mu'allaq' dalam konteks Shahih Bukhari?",
+        "options": ["Hadits yang sanadnya bersambung penuh", "Hadits yang Imam Bukhari sebutkan tanpa sanad atau dengan sanad yang dipotong di awal", "Hadits yang bertentangan dengan hadits lain", "Hadits dengan matan yang sulit dipahami"],
+        "answer": 1,
+        "explanation": "Mu'allaq secara umum adalah hadits yang sanadnya dipotong dari awal (satu atau lebih perawi di awal dihilangkan). Dalam Shahih Bukhari, ada hadits mu'allaq sebagai penguat atau isyarat; para ulama mengumpulkan dan menilainya dalam karya seperti 'Taghliq At-Ta'liq' karya Ibnu Hajar."
+      },
+      {
+        "q": "Kritik orientalis terhadap hadits yang paling terkenal adalah teori?",
+        "options": ["Hadits tidak bisa dipercaya sama sekali", "Teori Goldziher dan Schacht bahwa banyak hadits adalah projeksi retroaktif pendapat ulama abad ke-2-3 H, bukan dari Nabi SAW", "Hadits hanya relevan untuk sejarah Arab", "Sanad hadits tidak dapat diverifikasi"],
+        "answer": 1,
+        "explanation": "Ignaz Goldziher dan Joseph Schacht berpendapat bahwa banyak hadits adalah kreasi ulama abad ke-2-3 H yang diproyeksikan mundur ke Nabi SAW. Para ulama Muslim kontemporer seperti Mustafa Azami telah merespons dan membantah argumen ini secara ilmiah."
+      },
+      {
+        "q": "Dalam terminologi hadits, apa yang dimaksud dengan 'tashif'?",
+        "options": ["Cara menyusun kitab hadits berdasarkan topik", "Kesalahan dalam membaca atau menyalin hadits karena kemiripan huruf atau titik", "Cara mengkritik perawi hadits", "Ilmu yang mempelajari variasi matan hadits"],
+        "answer": 1,
+        "explanation": "Tashif adalah kesalahan dalam meriwayatkan hadits karena kekeliruan membaca tulisan, disebabkan kemiripan huruf atau titik. Ini adalah salah satu jenis 'illat yang melemahkan hadits. Ulama ahli tashif terkenal di antaranya Ad-Daruquthni."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'hadits mutabi'' dan 'hadits syahid' dalam i'tibar?",
+        "options": ["Dua nama berbeda untuk hal yang sama", "Mutabi': perawi lain dari sahabat yang sama mendukung; syahid: sahabat lain meriwayatkan hadits serupa", "Mutabi' lebih kuat dari syahid", "Syahid hanya untuk hadits dhaif"],
+        "answer": 1,
+        "explanation": "Mutabi' (tabi'): perawi lain dari sahabat yang sama meriwayatkan hal serupa, memperkuat di tingkatan tabi'in atau di bawahnya. Syahid: sahabat lain (berbeda dari sahabat asli) meriwayatkan hadits dengan makna serupa, memperkuat di tingkatan sahabat."
+      },
+      {
+        "q": "Imam Al-Bukhari dikenal memiliki standar yang lebih ketat dari Imam Muslim dalam hal?",
+        "options": ["Jumlah perawi yang dibutuhkan", "Mensyaratkan bukti pertemuan fisik antara perawi dan gurunya (liqa'), tidak hanya kemungkinan bertemu di zaman yang sama", "Kualitas matan hadits", "Hanya menerima hadits dari orang Arab"],
+        "answer": 1,
+        "explanation": "Bukhari mensyaratkan liqa' (bukti nyata pertemuan antara perawi dan gurunya). Muslim cukup dengan mu'asharah (hidup sezaman), yang lebih longgar. Inilah salah satu alasan Shahih Bukhari dianggap sedikit lebih ketat dari Shahih Muslim."
+      },
+      {
+        "q": "Apa peran kitab 'Mizan Al-I'tidal' karya Imam Adz-Dzahabi dalam ilmu hadits?",
+        "options": ["Kitab tafsir hadits", "Ensiklopedia biografi perawi hadits yang lemah dan cacat", "Kitab tentang hukum-hukum fiqh dari hadits", "Kitab perbandingan Shahih Bukhari dan Shahih Muslim"],
+        "answer": 1,
+        "explanation": "Mizan Al-I'tidal fi Naqd Ar-Rijal karya Imam Syamsuddin Adz-Dzahabi (w. 748 H) adalah ensiklopedia besar tentang perawi hadits yang dinilai lemah atau cacat, sangat penting dalam ilmu jarh wa ta'dil."
+      },
+      {
+        "q": "Konsep 'tawatur ma'nawi' berbeda dari 'tawatur lafzhi' dalam hal?",
+        "options": ["Tidak ada perbedaan keduanya sama saja", "Tawatur lafzhi: teks dan redaksi sama persis; tawatur ma'nawi: teks berbeda tapi makna pokoknya sama, diriwayatkan banyak jalur", "Tawatur ma'nawi lebih lemah dari ahad", "Tawatur lafzhi hanya untuk Al-Quran"],
+        "answer": 1,
+        "explanation": "Tawatur lafzhi: lafaz dan teks persis sama di semua jalur riwayat. Tawatur ma'nawi: teks berbeda-beda tetapi semua menunjuk makna yang sama. Contoh tawatur ma'nawi: hadits tentang mengangkat tangan dalam doa, dari puluhan jalur berbeda."
+      },
+      {
+        "q": "Apa yang dimaksud dengan metode 'dirasah al-asanid' (studi sanad) dalam penelitian hadits modern?",
+        "options": ["Hanya menghitung jumlah perawi dalam sanad", "Analisis komprehensif atas seluruh jalur sanad suatu hadits untuk menentukan kualitas, penyebaran, dan sejarahnya", "Cara menghafal sanad dengan cepat", "Penulisan ulang sanad dalam bahasa modern"],
+        "answer": 1,
+        "explanation": "Dirasah al-asanid modern menggabungkan metode klasik jarh wa ta'dil dengan database digital (seperti Mausu'ah Rijal Al-Kutub Al-Tis'ah) untuk melacak semua jalur sanad, menilai perawi, dan menyimpulkan kualitas hadits secara komprehensif."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'hadits shadz'?",
+        "options": ["Hadits aneh dan tidak masuk akal", "Hadits yang perawinya tsiqah namun bertentangan dengan riwayat yang lebih tsiqah atau lebih banyak", "Hadits yang hanya ditemukan di satu kitab", "Hadits tentang topik yang tidak lazim dibahas"],
+        "answer": 1,
+        "explanation": "Hadits syadz: perawinya tsiqah namun riwayatnya bertentangan dengan riwayat perawi yang lebih tsiqah atau lebih banyak jumlahnya. Syadz adalah salah satu sebab hadits tidak dapat diterima sebagai hadits shahih."
+      },
+      {
+        "q": "Mengapa sanad hadits disebut sebagai 'keistimewaan umat Islam' oleh Imam Abdullah bin Al-Mubarak?",
+        "options": ["Karena sanad ditulis dalam bahasa Arab yang sulit", "Karena sistem sanad adalah metode verifikasi riwayat secara berantai yang unik dalam sejarah peradaban, tidak ada yang menyamainya", "Karena sanad hanya ada dalam Islam", "Karena sanad membuat hadits lebih panjang dari kitab lain"],
+        "answer": 1,
+        "explanation": "Ibnu Al-Mubarak berkata: 'Sanad adalah bagian dari agama. Kalaulah bukan karena sanad, siapapun bisa mengatakan apa saja yang ia mau.' Sistem sanad adalah metodologi verifikasi historis yang belum ada tandingannya dalam tradisi keilmuan dunia."
+      },
+      {
+        "q": "Dalam ilmu hadits, apa yang dimaksud dengan 'talqin' sebagai cacat perawi?",
+        "options": ["Cara mengajar hadits kepada murid", "Kondisi di mana perawi menerima saja hadits yang 'disugestikan' kepadanya tanpa verifikasi, menunjukkan lemahnya ke-dhabith-an", "Metode menghafal hadits dengan pengulangan", "Cara mendeteksi hadits palsu"],
+        "answer": 1,
+        "explanation": "Talqin (sugesti) adalah pengujian di mana seseorang 'mensugestikan' hadits kepada perawi dan perawi menerimanya begitu saja tanpa mengoreksi. Ini menunjukkan lemahnya ke-dhabith-an perawi, sehingga kualitas haditsnya diragukan."
+      }
+    ]
+  }
+}

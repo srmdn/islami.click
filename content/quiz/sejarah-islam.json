@@ -1,0 +1,278 @@
+{
+  "slug": "sejarah-islam",
+  "label": "Sejarah Islam",
+  "description": "Peradaban dan ekspansi Islam dari masa ke masa",
+  "display_order": 7,
+  "questions": {
+    "basic": [
+      {
+        "q": "Kekhalifahan Islam pertama setelah Nabi SAW wafat disebut?",
+        "options": ["Dinasti Umayyah", "Khulafaur Rasyidin", "Dinasti Abbasiyah", "Dinasti Fathimiyah"],
+        "answer": 1,
+        "explanation": "Khulafaur Rasyidin (Khalifah yang mendapat petunjuk) adalah empat khalifah pertama: Abu Bakar, Umar, Utsman, dan Ali. Mereka memerintah sekitar tahun 632-661 M."
+      },
+      {
+        "q": "Dinasti Islam yang berpusat di Baghdad adalah?",
+        "options": ["Dinasti Umayyah", "Dinasti Abbasiyah", "Dinasti Fathimiyah", "Dinasti Utsmaniyah"],
+        "answer": 1,
+        "explanation": "Dinasti Abbasiyah (750-1258 M) berpusat di Baghdad. Masa keemasannya dikenal sebagai Golden Age Islam, terutama pada masa Harun Al-Rasyid dan Al-Ma'mun."
+      },
+      {
+        "q": "Siapakah yang mendirikan Dinasti Umayyah?",
+        "options": ["Ali bin Abi Thalib", "Muawiyah bin Abi Sufyan", "Yazid bin Muawiyah", "Marwan bin Hakam"],
+        "answer": 1,
+        "explanation": "Muawiyah bin Abi Sufyan mendirikan Dinasti Umayyah setelah masa Ali bin Abi Thalib. Ibu kota pertamanya adalah Damaskus."
+      },
+      {
+        "q": "Kota Baghdad didirikan oleh khalifah Abbasiyah bernama?",
+        "options": ["Harun Al-Rasyid", "Al-Mansur", "Al-Ma'mun", "Al-Mutawakkil"],
+        "answer": 1,
+        "explanation": "Khalifah Al-Mansur (Abu Ja'far) mendirikan kota Baghdad pada tahun 762 M sebagai ibu kota Dinasti Abbasiyah."
+      },
+      {
+        "q": "Kekaisaran Mongol menghancurkan Baghdad (pusat Abbasiyah) pada tahun?",
+        "options": ["1099 M", "1258 M", "1453 M", "1492 M"],
+        "answer": 1,
+        "explanation": "Pada tahun 1258 M, pasukan Mongol di bawah Hulagu Khan menghancurkan Baghdad, mengakhiri Dinasti Abbasiyah, dan menenggelamkan buku-buku ilmu pengetahuan ke Sungai Tigris."
+      },
+      {
+        "q": "Islam masuk ke Indonesia diperkirakan mulai sekitar abad ke?",
+        "options": ["5 M", "8-13 M", "15-16 M", "17 M"],
+        "answer": 1,
+        "explanation": "Islam diperkirakan mulai masuk ke Indonesia sekitar abad ke-7-8 M (dibawa pedagang Arab/Persia/India), dan berkembang lebih pesat pada abad ke-13-15 M dengan berdirinya kerajaan-kerajaan Islam."
+      },
+      {
+        "q": "Siapakah tokoh yang mendirikan Kerajaan Islam Samudra Pasai?",
+        "options": ["Sultan Agung", "Marah Silu (Sultan Malik Al-Saleh)", "Raden Patah", "Pangeran Diponegoro"],
+        "answer": 1,
+        "explanation": "Kerajaan Samudra Pasai (di Aceh) adalah kerajaan Islam pertama di Nusantara, didirikan oleh Marah Silu yang kemudian bergelar Sultan Malik Al-Saleh pada akhir abad ke-13 M."
+      },
+      {
+        "q": "Wali Songo adalah?",
+        "options": ["9 raja Muslim di Jawa", "9 ulama penyebar Islam di Jawa pada abad ke-15-16 M", "9 ulama penulis kitab fiqh", "9 sultan Kesultanan Demak"],
+        "answer": 1,
+        "explanation": "Wali Songo (Sembilan Wali) adalah sembilan ulama yang berperan besar dalam penyebaran Islam di Pulau Jawa pada abad ke-15-16 M, dengan metode dakwah yang bijak dan akomodatif terhadap budaya lokal."
+      },
+      {
+        "q": "Perang Salib pertama dimulai pada tahun?",
+        "options": ["900 M", "1095 M", "1200 M", "1299 M"],
+        "answer": 1,
+        "explanation": "Perang Salib Pertama (1095-1099 M) dimulai atas seruan Paus Urban II di Clermont, Perancis. Pasukan Salib berhasil merebut Yerusalem pada 1099 M."
+      },
+      {
+        "q": "Siapakah pemimpin Muslim yang berhasil merebut kembali Yerusalem dari pasukan Salib?",
+        "options": ["Nuruddin Zanki", "Shalahuddin Al-Ayyubi", "Baibars", "Qutuz"],
+        "answer": 1,
+        "explanation": "Shalahuddin Al-Ayyubi (Saladin) berhasil merebut kembali Yerusalem dari pasukan Salib pada tahun 1187 M dalam Pertempuran Hattin, dikenal atas sikapnya yang ksatria."
+      },
+      {
+        "q": "Kesultanan Ottoman (Utsmaniyah) menguasai Konstantinopel pada tahun?",
+        "options": ["1258 M", "1389 M", "1453 M", "1517 M"],
+        "answer": 2,
+        "explanation": "Konstantinopel (ibu kota Byzantium) ditaklukkan oleh Sultan Muhammad Al-Fatih dari Kesultanan Utsmaniyah pada tahun 1453 M, mengakhiri Kekaisaran Romawi Timur."
+      },
+      {
+        "q": "Kerajaan Islam Demak didirikan oleh?",
+        "options": ["Sunan Gunung Jati", "Sunan Kudus", "Raden Patah", "Sunan Kalijaga"],
+        "answer": 2,
+        "explanation": "Kesultanan Demak didirikan oleh Raden Patah sekitar tahun 1478 M, sebagai kerajaan Islam pertama di Jawa yang menggantikan pengaruh Majapahit."
+      },
+      {
+        "q": "Ilmuwan Muslim yang dikenal sebagai 'Bapak Kedokteran' adalah?",
+        "options": ["Al-Farabi", "Al-Biruni", "Ibnu Sina (Avicenna)", "Al-Khawarizmi"],
+        "answer": 2,
+        "explanation": "Ibnu Sina (980-1037 M), dikenal di Barat sebagai Avicenna, adalah ilmuwan Muslim terkemuka dalam kedokteran. Karyanya Al-Qanun fit-Tibb menjadi buku teks kedokteran di Eropa selama berabad-abad."
+      },
+      {
+        "q": "Al-Khawarizmi dikenal karena kontribusinya dalam bidang?",
+        "options": ["Astronomi saja", "Matematika, khususnya aljabar (al-jabar)", "Kedokteran dan farmasi", "Filsafat dan logika"],
+        "answer": 1,
+        "explanation": "Muhammad bin Musa Al-Khawarizmi (780-850 M) dikenal sebagai 'Bapak Aljabar'. Karyanya Al-Kitab Al-Mukhtasar fi Hisab Al-Jabr wal-Muqabala menjadi asal kata 'algebra' dan 'algorithm'."
+      },
+      {
+        "q": "Organisasi Islam terbesar di Indonesia yang didirikan pada tahun 1926 adalah?",
+        "options": ["Muhammadiyah", "Nahdlatul Ulama", "Persis", "Al-Irsyad"],
+        "answer": 1,
+        "explanation": "Nahdlatul Ulama (NU) didirikan pada 31 Januari 1926 di Surabaya oleh KH. Hasyim Asy'ari dan para ulama pesantren, sebagai organisasi yang berpegang pada tradisi Ahlus Sunnah wal Jamaah."
+      }
+    ],
+    "intermediate": [
+      {
+        "q": "Masa Keemasan Islam (Golden Age) ditandai oleh?",
+        "options": ["Penaklukan terluas wilayah Islam", "Kemajuan pesat ilmu pengetahuan, sains, filsafat, dan seni yang berpusat di Baghdad (abad 8-13 M)", "Terbentuknya 4 madzhab fiqh", "Penyatuan seluruh dunia Islam di bawah satu khalifah"],
+        "answer": 1,
+        "explanation": "Golden Age Islam (abad ke-8-13 M) ditandai kemajuan luar biasa: matematika, astronomi, kedokteran, kimia, filsafat. Pusat pengetahuan: Baghdad (Baitul Hikmah). Tokoh: Al-Khawarizmi, Ibnu Sina, Al-Biruni, Al-Razi, dll."
+      },
+      {
+        "q": "Baitul Hikmah di Baghdad adalah?",
+        "options": ["Masjid terbesar di Baghdad", "Pusat penerjemahan dan penelitian ilmu pengetahuan pada masa Abbasiyah", "Istana khalifah Abbasiyah", "Perpustakaan pribadi Harun Al-Rasyid"],
+        "answer": 1,
+        "explanation": "Baitul Hikmah (House of Wisdom) adalah lembaga riset dan penerjemahan besar pada masa Abbasiyah, terutama masa Al-Ma'mun. Ribuan karya Yunani, Persia, dan India diterjemahkan ke bahasa Arab di sini."
+      },
+      {
+        "q": "Kekalahan pasukan Islam dalam Pertempuran Tours/Poitiers (732 M) menandai?",
+        "options": ["Akhir Dinasti Umayyah", "Batas perluasan Islam ke arah barat Eropa", "Awal Perang Salib", "Perpecahan antara Sunni dan Syiah"],
+        "answer": 1,
+        "explanation": "Pertempuran Tours/Poitiers (732 M) di Perancis antara pasukan Umayyah dan Charles Martel menghentikan ekspansi Islam ke Eropa Barat. Sejarawan menganggap ini salah satu pertempuran paling penting dalam sejarah dunia."
+      },
+      {
+        "q": "Dinasti Safawiyah di Persia penting dalam sejarah Islam karena?",
+        "options": ["Menjadi pusat ilmu pengetahuan Islam", "Menjadikan Islam Syiah sebagai agama negara Persia (Iran), yang masih bertahan hingga kini", "Menaklukkan Konstantinopel", "Menyatukan seluruh dunia Sunni"],
+        "answer": 1,
+        "explanation": "Dinasti Safawiyah (1501-1736 M) di bawah Shah Ismail I menjadikan Islam Syiah Dua Belas (Itsna Asyariah) sebagai agama negara Persia, yang membentuk identitas keislaman Iran hingga hari ini."
+      },
+      {
+        "q": "Siapakah Sultan Utsmaniyah yang menaklukkan Konstantinopel?",
+        "options": ["Sultan Sulaiman Al-Qanuni", "Sultan Selim I", "Sultan Muhammad II (Al-Fatih)", "Sultan Bayazid II"],
+        "answer": 2,
+        "explanation": "Sultan Muhammad II (Muhammad Al-Fatih, 1453 M) menaklukkan Konstantinopel pada usia 21 tahun, memenuhi hadits Nabi SAW tentang seorang pemimpin terbaik yang akan menaklukkan kota tersebut."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'Reconquista' dalam sejarah Islam?",
+        "options": ["Penaklukan Islam atas Spanyol", "Perang Salib di Timur Tengah", "Proses pengambilalihan kembali Semenanjung Iberia oleh kerajaan Kristen dari Muslim selama abad 8-15 M", "Perang antara Ottoman dan Persia"],
+        "answer": 2,
+        "explanation": "Reconquista adalah proses panjang (718-1492 M) di mana kerajaan-kerajaan Kristen merebut kembali Semenanjung Iberia (Spanyol-Portugal) dari kekuasaan Muslim. Berakhir dengan jatuhnya Granada tahun 1492 M."
+      },
+      {
+        "q": "Ulama yang mengkritisi ulama istana dan menulis tentang reformasi Islam di abad ke-14 H adalah?",
+        "options": ["Imam Al-Ghazali", "Ibnu Khaldun", "Ibnu Taimiyah", "Ibnu Batutah"],
+        "answer": 2,
+        "explanation": "Ibnu Taimiyah (1263-1328 M) adalah ulama reformis yang mengkritisi praktik bid'ah, tawassul yang tidak berdasar, dan ulama yang berpihak kepada kekuasaan. Pemikirannya sangat berpengaruh dalam gerakan pemurnian Islam."
+      },
+      {
+        "q": "Penjelajah Muslim yang terkenal atas perjalanannya ke seluruh dunia Islam pada abad ke-14 M adalah?",
+        "options": ["Ibnu Batutah", "Ibnu Khaldun", "Al-Idrisi", "Al-Masudi"],
+        "answer": 0,
+        "explanation": "Ibnu Batutah (1304-1368/9 M) adalah penjelajah Muslim asal Maroko yang melakukan perjalanan sejauh lebih dari 117.000 km dalam 29 tahun, mengunjungi hampir seluruh dunia Islam dan merekamnya dalam Kitab Ar-Rihlah."
+      },
+      {
+        "q": "Tokoh yang dikenal sebagai 'Bapak Sosiologi' dan menulis Muqaddimah adalah?",
+        "options": ["Ibnu Batutah", "Ibnu Rusyd (Averroes)", "Ibnu Khaldun", "Al-Farabi"],
+        "answer": 2,
+        "explanation": "Ibnu Khaldun (1332-1406 M) menulis Al-Muqaddimah, karya monumental yang menganalisis sejarah, peradaban, dan masyarakat secara sistematis. Ia dianggap sebagai pelopor sosiologi, historiografi, dan ilmu ekonomi."
+      },
+      {
+        "q": "Islam masuk ke Afrika Barat terutama melalui jalur?",
+        "options": ["Perang militer langsung", "Perdagangan trans-Sahara dan ulama-ulama pengembara", "Kolonisasi Arab", "Kebijakan pemerintah Abbasiyah"],
+        "answer": 1,
+        "explanation": "Islam menyebar ke Afrika Barat (Mali, Ghana, Songhai) terutama melalui perdagangan trans-Sahara dan para ulama pengembara. Kerajaan Mali (1230-1600 M) dengan raja terkenalnya Mansa Musa adalah contoh terkemuka."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'Pan-Islamisme' sebagai gerakan abad ke-19?",
+        "options": ["Gerakan menolak modernisasi", "Gerakan yang menganjurkan persatuan politik seluruh Muslim di bawah satu kepemimpinan, sebagai respons terhadap imperialisme Eropa", "Gerakan hanya untuk negara Arab", "Gerakan reformasi fiqh semata"],
+        "answer": 1,
+        "explanation": "Pan-Islamisme, dipelopori tokoh seperti Jamal Al-Din Al-Afghani, adalah gerakan yang mengadvokasi persatuan politik dan budaya umat Islam sebagai respons terhadap dominasi kolonial Eropa di abad ke-19."
+      },
+      {
+        "q": "Muhammadiyah didirikan di Yogyakarta pada tahun 1912 oleh?",
+        "options": ["KH. Hasyim Asy'ari", "KH. Ahmad Dahlan", "KH. Abdul Wahab Chasbullah", "Hadratussyaikh Kyai Saleh Darat"],
+        "answer": 1,
+        "explanation": "Muhammadiyah didirikan oleh KH. Ahmad Dahlan pada 18 November 1912 di Yogyakarta, dengan fokus pada pemurnian ajaran Islam dan modernisasi pendidikan."
+      },
+      {
+        "q": "Runtuhnya Kekhalifahan Utsmaniyah secara resmi terjadi pada tahun?",
+        "options": ["1918 M", "1922 M", "1924 M", "1930 M"],
+        "answer": 2,
+        "explanation": "Kekhalifahan Utsmaniyah secara resmi dihapuskan oleh Mustafa Kemal Ataturk pada 3 Maret 1924. Ini menandai berakhirnya institusi kekhalifahan yang telah berlangsung selama 1.300 tahun."
+      },
+      {
+        "q": "Siapakah tokoh yang memimpin gerakan kebangkitan Islam di India pada abad ke-18-19 M?",
+        "options": ["Muhammad Iqbal", "Sayyid Ahmad Barelwi", "Shah Waliullah Al-Dihlawi", "Muhammad Ali Jinnah"],
+        "answer": 2,
+        "explanation": "Shah Waliullah Al-Dihlawi (1703-1762 M) adalah tokoh reformis besar Islam di India, yang berusaha memperbarui fiqh, menerjemahkan Al-Quran ke Persia-Urdu, dan mempersatukan madzhab-madzhab."
+      },
+      {
+        "q": "Siapakah yang mendirikan Kerajaan Saudi pertama yang terinspirasi pemikiran Ibnu Taimiyah?",
+        "options": ["Ibnu Saud dan Muhammad bin Abdul Wahhab", "Ibnu Taimiyah sendiri", "Sultan Ottoman", "Raja Faisal"],
+        "answer": 0,
+        "explanation": "Kerajaan Saudi pertama (1744-1818 M) didirikan melalui aliansi Muhammad bin Saud (penguasa Ad-Dir'iyyah) dan Muhammad bin Abdul Wahhab (ulama reformis), yang berupaya mengembalikan Islam pada kemurniannya."
+      }
+    ],
+    "advanced": [
+      {
+        "q": "Apa yang dimaksud dengan 'asabiyyah' dalam teori sejarah Ibnu Khaldun?",
+        "options": ["Semangat keagamaan", "Solidaritas kelompok/suku yang menjadi kekuatan penggerak naik-turunnya peradaban dan dinasti", "Sistem pemerintahan Islam", "Kekuatan ekonomi suatu bangsa"],
+        "answer": 1,
+        "explanation": "Asabiyyah dalam Al-Muqaddimah Ibnu Khaldun adalah kohesi sosial atau solidaritas kelompok yang menjadi pendorong utama pembentukan, kekuatan, dan keruntuhan dinasti. Ketika asabiyyah kuat, dinasti naik; ketika melemah karena kemewahan, dinasti runtuh."
+      },
+      {
+        "q": "Apa peran gerakan Ismaili (Syiah Sab'iyyah) dalam sejarah Islam?",
+        "options": ["Hanya sekte kecil tanpa pengaruh sejarah", "Mendirikan Dinasti Fathimiyah di Mesir (909-1171 M) dan memiliki jaringan dakwah (da'wah) yang sangat terorganisir", "Menyatukan seluruh dunia Syiah", "Gerakan ini didirikan pada abad ke-20"],
+        "answer": 1,
+        "explanation": "Ismaili mendirikan Dinasti Fathimiyah (909-1171 M) yang menguasai Afrika Utara hingga Mesir dan Syam, mendirikan Universitas Al-Azhar (972 M), dan memiliki sistem da'wah rahasia (taqiyyah) yang terorganisir ke seluruh dunia Islam."
+      },
+      {
+        "q": "Apa signifikansi historis 'Pertempuran Ain Jalut' (1260 M)?",
+        "options": ["Pertempuran pertama antara Muslim dan Mongol", "Kekalahan pertama Mongol dari pasukan Mamluk Mesir, menghentikan ekspansi Mongol ke Barat", "Penaklukan Yerusalem oleh Shalahuddin", "Awal Perang Salib Pertama"],
+        "answer": 1,
+        "explanation": "Ain Jalut (1260 M) adalah titik balik sejarah: pasukan Mamluk Mesir di bawah Sultan Qutuz dan Baibars mengalahkan Mongol untuk pertama kalinya, menghentikan ekspansi mereka ke Afrika dan menyelamatkan peradaban Islam."
+      },
+      {
+        "q": "Apa yang membedakan penyebaran Islam di Asia Tenggara dari penyebaran Islam di Timur Tengah dari sisi metode?",
+        "options": ["Tidak ada perbedaan, sama-sama dengan perang", "Asia Tenggara: didominasi perdagangan damai, pernikahan, ulama pengembara, dan adaptasi budaya (sufisme); bukan terutama penaklukan militer", "Asia Tenggara: hanya melalui kolonisasi Arab", "Asia Tenggara: melalui paksaan politik penguasa lokal"],
+        "answer": 1,
+        "explanation": "Islam di Asia Tenggara (termasuk Nusantara) menyebar terutama melalui perdagangan, pernikahan antar pedagang Muslim dan bangsawan lokal, ulama-ulama Sufi, serta adaptasi budaya lokal. Ini berbeda dari penaklukan militer awal Islam di Timur Tengah."
+      },
+      {
+        "q": "Apa dampak jangka panjang Perang Salib terhadap peradaban Eropa dan Islam?",
+        "options": ["Hanya berdampak negatif bagi kedua belah pihak", "Eropa mendapat transfer pengetahuan dari dunia Islam melalui kontak Perang Salib, yang berkontribusi pada Renaisans; Islam mengalami destruksi namun juga memperkuat identitas", "Tidak ada dampak berarti bagi Eropa", "Islam justru memperluas wilayah setelah Perang Salib"],
+        "answer": 1,
+        "explanation": "Perang Salib memfasilitasi transfer ilmu pengetahuan Islam ke Eropa (matematika, kedokteran, filsafat) yang berkontribusi pada Renaisans. Bagi dunia Islam, Perang Salib meninggalkan luka trauma kolektif namun juga memunculkan tokoh-tokoh besar seperti Shalahuddin."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'Dar Al-Islam' dan 'Dar Al-Harb' dalam geopolitik fiqh klasik?",
+        "options": ["Dua wilayah surga dan neraka", "Dar Al-Islam: wilayah di bawah hukum Islam; Dar Al-Harb: wilayah yang belum di bawah hukum Islam dan dalam keadaan perang potensial", "Konsep yang tidak relevan dalam fiqh modern", "Dua madzhab yang berbeda"],
+        "answer": 1,
+        "explanation": "Dalam fiqh klasik, Dar Al-Islam adalah wilayah yang dipimpin hukum Islam, sementara Dar Al-Harb adalah wilayah lain (beberapa ulama menambahkan Dar Al-Ahd/wilayah perjanjian damai). Konsep ini banyak dikritisi ulama kontemporer sebagai tidak relevan dalam konteks negara-bangsa modern."
+      },
+      {
+        "q": "Faktor apa yang paling berkontribusi pada kemunduran Dinasti Abbasiyah sebelum dihancurkan Mongol?",
+        "options": ["Kurangnya kekuatan militer sejak awal", "Pertentangan internal, kekuasaan yang beralih ke tangan tentara bayaran Turki, ketidakstabilan politik, dan perpecahan menjadi wilayah-wilayah otonom", "Serangan terus-menerus dari Perang Salib", "Tidak ada kemunduran; Mongol mengejutkan dalam keadaan kuat"],
+        "answer": 1,
+        "explanation": "Abbasiyah melemah karena: (1) kekuasaan riil beralih ke tentara Turki dan kemudian Buwaihi (Syiah), (2) perpecahan wilayah menjadi dinasti-dinasti semi-otonom, (3) ketidakstabilan politik dan konflik internal, (4) krisis ekonomi. Ketika Mongol menyerang (1258 M), Baghdad sudah sangat lemah."
+      },
+      {
+        "q": "Apa kontribusi intelektual Ibnu Rusyd (Averroes) yang paling signifikan terhadap peradaban Barat?",
+        "options": ["Penerjemahan Al-Quran ke bahasa Latin", "Komentar-komentarnya atas karya Aristoteles yang menjadi jembatan transmisi filsafat Yunani ke Eropa abad pertengahan", "Penemuan aljabar", "Penulisan kitab fiqh yang diterjemahkan ke Eropa"],
+        "answer": 1,
+        "explanation": "Ibnu Rusyd (1126-1198 M) menulis komentar komprehensif atas karya Aristoteles yang kemudian diterjemahkan ke Latin. Ini menjadi jembatan utama transmisi filsafat Yunani ke Eropa Abad Pertengahan, mempengaruhi Thomas Aquinas dan Scholasticism."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'Tanzimat' dalam sejarah Kesultanan Utsmaniyah?",
+        "options": ["Sistem militer Utsmaniyah", "Reformasi modernisasi ala Eropa yang dilakukan Utsmaniyah pada abad ke-19 (1839-1876 M) mencakup hukum, militer, dan administrasi", "Sistem perpajakan tradisional", "Nama ibu kota Utsmaniyah"],
+        "answer": 1,
+        "explanation": "Tanzimat (1839-1876 M) adalah serangkaian reformasi modernisasi Utsmaniyah yang terinspirasi Eropa: reformasi militer, hukum (adopsi hukum sipil Barat), administrasi, dan pendidikan. Ini adalah upaya mempertahankan kekaisaran yang sedang melemah dari tekanan Eropa."
+      },
+      {
+        "q": "Apa peran Gerakan Padri di Sumatera Barat dalam konteks sejarah Islam Indonesia?",
+        "options": ["Gerakan anti-kolonial semata", "Gerakan reformasi Islam yang terinspirasi Wahhabisme, berupaya memurnikan Islam dari praktik adat yang dianggap bid'ah; berkonflik dengan adat Minangkabau dan kemudian Belanda", "Gerakan pedagang Muslim melawan monopoli Belanda", "Gerakan mendirikan kerajaan Islam baru"],
+        "answer": 1,
+        "explanation": "Gerakan Padri (1803-1837 M) dimulai sebagai gerakan pemurnian Islam yang terinspirasi Wahhabisme (dibawa haji yang kembali dari Makkah), berkonflik dengan pemuka adat Minangkabau, lalu meluas menjadi konflik bersenjata yang kemudian dimanfaatkan Belanda untuk intervensi (Perang Padri)."
+      },
+      {
+        "q": "Apa signifikansi pendirian Al-Azhar oleh Dinasti Fathimiyah terhadap dunia Islam?",
+        "options": ["Hanya masjid biasa yang kemudian dijadikan universitas", "Al-Azhar didirikan sebagai pusat dakwah Syiah Ismaili, namun setelah Shalahuddin (Sunni) berkuasa menjadi universitas Sunni terkemuka dan hingga kini otoritas fiqh Islam terpenting", "Al-Azhar selalu menjadi pusat Islam Sunni sejak awal", "Fathimiyah mendirikannya sebagai saingan Baghdad"],
+        "answer": 1,
+        "explanation": "Al-Azhar didirikan 972 M sebagai pusat dakwah Ismaili. Ketika Shalahuddin Al-Ayyubi menaklukkan Mesir (1171 M) dan mengakhiri Fathimiyah, Al-Azhar diubah menjadi lembaga Sunni. Kini menjadi salah satu otoritas Islam tertinggi dan universitas tertua yang masih beroperasi."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'Islamisasi ilmu pengetahuan' sebagai wacana intelektual Islam kontemporer?",
+        "options": ["Melarang ilmu pengetahuan Barat", "Upaya mengintegrasikan ilmu pengetahuan modern dengan kerangka epistemologi dan nilai-nilai Islam, sebagai respons atas sekularisasi ilmu", "Hanya mengganti nama ilmu Barat dengan nama Arab", "Gerakan menolak teknologi modern"],
+        "answer": 1,
+        "explanation": "Islamisasi ilmu (Ismail Al-Faruqi, Syed Naquib Al-Attas, dll.) adalah proyek intelektual untuk mengintegrasikan ilmu pengetahuan modern dengan worldview tauhid Islam. Mereka mengkritisi dikotomi ilmu agama vs ilmu umum yang mewarisi sekularisme Barat."
+      },
+      {
+        "q": "Apa yang menjadi penyebab perpecahan pertama dalam tubuh umat Islam (antara Sunni dan Syiah)?",
+        "options": ["Perbedaan cara shalat", "Perselisihan tentang siapa yang berhak memimpin (khalifah) setelah Nabi SAW wafat: berdasarkan pemilihan (Sunni) atau keturunan Ali (Syiah)", "Perbedaan penafsiran Al-Quran", "Perselisihan tentang lokasi ibu kota Islam"],
+        "answer": 1,
+        "explanation": "Perpecahan Sunni-Syiah berakar pada persoalan kepemimpinan (imamah): Sunni menerima pemilihan Abu Bakar sebagai khalifah pertama. Syiah berpendapat hak kepemimpinan adalah milik Ali bin Abi Thalib dan keturunannya. Perpecahan ini semakin dalam setelah peristiwa Karbala (680 M)."
+      },
+      {
+        "q": "Apa dampak kolonialisme Eropa terhadap sistem pendidikan Islam tradisional?",
+        "options": ["Memperkuat dan menyebarkan sistem pendidikan Islam", "Mendorong sekularisasi pendidikan, marginalisasi pesantren/madrasah, dan dikotomi ilmu agama vs ilmu umum yang masih berdampak hingga kini", "Tidak ada dampak berarti terhadap pendidikan Islam", "Meningkatkan kualitas madrasah melalui modernisasi"],
+        "answer": 1,
+        "explanation": "Kolonialisme memperkenalkan sistem pendidikan sekuler yang memarginalisasi institusi pendidikan Islam tradisional, menciptakan dikotomi ilmu 'agama' vs 'umum' yang tidak dikenal dalam tradisi Islam klasik, dan menghasilkan elite Muslim yang tersosialisasi dalam kerangka berpikir Barat."
+      }
+    ]
+  }
+}

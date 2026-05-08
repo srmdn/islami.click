@@ -1,0 +1,284 @@
+{
+  "slug": "rukun-islam",
+  "label": "Rukun Islam",
+  "description": "Lima pilar ibadah: syahadat, shalat, zakat, puasa, dan haji",
+  "display_order": 2,
+  "questions": {
+    "basic": [
+      {
+        "q": "Berapa jumlah Rukun Islam?",
+        "options": ["4", "5", "6", "7"],
+        "answer": 1,
+        "explanation": "Rukun Islam ada 5: syahadat, shalat, zakat, puasa Ramadhan, dan haji bagi yang mampu."
+      },
+      {
+        "q": "Berapa kali shalat fardhu dalam sehari semalam?",
+        "options": ["3", "4", "5", "6"],
+        "answer": 2,
+        "explanation": "Shalat fardhu dilaksanakan 5 kali sehari semalam: Subuh, Dzuhur, Ashar, Maghrib, dan Isya."
+      },
+      {
+        "q": "Berapa rakaat shalat Subuh?",
+        "options": ["3", "4", "2", "5"],
+        "answer": 2,
+        "explanation": "Shalat Subuh terdiri dari 2 rakaat."
+      },
+      {
+        "q": "Zakat fitrah wajib dikeluarkan pada saat?",
+        "options": ["Awal Ramadhan", "Hari Raya Idul Adha", "Pertengahan Ramadhan", "Akhir Ramadhan sebelum shalat Idul Fitri"],
+        "answer": 3,
+        "explanation": "Zakat fitrah wajib dikeluarkan sebelum shalat Idul Fitri. Besarnya satu sha' (sekitar 2,5-3 kg) makanan pokok."
+      },
+      {
+        "q": "Ibadah haji dilaksanakan pada bulan?",
+        "options": ["Ramadhan", "Muharram", "Dzulhijjah", "Rajab"],
+        "answer": 2,
+        "explanation": "Haji dilaksanakan pada bulan Dzulhijjah, khususnya puncaknya pada tanggal 8-13 Dzulhijjah."
+      },
+      {
+        "q": "Berapa rakaat shalat Maghrib?",
+        "options": ["3", "4", "2", "5"],
+        "answer": 0,
+        "explanation": "Shalat Maghrib terdiri dari 3 rakaat."
+      },
+      {
+        "q": "Haji wajib dilaksanakan berapa kali seumur hidup bagi yang mampu?",
+        "options": ["Setiap tahun", "2 kali", "3 kali", "1 kali"],
+        "answer": 3,
+        "explanation": "Haji wajib hanya 1 kali seumur hidup bagi yang mampu. Haji lebih dari sekali hukumnya sunnah."
+      },
+      {
+        "q": "Manakah yang termasuk rukun Islam urutan ketiga?",
+        "options": ["Puasa", "Haji", "Zakat", "Shalat"],
+        "answer": 2,
+        "explanation": "Urutan Rukun Islam: (1) Syahadat, (2) Shalat, (3) Zakat, (4) Puasa, (5) Haji."
+      },
+      {
+        "q": "Berapa rakaat shalat Dzuhur?",
+        "options": ["2", "3", "4", "5"],
+        "answer": 2,
+        "explanation": "Shalat Dzuhur terdiri dari 4 rakaat."
+      },
+      {
+        "q": "Yang membatalkan puasa adalah?",
+        "options": ["Suntik obat melalui otot", "Mencium bau masakan", "Sikat gigi dengan pasta gigi", "Makan dan minum dengan sengaja"],
+        "answer": 3,
+        "explanation": "Makan dan minum dengan sengaja adalah salah satu hal yang membatalkan puasa. Jika dilakukan karena lupa, puasanya tetap sah."
+      },
+      {
+        "q": "Nisab zakat emas adalah senilai?",
+        "options": ["50 gram", "75 gram", "85 gram", "100 gram"],
+        "answer": 2,
+        "explanation": "Nisab zakat emas adalah 85 gram emas murni. Jika seseorang memiliki emas sebanyak itu selama satu tahun (haul), wajib mengeluarkan zakat 2,5%."
+      },
+      {
+        "q": "Berapa rakaat shalat Ashar?",
+        "options": ["4", "3", "2", "5"],
+        "answer": 0,
+        "explanation": "Shalat Ashar terdiri dari 4 rakaat."
+      },
+      {
+        "q": "Syarat wajib haji di antaranya adalah?",
+        "options": ["Hanya Islam dan kaya", "Islam, baligh, berakal, dan mampu", "Hanya Islam dan sehat", "Baligh, kaya, dan punya kendaraan"],
+        "answer": 1,
+        "explanation": "Syarat wajib haji: Islam, baligh, berakal sehat, merdeka, dan istitha'ah (mampu secara fisik dan finansial)."
+      },
+      {
+        "q": "Dua kalimat syahadat terdiri dari syahadat tauhid dan?",
+        "options": ["Syahadat malaikat", "Syahadat kitab", "Syahadat iman", "Syahadat rasul"],
+        "answer": 3,
+        "explanation": "Dua kalimat syahadat adalah syahadat tauhid (bersaksi tiada tuhan selain Allah) dan syahadat rasul (bersaksi bahwa Muhammad adalah utusan Allah)."
+      },
+      {
+        "q": "Berapa rakaat shalat Isya?",
+        "options": ["2", "3", "5", "4"],
+        "answer": 3,
+        "explanation": "Shalat Isya terdiri dari 4 rakaat."
+      }
+    ],
+    "intermediate": [
+      {
+        "q": "Haul dalam zakat berarti?",
+        "options": ["Batas minimal harta", "Cara menghitung zakat", "Satu tahun kepemilikan harta", "Tempat membayar zakat"],
+        "answer": 2,
+        "explanation": "Haul adalah syarat zakat berupa kepemilikan harta selama satu tahun penuh (tahun Hijriyah)."
+      },
+      {
+        "q": "Wukuf di Arafah dilaksanakan pada tanggal?",
+        "options": ["8 Dzulhijjah", "9 Dzulhijjah", "10 Dzulhijjah", "12 Dzulhijjah"],
+        "answer": 1,
+        "explanation": "Wukuf di Arafah adalah rukun haji terpenting, dilaksanakan pada tanggal 9 Dzulhijjah."
+      },
+      {
+        "q": "Zakat perdagangan dikeluarkan sebesar?",
+        "options": ["5%", "10%", "20%", "2,5%"],
+        "answer": 3,
+        "explanation": "Zakat perdagangan dikeluarkan sebesar 2,5% dari nilai total aset dagangan yang telah mencapai nisab dan haul."
+      },
+      {
+        "q": "Sa'i dalam ibadah haji/umrah adalah?",
+        "options": ["Berjalan antara Safa dan Marwa sebanyak 7 kali", "Melempar jumrah di Mina", "Wukuf di padang Arafah", "Mencukur rambut setelah ihram"],
+        "answer": 0,
+        "explanation": "Sa'i adalah berjalan antara bukit Safa dan Marwa sebanyak 7 kali, mengenang perjuangan Siti Hajar mencari air untuk putranya Ismail."
+      },
+      {
+        "q": "Shalat yang boleh dijamak (digabungkan) adalah?",
+        "options": ["Subuh dengan Dzuhur", "Dzuhur dengan Ashar, atau Maghrib dengan Isya", "Ashar dengan Maghrib", "Semua shalat fardhu"],
+        "answer": 1,
+        "explanation": "Yang boleh dijamak: Dzuhur dengan Ashar, dan Maghrib dengan Isya. Shalat Subuh tidak boleh dijamak."
+      },
+      {
+        "q": "Fidyah dalam puasa diwajibkan bagi?",
+        "options": ["Orang yang sengaja tidak puasa", "Orang yang bepergian jauh", "Ibu hamil dan menyusui saja", "Orang tua renta atau sakit kronis yang tidak mampu berpuasa"],
+        "answer": 3,
+        "explanation": "Fidyah wajib bagi yang tidak mampu berpuasa secara permanen, seperti orang tua renta dan penderita penyakit kronis yang tidak ada harapan sembuh."
+      },
+      {
+        "q": "Nisab zakat pertanian adalah?",
+        "options": ["300 kg", "520 kg", "653 kg", "850 kg"],
+        "answer": 2,
+        "explanation": "Nisab zakat pertanian adalah 5 wasaq = 653 kg. Kadarnya 10% jika diairi tanpa biaya, dan 5% jika menggunakan irigasi berbayar."
+      },
+      {
+        "q": "Thawaf ifadhah dalam haji dilakukan?",
+        "options": ["Saat baru tiba di Makkah", "Sebelum meninggalkan Makkah", "Setelah wukuf di Arafah, sebagai rukun haji", "Kapan saja selama di Makkah"],
+        "answer": 2,
+        "explanation": "Thawaf ifadhah adalah rukun haji yang dilaksanakan setelah wukuf di Arafah dan mabit di Muzdalifah."
+      },
+      {
+        "q": "8 golongan yang berhak menerima zakat (mustahiq) berdasarkan QS. At-Taubah: 60 adalah?",
+        "options": ["Fakir, miskin, amil, muallaf, riqab, gharim, fisabilillah, ibnus sabil", "Hanya fakir dan miskin", "Fakir, miskin, dan orang berhutang saja", "Semua orang tanpa terkecuali"],
+        "answer": 0,
+        "explanation": "8 mustahiq: fakir, miskin, amil (pengelola), muallaf, riqab (budak), gharim (berhutang), fisabilillah, dan ibnus sabil (musafir kehabisan bekal)."
+      },
+      {
+        "q": "Apa yang dimaksud dengan thawaf wada?",
+        "options": ["Thawaf pertama saat tiba", "Thawaf wajib saat baru masuk Makkah", "Thawaf rukun haji utama", "Thawaf perpisahan sebelum meninggalkan Makkah"],
+        "answer": 3,
+        "explanation": "Thawaf wada adalah thawaf perpisahan yang dilakukan sebelum meninggalkan Makkah, hukumnya wajib bagi bukan penduduk Makkah."
+      },
+      {
+        "q": "Shalat Jumat wajib bagi?",
+        "options": ["Semua Muslim tanpa terkecuali", "Laki-laki dan perempuan Muslim", "Laki-laki Muslim mukallaf yang mukim dan tidak ada udzur", "Hanya laki-laki yang sudah menikah"],
+        "answer": 2,
+        "explanation": "Shalat Jumat wajib bagi laki-laki Muslim yang mukallaf, merdeka, mukim, dan tidak ada udzur (seperti sakit berat)."
+      },
+      {
+        "q": "Kadar zakat pertanian jika lahan diairi dengan hujan/sungai tanpa biaya adalah?",
+        "options": ["2,5%", "5%", "10%", "20%"],
+        "answer": 2,
+        "explanation": "Zakat pertanian yang diairi tanpa biaya (hujan/sungai) kadarnya 10%. Jika diairi dengan biaya (irigasi), kadarnya 5%."
+      },
+      {
+        "q": "Dalam puasa, apa perbedaan antara kafarat dan fidyah?",
+        "options": ["Tidak ada perbedaan", "Kafarat: denda pelanggaran berat (misal: berhubungan suami istri di siang Ramadhan); fidyah: pengganti untuk yang tidak mampu berpuasa", "Fidyah lebih berat dari kafarat", "Kafarat hanya untuk haji"],
+        "answer": 1,
+        "explanation": "Kafarat adalah denda berat akibat pelanggaran serius (misal berhubungan badan di siang Ramadhan: memerdekakan budak, atau puasa 2 bulan berturut, atau memberi makan 60 orang miskin). Fidyah adalah pengganti puasa bagi yang tidak mampu berpuasa secara permanen."
+      },
+      {
+        "q": "Ihram dalam haji/umrah dimulai dari?",
+        "options": ["Ka'bah langsung", "Hotel di Makkah", "Miqat makani (batas tempat yang ditentukan)", "Bandara Arab Saudi"],
+        "answer": 2,
+        "explanation": "Ihram dimulai dari miqat makani, yaitu batas tempat yang telah ditentukan syariat tergantung asal kedatangan jamaah."
+      },
+      {
+        "q": "Apa hukum shalat berjamaah bagi laki-laki Muslim menurut pendapat yang kuat?",
+        "options": ["Sunnah saja", "Fardhu kifayah", "Sunnah muakkadah", "Fardhu ain (wajib bagi setiap laki-laki Muslim)"],
+        "answer": 3,
+        "explanation": "Menurut pendapat Imam Ahmad dan sebagian ulama, shalat berjamaah di masjid adalah fardhu ain bagi laki-laki Muslim. Syafi'i dan Maliki menganggapnya sunnah muakkadah. Dalil keduanya sama-sama kuat."
+      }
+    ],
+    "advanced": [
+      {
+        "q": "Hukum shalat seorang wanita yang berjamaah di masjid menurut mayoritas ulama adalah?",
+        "options": ["Wajib seperti pria", "Haram", "Makruh tanzih", "Boleh, namun shalat di rumahnya lebih utama"],
+        "answer": 3,
+        "explanation": "Mayoritas ulama berpendapat wanita boleh berjamaah di masjid namun shalat di rumahnya lebih afdhal berdasarkan hadits shahih Nabi SAW."
+      },
+      {
+        "q": "Perbedaan haji qiran, ifrad, dan tamattu' adalah?",
+        "options": ["Hanya berbeda niat", "Qiran: haji+umrah dalam satu ihram; Ifrad: haji saja; Tamattu': umrah dulu lalu ihram haji baru", "Ifrad lebih afdhal secara mutlak dari tamattu'", "Semuanya sama hasilnya"],
+        "answer": 1,
+        "explanation": "Qiran: satu ihram untuk haji dan umrah sekaligus. Ifrad: ihram hanya haji. Tamattu': umrah dulu, selesai ihram, kemudian ihram haji. Mayoritas ulama menganggap tamattu' paling afdhal untuk jamaah dari luar Makkah."
+      },
+      {
+        "q": "Menurut fiqh, apakah shalat fardhu sah jika tidak membaca Al-Fatihah secara sengaja?",
+        "options": ["Sah, Al-Fatihah hanya sunnah ab'adh", "Tidak sah menurut jumhur ulama karena Al-Fatihah adalah rukun shalat", "Sah asal membaca surat lain yang panjang", "Sah jika posisinya sebagai makmum"],
+        "answer": 1,
+        "explanation": "Jumhur (Syafi'i, Maliki, Hanbali) berpendapat Al-Fatihah rukun shalat berdasar hadits: 'Tidak sah shalat yang tidak membaca Ummul Kitab' (HR. Bukhari-Muslim). Madzhab Hanafi menganggapnya wajib bukan rukun."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'dam' dalam ibadah haji?",
+        "options": ["Denda penyembelihan hewan karena melanggar ihram atau meninggalkan wajib haji", "Darah yang mengalir saat terluka di Makkah", "Biaya tambahan perjalanan haji", "Sedekah wajib kepada fakir miskin di Makkah"],
+        "answer": 0,
+        "explanation": "Dam adalah denda berupa penyembelihan hewan (kambing atau sebanding) yang wajib dikeluarkan ketika jamaah haji melanggar larangan ihram atau meninggalkan wajib haji."
+      },
+      {
+        "q": "Hukum membayar zakat fitrah dengan uang tunai menurut ulama fiqh adalah?",
+        "options": ["Semua ulama melarang", "Jumhur wajibkan makanan; Hanafiyah membolehkan uang karena melihat tujuan pemenuhan kebutuhan", "Semua ulama sepakat boleh dengan uang", "Hanya boleh uang di era modern"],
+        "answer": 1,
+        "explanation": "Jumhur (Maliki, Syafi'i, Hanbali) mewajibkan makanan pokok. Madzhab Hanafi membolehkan pembayaran dengan nilai/uang karena tujuannya memenuhi kebutuhan fakir miskin."
+      },
+      {
+        "q": "Apa perbedaan antara 'wajib' dan 'fardhu' menurut Madzhab Hanafi?",
+        "options": ["Tidak ada perbedaan sama sekali", "Wajib lebih tinggi tingkatannya dari fardhu", "Fardhu: dalil qath'i; wajib: dalil dzanni. Meninggalkan fardhu lebih berat hukumnya", "Fardhu hanya untuk shalat, wajib untuk puasa dan zakat"],
+        "answer": 2,
+        "explanation": "Hanafi membedakan fardhu (dalil qath'i, meninggalkannya bisa dikafirkan) dan wajib (dalil dzanni/hadits ahad, meninggalkan sekali tidak menjadi kafir). Jumhur tidak membedakan keduanya."
+      },
+      {
+        "q": "Zakat saham dan investasi di era modern dianalogikan para ulama kontemporer dengan?",
+        "options": ["Zakat emas dan perak saja", "Tidak ada zakatnya karena belum ada di zaman Nabi SAW", "Zakat pertanian karena hasilnya berkala", "Zakat tijarah (perdagangan): 2,5% dari nilai pasar setelah haul dan nisab"],
+        "answer": 3,
+        "explanation": "Ulama kontemporer seperti Yusuf Al-Qaradhawi menganalogikan saham dengan zakat tijarah (perdagangan): 2,5% dari nilai pasar yang telah mencapai nisab dan haul."
+      },
+      {
+        "q": "Waktu shalat Ashar berakhir secara dharurah (darurat) pada?",
+        "options": ["Saat adzan Maghrib dikumandangkan", "Saat bayangan benda dua kali panjang benda", "Saat matahari terbenam sepenuhnya", "Saat langit mulai memerah"],
+        "answer": 2,
+        "explanation": "Waktu ikhtiari Ashar berakhir saat bayangan = 2x panjang benda. Waktu dharurah (darurat) berakhir saat matahari terbenam sepenuhnya."
+      },
+      {
+        "q": "Apakah orang gila (majnun) wajib shalat menurut fiqh Islam?",
+        "options": ["Wajib dengan bimbingan wali", "Wajib dengan shalat yang disederhanakan", "Wajib mengqadha setelah sembuh", "Tidak wajib karena akal adalah syarat mukallaf; tidak ada qadha setelah sembuh"],
+        "answer": 3,
+        "explanation": "Orang gila tidak mukallaf karena hilangnya akal mengangkat kewajiban (raf'ul qalam). Setelah sembuh tidak ada kewajiban mengqadha masa gila tersebut."
+      },
+      {
+        "q": "Menurut ulama, apa hikmah disyariatkannya puasa Ramadhan dari sisi sosial?",
+        "options": ["Hanya untuk kesehatan jasmani", "Hanya menahan lapar agar ingat Allah", "Menumbuhkan empati kepada fakir miskin, solidaritas sosial, dan kesetaraan di hadapan Allah", "Hanya sebagai latihan disiplin waktu"],
+        "answer": 2,
+        "explanation": "Puasa Ramadhan memiliki hikmah sosial: menumbuhkan empati kepada yang kelaparan, solidaritas umat, kesetaraan (semua Muslim berpuasa tanpa memandang status), dan melembutkan hati untuk berzakat dan bersedekah."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'miqat zamani' untuk ibadah haji?",
+        "options": ["Batas tempat memulai ihram", "Batas waktu pelaksanaan ibadah haji yaitu bulan Syawal, Dzulqa'dah, dan Dzulhijjah", "Waktu wukuf di Arafah saja", "Waktu melempar jumrah"],
+        "answer": 1,
+        "explanation": "Miqat zamani adalah batas waktu yang disyariatkan untuk ihram haji, yaitu bulan-bulan haji: Syawal, Dzulqa'dah, dan 10 hari pertama Dzulhijjah (QS. Al-Baqarah: 197)."
+      },
+      {
+        "q": "Shalat sunnah yang paling utama setelah shalat fardhu menurut hadits shahih adalah?",
+        "options": ["Shalat tarawih", "Shalat witir", "Shalat dhuha", "Shalat tahajjud (qiyamul lail)"],
+        "answer": 3,
+        "explanation": "Berdasarkan hadits: 'Shalat yang paling utama setelah shalat fardhu adalah shalat malam (qiyamul lail/tahajjud)' (HR. Muslim)."
+      },
+      {
+        "q": "Istitha'ah fisik yang tidak menghalangi wajibnya haji adalah?",
+        "options": ["Harus sehat sempurna tanpa cacat", "Usia di bawah 60 tahun", "Mampu melaksanakan rukun haji walaupun dengan kursi roda atau bantuan orang lain", "Harus bisa berjalan kaki minimal 10 km"],
+        "answer": 2,
+        "explanation": "Istitha'ah tidak mensyaratkan tubuh sempurna. Orang yang tak bisa berjalan namun mampu naik kendaraan dan melaksanakan rukun haji dengan bantuan tetap diwajibkan haji jika mampu finansial."
+      },
+      {
+        "q": "Apakah shalat qadha bisa gugur kewajiban menggantikannya?",
+        "options": ["Ya, jika sudah bertaubat", "Ya, cukup dengan membayar fidyah", "Tidak, kewajiban qadha tetap ada dan harus dikerjakan walau sudah bertaubat", "Ya, jika usianya sudah tua"],
+        "answer": 2,
+        "explanation": "Menurut jumhur ulama, kewajiban mengqadha shalat tidak gugur walaupun sudah bertaubat. Taubat menghapus dosa meninggalkan shalat, tapi kewajiban mengganti tetap ada."
+      },
+      {
+        "q": "Dalam fikih, kondisi apa yang membolehkan menjamak shalat selain safar?",
+        "options": ["Malas dan sibuk bekerja", "Hujan lebat, sakit, atau kondisi darurat yang menyulitkan", "Menonton pertandingan penting", "Hanya safar yang membolehkan jamak"],
+        "answer": 1,
+        "explanation": "Selain safar, menjamak shalat dibolehkan dalam kondisi hujan lebat (khusus jamak Maghrib-Isya menurut sebagian ulama), sakit berat, atau kondisi darurat yang menyulitkan pelaksanaan shalat pada waktunya."
+      }
+    ]
+  }
+}

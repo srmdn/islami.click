@@ -1,0 +1,278 @@
+{
+  "slug": "fiqh",
+  "label": "Fiqh",
+  "description": "Hukum Islam: halal, haram, dan tata cara ibadah",
+  "display_order": 6,
+  "questions": {
+    "basic": [
+      {
+        "q": "Hukum Islam yang berarti wajib dilakukan dan berdosa jika ditinggalkan adalah?",
+        "options": ["Sunnah", "Mubah", "Fardhu/Wajib", "Makruh"],
+        "answer": 2,
+        "explanation": "Fardhu/Wajib adalah hukum yang mewajibkan pelaksanaannya; pelaku mendapat pahala dan yang meninggalkan mendapat dosa."
+      },
+      {
+        "q": "Berapa madzhab fiqh utama dalam Islam Sunni?",
+        "options": ["2", "3", "4", "5"],
+        "answer": 2,
+        "explanation": "Ada 4 madzhab fiqh utama dalam Islam Sunni: Hanafi, Maliki, Syafi'i, dan Hanbali."
+      },
+      {
+        "q": "Air yang dapat digunakan untuk bersuci (wudhu dan mandi junub) adalah?",
+        "options": ["Semua jenis air", "Air muthlaq (air suci dan mensucikan)", "Air yang sudah dimasak", "Hanya air zamzam"],
+        "answer": 1,
+        "explanation": "Air muthlaq (air murni yang tidak tercampur sesuatu yang mengubah salah satu sifatnya) adalah air yang sah untuk bersuci, seperti air hujan, air laut, air sungai, air sumur."
+      },
+      {
+        "q": "Makanan yang jelas-jelas halal dalam Islam adalah?",
+        "options": ["Semua jenis daging", "Daging babi dan sapi", "Daging sapi yang disembelih dengan nama Allah", "Daging hewan apapun selama dimasak"],
+        "answer": 2,
+        "explanation": "Daging sapi yang disembelih dengan menyebut nama Allah (bismillah) adalah halal. Makanan halal mensyaratkan: jenis hewan halal, cara penyembelihan yang syar'i, tidak ada najis."
+      },
+      {
+        "q": "Apakah hukum memakan daging babi dalam Islam?",
+        "options": ["Makruh", "Haram", "Mubah dalam keadaan tertentu saja", "Halal jika dimasak dengan benar"],
+        "answer": 1,
+        "explanation": "Daging babi haram secara mutlak berdasarkan Al-Quran (QS. Al-Baqarah: 173, Al-Maidah: 3). Keharaman ini mencakup semua bagian tubuh babi."
+      },
+      {
+        "q": "Rukun wudhu yang benar adalah?",
+        "options": ["Niat, membasuh muka, kedua tangan, mengusap kepala, membasuh kedua kaki", "Hanya membasuh muka dan tangan", "Mandi seluruh tubuh", "Niat dan membaca basmalah saja"],
+        "answer": 0,
+        "explanation": "Rukun wudhu menurut jumhur: niat, membasuh muka, membasuh kedua tangan hingga siku, mengusap sebagian kepala, membasuh kedua kaki hingga mata kaki, dan tertib (berurutan)."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'najis' dalam fiqh Islam?",
+        "options": ["Sesuatu yang kotor secara fisik", "Sesuatu yang secara syariat menghalangi sahnya ibadah tertentu jika bersentuhan", "Makanan yang tidak enak", "Tempat yang tidak bersih"],
+        "answer": 1,
+        "explanation": "Najis dalam fiqh adalah sesuatu yang secara hukum syariat memiliki sifat yang menghalangi sahnya shalat dan ibadah tertentu jika bersentuhan dengannya, seperti darah, air kencing, kotoran, bangkai."
+      },
+      {
+        "q": "Hukum menikah dalam Islam bagi seseorang yang mampu dan dikhawatirkan jatuh ke perbuatan zina adalah?",
+        "options": ["Mubah (boleh)", "Makruh", "Wajib", "Sunnah"],
+        "answer": 2,
+        "explanation": "Bagi yang sudah mampu dan dikhawatirkan jatuh ke perbuatan zina, hukum menikah adalah wajib. Jika tidak khawatir zina tetapi mampu, hukumnya sunnah."
+      },
+      {
+        "q": "Qiyas dalam fiqh Islam adalah?",
+        "options": ["Menghafal seluruh hukum Islam", "Menetapkan hukum suatu masalah baru berdasarkan persamaan illat (sebab) dengan masalah yang sudah ada hukumnya dalam nash", "Pendapat pribadi ulama tanpa dasar", "Ijmak para ulama"],
+        "answer": 1,
+        "explanation": "Qiyas adalah salah satu sumber hukum Islam: menyamakan hukum suatu masalah yang belum ada nashnya dengan masalah yang sudah ada hukumnya karena memiliki illat (sebab hukum) yang sama."
+      },
+      {
+        "q": "Berapa lama masa iddah wanita yang dicerai suaminya (bukan karena kematian)?",
+        "options": ["1 bulan", "2 bulan", "3 kali quru' (haid atau suci)", "6 bulan"],
+        "answer": 2,
+        "explanation": "Masa iddah wanita yang dicerai (masih haid) adalah 3 kali quru' (3 kali haid menurut Hanafi, atau 3 kali suci menurut Syafi'i dan Maliki). Tujuannya memastikan tidak ada kehamilan."
+      },
+      {
+        "q": "Hukum bunga bank (riba) dalam Islam adalah?",
+        "options": ["Halal jika bunganya kecil", "Makruh", "Haram secara tegas", "Mubah untuk kebutuhan"],
+        "answer": 2,
+        "explanation": "Riba (termasuk bunga bank) diharamkan secara tegas dalam Al-Quran (QS. Al-Baqarah: 275-279) dan hadits Nabi SAW. Allah mengancam pelaku riba dengan perang dari Allah dan Rasul-Nya."
+      },
+      {
+        "q": "Syarat sah shalat dari sisi kebersihan adalah?",
+        "options": ["Hanya pakaian harus bersih", "Suci dari hadats kecil dan besar, pakaian dan tempat suci dari najis", "Hanya tempat shalat harus bersih", "Tidak ada syarat kebersihan khusus"],
+        "answer": 1,
+        "explanation": "Syarat sah shalat terkait kebersihan: suci dari hadats kecil (dengan wudhu) dan hadats besar (dengan mandi), pakaian bersih dari najis, dan tempat shalat bersih dari najis."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'talak raj'i'?",
+        "options": ["Talak yang tidak bisa rujuk sama sekali", "Talak satu atau dua di mana suami berhak merujuk istri dalam masa iddah", "Talak yang jatuh tiga sekaligus", "Talak yang diucapkan secara tidak sengaja"],
+        "answer": 1,
+        "explanation": "Talak raj'i adalah talak satu atau dua di mana suami masih memiliki hak untuk merujuk (kembali kepada) istrinya selama masih dalam masa iddah tanpa perlu akad nikah baru."
+      },
+      {
+        "q": "Madzhab fiqh yang paling banyak diikuti di Indonesia adalah?",
+        "options": ["Hanafi", "Maliki", "Syafi'i", "Hanbali"],
+        "answer": 2,
+        "explanation": "Mayoritas Muslim Indonesia mengikuti madzhab Syafi'i dalam fiqh, yang dibawa oleh para ulama dan wali yang menyebarkan Islam di Nusantara."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'hukum mubah' dalam fiqh?",
+        "options": ["Wajib dikerjakan", "Haram dilakukan", "Boleh dilakukan atau ditinggalkan tanpa pahala dan dosa", "Sangat dianjurkan"],
+        "answer": 2,
+        "explanation": "Mubah adalah hukum yang memperbolehkan suatu perbuatan; pelakunya tidak mendapat pahala dan tidak berdosa, baik melakukan maupun meninggalkannya."
+      }
+    ],
+    "intermediate": [
+      {
+        "q": "Perbedaan antara fardhu kifayah dan fardhu ain adalah?",
+        "options": ["Tidak ada perbedaan", "Fardhu ain: wajib bagi setiap individu; fardhu kifayah: gugur kewajibannya jika sudah dikerjakan sebagian orang", "Fardhu kifayah lebih wajib", "Fardhu ain hanya untuk ibadah ritual"],
+        "answer": 1,
+        "explanation": "Fardhu ain wajib dilaksanakan oleh setiap individu Muslim (seperti shalat 5 waktu). Fardhu kifayah gugur dari yang lain jika sudah dikerjakan sebagian orang (seperti shalat jenazah, menuntut ilmu tertentu)."
+      },
+      {
+        "q": "Dalam fiqh muamalah, apa syarat akad jual beli yang sah?",
+        "options": ["Tidak ada syarat khusus", "Adanya penjual, pembeli, ijab-qabul, barang yang jelas dan halal, serta harga yang jelas", "Hanya perlu sepakat harga", "Harus ada saksi dan tercatat notaris"],
+        "answer": 1,
+        "explanation": "Rukun dan syarat jual beli: penjual dan pembeli (cakap hukum), objek transaksi (jelas, halal, bisa diserahkan), harga yang jelas, dan sighat (ijab-qabul) yang jelas menunjukkan kerelaan."
+      },
+      {
+        "q": "Konsep 'maslahah mursalah' dalam ushul fiqh adalah?",
+        "options": ["Pendapat yang tidak boleh dipakai", "Kemaslahatan yang tidak ada dalil khusus yang membenarkan atau melarangnya, namun sejalan dengan tujuan syariat secara umum", "Hukum berdasarkan tradisi lokal", "Pendapat yang hanya dipakai oleh madzhab Maliki"],
+        "answer": 1,
+        "explanation": "Maslahah mursalah adalah kemaslahatan yang tidak ditetapkan dan tidak pula dibatalkan oleh dalil khusus, namun selaras dengan tujuan-tujuan umum syariat (maqasid syariah). Dipakai terutama oleh madzhab Maliki sebagai sumber hukum."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'ijtihad' dalam hukum Islam?",
+        "options": ["Menghafal seluruh hukum fiqh", "Pengerahan segenap kemampuan seorang ahli fiqh untuk menetapkan hukum masalah yang tidak ada nashnya yang jelas", "Mengikuti pendapat madzhab tertentu", "Debat antar ulama tentang hukum"],
+        "answer": 1,
+        "explanation": "Ijtihad adalah pengerahan segenap kemampuan seorang mujtahid (ahli fiqh yang memenuhi syarat) untuk menetapkan hukum syariat dari dalil-dalil rinci. Ini dibolehkan pada masalah yang tidak ada nash qath'i (pasti) tentangnya."
+      },
+      {
+        "q": "Akad yang dilarang dalam muamalah Islam karena mengandung gharar (ketidakpastian besar) adalah?",
+        "options": ["Jual beli tunai", "Kontrak jasa yang jelas", "Jual beli 'habal al-habalah' (anak dari anak unta yang belum ada)", "Akad sewa menyewa yang jelas"],
+        "answer": 2,
+        "explanation": "Gharar adalah ketidakpastian berlebihan dalam akad yang bisa merugikan salah satu pihak. Contoh jual beli habal al-habalah (menjual anak unta yang masih dalam kandungan induknya yang juga masih dalam kandungan) adalah contoh gharar yang dilarang Nabi SAW."
+      },
+      {
+        "q": "Maqasid Al-Syariah (tujuan syariat) yang lima adalah?",
+        "options": ["Shalat, zakat, puasa, haji, syahadat", "Menjaga agama, jiwa, akal, keturunan, dan harta", "Tauhid, fiqh, hadits, sirah, akhlak", "Iman, Islam, ihsan, ilmu, dan amal"],
+        "answer": 1,
+        "explanation": "Lima maqasid syariah (tujuan utama syariat Islam): hifdz al-din (menjaga agama), hifdz al-nafs (menjaga jiwa), hifdz al-aql (menjaga akal), hifdz al-nasl (menjaga keturunan), dan hifdz al-mal (menjaga harta)."
+      },
+      {
+        "q": "Dalam fiqh nikah, apa yang dimaksud dengan 'wali mujbir'?",
+        "options": ["Wali yang boleh menikahkan tanpa izin mempelai dalam semua kasus", "Ayah atau kakek yang dalam madzhab tertentu boleh menikahkan anak perempuan yang masih perawan tanpa meminta izin, meski ada khilaf", "Wali yang dipaksa hadir dalam pernikahan", "Hakim yang menikahkan jika tidak ada wali"],
+        "answer": 1,
+        "explanation": "Wali mujbir (dalam madzhab Syafi'i) adalah ayah atau kakek yang boleh menikahkan anak perempuan perawan tanpa izinnya. Ini diperdebatkan; Hanafi mensyaratkan persetujuan perempuan yang sudah baligh. Konteks historis dan kepentingan anak menjadi pertimbangan."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'urf' sebagai sumber hukum Islam?",
+        "options": ["Pendapat ulama tertentu", "Tradisi atau kebiasaan masyarakat yang diakui hukum Islam jika tidak bertentangan dengan syariat", "Hukum adat yang menggantikan syariat", "Ijmak ulama lokal"],
+        "answer": 1,
+        "explanation": "Urf adalah kebiasaan atau tradisi yang berlaku dalam masyarakat. Dalam fiqh, urf yang tidak bertentangan dengan nash dan kaidah syariat dapat menjadi pertimbangan dalam penetapan hukum. Kaidah: 'al-adatu muhakkamah' (adat kebiasaan dapat dijadikan hukum)."
+      },
+      {
+        "q": "Transaksi apa yang dilarang dalam Islam karena mengandung riba?",
+        "options": ["Semua bentuk perdagangan", "Pinjaman berbunga, jual beli emas dengan tidak tunai/tidak sama, dan penambahan dalam tukar-menukar barang ribawi", "Hanya pinjaman berbunga bank", "Hanya jual beli tanah"],
+        "answer": 1,
+        "explanation": "Riba mencakup: riba qardh (pinjaman berbunga), riba fadhl (tukar-menukar barang ribawi sejenis dengan tidak sama), riba nasiah (penundaan dalam tukar barang ribawi). Barang ribawi utama: emas, perak, gandum, jewawut, kurma, garam."
+      },
+      {
+        "q": "Hukum aborsi dalam Islam secara umum adalah?",
+        "options": ["Halal secara mutlak", "Ada perbedaan pendapat: sebelum peniupan roh (120 hari) lebih ringan hukumnya; setelah itu haram kecuali ada darurat nyawa ibu", "Haram secara mutlak sejak pembuahan", "Mubah (boleh) selama belum melahirkan"],
+        "answer": 1,
+        "explanation": "Para ulama berbeda pendapat: mayoritas sepakat aborsi setelah 120 hari (peniupan roh) haram kecuali darurat nyawa ibu. Sebelum 120 hari lebih diperdebatkan; ada yang membolehkan dengan alasan kuat, ada yang tetap melarang. Pandangan kontemporer cenderung memperketat."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'wakalah' dalam fiqh muamalah?",
+        "options": ["Perjanjian hutang piutang", "Akad perwakilan di mana seseorang mewakilkan urusannya kepada orang lain", "Perjanjian bagi hasil", "Kontrak sewa menyewa"],
+        "answer": 1,
+        "explanation": "Wakalah adalah akad di mana seseorang (muwakkil) mewakilkan suatu urusan kepada orang lain (wakil) untuk dilaksanakan selama muwakkil masih hidup dan cakap hukum. Ini adalah dasar hukum lembaga perwakilan, pengacara, agen, dll."
+      },
+      {
+        "q": "Apa hukum mengucapkan 'talak tiga sekaligus' dalam satu ucapan?",
+        "options": ["Sama dengan talak satu, tidak ada masalah", "Berdosa karena bid'ah tapi jatuh tiga (pendapat jumhur) atau hanya jatuh satu (pendapat Ibnu Taimiyah dan pengikutnya)", "Tidak sah sama sekali", "Sah dan halal dilakukan"],
+        "answer": 1,
+        "explanation": "Talak tiga sekaligus: jumhur ulama (mayoritas) menganggapnya jatuh tiga dan istri menjadi mahram sampai menikah dengan orang lain. Ibnu Taimiyah dan Ibnu Qayyim berpendapat hanya jatuh satu karena bertentangan dengan sunnah. Ini adalah salah satu khilaf fiqh terbesar."
+      },
+      {
+        "q": "Apa syarat hewan yang boleh dikonsumsi dalam Islam selain jenisnya halal?",
+        "options": ["Harus diternakkan khusus untuk dimakan", "Harus disembelih oleh Muslim dengan menyebut nama Allah, memotong urat nadi dan saluran napas, darahnya mengalir", "Cukup dibacakan doa setelah dimasak", "Harus disembelih di tempat khusus"],
+        "answer": 1,
+        "explanation": "Syarat penyembelihan syar'i: penyembelih Muslim atau Ahli Kitab, menyebut nama Allah (bismillah), memutus saluran napas (trakea) dan saluran makanan (esofagus) minimal, menggunakan alat tajam, dan membiarkan darah mengalir keluar."
+      },
+      {
+        "q": "Dalam fiqh, apa perbedaan antara 'syirkah' (persekutuan) dan 'mudharabah'?",
+        "options": ["Tidak ada perbedaan", "Syirkah: permodalan bersama dari semua pihak; mudharabah: satu pihak menyediakan modal, pihak lain menyediakan tenaga/keahlian", "Mudharabah lebih berisiko dari syirkah", "Hanya syirkah yang dibolehkan dalam Islam"],
+        "answer": 1,
+        "explanation": "Syirkah: semua mitra berkontribusi modal dan/atau tenaga, berbagi untung-rugi. Mudharabah: pemilik modal (shahibul mal) dan pengelola (mudharib) berbagi keuntungan sesuai nisbah; kerugian ditanggung pemilik modal (kecuali karena kelalaian mudharib)."
+      },
+      {
+        "q": "Apakah hukum transplantasi organ dalam pandangan fiqh Islam kontemporer?",
+        "options": ["Haram secara mutlak", "Haram secara mutlak karena merusak tubuh", "Mayoritas ulama kontemporer membolehkan dengan syarat: donor sadar, tidak membahayakan pendonor berlebihan, ada kebutuhan mendesak penerima", "Mubah tanpa syarat apapun"],
+        "answer": 2,
+        "explanation": "Lembaga-lembaga fiqh internasional (seperti Majma' Fiqh Islami) membolehkan transplantasi organ dengan syarat: persetujuan pendonor (atau wali jika sudah meninggal), tidak membahayakan pendonor berlebihan, ada kebutuhan nyata penerima, dan tidak dijualbelikan."
+      }
+    ],
+    "advanced": [
+      {
+        "q": "Apa yang dimaksud dengan 'al-qawa'id al-fiqhiyah' (kaidah fiqh) dan berikan contohnya?",
+        "options": ["Daftar semua hukum fiqh yang panjang", "Prinsip-prinsip umum yang merangkum sejumlah besar hukum fiqh cabang; contoh: 'Al-umuru bi maqashidiha' (segala urusan dinilai dari tujuannya)", "Nama kitab fiqh tertentu", "Fatwa-fatwa ulama yang terkumpul"],
+        "answer": 1,
+        "explanation": "Qawa'id fiqhiyah adalah proposisi umum yang merangkum banyak masalah fiqh cabang. Lima kaidah asasi: (1) segala urusan dinilai dari tujuannya, (2) keyakinan tidak bisa dikalahkan keraguan, (3) kesulitan mendatangkan kemudahan, (4) kemudharatan harus dihilangkan, (5) adat kebiasaan dapat dijadikan hukum."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'ikhtilaf' (perbedaan pendapat) yang dimaklumi dalam fiqh?",
+        "options": ["Semua perbedaan pendapat dimaklumi", "Perbedaan pada masalah zhanniyah (tidak ada nash qath'i) yang hasil ijtihadnya bisa benar semua (ishabah dan khatha' sama-sama berpahala) atau hanya satu yang benar namun semuanya bersungguh-sungguh", "Perbedaan yang sengaja dibuat untuk kebingungan umat", "Perbedaan yang tidak memiliki dalil sama sekali"],
+        "answer": 1,
+        "explanation": "Ikhtilaf yang dimaklumi terjadi pada masalah zhanniyah (ijtihadi): tidak ada dalil qath'i yang menentukan. Mujtahid yang benar mendapat dua pahala, yang salah satu pahala. Ini berbeda dari ikhtilaf pada masalah qath'iyah yang tidak boleh berbeda."
+      },
+      {
+        "q": "Prinsip 'sadd al-dzara'i' (menutup jalan menuju yang haram) paling kuat digunakan oleh madzhab?",
+        "options": ["Madzhab Syafi'i", "Madzhab Maliki dan Hanbali", "Hanya madzhab Hanafi", "Semua madzhab sama kuatnya"],
+        "answer": 1,
+        "explanation": "Sadd al-dzara'i digunakan paling ekstensif oleh madzhab Maliki dan Hanbali. Prinsipnya: melarang sesuatu yang pada dasarnya mubah karena biasanya menjadi jalan menuju yang haram. Contoh: melarang jual beli anggur kepada orang yang akan membuatnya menjadi khamr."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'fiqh al-aqalliyyat' (fiqh minoritas Muslim) sebagai bidang kajian kontemporer?",
+        "options": ["Fiqh untuk orang miskin", "Ijtihad fiqh yang mempertimbangkan kondisi khusus Muslim yang hidup sebagai minoritas di negara non-Muslim, dengan memperhatikan maqasid syariah dan kebutuhan nyata", "Fiqh yang lebih ringan dari fiqh biasa", "Hanya berlaku di negara barat"],
+        "answer": 1,
+        "explanation": "Fiqh al-aqalliyyat (Yusuf Al-Qaradhawi, Taha Jabir Al-Alwani) adalah respons ijtihad terhadap realitas Muslim di negara minoritas: masalah kewarganegaraan, pernikahan campur, makanan, pekerjaan di lembaga konvensional, dll. dengan tetap berpegang pada maqasid syariah."
+      },
+      {
+        "q": "Dalam ushul fiqh, apa perbedaan antara 'muthlaq' dan 'muqayyad' dalam teks hukum?",
+        "options": ["Tidak ada perbedaan dalam penerapannya", "Muthlaq: teks yang tidak dibatasi sifat tertentu; muqayyad: teks yang dibatasi sifat tertentu. Jika keduanya berkaitan dengan hukum yang sama, muqayyad membatasi muthlaq", "Muthlaq lebih kuat hukumnya", "Muqayyad hanya berlaku dalam ibadah mahdhah"],
+        "answer": 1,
+        "explanation": "Muthlaq: 'bebaskan seorang budak' (QS. Al-Maidah: 89) tanpa sifat tambahan. Muqayyad: 'bebaskan budak mukmin' (QS. An-Nisa: 92). Ulama berbeda apakah muqayyad membatasi muthlaq jika hukum dan sebabnya sama (Syafi'i: membatasi; Hanafi: tidak selalu)."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'istihsan' dan mengapa madzhab Syafi'i menolaknya?",
+        "options": ["Istihsan adalah kaidah fiqh yang diterima semua madzhab", "Istihsan: beralih dari hukum hasil qiyas ke hukum yang dianggap lebih baik/sesuai. Syafi'i menolak karena dianggap mengikuti hawa nafsu tanpa dalil yang jelas; Hanafi memakainya dengan standar ketat", "Istihsan adalah bentuk ijtihad yang dilarang Al-Quran", "Syafi'i menolak karena Hanafi yang memperkenalkannya"],
+        "answer": 1,
+        "explanation": "Istihsan (madzhab Hanafi, Maliki, Hanbali) adalah meninggalkan hukum qiyas ke hukum yang lebih kuat dalilnya atau lebih maslahat. Imam Syafi'i mengkritik keras dalam kitab Al-Umm, menyebutnya 'barangsiapa beristihsan berarti ia membuat syariat sendiri'. Ulama kemudian merespons bahwa istihsan yang dimaksud berbeda."
+      },
+      {
+        "q": "Dalam fiqh perbankan Islam, apa prinsip utama yang membedakan produk keuangan Islam dari konvensional?",
+        "options": ["Hanya namanya yang berbeda", "Larangan riba, gharar, dan maisir; menggantinya dengan akad syariah seperti murabahah, ijarah, musyarakah, mudharabah yang berbasis bagi risiko dan keuntungan nyata", "Hanya perlu bunga yang lebih rendah", "Cukup dibaca basmalah sebelum transaksi"],
+        "answer": 1,
+        "explanation": "Keuangan Islam dibangun di atas: (1) larangan riba (bunga tetap), (2) larangan gharar (ketidakpastian berlebih), (3) larangan maisir (judi/spekulasi murni), digantikan akad berbasis aset nyata dan bagi hasil/risiko nyata seperti murabahah (jual beli), ijarah (sewa), musyarakah (bagi hasil), mudharabah."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'talfiq' dalam pengamalan madzhab fiqh?",
+        "options": ["Mengikuti satu madzhab secara konsisten", "Menggabungkan hukum dari dua madzhab atau lebih dalam satu perbuatan, sehingga menghasilkan tindakan yang tidak dibenarkan oleh satupun madzhab yang digabungkan", "Mengutip pendapat banyak ulama untuk satu masalah", "Pindah dari satu madzhab ke madzhab lain untuk seluruh hidupnya"],
+        "answer": 1,
+        "explanation": "Talfiq: mengambil dari madzhab A dan madzhab B dalam satu ibadah hingga menghasilkan sesuatu yang tidak diakui oleh keduanya. Contoh: wudhu dengan cara Maliki (tidak batal karena menyentuh wanita) + shalat dengan cara Syafi'i (laki-laki menyentuh wanita ajnabiyah tidak batal). Sebagian ulama melarang talfiq jenis ini."
+      },
+      {
+        "q": "Konsep 'dharurah' (darurat) dalam fiqh Islam membolehkan apa?",
+        "options": ["Semua hal yang dilarang boleh dilakukan dalam keadaan darurat tanpa batas", "Yang diharamkan boleh dilakukan sebatas yang diperlukan untuk menghilangkan dharurah, dengan syarat tidak ada alternatif halal dan tidak melebihi kebutuhan", "Darurat hanya berlaku untuk makanan", "Dharurah menghapus semua kewajiban ibadah"],
+        "answer": 1,
+        "explanation": "Kaidah: 'al-dharuratu tubihu al-mahdhurat' (darurat membolehkan yang terlarang). Syaratnya: (1) benar-benar darurat yang mengancam jiwa atau maqasid syariah, (2) tidak ada alternatif halal, (3) hanya sebatas kebutuhan, (4) tidak menimbulkan mudharat lebih besar."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'qath'iyyu al-dalalah' dan 'zhanniyyu al-dalalah' dalam ushul fiqh?",
+        "options": ["Dalil yang pasti ada dan dalil yang diragukan keasliannya", "Qath'i: teks yang makna atau penunjukannya hanya satu dan tidak mungkin ditafsirkan lain; zhanni: teks yang mengandung kemungkinan lebih dari satu penafsiran", "Tidak ada perbedaan dalam penggunaannya", "Hanya berlaku untuk teks Al-Quran, bukan hadits"],
+        "answer": 1,
+        "explanation": "Qath'iyyu al-dalalah: teks yang petunjuknya pasti dan tidak mengandung multi-tafsir, seperti angka-angka dalam waris. Zhanniyyu al-dalalah: teks yang bisa ditafsirkan lebih dari satu cara, menjadi ladang ijtihad. Perbedaan ini menentukan apakah suatu hukum termasuk qath'i (tidak boleh berselisih) atau zhanni (ijtihadi)."
+      },
+      {
+        "q": "Perdebatan utama tentang hukum asuransi konvensional dalam fiqh Islam adalah?",
+        "options": ["Semua ulama sepakat haram", "Mayoritas ulama kontemporer menyatakan haram karena mengandung gharar, maisir, dan riba; mendorong asuransi takaful (saling menanggung) sebagai alternatif syariah", "Semua ulama sepakat halal", "Hanya haram di negara Muslim saja"],
+        "answer": 1,
+        "explanation": "Mayoritas lembaga fiqh (Majma' Fiqh, Al-Azhar, dll.) menyatakan asuransi konvensional mengandung gharar (ketidakpastian objek) dan unsur maisir. Takaful (asuransi syariah) berbasis hibah/wakaf antar peserta menjadi alternatif yang disyariatkan."
+      },
+      {
+        "q": "Apa inti perdebatan tentang hukum musik dalam Islam?",
+        "options": ["Semua musik haram tanpa pengecualian", "Semua musik halal tanpa pengecualian", "Ada khilaf: sebagian ulama mengharamkan secara umum; sebagian membolehkan musik yang tidak mengandung lirik cabul, tidak dimainkan bersama kemaksiatan, dan tidak melalaikan dari kewajiban", "Hanya musik Arab yang dibolehkan"],
+        "answer": 2,
+        "explanation": "Ulama yang mengharamkan (Ibnu Mas'ud, sebagian Maliki, Hanbali): mendasarkan pada tafsir 'lahwal hadits' (QS. Luqman: 6) dan beberapa hadits. Ulama yang membolehkan (Ibnu Hazm, sebagian Syafi'i): mengkritik sanad hadits pengharaman. Mayoritas tengah: haram yang menjurus maksiat, halal yang tidak."
+      },
+      {
+        "q": "Apa yang dimaksud dengan 'fiqh al-muwazanat' (fiqh pertimbangan maslahat) dalam ijtihad kontemporer?",
+        "options": ["Cara menghitung biaya dan manfaat secara matematis", "Metodologi yang mempertimbangkan dan menyeimbangkan berbagai maslahat dan mafsadat dalam penetapan hukum, terutama untuk masalah-masalah baru yang kompleks", "Pendapat yang hanya dipakai oleh satu ulama saja", "Cara membagi zakat yang adil"],
+        "answer": 1,
+        "explanation": "Fiqh al-muwazanat (Yusuf Al-Qaradhawi) adalah ijtihad yang mempertimbangkan dan menyeimbangkan berbagai maslahat dan mafsadat secara komprehensif. Penting untuk masalah kontemporer di mana pilihan-pilihan yang ada masing-masing memiliki sisi positif dan negatif."
+      },
+      {
+        "q": "Mengapa hukum 'mut'ah' (nikah sementara) berbeda antara Sunni dan Syiah?",
+        "options": ["Hanya masalah tradisi lokal", "Sunni: Nabi SAW mengharamkan setelah mengizinkannya, ini mansukh; Syiah Imamiyah: pengharaman oleh Umar dianggap bid'ah karena menurut mereka tidak ada dalil qath'i penghapusannya dari Nabi SAW", "Tidak ada perbedaan, keduanya membolehkan", "Perbedaan hanya dalam persyaratan administratif"],
+        "answer": 1,
+        "explanation": "Sunni berpendapat Nabi SAW sendiri yang mengharamkan nikah mut'ah secara permanen setelah mengizinkannya dalam kondisi tertentu (hadits sahih Bukhari-Muslim). Syiah Dua Belas berpendapat pengharamannya oleh Umar RA adalah ijtihad yang tidak mengikat karena mereka tidak menerima otoritas Umar seperti Sunni."
+      }
+    ]
+  }
+}
