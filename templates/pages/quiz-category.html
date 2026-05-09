@@ -18,7 +18,7 @@
       <p class="text-slate-500 dark:text-slate-400 text-sm mt-1.5">{{.Category.Description}}</p>
     </div>
 
-    <div class="rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] bg-white dark:bg-[#0C1E26] p-6 space-y-6">
+    <div class="rounded-2xl border border-slate-200/80 dark:border-slate-700/50 bg-white dark:bg-slate-800 p-6 space-y-6">
 
       <div>
         <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Nama Kamu</label>
@@ -27,7 +27,7 @@
           x-model="playerName"
           maxlength="30"
           placeholder="Masukkan nama (maks 30 karakter)"
-          class="w-full px-4 py-3 rounded-xl border border-[#E2D9CE] dark:border-[#1E4458] bg-[#FAF7F2] dark:bg-[#0B1120] text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0E5C73] transition text-sm"
+          class="w-full px-4 py-3 rounded-xl border border-slate-200/80 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/30 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0E5C73] transition text-sm"
         />
       </div>
 
@@ -36,7 +36,7 @@
         <div class="grid grid-cols-3 gap-3">
           <button
             @click="difficulty = 'basic'"
-            :class="difficulty === 'basic' ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400' : 'border-[#E2D9CE] dark:border-[#1E4458] bg-[#FAF7F2] dark:bg-[#0B1120] text-slate-600 dark:text-slate-300 hover:border-emerald-400'"
+            :class="difficulty === 'basic' ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400' : 'border-slate-200/80 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/30 text-slate-600 dark:text-slate-300 hover:border-emerald-400'"
             class="flex flex-col items-center gap-1 px-3 py-3 rounded-xl border-2 transition-all text-sm font-medium cursor-pointer"
           >
             <span class="text-lg">🟢</span>
@@ -45,7 +45,7 @@
           </button>
           <button
             @click="difficulty = 'intermediate'"
-            :class="difficulty === 'intermediate' ? 'border-amber-500 bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400' : 'border-[#E2D9CE] dark:border-[#1E4458] bg-[#FAF7F2] dark:bg-[#0B1120] text-slate-600 dark:text-slate-300 hover:border-amber-400'"
+            :class="difficulty === 'intermediate' ? 'border-amber-500 bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400' : 'border-slate-200/80 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/30 text-slate-600 dark:text-slate-300 hover:border-amber-400'"
             class="flex flex-col items-center gap-1 px-3 py-3 rounded-xl border-2 transition-all text-sm font-medium cursor-pointer"
           >
             <span class="text-lg">🟡</span>
@@ -54,7 +54,7 @@
           </button>
           <button
             @click="difficulty = 'advanced'"
-            :class="difficulty === 'advanced' ? 'border-red-500 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400' : 'border-[#E2D9CE] dark:border-[#1E4458] bg-[#FAF7F2] dark:bg-[#0B1120] text-slate-600 dark:text-slate-300 hover:border-red-400'"
+            :class="difficulty === 'advanced' ? 'border-red-500 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400' : 'border-slate-200/80 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/30 text-slate-600 dark:text-slate-300 hover:border-red-400'"
             class="flex flex-col items-center gap-1 px-3 py-3 rounded-xl border-2 transition-all text-sm font-medium cursor-pointer"
           >
             <span class="text-lg">🔴</span>
@@ -76,9 +76,9 @@
     <!-- Leaderboard preview on idle -->
     <div class="mt-8" x-show="leaderboard.length > 0">
       <h2 class="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-3 uppercase tracking-wide">Leaderboard — <span x-text="difficultyLabel()"></span></h2>
-      <div class="rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] overflow-hidden">
+      <div class="rounded-2xl border border-slate-200/80 dark:border-slate-700/50 overflow-hidden">
         <template x-for="(sc, i) in leaderboard" :key="sc.rank">
-          <div class="flex items-center gap-3 px-4 py-3 border-b border-[#E2D9CE]/50 dark:border-[#1E4458]/50 last:border-0">
+          <div class="flex items-center gap-3 px-4 py-3 border-b border-slate-200 dark:border-slate-700/50 last:border-0">
             <span class="w-6 text-center text-sm font-bold" :class="i === 0 ? 'text-amber-500' : i === 1 ? 'text-slate-400' : i === 2 ? 'text-amber-700' : 'text-slate-400'" x-text="i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i+1)"></span>
             <span class="flex-1 text-sm font-medium text-slate-700 dark:text-slate-200" x-text="sc.player_name"></span>
             <span class="text-sm font-semibold text-[#0E5C73] dark:text-[#14B8A6]" x-text="sc.score + ' pts'"></span>
@@ -123,7 +123,7 @@
     </div>
 
     <!-- Question -->
-    <div class="rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] bg-white dark:bg-[#0C1E26] p-6 mb-4">
+    <div class="rounded-2xl border border-slate-200/80 dark:border-slate-700/50 bg-white dark:bg-slate-800 p-6 mb-4">
       <p class="text-base font-medium text-slate-800 dark:text-white leading-relaxed" x-text="currentQuestion().question"></p>
     </div>
 
@@ -175,26 +175,26 @@
     </div>
 
     <div class="grid grid-cols-3 gap-3 mb-8">
-      <div class="text-center rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] bg-white dark:bg-[#0C1E26] p-4">
+      <div class="text-center rounded-2xl border border-slate-200/80 dark:border-slate-700/50 bg-white dark:bg-slate-800 p-4">
         <div class="text-2xl font-bold text-[#0E5C73] dark:text-[#14B8A6]" x-text="score"></div>
         <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Poin</div>
       </div>
-      <div class="text-center rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] bg-white dark:bg-[#0C1E26] p-4">
+      <div class="text-center rounded-2xl border border-slate-200/80 dark:border-slate-700/50 bg-white dark:bg-slate-800 p-4">
         <div class="text-2xl font-bold text-emerald-500" x-text="correctCount + '/' + questions.length"></div>
         <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Benar</div>
       </div>
-      <div class="text-center rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] bg-white dark:bg-[#0C1E26] p-4">
+      <div class="text-center rounded-2xl border border-slate-200/80 dark:border-slate-700/50 bg-white dark:bg-slate-800 p-4">
         <div class="text-2xl font-bold text-amber-500" x-text="Math.round(correctCount / questions.length * 100) + '%'"></div>
         <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Akurasi</div>
       </div>
     </div>
 
     <!-- Submit score -->
-    <div x-show="!scoreSaved" class="rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] bg-white dark:bg-[#0C1E26] p-5 mb-6">
+    <div x-show="!scoreSaved" class="rounded-2xl border border-slate-200/80 dark:border-slate-700/50 bg-white dark:bg-slate-800 p-5 mb-6">
       <h3 class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Simpan ke Leaderboard</h3>
       <div class="flex gap-3">
         <input type="text" x-model="playerName" maxlength="30" placeholder="Nama kamu"
-          class="flex-1 px-3 py-2.5 rounded-xl border border-[#E2D9CE] dark:border-[#1E4458] bg-[#FAF7F2] dark:bg-[#0B1120] text-sm text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#0E5C73]"
+          class="flex-1 px-3 py-2.5 rounded-xl border border-slate-200/80 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/30 text-sm text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#0E5C73]"
         />
         <button @click="saveScore()" :disabled="playerName.trim().length === 0 || savingScore"
           class="px-5 py-2.5 rounded-xl bg-[#C9A84C] hover:bg-[#b8953f] disabled:opacity-40 text-white font-semibold text-sm transition-colors whitespace-nowrap"
@@ -206,9 +206,9 @@
     <!-- Leaderboard -->
     <div x-show="leaderboard.length > 0">
       <h2 class="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-3 uppercase tracking-wide">Leaderboard — <span x-text="difficultyLabel()"></span></h2>
-      <div class="rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] overflow-hidden mb-6">
+      <div class="rounded-2xl border border-slate-200/80 dark:border-slate-700/50 overflow-hidden mb-6">
         <template x-for="(sc, i) in leaderboard" :key="sc.rank">
-          <div class="flex items-center gap-3 px-4 py-3 border-b border-[#E2D9CE]/50 dark:border-[#1E4458]/50 last:border-0"
+          <div class="flex items-center gap-3 px-4 py-3 border-b border-slate-200 dark:border-slate-700/50 last:border-0"
             :class="sc.player_name === playerName && sc.score === score ? 'bg-amber-50/50 dark:bg-amber-900/10' : ''"
           >
             <span class="w-6 text-center text-sm font-bold" :class="i === 0 ? 'text-amber-500' : i === 1 ? 'text-slate-400' : i === 2 ? 'text-amber-700' : 'text-slate-400'" x-text="i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i+1)"></span>
@@ -345,12 +345,12 @@ function quizApp(categorySlug) {
 
     optionClass(idx) {
       if (this.state === 'playing') {
-        return 'border-[#E2D9CE] dark:border-[#1E4458] bg-white dark:bg-[#0C1E26] text-slate-700 dark:text-slate-200 hover:border-[#0E5C73] hover:bg-[#0E5C73]/5 dark:hover:bg-[#0E5C73]/10';
+        return 'border-slate-200/80 dark:border-slate-700/50 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:border-[#0E5C73] hover:bg-[#0E5C73]/5 dark:hover:bg-[#0E5C73]/10';
       }
       const correct = this.currentQuestion().answer;
       if (idx === correct) return 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400';
       if (idx === this.selectedAnswer && idx !== correct) return 'border-red-500 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400';
-      return 'border-[#E2D9CE] dark:border-[#1E4458] bg-white dark:bg-[#0C1E26] text-slate-400 dark:text-slate-500 opacity-50';
+      return 'border-slate-200/80 dark:border-slate-700/50 bg-white dark:bg-slate-800 text-slate-400 dark:text-slate-500 opacity-50';
     },
 
     async saveScore() {
