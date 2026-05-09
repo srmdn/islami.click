@@ -36,7 +36,7 @@
         <div class="grid grid-cols-3 gap-3">
           <button
             @click="difficulty = 'basic'"
-            :class="difficulty === 'basic' ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400' : 'border-[#E2D9CE] dark:border-[#1E4458] text-slate-600 dark:text-slate-300 hover:border-emerald-400'"
+            :class="difficulty === 'basic' ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400' : 'border-[#E2D9CE] dark:border-[#1E4458] bg-[#FAF7F2] dark:bg-[#0B1120] text-slate-600 dark:text-slate-300 hover:border-emerald-400'"
             class="flex flex-col items-center gap-1 px-3 py-3 rounded-xl border-2 transition-all text-sm font-medium cursor-pointer"
           >
             <span class="text-lg">🟢</span>
@@ -45,7 +45,7 @@
           </button>
           <button
             @click="difficulty = 'intermediate'"
-            :class="difficulty === 'intermediate' ? 'border-amber-500 bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400' : 'border-[#E2D9CE] dark:border-[#1E4458] text-slate-600 dark:text-slate-300 hover:border-amber-400'"
+            :class="difficulty === 'intermediate' ? 'border-amber-500 bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400' : 'border-[#E2D9CE] dark:border-[#1E4458] bg-[#FAF7F2] dark:bg-[#0B1120] text-slate-600 dark:text-slate-300 hover:border-amber-400'"
             class="flex flex-col items-center gap-1 px-3 py-3 rounded-xl border-2 transition-all text-sm font-medium cursor-pointer"
           >
             <span class="text-lg">🟡</span>
@@ -54,7 +54,7 @@
           </button>
           <button
             @click="difficulty = 'advanced'"
-            :class="difficulty === 'advanced' ? 'border-red-500 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400' : 'border-[#E2D9CE] dark:border-[#1E4458] text-slate-600 dark:text-slate-300 hover:border-red-400'"
+            :class="difficulty === 'advanced' ? 'border-red-500 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400' : 'border-[#E2D9CE] dark:border-[#1E4458] bg-[#FAF7F2] dark:bg-[#0B1120] text-slate-600 dark:text-slate-300 hover:border-red-400'"
             class="flex flex-col items-center gap-1 px-3 py-3 rounded-xl border-2 transition-all text-sm font-medium cursor-pointer"
           >
             <span class="text-lg">🔴</span>
@@ -177,15 +177,15 @@
     <div class="grid grid-cols-3 gap-3 mb-8">
       <div class="text-center rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] bg-white dark:bg-[#0C1E26] p-4">
         <div class="text-2xl font-bold text-[#0E5C73] dark:text-[#14B8A6]" x-text="score"></div>
-        <div class="text-xs text-slate-500 mt-0.5">Poin</div>
+        <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Poin</div>
       </div>
       <div class="text-center rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] bg-white dark:bg-[#0C1E26] p-4">
         <div class="text-2xl font-bold text-emerald-500" x-text="correctCount + '/' + questions.length"></div>
-        <div class="text-xs text-slate-500 mt-0.5">Benar</div>
+        <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Benar</div>
       </div>
       <div class="text-center rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] bg-white dark:bg-[#0C1E26] p-4">
         <div class="text-2xl font-bold text-amber-500" x-text="Math.round(correctCount / questions.length * 100) + '%'"></div>
-        <div class="text-xs text-slate-500 mt-0.5">Akurasi</div>
+        <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Akurasi</div>
       </div>
     </div>
 
@@ -345,12 +345,12 @@ function quizApp(categorySlug) {
 
     optionClass(idx) {
       if (this.state === 'playing') {
-        return 'border-[#E2D9CE] dark:border-[#1E4458] text-slate-700 dark:text-slate-200 hover:border-[#0E5C73] hover:bg-[#0E5C73]/5';
+        return 'border-[#E2D9CE] dark:border-[#1E4458] bg-white dark:bg-[#0C1E26] text-slate-700 dark:text-slate-200 hover:border-[#0E5C73] hover:bg-[#0E5C73]/5 dark:hover:bg-[#0E5C73]/10';
       }
       const correct = this.currentQuestion().answer;
       if (idx === correct) return 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400';
       if (idx === this.selectedAnswer && idx !== correct) return 'border-red-500 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400';
-      return 'border-[#E2D9CE] dark:border-[#1E4458] text-slate-400 dark:text-slate-500 opacity-60';
+      return 'border-[#E2D9CE] dark:border-[#1E4458] bg-white dark:bg-[#0C1E26] text-slate-400 dark:text-slate-500 opacity-50';
     },
 
     async saveScore() {
