@@ -16,7 +16,7 @@
 
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
     {{range .Categories}}
-    <a href="/quiz/{{.Slug}}" class="group flex flex-col gap-3 p-5 rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] bg-white dark:bg-[#0C1E26] hover:border-[#C9A84C] dark:hover:border-[#C9A84C] hover:shadow-md transition-all">
+    <a href="/quiz/{{.Slug}}" class="group flex flex-col gap-3 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-700/50 bg-white dark:bg-slate-800 hover:border-[#C9A84C] dark:hover:border-[#C9A84C] hover:shadow-md transition-all">
       <div class="flex items-center justify-between">
         <span class="text-lg font-semibold text-slate-800 dark:text-white group-hover:text-[#0E5C73] dark:group-hover:text-[#14B8A6] transition-colors">{{.Label}}</span>
         <svg class="w-5 h-5 text-slate-300 dark:text-slate-600 group-hover:text-[#C9A84C] transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

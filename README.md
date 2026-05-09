@@ -41,6 +41,8 @@ go build -o islami.click ./cmd/server
 
 **`/quran`** — Quran reader with per-surah browsing, Madinah mushaf pagination, smart search, and audio recitation.
 
+**`/quiz`** — Quiz Islami: 8 categories (Aqidah, Al-Qur'an, Hadits, Sirah, Fiqh, Sejarah Islam, Akhlak, Doa), 3 difficulty levels (Basic 10 q, Intermediate/Advanced 15 q each), 30-second timer per question, time-bonus scoring (10 pts correct + up to 10 pts speed bonus), answer explanations, and a shared SQLite leaderboard per category and difficulty.
+
 ## Quran detail
 
 **Per-surah browsing** — `/quran` lists all 114 surahs with Arabic name, revelation type (Makkiyah/Madaniyah), and ayah count. `/quran/:surah` renders the surah with Arabic text (Madinah mushaf) and Indonesian translation (Kemenag).
