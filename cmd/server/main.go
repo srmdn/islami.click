@@ -8,6 +8,7 @@ import (
 	"os"
 	"regexp"
 	"strings"
+	"time"
 
 	islamiclick "github.com/srmdn/islami.click"
 	"github.com/srmdn/islami.click/internal/handler"
@@ -152,6 +153,13 @@ func main() {
 	})
 	http.HandleFunc("/quiz/", h.QuizCategory)
 
+	srv := &http.Server{
+		Addr:              ":" + port,
+		ReadHeaderTimeout: 5 * time.Second,
+		ReadTimeout:       15 * time.Second,
+		WriteTimeout:      30 * time.Second,
+		IdleTimeout:       60 * time.Second,
+	}
 	log.Printf("islami.click listening on :%s", port)
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+	log.Fatal(srv.ListenAndServe())
 }

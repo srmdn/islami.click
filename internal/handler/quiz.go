@@ -171,6 +171,7 @@ func (h *Handler) QuizScoreAPI(w http.ResponseWriter, r *http.Request) {
 		Total      int    `json:"total"`
 		Difficulty string `json:"difficulty"`
 	}
+	r.Body = http.MaxBytesReader(w, r.Body, 4096)
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, "invalid request", http.StatusBadRequest)
 		return
