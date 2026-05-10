@@ -289,6 +289,9 @@ func (h *Handler) QuranSurah(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) QuranSearch(w http.ResponseWriter, r *http.Request) {
 	query := strings.TrimSpace(r.URL.Query().Get("q"))
+	if len(query) > 200 {
+		query = query[:200]
+	}
 
 	data := model.QuranSearchData{
 		Meta:        pageMeta(r, "Pencarian Al-Qur'an", "Cari ayat dalam Al-Qur'an"),
@@ -732,7 +735,7 @@ func (h *Handler) Shalat(w http.ResponseWriter, r *http.Request) {
 	}
 	defer resp.Body.Close()
 
-	body, err := io.ReadAll(resp.Body)
+	body, err := io.ReadAll(io.LimitReader(resp.Body, 64*1024))
 	if err != nil {
 		page.Error = "Gagal membaca data jadwal shalat."
 		h.render(w, "shalat.html", page)
@@ -809,7 +812,7 @@ func (h *Handler) fetchShalatMini(ctx context.Context) model.ShalatMiniData {
 	}
 	defer resp.Body.Close()
 
-	body, err := io.ReadAll(resp.Body)
+	body, err := io.ReadAll(io.LimitReader(resp.Body, 64*1024))
 	if err != nil {
 		return model.ShalatMiniData{Error: "Gagal memuat waktu shalat."}
 	}
