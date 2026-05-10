@@ -186,7 +186,12 @@ func (h *Handler) QuizScoreAPI(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "invalid difficulty", http.StatusBadRequest)
 		return
 	}
-	if req.Score < 0 || req.Correct < 0 || req.Total < 0 || req.Total > 20 {
+	const maxQuestionsPerQuiz = 15
+	const maxPointsPerQuestion = 20 // 10 base + 10 time bonus
+	if req.Score < 0 || req.Correct < 0 || req.Total < 0 ||
+		req.Total > maxQuestionsPerQuiz ||
+		req.Correct > req.Total ||
+		req.Score > req.Total*maxPointsPerQuestion {
 		http.Error(w, "invalid score values", http.StatusBadRequest)
 		return
 	}

@@ -625,7 +625,14 @@ func (h *Handler) DoaMore(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) Shalat(w http.ResponseWriter, r *http.Request) {
 	city := strings.TrimSpace(r.URL.Query().Get("city"))
-	if city == "" {
+	validCity := false
+	for _, c := range indonesianCities {
+		if c == city {
+			validCity = true
+			break
+		}
+	}
+	if !validCity {
 		city = "Jakarta"
 	}
 
