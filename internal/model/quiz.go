@@ -38,3 +38,8 @@ type QuizCategoryData struct {
 	Category   QuizCategory
 	Categories []QuizCategory
 }
+
+type QuizAnswerKey struct {
+	CorrectIndex int
+	Explanation  string
+}

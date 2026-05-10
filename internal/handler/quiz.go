@@ -3,13 +3,25 @@ package handler
 import (
 	"encoding/json"
 	"log"
+	"math"
 	"net/http"
 	"strings"
 
 	"github.com/srmdn/islami.click/internal/model"
 )
 
-const quizLeaderboardLimit = 10
+const (
+	quizLeaderboardLimit = 10
+	quizTimerSeconds     = 30
+	quizScorePerCorrect  = 10
+	quizTimeBonusMax     = 10
+)
+
+var quizQuestionsPerDifficulty = map[string]int{
+	"basic":        10,
+	"intermediate": 15,
+	"advanced":     15,
+}
 
 func (h *Handler) QuizHome(w http.ResponseWriter, r *http.Request) {
 	cats, err := h.contentStore.QuizCategories(r.Context())
@@ -73,7 +85,8 @@ func (h *Handler) QuizQuestionsAPI(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	questions, err := h.contentStore.QuizQuestions(r.Context(), slug, difficulty)
+	limit := quizQuestionsPerDifficulty[difficulty]
+	questions, err := h.contentStore.QuizQuestions(r.Context(), slug, difficulty, limit)
 	if err != nil {
 		log.Printf("quiz questions api %s/%s: %v", slug, difficulty, err)
 		http.Error(w, "Failed to load questions", http.StatusInternalServerError)
@@ -81,21 +94,17 @@ func (h *Handler) QuizQuestionsAPI(w http.ResponseWriter, r *http.Request) {
 	}
 
 	type questionOut struct {
-		ID          int      `json:"id"`
-		Question    string   `json:"question"`
-		Options     []string `json:"options"`
-		Answer      int      `json:"answer"`
-		Explanation string   `json:"explanation"`
+		ID       int      `json:"id"`
+		Question string   `json:"question"`
+		Options  []string `json:"options"`
 	}
 
 	out := make([]questionOut, len(questions))
 	for i, q := range questions {
 		out[i] = questionOut{
-			ID:          q.ID,
-			Question:    q.Question,
-			Options:     q.Options,
-			Answer:      q.Answer,
-			Explanation: q.Explanation,
+			ID:       q.ID,
+			Question: q.Question,
+			Options:  q.Options,
 		}
 	}
 
@@ -124,34 +133,13 @@ func (h *Handler) QuizLeaderboardAPI(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	type scoreOut struct {
-		Rank       int    `json:"rank"`
-		PlayerName string `json:"player_name"`
-		Score      int    `json:"score"`
-		Correct    int    `json:"correct"`
-		Total      int    `json:"total"`
-		PlayedAt   string `json:"played_at"`
-	}
-
-	out := make([]scoreOut, len(scores))
-	for i, s := range scores {
-		out[i] = scoreOut{
-			Rank:       i + 1,
-			PlayerName: s.PlayerName,
-			Score:      s.Score,
-			Correct:    s.CorrectCount,
-			Total:      s.TotalCount,
-			PlayedAt:   s.PlayedAt,
-		}
-	}
-
 	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(out); err != nil {
+	if err := json.NewEncoder(w).Encode(leaderboardOut(scores)); err != nil {
 		log.Printf("quiz leaderboard encode: %v", err)
 	}
 }
 
-func (h *Handler) QuizScoreAPI(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) QuizSubmitAPI(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
 		return
@@ -166,12 +154,14 @@ func (h *Handler) QuizScoreAPI(w http.ResponseWriter, r *http.Request) {
 
 	var req struct {
 		PlayerName string `json:"player_name"`
-		Score      int    `json:"score"`
-		Correct    int    `json:"correct"`
-		Total      int    `json:"total"`
 		Difficulty string `json:"difficulty"`
+		Answers    []struct {
+			QuestionID int `json:"question_id"`
+			Selected   int `json:"selected"`
+			TimeLeft   int `json:"time_left"`
+		} `json:"answers"`
 	}
-	r.Body = http.MaxBytesReader(w, r.Body, 4096)
+	r.Body = http.MaxBytesReader(w, r.Body, 8192)
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, "invalid request", http.StatusBadRequest)
 		return
@@ -186,59 +176,115 @@ func (h *Handler) QuizScoreAPI(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "invalid difficulty", http.StatusBadRequest)
 		return
 	}
-	const maxQuestionsPerQuiz = 15
-	const maxPointsPerQuestion = 20 // 10 base + 10 time bonus
-	if req.Score < 0 || req.Correct < 0 || req.Total < 0 ||
-		req.Total > maxQuestionsPerQuiz ||
-		req.Correct > req.Total ||
-		req.Score > req.Total*maxPointsPerQuestion {
-		http.Error(w, "invalid score values", http.StatusBadRequest)
+	maxQ := quizQuestionsPerDifficulty[req.Difficulty]
+	if len(req.Answers) == 0 || len(req.Answers) > maxQ {
+		http.Error(w, "invalid number of answers", http.StatusBadRequest)
 		return
 	}
 
-	sc := model.QuizScore{
-		CategorySlug: slug,
-		PlayerName:   name,
-		Score:        req.Score,
-		CorrectCount: req.Correct,
-		TotalCount:   req.Total,
-		Difficulty:   req.Difficulty,
-	}
-	if err := h.contentStore.SaveQuizScore(r.Context(), sc); err != nil {
-		log.Printf("save quiz score %s: %v", slug, err)
-		http.Error(w, "Failed to save score", http.StatusInternalServerError)
-		return
-	}
-
-	scores, err := h.contentStore.QuizLeaderboard(r.Context(), slug, req.Difficulty, quizLeaderboardLimit)
-	if err != nil {
-		log.Printf("leaderboard after save %s: %v", slug, err)
-		http.Error(w, "Failed to load leaderboard", http.StatusInternalServerError)
-		return
-	}
-
-	type scoreOut struct {
-		Rank       int    `json:"rank"`
-		PlayerName string `json:"player_name"`
-		Score      int    `json:"score"`
-		Correct    int    `json:"correct"`
-		Total      int    `json:"total"`
-		PlayedAt   string `json:"played_at"`
-	}
-	out := make([]scoreOut, len(scores))
-	for i, s := range scores {
-		out[i] = scoreOut{
-			Rank:       i + 1,
-			PlayerName: s.PlayerName,
-			Score:      s.Score,
-			Correct:    s.CorrectCount,
-			Total:      s.TotalCount,
-			PlayedAt:   s.PlayedAt,
+	// Deduplicate by question ID (take first occurrence)
+	seen := make(map[int]bool, len(req.Answers))
+	answers := req.Answers[:0]
+	for _, a := range req.Answers {
+		if !seen[a.QuestionID] {
+			seen[a.QuestionID] = true
+			answers = append(answers, a)
 		}
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(out); err != nil {
-		log.Printf("quiz score response encode: %v", err)
+	answerKeys, err := h.contentStore.QuizAnswerKeys(r.Context(), slug, req.Difficulty)
+	if err != nil {
+		log.Printf("quiz submit answer keys %s/%s: %v", slug, req.Difficulty, err)
+		http.Error(w, "failed to process quiz", http.StatusInternalServerError)
+		return
 	}
+
+	type resultOut struct {
+		QuestionID   int    `json:"question_id"`
+		Correct      bool   `json:"correct"`
+		CorrectIndex int    `json:"correct_index"`
+		Explanation  string `json:"explanation"`
+	}
+
+	var score, correct int
+	results := make([]resultOut, 0, len(answers))
+
+	for _, ans := range answers {
+		key, ok := answerKeys[ans.QuestionID]
+		if !ok {
+			continue
+		}
+		timeLeft := ans.TimeLeft
+		if timeLeft < 0 {
+			timeLeft = 0
+		}
+		if timeLeft > quizTimerSeconds {
+			timeLeft = quizTimerSeconds
+		}
+		isCorrect := ans.Selected == key.CorrectIndex
+		if isCorrect {
+			correct++
+			timeBonus := int(math.Round(float64(timeLeft) / float64(quizTimerSeconds) * float64(quizTimeBonusMax)))
+			score += quizScorePerCorrect + timeBonus
+		}
+		results = append(results, resultOut{
+			QuestionID:   ans.QuestionID,
+			Correct:      isCorrect,
+			CorrectIndex: key.CorrectIndex,
+			Explanation:  key.Explanation,
+		})
+	}
+	total := len(results)
+
+	if err := h.contentStore.SaveQuizScore(r.Context(), model.QuizScore{
+		CategorySlug: slug,
+		PlayerName:   name,
+		Score:        score,
+		CorrectCount: correct,
+		TotalCount:   total,
+		Difficulty:   req.Difficulty,
+	}); err != nil {
+		log.Printf("quiz submit save score %s: %v", slug, err)
+		http.Error(w, "failed to save score", http.StatusInternalServerError)
+		return
+	}
+
+	leaderboard, err := h.contentStore.QuizLeaderboard(r.Context(), slug, req.Difficulty, quizLeaderboardLimit)
+	if err != nil {
+		log.Printf("quiz submit leaderboard %s/%s: %v", slug, req.Difficulty, err)
+	}
+
+	resp := struct {
+		Score       int         `json:"score"`
+		Correct     int         `json:"correct"`
+		Total       int         `json:"total"`
+		Results     []resultOut `json:"results"`
+		Leaderboard interface{} `json:"leaderboard"`
+	}{
+		Score:       score,
+		Correct:     correct,
+		Total:       total,
+		Results:     results,
+		Leaderboard: leaderboardOut(leaderboard),
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(resp); err != nil {
+		log.Printf("quiz submit encode: %v", err)
+	}
+}
+
+func leaderboardOut(scores []model.QuizScore) []map[string]interface{} {
+	out := make([]map[string]interface{}, len(scores))
+	for i, s := range scores {
+		out[i] = map[string]interface{}{
+			"rank":        i + 1,
+			"player_name": s.PlayerName,
+			"score":       s.Score,
+			"correct":     s.CorrectCount,
+			"total":       s.TotalCount,
+			"played_at":   s.PlayedAt,
+		}
+	}
+	return out
 }

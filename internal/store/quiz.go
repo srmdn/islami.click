@@ -152,13 +152,14 @@ func (s *Store) QuizCategory(ctx context.Context, slug string) (*model.QuizCateg
 	return &c, nil
 }
 
-func (s *Store) QuizQuestions(ctx context.Context, categorySlug, difficulty string) ([]model.QuizQuestion, error) {
+func (s *Store) QuizQuestions(ctx context.Context, categorySlug, difficulty string, limit int) ([]model.QuizQuestion, error) {
 	rows, err := s.db.QueryContext(ctx,
 		`SELECT id, question, options_json, answer_index, explanation
 		 FROM quiz_questions
 		 WHERE category_slug = ? AND difficulty = ?
-		 ORDER BY RANDOM()`,
-		categorySlug, difficulty,
+		 ORDER BY RANDOM()
+		 LIMIT ?`,
+		categorySlug, difficulty, limit,
 	)
 	if err != nil {
 		return nil, fmt.Errorf("quiz questions: %w", err)
@@ -180,6 +181,28 @@ func (s *Store) QuizQuestions(ctx context.Context, categorySlug, difficulty stri
 		questions = append(questions, q)
 	}
 	return questions, rows.Err()
+}
+
+func (s *Store) QuizAnswerKeys(ctx context.Context, categorySlug, difficulty string) (map[int]model.QuizAnswerKey, error) {
+	rows, err := s.db.QueryContext(ctx,
+		`SELECT id, answer_index, explanation FROM quiz_questions WHERE category_slug = ? AND difficulty = ?`,
+		categorySlug, difficulty,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("quiz answer keys: %w", err)
+	}
+	defer rows.Close()
+
+	keys := make(map[int]model.QuizAnswerKey)
+	for rows.Next() {
+		var id, answerIndex int
+		var explanation string
+		if err := rows.Scan(&id, &answerIndex, &explanation); err != nil {
+			return nil, fmt.Errorf("scan quiz answer key: %w", err)
+		}
+		keys[id] = model.QuizAnswerKey{CorrectIndex: answerIndex, Explanation: explanation}
+	}
+	return keys, rows.Err()
 }
 
 func (s *Store) QuizLeaderboard(ctx context.Context, categorySlug, difficulty string, limit int) ([]model.QuizScore, error) {

@@ -145,8 +145,8 @@ func main() {
 			h.QuizQuestionsAPI(w, r)
 		} else if strings.HasSuffix(path, "/leaderboard") {
 			h.QuizLeaderboardAPI(w, r)
-		} else if strings.HasSuffix(path, "/score") {
-			h.QuizScoreAPI(w, r)
+		} else if strings.HasSuffix(path, "/submit") {
+			h.QuizSubmitAPI(w, r)
 		} else {
 			http.NotFound(w, r)
 		}
