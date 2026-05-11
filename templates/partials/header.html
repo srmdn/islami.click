@@ -45,7 +45,7 @@
 
     <!-- Backdrop: fades in/out, click anywhere outside drawer to close -->
     <div
-        style="display:none"
+        x-cloak
         x-show="open"
         x-transition:enter="transition ease-out duration-200"
         x-transition:enter-start="opacity-0"
@@ -59,7 +59,7 @@
 
     <!-- Drawer panel: slides in from left, full viewport height, above backdrop -->
     <div
-        style="display:none"
+        x-cloak
         x-show="open"
         x-transition:enter="transition ease-out duration-300"
         x-transition:enter-start="-translate-x-full"
