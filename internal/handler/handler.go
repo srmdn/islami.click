@@ -94,6 +94,57 @@ func pageMeta(r *http.Request, title, description string) model.PageMeta {
 	}
 }
 
+type jsonLDWebSite struct {
+	Context     string `json:"@context"`
+	Type        string `json:"@type"`
+	ID          string `json:"@id"`
+	URL         string `json:"url"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	InLanguage  string `json:"inLanguage"`
+}
+
+type jsonLDBreadcrumbItem struct {
+	Type     string `json:"@type"`
+	Position int    `json:"position"`
+	Name     string `json:"name"`
+	Item     string `json:"item,omitempty"`
+}
+
+type jsonLDBreadcrumb struct {
+	Context         string                `json:"@context"`
+	Type            string                `json:"@type"`
+	ItemListElement []jsonLDBreadcrumbItem `json:"itemListElement"`
+}
+
+func websiteJSONLD() string {
+	b, _ := json.Marshal(jsonLDWebSite{
+		Context:     "https://schema.org",
+		Type:        "WebSite",
+		ID:          siteURL + "/#website",
+		URL:         siteURL + "/",
+		Name:        "islami.click",
+		Description: "Portal islami lengkap untuk Muslim Indonesia",
+		InLanguage:  "id-ID",
+	})
+	return string(b)
+}
+
+func breadcrumbJSONLD(items ...jsonLDBreadcrumbItem) string {
+	b, _ := json.Marshal(jsonLDBreadcrumb{
+		Context:         "https://schema.org",
+		Type:            "BreadcrumbList",
+		ItemListElement: items,
+	})
+	return string(b)
+}
+
+func crumb(pos int, name, url string) jsonLDBreadcrumbItem {
+	return jsonLDBreadcrumbItem{Type: "ListItem", Position: pos, Name: name, Item: url}
+}
+
+func homeCrumb() jsonLDBreadcrumbItem { return crumb(1, "Beranda", siteURL+"/") }
+
 func (h *Handler) renderPartial(w http.ResponseWriter, name string, data any) {
 	t, ok := h.partialTmpls[name]
 	if !ok {
@@ -119,21 +170,21 @@ func (h *Handler) render(w http.ResponseWriter, page string, data any) {
 }
 
 func (h *Handler) Home(w http.ResponseWriter, r *http.Request) {
-	h.render(w, "home.html", struct{ Meta model.PageMeta }{
-		Meta: pageMeta(r, "Beranda", "Portal islami lengkap: Al-Matsurat, jadwal shalat, Al-Quran, doa harian, Asmaul Husna, dan kiblat untuk Muslim Indonesia."),
-	})
+	meta := pageMeta(r, "Beranda", "Portal islami lengkap: Al-Matsurat, jadwal shalat, Al-Quran, doa harian, Asmaul Husna, dan kiblat untuk Muslim Indonesia.")
+	meta.JSONLD = websiteJSONLD()
+	h.render(w, "home.html", struct{ Meta model.PageMeta }{Meta: meta})
 }
 
 func (h *Handler) AlMatsurat(w http.ResponseWriter, r *http.Request) {
-	h.render(w, "almatsurat.html", struct{ Meta model.PageMeta }{
-		Meta: pageMeta(r, "Al-Matsurat", "Kumpulan dzikir pagi dan petang dari Al-Matsurat Sugro dan Kubro, panduan wirid harian Muslim."),
-	})
+	meta := pageMeta(r, "Al-Matsurat", "Kumpulan dzikir pagi dan petang dari Al-Matsurat Sugro dan Kubro, panduan wirid harian Muslim.")
+	meta.JSONLD = breadcrumbJSONLD(homeCrumb(), crumb(2, "Al-Ma'tsurat", siteURL+"/almatsurat"))
+	h.render(w, "almatsurat.html", struct{ Meta model.PageMeta }{Meta: meta})
 }
 
 func (h *Handler) Kiblat(w http.ResponseWriter, r *http.Request) {
-	h.render(w, "kiblat.html", struct{ Meta model.PageMeta }{
-		Meta: pageMeta(r, "Arah Kiblat", "Cek arah kiblat dari lokasi Anda secara akurat menggunakan kompas berbasis GPS."),
-	})
+	meta := pageMeta(r, "Arah Kiblat", "Cek arah kiblat dari lokasi Anda secara akurat menggunakan kompas berbasis GPS.")
+	meta.JSONLD = breadcrumbJSONLD(homeCrumb(), crumb(2, "Arah Kiblat", siteURL+"/kiblat"))
+	h.render(w, "kiblat.html", struct{ Meta model.PageMeta }{Meta: meta})
 }
 
 func (h *Handler) Hisab(w http.ResponseWriter, r *http.Request) {
@@ -156,8 +207,10 @@ func (h *Handler) Hisab(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	hisabMeta := pageMeta(r, "Hisab Kalender Hijriyah", "Konversi tanggal Hijriyah dan Masehi, kalender bulan Hijriyah lengkap.")
+	hisabMeta.JSONLD = breadcrumbJSONLD(homeCrumb(), crumb(2, "Hisab Hijriyah", siteURL+"/hisab"))
 	data := model.HisabPageData{
-		Meta:           pageMeta(r, "Hisab Kalender Hijriyah", "Konversi tanggal Hijriyah dan Masehi, kalender bulan Hijriyah lengkap."),
+		Meta:           hisabMeta,
 		HijriToday:     hijriDate.FormatID(),
 		MasehiToday:    hijri.FormatGregorianID(now),
 		HijriDay:       hijriDate.Day,
@@ -178,6 +231,7 @@ func (h *Handler) AsmaulHusna(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	content.Meta = pageMeta(r, "Asmaul Husna", "99 Asmaul Husna lengkap dengan teks Arab, transliterasi Latin, dan terjemahan makna dalam bahasa Indonesia.")
+	content.Meta.JSONLD = breadcrumbJSONLD(homeCrumb(), crumb(2, "Asmaul Husna", siteURL+"/asmaul-husna"))
 	h.render(w, "asmaul-husna.html", content)
 }
 
@@ -189,8 +243,10 @@ func (h *Handler) Quran(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	quranMeta := pageMeta(r, "Al-Quran", "Baca Al-Quran 30 juz lengkap dengan teks Arab, terjemahan Indonesia, dan audio murottal per surah.")
+	quranMeta.JSONLD = breadcrumbJSONLD(homeCrumb(), crumb(2, "Al-Quran", siteURL+"/quran"))
 	data := model.QuranPageData{
-		Meta:        pageMeta(r, "Al-Quran", "Baca Al-Quran 30 juz lengkap dengan teks Arab, terjemahan Indonesia, dan audio murottal per surah."),
+		Meta:        quranMeta,
 		Title:       "Al-Qur'an",
 		Description: "Baca Al-Qur'an lengkap dengan terjemahan Bahasa Indonesia",
 		Surahs:      surahs,
@@ -254,8 +310,10 @@ func (h *Handler) QuranSurah(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	surahMeta := pageMeta(r, fmt.Sprintf("Surah %s", surah.Name), fmt.Sprintf("Baca Surah %s lengkap dengan teks Arab, terjemahan Indonesia, dan audio murottal.", surah.Name))
+	surahMeta.JSONLD = breadcrumbJSONLD(homeCrumb(), crumb(2, "Al-Quran", siteURL+"/quran"), crumb(3, surah.Name, fmt.Sprintf("%s/quran/%d", siteURL, surahNumber)))
 	data := model.SurahReaderData{
-		Meta:        pageMeta(r, fmt.Sprintf("Surah %s", surah.Name), fmt.Sprintf("Baca Surah %s lengkap dengan teks Arab, terjemahan Indonesia, dan audio murottal.", surah.Name)),
+		Meta:        surahMeta,
 		Title:       fmt.Sprintf("%s - Al-Qur'an", surah.Name),
 		Description: fmt.Sprintf("Surah %s (%s) - %d Ayat", surah.Name, surah.ArabicName, surah.AyahCount),
 		Surah:       surah,
@@ -581,6 +639,7 @@ func (h *Handler) AlMatsuratSugro(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	content.Meta = pageMeta(r, "Al-Matsurat Sugro", "Dzikir pagi dan petang Al-Matsurat Sugro lengkap dengan teks Arab, transliterasi, dan terjemahan.")
+	content.Meta.JSONLD = breadcrumbJSONLD(homeCrumb(), crumb(2, "Al-Ma'tsurat", siteURL+"/almatsurat"), crumb(3, "Sugro", siteURL+"/almatsurat/sugro"))
 	h.render(w, "almatsurat-sugro.html", content)
 }
 
@@ -592,6 +651,7 @@ func (h *Handler) AlMatsuratKubro(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	content.Meta = pageMeta(r, "Al-Matsurat Kubro", "Dzikir pagi dan petang Al-Matsurat Kubro lengkap dengan teks Arab, transliterasi, dan terjemahan.")
+	content.Meta.JSONLD = breadcrumbJSONLD(homeCrumb(), crumb(2, "Al-Ma'tsurat", siteURL+"/almatsurat"), crumb(3, "Kubro", siteURL+"/almatsurat/kubro"))
 	h.render(w, "almatsurat-kubro.html", content)
 }
 
@@ -605,6 +665,7 @@ func (h *Handler) Doa(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	page.Meta = pageMeta(r, "Doa Harian", "Kumpulan doa harian Islam lengkap: doa makan, tidur, bepergian, masuk rumah, dan ratusan doa lainnya.")
+	page.Meta.JSONLD = breadcrumbJSONLD(homeCrumb(), crumb(2, "Doa Harian", siteURL+"/doa"))
 	h.render(w, "doa.html", page)
 }
 
@@ -639,8 +700,10 @@ func (h *Handler) Shalat(w http.ResponseWriter, r *http.Request) {
 		city = "Jakarta"
 	}
 
+	shalatMeta := pageMeta(r, "Jadwal Shalat", "Jadwal shalat harian akurat berdasarkan lokasi kota di Indonesia, dilengkapi waktu imsak dan terbit.")
+	shalatMeta.JSONLD = breadcrumbJSONLD(homeCrumb(), crumb(2, "Jadwal Shalat", siteURL+"/shalat"))
 	page := model.ShalatPageData{
-		Meta:   pageMeta(r, "Jadwal Shalat", "Jadwal shalat harian akurat berdasarkan lokasi kota di Indonesia, dilengkapi waktu imsak dan terbit."),
+		Meta:   shalatMeta,
 		City:   city,
 		Cities: indonesianCities,
 	}

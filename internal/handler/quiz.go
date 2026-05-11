@@ -30,8 +30,10 @@ func (h *Handler) QuizHome(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Failed to load quiz categories", http.StatusInternalServerError)
 		return
 	}
+	quizMeta := pageMeta(r, "Quiz Islami", "Uji pengetahuan Islammu dengan kuis interaktif: aqidah, Al-Quran, hadits, sirah, fiqh, dan lebih banyak lagi.")
+	quizMeta.JSONLD = breadcrumbJSONLD(homeCrumb(), crumb(2, "Quiz Islami", siteURL+"/quiz"))
 	h.render(w, "quiz.html", model.QuizHomeData{
-		Meta:       pageMeta(r, "Quiz Islami", "Uji pengetahuan Islammu dengan kuis interaktif: aqidah, Al-Quran, hadits, sirah, fiqh, dan lebih banyak lagi."),
+		Meta:       quizMeta,
 		Categories: cats,
 	})
 }
@@ -62,8 +64,10 @@ func (h *Handler) QuizCategory(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	catMeta := pageMeta(r, "Quiz "+cat.Label, "Uji pengetahuan Islammu tentang "+cat.Label+": pilih tingkat kesulitan dan mulai kuis.")
+	catMeta.JSONLD = breadcrumbJSONLD(homeCrumb(), crumb(2, "Quiz Islami", siteURL+"/quiz"), crumb(3, cat.Label, siteURL+"/quiz/"+slug))
 	h.render(w, "quiz-category.html", model.QuizCategoryData{
-		Meta:       pageMeta(r, "Quiz "+cat.Label, "Uji pengetahuan Islammu tentang "+cat.Label+": pilih tingkat kesulitan dan mulai kuis."),
+		Meta:       catMeta,
 		Category:   *cat,
 		Categories: cats,
 	})
