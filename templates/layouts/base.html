@@ -20,9 +20,12 @@
     <meta property="og:image:alt" content="islami.click - portal islami untuk Muslim Indonesia">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@msaidramadhan">
+    <meta name="twitter:creator" content="@msaidramadhan">
     <meta name="twitter:title" content="{{if .Meta.OGTitle}}{{.Meta.OGTitle}}{{else}}{{template "title" .}} | islami.click{{end}}">
     <meta name="twitter:description" content="{{if .Meta.OGDescription}}{{.Meta.OGDescription}}{{else}}{{template "description" .}}{{end}}">
     <meta name="twitter:image" content="{{if .Meta.OGImage}}{{.Meta.OGImage}}{{else}}https://islami.click/static/images/og-image.png{{end}}">
+    <meta name="twitter:image:alt" content="islami.click - portal islami untuk Muslim Indonesia">
+    {{if .Meta.JSONLD}}<script type="application/ld+json">{{.Meta.JSONLD}}</script>{{end}}
     <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="/static/css/out.css?v=3">
     <script>

@@ -5,4 +5,5 @@ type PageMeta struct {
 	OGTitle       string
 	OGDescription string
 	OGImage       string
+	JSONLD        string
 }
