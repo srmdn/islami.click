@@ -1,5 +1,7 @@
 package model
 
+import "time"
+
 type QuizCategory struct {
 	Slug        string
 	Label       string
@@ -42,4 +44,39 @@ type QuizCategoryData struct {
 type QuizAnswerKey struct {
 	CorrectIndex int
 	Explanation  string
+}
+
+type QuizSession struct {
+	ID            int
+	Token         string
+	CategorySlug  string
+	PlayerName    string
+	Difficulty    string
+	Status        string
+	QuestionCount int
+	CurrentIndex  int
+	StartedAt     time.Time
+	ExpiresAt     time.Time
+	CompletedAt   *time.Time
+}
+
+type QuizSessionQuestion struct {
+	SessionID     int
+	Position      int
+	QuestionID    int
+	Question      string
+	Options       []string
+	Answer        int
+	Explanation   string
+	PresentedAt   time.Time
+	SelectedIndex *int
+	AnsweredAt    *time.Time
+	IsCorrect     *bool
+	ScoreAwarded  int
+}
+
+type QuizQuestionPublic struct {
+	ID       int      `json:"id"`
+	Question string   `json:"question"`
+	Options  []string `json:"options"`
 }

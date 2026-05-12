@@ -141,12 +141,12 @@ func main() {
 	http.HandleFunc("/quiz", h.QuizHome)
 	http.HandleFunc("/api/quiz/", func(w http.ResponseWriter, r *http.Request) {
 		path := r.URL.Path
-		if strings.HasSuffix(path, "/questions") {
-			h.QuizQuestionsAPI(w, r)
+		if strings.HasSuffix(path, "/start") {
+			h.QuizStartAPI(w, r)
+		} else if strings.HasSuffix(path, "/answer") {
+			h.QuizAnswerAPI(w, r)
 		} else if strings.HasSuffix(path, "/leaderboard") {
 			h.QuizLeaderboardAPI(w, r)
-		} else if strings.HasSuffix(path, "/submit") {
-			h.QuizSubmitAPI(w, r)
 		} else {
 			http.NotFound(w, r)
 		}

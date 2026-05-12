@@ -6,6 +6,7 @@ import (
 	"math"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/srmdn/islami.click/internal/model"
 )
@@ -73,58 +74,190 @@ func (h *Handler) QuizCategory(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-func (h *Handler) QuizQuestionsAPI(w http.ResponseWriter, r *http.Request) {
-	parts := strings.Split(strings.Trim(r.URL.Path, "/"), "/")
-	if len(parts) < 4 {
+func (h *Handler) QuizStartAPI(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	slug, ok := quizSlugFromAPIPath(r.URL.Path)
+	if !ok {
 		http.NotFound(w, r)
 		return
 	}
-	slug := parts[2]
-	difficulty := r.URL.Query().Get("difficulty")
-	if difficulty == "" {
-		difficulty = "basic"
+
+	var req struct {
+		PlayerName string `json:"player_name"`
+		Difficulty string `json:"difficulty"`
 	}
-	if difficulty != "basic" && difficulty != "intermediate" && difficulty != "advanced" {
+	r.Body = http.MaxBytesReader(w, r.Body, 2048)
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, "invalid request", http.StatusBadRequest)
+		return
+	}
+
+	name := strings.TrimSpace(req.PlayerName)
+	if len(name) == 0 || len(name) > 30 {
+		http.Error(w, "player name must be 1-30 characters", http.StatusBadRequest)
+		return
+	}
+	if !validQuizDifficulty(req.Difficulty) {
 		http.Error(w, "invalid difficulty", http.StatusBadRequest)
 		return
 	}
 
-	limit := quizQuestionsPerDifficulty[difficulty]
-	questions, err := h.contentStore.QuizQuestions(r.Context(), slug, difficulty, limit)
+	limit := quizQuestionsPerDifficulty[req.Difficulty]
+	session, questions, err := h.contentStore.CreateQuizSession(r.Context(), slug, req.Difficulty, name, limit, time.Now())
 	if err != nil {
-		log.Printf("quiz questions api %s/%s: %v", slug, difficulty, err)
-		http.Error(w, "Failed to load questions", http.StatusInternalServerError)
+		log.Printf("quiz start %s/%s: %v", slug, req.Difficulty, err)
+		http.Error(w, "Failed to start quiz", http.StatusInternalServerError)
+		return
+	}
+	if len(questions) == 0 {
+		http.Error(w, "Failed to start quiz", http.StatusInternalServerError)
 		return
 	}
 
-	type questionOut struct {
-		ID       int      `json:"id"`
-		Question string   `json:"question"`
-		Options  []string `json:"options"`
-	}
-
-	out := make([]questionOut, len(questions))
-	for i, q := range questions {
-		out[i] = questionOut{
-			ID:       q.ID,
-			Question: q.Question,
-			Options:  q.Options,
-		}
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(out); err != nil {
-		log.Printf("quiz questions encode: %v", err)
-	}
+	writeJSON(w, http.StatusOK, map[string]interface{}{
+		"session_token":   session.Token,
+		"question_number": 1,
+		"total_questions": len(questions),
+		"question":        questions[0],
+	})
 }
 
-func (h *Handler) QuizLeaderboardAPI(w http.ResponseWriter, r *http.Request) {
-	parts := strings.Split(strings.Trim(r.URL.Path, "/"), "/")
-	if len(parts) < 4 {
+func (h *Handler) QuizAnswerAPI(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	slug, ok := quizSlugFromAPIPath(r.URL.Path)
+	if !ok {
 		http.NotFound(w, r)
 		return
 	}
-	slug := parts[2]
+
+	var req struct {
+		SessionToken string `json:"session_token"`
+		QuestionID   int    `json:"question_id"`
+		Selected     int    `json:"selected"`
+	}
+	r.Body = http.MaxBytesReader(w, r.Body, 4096)
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, "invalid request", http.StatusBadRequest)
+		return
+	}
+	if strings.TrimSpace(req.SessionToken) == "" {
+		http.Error(w, "session token is required", http.StatusBadRequest)
+		return
+	}
+
+	session, err := h.contentStore.QuizSessionByToken(r.Context(), strings.TrimSpace(req.SessionToken), slug)
+	if err != nil {
+		log.Printf("quiz session lookup %s: %v", slug, err)
+		http.Error(w, "failed to process quiz", http.StatusInternalServerError)
+		return
+	}
+	if session == nil {
+		http.Error(w, "quiz session not found", http.StatusNotFound)
+		return
+	}
+	if session.Status != "active" {
+		http.Error(w, "quiz session is not active", http.StatusConflict)
+		return
+	}
+	now := time.Now().UTC()
+	if now.After(session.ExpiresAt) {
+		if err := h.contentStore.ExpireQuizSession(r.Context(), session.ID); err != nil {
+			log.Printf("quiz expire session %d: %v", session.ID, err)
+		}
+		http.Error(w, "quiz session expired", http.StatusGone)
+		return
+	}
+
+	current, err := h.contentStore.CurrentQuizSessionQuestion(r.Context(), session.ID)
+	if err != nil {
+		log.Printf("quiz current question %d: %v", session.ID, err)
+		http.Error(w, "failed to process quiz", http.StatusInternalServerError)
+		return
+	}
+	if current == nil {
+		http.Error(w, "quiz session is complete", http.StatusConflict)
+		return
+	}
+	if current.QuestionID != req.QuestionID {
+		http.Error(w, "question does not match active session", http.StatusConflict)
+		return
+	}
+
+	selected := req.Selected
+	if selected < -1 || selected > 3 {
+		http.Error(w, "invalid answer selection", http.StatusBadRequest)
+		return
+	}
+
+	elapsed := now.Sub(current.PresentedAt)
+	if elapsed < 0 {
+		elapsed = 0
+	}
+	if elapsed > quizSessionTimeout() {
+		selected = -1
+	}
+	isCorrect := selected == current.Answer
+	scoreAwarded := 0
+	if isCorrect {
+		timeLeft := quizTimerSeconds - int(math.Floor(elapsed.Seconds()))
+		if timeLeft < 0 {
+			timeLeft = 0
+		}
+		if timeLeft > quizTimerSeconds {
+			timeLeft = quizTimerSeconds
+		}
+		timeBonus := int(math.Round(float64(timeLeft) / float64(quizTimerSeconds) * float64(quizTimeBonusMax)))
+		scoreAwarded = quizScorePerCorrect + timeBonus
+	}
+
+	if err := h.contentStore.RecordQuizAnswer(r.Context(), session.ID, current.QuestionID, selected, scoreAwarded, isCorrect, now); err != nil {
+		log.Printf("quiz answer %d/%d: %v", session.ID, current.QuestionID, err)
+		http.Error(w, "failed to process quiz", http.StatusInternalServerError)
+		return
+	}
+
+	if current.Position+1 >= session.QuestionCount {
+		h.quizFinishSession(w, r, session, slug, now)
+		return
+	}
+
+	nextQuestion, err := h.contentStore.NextQuizSessionQuestion(r.Context(), session.ID)
+	if err != nil {
+		log.Printf("quiz next question %d: %v", session.ID, err)
+		http.Error(w, "failed to process quiz", http.StatusInternalServerError)
+		return
+	}
+	if nextQuestion == nil {
+		http.Error(w, "next question not found", http.StatusInternalServerError)
+		return
+	}
+
+	writeJSON(w, http.StatusOK, map[string]interface{}{
+		"done":            false,
+		"question_number": nextQuestion.Position + 1,
+		"total_questions": session.QuestionCount,
+		"question": model.QuizQuestionPublic{
+			ID:       nextQuestion.QuestionID,
+			Question: nextQuestion.Question,
+			Options:  nextQuestion.Options,
+		},
+	})
+}
+
+func (h *Handler) QuizLeaderboardAPI(w http.ResponseWriter, r *http.Request) {
+	slug, ok := quizSlugFromAPIPath(r.URL.Path)
+	if !ok {
+		http.NotFound(w, r)
+		return
+	}
 	difficulty := r.URL.Query().Get("difficulty")
 	if difficulty == "" {
 		difficulty = "basic"
@@ -137,144 +270,96 @@ func (h *Handler) QuizLeaderboardAPI(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(leaderboardOut(scores)); err != nil {
-		log.Printf("quiz leaderboard encode: %v", err)
-	}
+	writeJSON(w, http.StatusOK, leaderboardOut(scores))
 }
 
-func (h *Handler) QuizSubmitAPI(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
-		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+func (h *Handler) quizFinishSession(w http.ResponseWriter, r *http.Request, session *model.QuizSession, slug string, now time.Time) {
+	if err := h.contentStore.CompleteQuizSession(r.Context(), session.ID, now); err != nil {
+		log.Printf("quiz complete session %d: %v", session.ID, err)
+		http.Error(w, "failed to save score", http.StatusInternalServerError)
 		return
 	}
 
-	parts := strings.Split(strings.Trim(r.URL.Path, "/"), "/")
-	if len(parts) < 4 {
-		http.NotFound(w, r)
-		return
-	}
-	slug := parts[2]
-
-	var req struct {
-		PlayerName string `json:"player_name"`
-		Difficulty string `json:"difficulty"`
-		Answers    []struct {
-			QuestionID int `json:"question_id"`
-			Selected   int `json:"selected"`
-			TimeLeft   int `json:"time_left"`
-		} `json:"answers"`
-	}
-	r.Body = http.MaxBytesReader(w, r.Body, 8192)
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		http.Error(w, "invalid request", http.StatusBadRequest)
-		return
-	}
-
-	name := strings.TrimSpace(req.PlayerName)
-	if len(name) == 0 || len(name) > 30 {
-		http.Error(w, "player name must be 1-30 characters", http.StatusBadRequest)
-		return
-	}
-	if req.Difficulty != "basic" && req.Difficulty != "intermediate" && req.Difficulty != "advanced" {
-		http.Error(w, "invalid difficulty", http.StatusBadRequest)
-		return
-	}
-	maxQ := quizQuestionsPerDifficulty[req.Difficulty]
-	if len(req.Answers) == 0 || len(req.Answers) > maxQ {
-		http.Error(w, "invalid number of answers", http.StatusBadRequest)
-		return
-	}
-
-	// Deduplicate by question ID (take first occurrence)
-	seen := make(map[int]bool, len(req.Answers))
-	answers := req.Answers[:0]
-	for _, a := range req.Answers {
-		if !seen[a.QuestionID] {
-			seen[a.QuestionID] = true
-			answers = append(answers, a)
-		}
-	}
-
-	answerKeys, err := h.contentStore.QuizAnswerKeys(r.Context(), slug, req.Difficulty)
+	results, err := h.contentStore.QuizSessionResults(r.Context(), session.ID)
 	if err != nil {
-		log.Printf("quiz submit answer keys %s/%s: %v", slug, req.Difficulty, err)
-		http.Error(w, "failed to process quiz", http.StatusInternalServerError)
+		log.Printf("quiz session results %d: %v", session.ID, err)
+		http.Error(w, "failed to load results", http.StatusInternalServerError)
 		return
 	}
 
-	type resultOut struct {
-		QuestionID   int    `json:"question_id"`
-		Correct      bool   `json:"correct"`
-		CorrectIndex int    `json:"correct_index"`
-		Explanation  string `json:"explanation"`
-	}
-
-	var score, correct int
-	results := make([]resultOut, 0, len(answers))
-
-	for _, ans := range answers {
-		key, ok := answerKeys[ans.QuestionID]
-		if !ok {
-			continue
-		}
-		timeLeft := ans.TimeLeft
-		if timeLeft < 0 {
-			timeLeft = 0
-		}
-		if timeLeft > quizTimerSeconds {
-			timeLeft = quizTimerSeconds
-		}
-		isCorrect := ans.Selected == key.CorrectIndex
-		if isCorrect {
+	var score int
+	var correct int
+	resultOut := make([]map[string]interface{}, 0, len(results))
+	for _, result := range results {
+		score += result.ScoreAwarded
+		if result.IsCorrect != nil && *result.IsCorrect {
 			correct++
-			timeBonus := int(math.Round(float64(timeLeft) / float64(quizTimerSeconds) * float64(quizTimeBonusMax)))
-			score += quizScorePerCorrect + timeBonus
 		}
-		results = append(results, resultOut{
-			QuestionID:   ans.QuestionID,
-			Correct:      isCorrect,
-			CorrectIndex: key.CorrectIndex,
-			Explanation:  key.Explanation,
+		selected := -1
+		if result.SelectedIndex != nil {
+			selected = *result.SelectedIndex
+		}
+		resultOut = append(resultOut, map[string]interface{}{
+			"question_id":   result.QuestionID,
+			"question":      result.Question,
+			"options":       result.Options,
+			"selected":      selected,
+			"correct":       result.IsCorrect != nil && *result.IsCorrect,
+			"correct_index": result.Answer,
+			"explanation":   result.Explanation,
+			"score_awarded": result.ScoreAwarded,
 		})
 	}
-	total := len(results)
 
 	if err := h.contentStore.SaveQuizScore(r.Context(), model.QuizScore{
 		CategorySlug: slug,
-		PlayerName:   name,
+		PlayerName:   session.PlayerName,
 		Score:        score,
 		CorrectCount: correct,
-		TotalCount:   total,
-		Difficulty:   req.Difficulty,
+		TotalCount:   len(results),
+		Difficulty:   session.Difficulty,
 	}); err != nil {
 		log.Printf("quiz submit save score %s: %v", slug, err)
 		http.Error(w, "failed to save score", http.StatusInternalServerError)
 		return
 	}
 
-	leaderboard, err := h.contentStore.QuizLeaderboard(r.Context(), slug, req.Difficulty, quizLeaderboardLimit)
+	leaderboard, err := h.contentStore.QuizLeaderboard(r.Context(), slug, session.Difficulty, quizLeaderboardLimit)
 	if err != nil {
-		log.Printf("quiz submit leaderboard %s/%s: %v", slug, req.Difficulty, err)
+		log.Printf("quiz submit leaderboard %s/%s: %v", slug, session.Difficulty, err)
 	}
 
-	resp := struct {
-		Score       int         `json:"score"`
-		Correct     int         `json:"correct"`
-		Total       int         `json:"total"`
-		Results     []resultOut `json:"results"`
-		Leaderboard interface{} `json:"leaderboard"`
-	}{
-		Score:       score,
-		Correct:     correct,
-		Total:       total,
-		Results:     results,
-		Leaderboard: leaderboardOut(leaderboard),
-	}
+	writeJSON(w, http.StatusOK, map[string]interface{}{
+		"done":        true,
+		"score":       score,
+		"correct":     correct,
+		"total":       len(results),
+		"results":     resultOut,
+		"leaderboard": leaderboardOut(leaderboard),
+	})
+}
 
+func quizSlugFromAPIPath(path string) (string, bool) {
+	parts := strings.Split(strings.Trim(path, "/"), "/")
+	if len(parts) < 4 || parts[0] != "api" || parts[1] != "quiz" {
+		return "", false
+	}
+	return parts[2], true
+}
+
+func validQuizDifficulty(difficulty string) bool {
+	return difficulty == "basic" || difficulty == "intermediate" || difficulty == "advanced"
+}
+
+func quizSessionTimeout() time.Duration {
+	return time.Duration(quizTimerSeconds) * time.Second
+}
+
+func writeJSON(w http.ResponseWriter, status int, v interface{}) {
 	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(resp); err != nil {
-		log.Printf("quiz submit encode: %v", err)
+	w.WriteHeader(status)
+	if err := json.NewEncoder(w).Encode(v); err != nil {
+		log.Printf("write json: %v", err)
 	}
 }
 

@@ -101,7 +101,7 @@
     <!-- Header bar -->
     <div class="flex items-center justify-between mb-5">
       <div class="text-sm text-slate-500 dark:text-slate-400">
-        Soal <span class="font-semibold text-slate-700 dark:text-slate-200" x-text="currentIndex + 1"></span> / <span x-text="questions.length"></span>
+        Soal <span class="font-semibold text-slate-700 dark:text-slate-200" x-text="currentIndex + 1"></span> / <span x-text="totalQuestions"></span>
       </div>
       <div class="flex items-center gap-3">
         <span class="text-sm font-medium text-slate-400 dark:text-slate-500" x-text="answeredCount() + ' dijawab'"></span>
@@ -118,7 +118,7 @@
     <!-- Progress bar -->
     <div class="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full mb-6 overflow-hidden">
       <div class="h-full bg-[#0E5C73] rounded-full transition-all duration-300"
-        :style="'width: ' + ((currentIndex) / questions.length * 100) + '%'"
+        :style="'width: ' + (totalQuestions > 0 ? ((currentIndex) / totalQuestions * 100) : 0) + '%'"
       ></div>
     </div>
 
@@ -150,7 +150,7 @@
       <button
         @click="nextQuestion()"
         class="px-8 py-3 rounded-xl bg-[#0E5C73] hover:bg-[#0c4f63] text-white font-semibold transition-colors"
-        x-text="currentIndex + 1 < questions.length ? 'Soal Berikutnya' : 'Selesai'"
+        x-text="currentIndex + 1 < totalQuestions ? 'Soal Berikutnya' : 'Selesai'"
       ></button>
     </div>
   </div>
@@ -248,14 +248,15 @@ function quizApp(categorySlug) {
   return {
     categorySlug,
     state: 'idle',
+    sessionToken: '',
     playerName: '',
     difficulty: 'basic',
-    questions: [],
+    activeQuestion: null,
     currentIndex: 0,
     selectedAnswer: null,
     timeLeft: TIMER,
     timerInterval: null,
-    answers: [],
+    totalQuestions: 0,
     score: 0,
     correctCount: 0,
     totalCount: 0,
@@ -276,19 +277,31 @@ function quizApp(categorySlug) {
     async startQuiz() {
       if (this.playerName.trim().length === 0) return;
       this.state = 'loading';
-      this.questions = [];
+      this.sessionToken = '';
+      this.activeQuestion = null;
       this.currentIndex = 0;
-      this.answers = [];
       this.results = [];
+      this.totalQuestions = 0;
       this.score = 0;
       this.correctCount = 0;
       this.totalCount = 0;
 
       try {
-        const res = await fetch(`/api/quiz/${this.categorySlug}/questions?difficulty=${this.difficulty}`);
+        const res = await fetch(`/api/quiz/${this.categorySlug}/start`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            player_name: this.playerName.trim(),
+            difficulty: this.difficulty,
+          }),
+        });
         if (!res.ok) throw new Error('fetch failed');
-        this.questions = await res.json();
-        if (this.questions.length === 0) throw new Error('no questions');
+        const data = await res.json();
+        this.sessionToken = data.session_token || '';
+        this.totalQuestions = data.total_questions || 0;
+        this.activeQuestion = data.question || null;
+        this.currentIndex = (data.question_number || 1) - 1;
+        if (!this.sessionToken || !this.activeQuestion || this.totalQuestions === 0) throw new Error('invalid session');
         this.state = 'playing';
         this.startTimer();
       } catch (_) {
@@ -298,11 +311,11 @@ function quizApp(categorySlug) {
     },
 
     currentQuestion() {
-      return this.questions[this.currentIndex] || {};
+      return this.activeQuestion || {};
     },
 
     answeredCount() {
-      return this.answers.length;
+      return Math.min(this.currentIndex, this.totalQuestions);
     },
 
     startTimer() {
@@ -320,8 +333,6 @@ function quizApp(categorySlug) {
     },
 
     handleTimeout() {
-      const q = this.currentQuestion();
-      this.answers.push({ question_id: q.id, selected: -1, time_left: 0 });
       this.selectedAnswer = -1;
       this.state = 'answered';
     },
@@ -329,64 +340,58 @@ function quizApp(categorySlug) {
     selectAnswer(idx) {
       if (this.state !== 'playing') return;
       clearInterval(this.timerInterval);
-      const q = this.currentQuestion();
-      this.answers.push({ question_id: q.id, selected: idx, time_left: this.timeLeft });
       this.selectedAnswer = idx;
       this.state = 'answered';
     },
 
-    nextQuestion() {
-      if (this.currentIndex + 1 < this.questions.length) {
-        this.currentIndex++;
-        this.state = 'playing';
-        this.startTimer();
-      } else {
-        clearInterval(this.timerInterval);
-        this.submitQuiz();
-      }
-    },
-
-    async submitQuiz() {
+    async nextQuestion() {
+      if (!this.activeQuestion || !this.sessionToken) return;
       this.state = 'submitting';
       try {
-        const res = await fetch(`/api/quiz/${this.categorySlug}/submit`, {
+        const res = await fetch(`/api/quiz/${this.categorySlug}/answer`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            player_name: this.playerName.trim(),
-            difficulty: this.difficulty,
-            answers: this.answers,
+            session_token: this.sessionToken,
+            question_id: this.activeQuestion.id,
+            selected: this.selectedAnswer ?? -1,
           }),
         });
         if (!res.ok) throw new Error('submit failed');
         const data = await res.json();
-        this.score = data.score;
-        this.correctCount = data.correct;
-        this.totalCount = data.total;
-        this.results = data.results || [];
-        this.leaderboard = data.leaderboard || [];
-        this.state = 'finished';
+        if (data.done) {
+          this.score = data.score || 0;
+          this.correctCount = data.correct || 0;
+          this.totalCount = data.total || 0;
+          this.results = data.results || [];
+          this.leaderboard = data.leaderboard || [];
+          this.activeQuestion = null;
+          this.state = 'finished';
+          return;
+        }
+
+        this.activeQuestion = data.question || null;
+        this.currentIndex = (data.question_number || 1) - 1;
+        if (!this.activeQuestion) throw new Error('missing next question');
+        this.state = 'playing';
+        this.startTimer();
       } catch (_) {
         this.state = 'finished';
         this.score = 0;
         this.correctCount = 0;
-        this.totalCount = this.answers.length;
+        this.totalCount = this.totalQuestions;
       }
     },
 
     reviewItems() {
-      return this.questions.map(q => {
-        const ans = this.answers.find(a => a.question_id === q.id) || { selected: -1 };
-        const res = this.results.find(r => r.question_id === q.id) || { correct: false, correct_index: -1, explanation: '' };
-        return {
-          question: q.question,
-          options: q.options,
-          selected: ans.selected,
-          correct: res.correct,
-          correctIndex: res.correct_index,
-          explanation: res.explanation,
-        };
-      });
+      return this.results.map(item => ({
+        question: item.question,
+        options: item.options,
+        selected: item.selected,
+        correct: item.correct,
+        correctIndex: item.correct_index,
+        explanation: item.explanation,
+      }));
     },
 
     optionClass(idx) {
@@ -402,10 +407,11 @@ function quizApp(categorySlug) {
     restart() {
       clearInterval(this.timerInterval);
       this.state = 'idle';
-      this.questions = [];
+      this.sessionToken = '';
+      this.activeQuestion = null;
       this.currentIndex = 0;
-      this.answers = [];
       this.results = [];
+      this.totalQuestions = 0;
       this.score = 0;
       this.correctCount = 0;
       this.totalCount = 0;
