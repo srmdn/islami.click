@@ -41,7 +41,7 @@ go build -o islami.click ./cmd/server
 
 **`/quran`** — Quran reader with per-surah browsing, Madinah mushaf pagination, smart search, and audio recitation.
 
-**`/quiz`** — Quiz Islami: 8 categories (Aqidah, Al-Qur'an, Hadits, Sirah, Fiqh, Sejarah Islam, Akhlak, Doa), 3 difficulty levels (Basic 10 q, Intermediate/Advanced 15 q each), 30-second timer per question, time-bonus scoring (10 pts correct + up to 10 pts speed bonus), answer explanations, and a shared SQLite leaderboard per category and difficulty.
+**`/quiz`** — Quiz Islami: 8 categories (Aqidah, Rukun Islam, Al-Qur'an, Hadits, Sirah, Fiqh, Sejarah Islam, Akhlak), 3 difficulty levels (Basic 10 q, Intermediate/Advanced 15 q each), 30-second timer per question, time-bonus scoring (10 pts correct + up to 10 pts speed bonus), answer explanations, and a shared SQLite leaderboard per category and difficulty.
 
 ## Quran detail
 
