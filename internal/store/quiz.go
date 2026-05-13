@@ -208,14 +208,14 @@ func (s *Store) QuizAnswerKeys(ctx context.Context, categorySlug, difficulty str
 	return keys, rows.Err()
 }
 
-func (s *Store) QuizLeaderboard(ctx context.Context, categorySlug, difficulty string, limit int) ([]model.QuizScore, error) {
+func (s *Store) QuizLeaderboard(ctx context.Context, categorySlug, difficulty, leaderboardMonth string, limit int) ([]model.QuizScore, error) {
 	rows, err := s.db.QueryContext(ctx,
-		`SELECT id, player_name, score, correct_count, total_count, difficulty, played_at
+		`SELECT id, player_name, score, correct_count, total_count, difficulty, leaderboard_month, played_at
 		 FROM quiz_scores
-		 WHERE category_slug = ? AND difficulty = ?
+		 WHERE category_slug = ? AND difficulty = ? AND leaderboard_month = ?
 		 ORDER BY score DESC, played_at ASC
 		 LIMIT ?`,
-		categorySlug, difficulty, limit,
+		categorySlug, difficulty, leaderboardMonth, limit,
 	)
 	if err != nil {
 		return nil, fmt.Errorf("quiz leaderboard: %w", err)
@@ -225,7 +225,7 @@ func (s *Store) QuizLeaderboard(ctx context.Context, categorySlug, difficulty st
 	var scores []model.QuizScore
 	for rows.Next() {
 		var sc model.QuizScore
-		if err := rows.Scan(&sc.ID, &sc.PlayerName, &sc.Score, &sc.CorrectCount, &sc.TotalCount, &sc.Difficulty, &sc.PlayedAt); err != nil {
+		if err := rows.Scan(&sc.ID, &sc.PlayerName, &sc.Score, &sc.CorrectCount, &sc.TotalCount, &sc.Difficulty, &sc.PlayedMonth, &sc.PlayedAt); err != nil {
 			return nil, fmt.Errorf("scan quiz score: %w", err)
 		}
 		sc.CategorySlug = categorySlug
@@ -234,11 +234,35 @@ func (s *Store) QuizLeaderboard(ctx context.Context, categorySlug, difficulty st
 	return scores, rows.Err()
 }
 
+func (s *Store) QuizLeaderboardMonths(ctx context.Context, categorySlug, difficulty string) ([]string, error) {
+	rows, err := s.db.QueryContext(ctx,
+		`SELECT DISTINCT leaderboard_month
+		 FROM quiz_scores
+		 WHERE category_slug = ? AND difficulty = ? AND leaderboard_month <> ''
+		 ORDER BY leaderboard_month DESC`,
+		categorySlug, difficulty,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("quiz leaderboard months: %w", err)
+	}
+	defer rows.Close()
+
+	var months []string
+	for rows.Next() {
+		var month string
+		if err := rows.Scan(&month); err != nil {
+			return nil, fmt.Errorf("scan quiz leaderboard month: %w", err)
+		}
+		months = append(months, month)
+	}
+	return months, rows.Err()
+}
+
 func (s *Store) SaveQuizScore(ctx context.Context, sc model.QuizScore) error {
 	_, err := s.db.ExecContext(ctx,
-		`INSERT INTO quiz_scores (category_slug, player_name, score, correct_count, total_count, difficulty)
-		 VALUES (?, ?, ?, ?, ?, ?)`,
-		sc.CategorySlug, sc.PlayerName, sc.Score, sc.CorrectCount, sc.TotalCount, sc.Difficulty,
+		`INSERT INTO quiz_scores (category_slug, player_name, score, correct_count, total_count, difficulty, leaderboard_month)
+		 VALUES (?, ?, ?, ?, ?, ?, ?)`,
+		sc.CategorySlug, sc.PlayerName, sc.Score, sc.CorrectCount, sc.TotalCount, sc.Difficulty, sc.PlayedMonth,
 	)
 	if err != nil {
 		return fmt.Errorf("save quiz score: %w", err)

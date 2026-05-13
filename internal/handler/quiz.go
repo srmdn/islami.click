@@ -24,6 +24,14 @@ var quizQuestionsPerDifficulty = map[string]int{
 	"advanced":     15,
 }
 
+var quizLeaderboardLocation = func() *time.Location {
+	loc, err := time.LoadLocation("Asia/Jakarta")
+	if err != nil {
+		return time.FixedZone("WIB", 7*60*60)
+	}
+	return loc
+}()
+
 func (h *Handler) QuizHome(w http.ResponseWriter, r *http.Request) {
 	cats, err := h.contentStore.QuizCategories(r.Context())
 	if err != nil {
@@ -262,15 +270,44 @@ func (h *Handler) QuizLeaderboardAPI(w http.ResponseWriter, r *http.Request) {
 	if difficulty == "" {
 		difficulty = "basic"
 	}
+	if !validQuizDifficulty(difficulty) {
+		http.Error(w, "invalid difficulty", http.StatusBadRequest)
+		return
+	}
+	currentMonth := quizLeaderboardMonth(time.Now())
+	selectedMonth := r.URL.Query().Get("month")
+	if selectedMonth == "" {
+		selectedMonth = currentMonth
+	}
+	if !validQuizLeaderboardMonth(selectedMonth) {
+		http.Error(w, "invalid month", http.StatusBadRequest)
+		return
+	}
 
-	scores, err := h.contentStore.QuizLeaderboard(r.Context(), slug, difficulty, quizLeaderboardLimit)
+	months, err := h.contentStore.QuizLeaderboardMonths(r.Context(), slug, difficulty)
 	if err != nil {
-		log.Printf("quiz leaderboard api %s/%s: %v", slug, difficulty, err)
+		log.Printf("quiz leaderboard months %s/%s: %v", slug, difficulty, err)
+		http.Error(w, "Failed to load leaderboard", http.StatusInternalServerError)
+		return
+	}
+	months = normalizeQuizLeaderboardMonths(months, currentMonth)
+	if selectedMonth != currentMonth && !containsQuizMonth(months, selectedMonth) {
+		selectedMonth = currentMonth
+	}
+
+	scores, err := h.contentStore.QuizLeaderboard(r.Context(), slug, difficulty, selectedMonth, quizLeaderboardLimit)
+	if err != nil {
+		log.Printf("quiz leaderboard api %s/%s/%s: %v", slug, difficulty, selectedMonth, err)
 		http.Error(w, "Failed to load leaderboard", http.StatusInternalServerError)
 		return
 	}
 
-	writeJSON(w, http.StatusOK, leaderboardOut(scores))
+	writeJSON(w, http.StatusOK, map[string]interface{}{
+		"scores":           leaderboardOut(scores),
+		"available_months": months,
+		"selected_month":   selectedMonth,
+		"current_month":    currentMonth,
+	})
 }
 
 func (h *Handler) quizFinishSession(w http.ResponseWriter, r *http.Request, session *model.QuizSession, slug string, now time.Time) {
@@ -318,13 +355,14 @@ func (h *Handler) quizFinishSession(w http.ResponseWriter, r *http.Request, sess
 		CorrectCount: correct,
 		TotalCount:   len(results),
 		Difficulty:   session.Difficulty,
+		PlayedMonth:  quizLeaderboardMonth(now),
 	}); err != nil {
 		log.Printf("quiz submit save score %s: %v", slug, err)
 		http.Error(w, "failed to save score", http.StatusInternalServerError)
 		return
 	}
 
-	leaderboard, err := h.contentStore.QuizLeaderboard(r.Context(), slug, session.Difficulty, quizLeaderboardLimit)
+	leaderboard, err := h.contentStore.QuizLeaderboard(r.Context(), slug, session.Difficulty, quizLeaderboardMonth(now), quizLeaderboardLimit)
 	if err != nil {
 		log.Printf("quiz submit leaderboard %s/%s: %v", slug, session.Difficulty, err)
 	}
@@ -353,6 +391,42 @@ func validQuizDifficulty(difficulty string) bool {
 
 func quizSessionTimeout() time.Duration {
 	return time.Duration(quizTimerSeconds) * time.Second
+}
+
+func quizLeaderboardMonth(now time.Time) string {
+	return now.In(quizLeaderboardLocation).Format("2006-01")
+}
+
+func validQuizLeaderboardMonth(v string) bool {
+	if len(v) != 7 || v[4] != '-' {
+		return false
+	}
+	for i, r := range v {
+		if i == 4 {
+			continue
+		}
+		if r < '0' || r > '9' {
+			return false
+		}
+	}
+	month := v[5:]
+	return month >= "01" && month <= "12"
+}
+
+func normalizeQuizLeaderboardMonths(months []string, currentMonth string) []string {
+	if containsQuizMonth(months, currentMonth) {
+		return months
+	}
+	return append([]string{currentMonth}, months...)
+}
+
+func containsQuizMonth(months []string, target string) bool {
+	for _, month := range months {
+		if month == target {
+			return true
+		}
+	}
+	return false
 }
 
 func writeJSON(w http.ResponseWriter, status int, v interface{}) {

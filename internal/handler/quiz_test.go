@@ -8,8 +8,10 @@ import (
 	"net/http/httptest"
 	"path/filepath"
 	"testing"
+	"time"
 
 	islamiclick "github.com/srmdn/islami.click"
+	"github.com/srmdn/islami.click/internal/model"
 	"github.com/srmdn/islami.click/internal/store"
 )
 
@@ -171,5 +173,78 @@ func TestQuizAPIRejectsForgedQuestionID(t *testing.T) {
 	h.QuizAnswerAPI(answerRec, answerReq)
 	if answerRec.Code != http.StatusConflict {
 		t.Fatalf("forged answer status = %d, want %d, body = %s", answerRec.Code, http.StatusConflict, answerRec.Body.String())
+	}
+}
+
+func TestQuizLeaderboardAPIArchiveMonth(t *testing.T) {
+	ctx := context.Background()
+	dbPath := filepath.Join(t.TempDir(), "quiz.db")
+
+	contentStore, err := store.Open(ctx, dbPath, islamiclick.MigrationFS, islamiclick.ContentFS)
+	if err != nil {
+		t.Fatalf("open store: %v", err)
+	}
+	defer contentStore.Close()
+
+	currentMonth := quizLeaderboardMonth(time.Now())
+	oldMonth := "2026-04"
+	if currentMonth == oldMonth {
+		oldMonth = "2026-03"
+	}
+
+	if err := contentStore.SaveQuizScore(ctx, model.QuizScore{
+		CategorySlug: "aqidah",
+		PlayerName:   "Arsip",
+		Score:        120,
+		CorrectCount: 8,
+		TotalCount:   10,
+		Difficulty:   "basic",
+		PlayedMonth:  oldMonth,
+	}); err != nil {
+		t.Fatalf("save archive score: %v", err)
+	}
+	if err := contentStore.SaveQuizScore(ctx, model.QuizScore{
+		CategorySlug: "aqidah",
+		PlayerName:   "BulanIni",
+		Score:        130,
+		CorrectCount: 9,
+		TotalCount:   10,
+		Difficulty:   "basic",
+		PlayedMonth:  currentMonth,
+	}); err != nil {
+		t.Fatalf("save current score: %v", err)
+	}
+
+	h := New(nil, nil, contentStore)
+	req := httptest.NewRequest(http.MethodGet, "/api/quiz/aqidah/leaderboard?difficulty=basic&month="+oldMonth, nil)
+	rec := httptest.NewRecorder()
+	h.QuizLeaderboardAPI(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("leaderboard status = %d, body = %s", rec.Code, rec.Body.String())
+	}
+
+	var resp struct {
+		Scores          []map[string]interface{} `json:"scores"`
+		AvailableMonths []string                 `json:"available_months"`
+		SelectedMonth   string                   `json:"selected_month"`
+		CurrentMonth    string                   `json:"current_month"`
+	}
+	if err := json.Unmarshal(rec.Body.Bytes(), &resp); err != nil {
+		t.Fatalf("decode leaderboard response: %v", err)
+	}
+	if resp.SelectedMonth != oldMonth {
+		t.Fatalf("selected month = %q, want %q", resp.SelectedMonth, oldMonth)
+	}
+	if resp.CurrentMonth != currentMonth {
+		t.Fatalf("current month = %q, want %q", resp.CurrentMonth, currentMonth)
+	}
+	if len(resp.Scores) != 1 {
+		t.Fatalf("scores count = %d, want 1", len(resp.Scores))
+	}
+	if resp.Scores[0]["player_name"] != "Arsip" {
+		t.Fatalf("archive player = %v, want Arsip", resp.Scores[0]["player_name"])
+	}
+	if len(resp.AvailableMonths) < 2 {
+		t.Fatalf("available months count = %d, want at least 2", len(resp.AvailableMonths))
 	}
 }

@@ -27,6 +27,7 @@ type QuizScore struct {
 	CorrectCount int
 	TotalCount   int
 	Difficulty   string
+	PlayedMonth  string
 	PlayedAt     string
 }
 
