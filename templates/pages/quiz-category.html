@@ -35,27 +35,30 @@
         <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Tingkat Kesulitan</label>
         <div class="grid grid-cols-3 gap-3">
           <button
-            @click="difficulty = 'basic'"
+            @click="difficulty = 'basic'; loadLeaderboard()"
+            :disabled="leaderboardLoading"
             :class="difficulty === 'basic' ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400' : 'border-slate-200/80 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/30 text-slate-600 dark:text-slate-300 hover:border-emerald-400'"
-            class="flex flex-col items-center gap-1 px-3 py-3 rounded-xl border-2 transition-all text-sm font-medium cursor-pointer"
+            class="flex flex-col items-center gap-1 px-3 py-3 rounded-xl border-2 transition-all text-sm font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <span class="text-lg">🟢</span>
             <span>Basic</span>
             <span class="text-xs opacity-70">10 soal</span>
           </button>
           <button
-            @click="difficulty = 'intermediate'"
+            @click="difficulty = 'intermediate'; loadLeaderboard()"
+            :disabled="leaderboardLoading"
             :class="difficulty === 'intermediate' ? 'border-amber-500 bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400' : 'border-slate-200/80 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/30 text-slate-600 dark:text-slate-300 hover:border-amber-400'"
-            class="flex flex-col items-center gap-1 px-3 py-3 rounded-xl border-2 transition-all text-sm font-medium cursor-pointer"
+            class="flex flex-col items-center gap-1 px-3 py-3 rounded-xl border-2 transition-all text-sm font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <span class="text-lg">🟡</span>
             <span>Intermediate</span>
             <span class="text-xs opacity-70">15 soal</span>
           </button>
           <button
-            @click="difficulty = 'advanced'"
+            @click="difficulty = 'advanced'; loadLeaderboard()"
+            :disabled="leaderboardLoading"
             :class="difficulty === 'advanced' ? 'border-red-500 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400' : 'border-slate-200/80 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/30 text-slate-600 dark:text-slate-300 hover:border-red-400'"
-            class="flex flex-col items-center gap-1 px-3 py-3 rounded-xl border-2 transition-all text-sm font-medium cursor-pointer"
+            class="flex flex-col items-center gap-1 px-3 py-3 rounded-xl border-2 transition-all text-sm font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <span class="text-lg">🔴</span>
             <span>Advanced</span>
@@ -74,8 +77,11 @@
     </div>
 
     <!-- Leaderboard preview on idle -->
-    <div class="mt-8" x-show="leaderboard.length > 0">
-      <h2 class="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-3 uppercase tracking-wide">Leaderboard — <span x-text="difficultyLabel()"></span></h2>
+    <div class="mt-8" x-show="leaderboard.length > 0 || leaderboardLoading">
+      <h2 class="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-3 uppercase tracking-wide">
+        Leaderboard — <span x-text="difficultyLabel()"></span>
+        <span x-show="leaderboardLoading" class="ml-2 text-xs font-normal normal-case tracking-normal text-slate-400">Memuat...</span>
+      </h2>
       <div class="rounded-2xl border border-slate-200/80 dark:border-slate-700/50 overflow-hidden">
         <template x-for="(sc, i) in leaderboard" :key="sc.rank">
           <div class="flex items-center gap-3 px-4 py-3 border-b border-slate-200 dark:border-slate-700/50 last:border-0">
@@ -262,16 +268,33 @@ function quizApp(categorySlug) {
     totalCount: 0,
     results: [],
     leaderboard: [],
+    leaderboardLoading: false,
+    leaderboardLoadingUntil: 0,
+    leaderboardRequestId: 0,
 
     init() {
       this.loadLeaderboard();
     },
 
     async loadLeaderboard() {
+      const requestId = ++this.leaderboardRequestId;
+      const difficulty = this.difficulty;
       try {
-        const res = await fetch(`/api/quiz/${this.categorySlug}/leaderboard?difficulty=${this.difficulty}`);
-        if (res.ok) this.leaderboard = await res.json();
+        this.leaderboardLoading = true;
+        this.leaderboardLoadingUntil = Date.now() + 400;
+        const res = await fetch(`/api/quiz/${this.categorySlug}/leaderboard?difficulty=${difficulty}`);
+        if (requestId === this.leaderboardRequestId && res.ok && difficulty === this.difficulty) {
+          this.leaderboard = await res.json();
+        }
       } catch (_) {}
+      finally {
+        const delay = Math.max(0, this.leaderboardLoadingUntil - Date.now());
+        setTimeout(() => {
+          if (requestId === this.leaderboardRequestId) {
+            this.leaderboardLoading = false;
+          }
+        }, delay);
+      }
     },
 
     async startQuiz() {
@@ -367,6 +390,7 @@ function quizApp(categorySlug) {
           this.leaderboard = data.leaderboard || [];
           this.activeQuestion = null;
           this.state = 'finished';
+          this.loadLeaderboard();
           return;
         }
 
