@@ -319,7 +319,7 @@
                 <span x-text="shareCopied ? 'Tersalin' : 'Salin Hasil'"></span>
               </button>
               <button
-                x-show="navigator.share"
+                x-show="canNativeShare()"
                 @click="nativeShare()"
                 :disabled="shareBusy"
                 class="py-3.5 rounded-[1.35rem] border border-[#D9C892] dark:border-[#B99845] bg-[#F8F0D8] dark:bg-[#322A18] text-[#7A621F] dark:text-[#F0D77E] font-semibold text-sm hover:bg-[#F4E8C2] dark:hover:bg-[#3D321C] focus:outline-none focus:ring-2 focus:ring-[#C9A84C]/30 transition-colors disabled:opacity-50"
@@ -569,6 +569,12 @@ function quizApp(categorySlug) {
       return this.$refs.shareDialog || null;
     },
 
+    canNativeShare() {
+      return typeof window !== 'undefined' &&
+        window.navigator &&
+        typeof window.navigator.share === 'function';
+    },
+
     openShare(event) {
       const dialog = this.shareDialogEl();
       if (!dialog) return;
@@ -626,10 +632,10 @@ function quizApp(categorySlug) {
     },
 
     async nativeShare() {
-      if (!navigator.share) return;
+      if (!this.canNativeShare()) return;
       this.shareBusy = true;
       try {
-        await navigator.share({
+        await window.navigator.share.call(window.navigator, {
           title: `Quiz ${'{{.Category.Label}}'}`,
           text: this.shareText(),
           url: this.shareUrl(),
