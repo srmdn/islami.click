@@ -5,11 +5,11 @@ After=network.target
 [Service]
 Type=simple
 User=www-data
-WorkingDirectory=/var/www/islami.click
-ExecStart=/var/www/islami.click/islami.click
+WorkingDirectory=/opt/YOUR_APP_DIR
+ExecStart=/opt/YOUR_APP_DIR/islami.click
 Restart=on-failure
 Environment=PORT=8080
-Environment=DB_PATH=/var/www/islami.click/data/islami.db
+Environment=DB_PATH=/opt/YOUR_APP_DIR/data/islami.db
 
 [Install]
 WantedBy=multi-user.target
