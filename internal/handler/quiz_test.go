@@ -89,6 +89,9 @@ func TestQuizAPIServerManagedSessionFlow(t *testing.T) {
 				Score   int  `json:"score"`
 				Correct int  `json:"correct"`
 				Total   int  `json:"total"`
+				Results []struct {
+					ScoreAwarded int `json:"score_awarded"`
+				} `json:"results"`
 			}
 			if err := json.Unmarshal(answerRec.Body.Bytes(), &finishResp); err != nil {
 				t.Fatalf("decode finish response: %v", err)
@@ -104,6 +107,14 @@ func TestQuizAPIServerManagedSessionFlow(t *testing.T) {
 			}
 			if finishResp.Score < startResp.TotalQuestions*quizScorePerCorrect {
 				t.Fatalf("finish score = %d, want at least %d", finishResp.Score, startResp.TotalQuestions*quizScorePerCorrect)
+			}
+			if len(finishResp.Results) != startResp.TotalQuestions {
+				t.Fatalf("finish results = %d, want %d", len(finishResp.Results), startResp.TotalQuestions)
+			}
+			for idx, result := range finishResp.Results {
+				if result.ScoreAwarded < quizScorePerCorrect || result.ScoreAwarded > quizScorePerCorrect+quizTimeBonusMax {
+					t.Fatalf("result %d score_awarded = %d, want between %d and %d", idx, result.ScoreAwarded, quizScorePerCorrect, quizScorePerCorrect+quizTimeBonusMax)
+				}
 			}
 			break
 		}

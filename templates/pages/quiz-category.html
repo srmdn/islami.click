@@ -78,6 +78,16 @@
 
     <!-- Leaderboard preview on idle -->
     <div class="mt-8" x-show="leaderboardMonths.length > 0 || leaderboard.length > 0 || leaderboardLoading">
+      <div class="mb-4 rounded-xl border border-slate-200/80 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/30 p-4">
+        <h2 class="text-sm font-semibold text-slate-700 dark:text-slate-200">Cara hitung poin</h2>
+        <div class="mt-2 space-y-1.5 text-sm text-slate-500 dark:text-slate-400">
+          <p>Waktu memengaruhi poin. Semakin cepat kamu menjawab dengan benar, semakin besar bonus poin.</p>
+          <p><span class="font-medium text-[#0E5C73] dark:text-[#14B8A6]">Rumus:</span> 10 poin + bonus waktu.</p>
+          <p><span class="font-medium text-[#0E5C73] dark:text-[#14B8A6]">Bonus waktu:</span> dibulatkan dari (sisa detik / 30) x 10.</p>
+          <p><span class="font-medium text-[#0E5C73] dark:text-[#14B8A6]">Jawaban salah atau waktu habis:</span> 0 poin.</p>
+        </div>
+      </div>
+
       <h2 class="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-3 uppercase tracking-wide">
         Leaderboard: <span x-text="difficultyLabel()"></span>
         <span x-show="leaderboardLoading" class="ml-2 text-xs font-normal normal-case tracking-normal text-slate-400">Memuat...</span>
@@ -204,8 +214,22 @@
       </div>
     </div>
 
+    <p class="mb-8 text-center text-xs text-slate-500 dark:text-slate-400">
+      Total poin = 10 poin per jawaban benar + bonus cepat sampai 10 poin per soal.
+    </p>
+
     <!-- Leaderboard -->
     <div x-show="leaderboardMonths.length > 0 || leaderboard.length > 0" class="mb-8">
+      <div class="mb-4 rounded-xl border border-slate-200/80 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/30 p-4 text-left">
+        <h2 class="text-sm font-semibold text-slate-700 dark:text-slate-200">Cara hitung poin</h2>
+        <div class="mt-2 space-y-1.5 text-sm text-slate-500 dark:text-slate-400">
+          <p>Waktu memengaruhi poin. Semakin cepat kamu menjawab dengan benar, semakin besar bonus poin.</p>
+          <p><span class="font-medium text-[#0E5C73] dark:text-[#14B8A6]">Rumus:</span> 10 poin + bonus waktu.</p>
+          <p><span class="font-medium text-[#0E5C73] dark:text-[#14B8A6]">Bonus waktu:</span> dibulatkan dari (sisa detik / 30) x 10.</p>
+          <p><span class="font-medium text-[#0E5C73] dark:text-[#14B8A6]">Jawaban salah atau waktu habis:</span> 0 poin.</p>
+        </div>
+      </div>
+
       <h2 class="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-3 uppercase tracking-wide">Leaderboard: <span x-text="difficultyLabel()"></span></h2>
       <div x-show="leaderboardMonths.length > 0" class="mb-3 flex flex-wrap gap-2">
         <template x-for="month in leaderboardMonths" :key="month">
@@ -243,9 +267,16 @@
           <div class="rounded-2xl border p-4"
             :class="item.correct ? 'border-emerald-200 dark:border-emerald-800 bg-emerald-50/50 dark:bg-emerald-900/10' : 'border-red-200 dark:border-red-800 bg-red-50/50 dark:bg-red-900/10'"
           >
-            <div class="flex items-start gap-2 mb-3">
-              <span class="text-base mt-0.5" x-text="item.correct ? '✅' : '❌'"></span>
-              <p class="text-sm font-medium text-slate-800 dark:text-white leading-snug" x-text="(i+1) + '. ' + item.question"></p>
+            <div class="mb-3 flex items-start justify-between gap-3">
+              <div class="flex items-start gap-2 min-w-0">
+                <span class="text-base mt-0.5" x-text="item.correct ? '✅' : '❌'"></span>
+                <p class="text-sm font-medium text-slate-800 dark:text-white leading-snug" x-text="(i+1) + '. ' + item.question"></p>
+              </div>
+              <span
+                class="shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold"
+                :class="item.correct ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400' : 'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400'"
+                x-text="item.scoreAwarded + ' poin'"
+              ></span>
             </div>
             <div class="space-y-1.5 mb-3 pl-6">
               <template x-for="(opt, idx) in item.options" :key="idx">
@@ -539,6 +570,7 @@ function quizApp(categorySlug) {
         correct: item.correct,
         correctIndex: item.correct_index,
         explanation: item.explanation,
+        scoreAwarded: item.score_awarded || 0,
       }));
     },
 
