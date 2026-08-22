@@ -73,13 +73,23 @@ type aladhanResponse struct {
 }
 
 type Handler struct {
-	tmpls        map[string]*template.Template
-	partialTmpls map[string]*template.Template
-	contentStore *store.Store
+	tmpls                  map[string]*template.Template
+	partialTmpls           map[string]*template.Template
+	contentStore           *store.Store
+	quizStartLimiter       *rateLimiter
+	quizAnswerLimiter      *rateLimiter
+	quizLeaderboardLimiter *rateLimiter
 }
 
 func New(tmpls map[string]*template.Template, partialTmpls map[string]*template.Template, contentStore *store.Store) *Handler {
-	return &Handler{tmpls: tmpls, partialTmpls: partialTmpls, contentStore: contentStore}
+	return &Handler{
+		tmpls:                  tmpls,
+		partialTmpls:           partialTmpls,
+		contentStore:           contentStore,
+		quizStartLimiter:       newRateLimiter(10, time.Minute),
+		quizAnswerLimiter:      newRateLimiter(120, time.Minute),
+		quizLeaderboardLimiter: newRateLimiter(60, time.Minute),
+	}
 }
 
 const siteURL = "https://islami.click"
@@ -112,8 +122,8 @@ type jsonLDBreadcrumbItem struct {
 }
 
 type jsonLDBreadcrumb struct {
-	Context         string                `json:"@context"`
-	Type            string                `json:"@type"`
+	Context         string                 `json:"@context"`
+	Type            string                 `json:"@type"`
 	ItemListElement []jsonLDBreadcrumbItem `json:"itemListElement"`
 }
 
@@ -768,6 +778,7 @@ func (h *Handler) Shalat(w http.ResponseWriter, r *http.Request) {
 
 	resp, err := aladhanClient.Get(apiURL)
 	if err != nil {
+		wib := time.FixedZone("WIB", 7*3600)
 		stale, staleErr := h.contentStore.GetShalatCacheStale(r.Context(), city, 20)
 		if staleErr != nil {
 			log.Printf("stalat stale cache for %s: %v", city, staleErr)
@@ -784,10 +795,10 @@ func (h *Handler) Shalat(w http.ResponseWriter, r *http.Request) {
 				Isya:    stripSeconds(stale.Isha),
 			}
 			page.MasehiDate = fmt.Sprintf("%s, %d %s %d",
-				masehiDaysID[time.Now().Weekday()],
-				time.Now().Day(),
-				masehiMonthsID[time.Now().Month()],
-				time.Now().Year(),
+				masehiDaysID[time.Now().In(wib).Weekday()],
+				time.Now().In(wib).Day(),
+				masehiMonthsID[time.Now().In(wib).Month()],
+				time.Now().In(wib).Year(),
 			)
 			h.render(w, "shalat.html", page)
 			return
@@ -836,7 +847,7 @@ func (h *Handler) Shalat(w http.ResponseWriter, r *http.Request) {
 		Weekday: hijri.Weekday.En,
 	}
 
-	now := time.Now()
+	now := time.Now().In(time.FixedZone("WIB", 7*3600))
 	page.MasehiDate = fmt.Sprintf("%s, %d %s %d",
 		masehiDaysID[now.Weekday()],
 		now.Day(),
@@ -1003,7 +1014,11 @@ func miniDataFromTimings(subuh, dzuhur, ashr, maghrib, isya string) model.Shalat
 
 func stripSeconds(t string) string {
 	// API sometimes returns "HH:MM (timezone)" — take first token
-	t = strings.Fields(t)[0]
+	fields := strings.Fields(t)
+	if len(fields) == 0 {
+		return ""
+	}
+	t = fields[0]
 	parts := strings.Split(t, ":")
 	if len(parts) >= 2 {
 		return parts[0] + ":" + parts[1]
@@ -1012,7 +1027,11 @@ func stripSeconds(t string) string {
 }
 
 func addMinutes(t string, mins int) string {
-	t = strings.Fields(t)[0]
+	fields := strings.Fields(t)
+	if len(fields) == 0 {
+		return ""
+	}
+	t = fields[0]
 	parts := strings.Split(t, ":")
 	if len(parts) < 2 {
 		return t

@@ -8,6 +8,16 @@ User=www-data
 WorkingDirectory=/opt/YOUR_APP_DIR
 ExecStart=/opt/YOUR_APP_DIR/islami.click
 Restart=on-failure
+RestartSec=5s
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectHome=true
+ProtectSystem=full
+ProtectKernelTunables=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+UMask=027
 Environment=PORT=8080
 Environment=DB_PATH=/opt/YOUR_APP_DIR/data/islami.db
 

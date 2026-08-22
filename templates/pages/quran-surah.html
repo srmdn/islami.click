@@ -23,6 +23,8 @@
         <div class="flex items-center gap-4">
             <button
                 @click="playing = !playing; playing ? $refs.audio.play() : $refs.audio.pause()"
+                :aria-label="playing ? 'Jeda murottal Surah ' + {{js .Surah.Name}} : 'Putar murottal Surah ' + {{js .Surah.Name}}"
+                :aria-pressed="playing"
                 class="flex-shrink-0 w-12 h-12 rounded-full bg-[#0E5C73] text-[#FAF7F2] flex items-center justify-center hover:bg-[#0A4A5C] transition-colors"
             >
                 <svg x-show="!playing" class="w-5 h-5 ml-0.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
@@ -52,7 +54,7 @@
     </div>
     {{end}}
 
-    <div class="space-y-8" id="ayahs-container">
+    <div class="space-y-8" id="ayahs-container" aria-live="polite">
         {{range .Ayahs}}
         <div class="group" id="ayah-{{.Number}}">
             <div class="flex items-start gap-4">

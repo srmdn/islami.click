@@ -272,6 +272,12 @@
         "options": ["Memperkuat dan menyebarkan sistem pendidikan Islam", "Mendorong sekularisasi pendidikan, marginalisasi pesantren/madrasah, dan dikotomi ilmu agama vs ilmu umum yang masih berdampak hingga kini", "Tidak ada dampak berarti terhadap pendidikan Islam", "Meningkatkan kualitas madrasah melalui modernisasi"],
         "answer": 1,
         "explanation": "Kolonialisme memperkenalkan sistem pendidikan sekuler yang memarginalisasi institusi pendidikan Islam tradisional, menciptakan dikotomi ilmu 'agama' vs 'umum' yang tidak dikenal dalam tradisi Islam klasik, dan menghasilkan elite Muslim yang tersosialisasi dalam kerangka berpikir Barat."
+      },
+      {
+        "q": "Siapa yang memimpin penaklukan Konstantinopel pada tahun 1453 M?",
+        "options": ["Shalahuddin Al-Ayyubi", "Sultan Muhammad Al-Fatih", "Nuruddin Zanki", "Sultan Abdul Hamid II"],
+        "answer": 1,
+        "explanation": "Konstantinopel ditaklukkan oleh Sultan Muhammad II dari Kesultanan Utsmaniyah, yang kemudian dikenal sebagai Muhammad Al-Fatih, pada tahun 1453 M."
       }
     ]
   }

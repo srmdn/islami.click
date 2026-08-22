@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"html/template"
 	"log"
 	"net/http"
@@ -36,24 +37,11 @@ func main() {
 			result := arabicParenRe.ReplaceAllString(escaped, `<span dir="ltr">(<bdi>$1</bdi>)</span>`)
 			return template.HTML(result)
 		},
-		"js": func(s string) string {
-			var result []byte
-			for i := 0; i < len(s); i++ {
-				c := s[i]
-				if c == '\'' || c == '"' || c == '`' || c == '\\' {
-					result = append(result, '_')
-				} else if c == 0xE2 && i+2 < len(s) && s[i+1] == 0x80 && s[i+2] == 0x99 {
-					result = append(result, '_')
-					i += 2
-				} else if c == 0xE2 && i+2 < len(s) && s[i+1] == 0x80 && s[i+2] == 0x98 {
-					result = append(result, '_')
-					i += 2
-				} else {
-					result = append(result, c)
-				}
-			}
-			return string(result)
+		"js": func(s string) template.JS {
+			encoded, _ := json.Marshal(s)
+			return template.JS(encoded)
 		},
+		"jsonLD": func(s string) template.JS { return template.JS(s) },
 	}
 
 	pages := []string{
@@ -117,13 +105,26 @@ func main() {
 	h := handler.New(tmpls, partialTmpls, contentStore)
 
 	fs := http.Dir("static")
-	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(fs)))
+	staticHandler := http.StripPrefix("/static/", http.FileServer(fs))
+	http.Handle("/static/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if strings.HasSuffix(r.URL.Path, "/") {
+			http.NotFound(w, r)
+			return
+		}
+		staticHandler.ServeHTTP(w, r)
+	}))
 
 	http.HandleFunc("/robots.txt", h.RobotsTxt)
 	http.HandleFunc("/sitemap.xml", h.Sitemap)
 	http.HandleFunc("/llms.txt", h.LLMsTxt)
 
-	http.HandleFunc("/", h.Home)
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/" {
+			http.NotFound(w, r)
+			return
+		}
+		h.Home(w, r)
+	})
 	http.HandleFunc("/almatsurat", h.AlMatsurat)
 	http.HandleFunc("/almatsurat/sugro", h.AlMatsuratSugro)
 	http.HandleFunc("/almatsurat/kubro", h.AlMatsuratKubro)
@@ -154,11 +155,12 @@ func main() {
 	http.HandleFunc("/quiz/", h.QuizCategory)
 
 	srv := &http.Server{
-		Addr:              ":" + port,
+		Addr:              "127.0.0.1:" + port,
 		ReadHeaderTimeout: 5 * time.Second,
 		ReadTimeout:       15 * time.Second,
 		WriteTimeout:      30 * time.Second,
 		IdleTimeout:       60 * time.Second,
+		Handler:           handler.SecurityHeaders(http.DefaultServeMux),
 	}
 	log.Printf("islami.click listening on :%s", port)
 	log.Fatal(srv.ListenAndServe())

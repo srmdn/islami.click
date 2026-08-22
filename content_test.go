@@ -2,6 +2,8 @@ package islamiclick_test
 
 import (
 	"encoding/json"
+	"fmt"
+	iofs "io/fs"
 	"net/url"
 	"regexp"
 	"strings"
@@ -123,5 +125,156 @@ func TestQuranReferencesAreCanonical(t *testing.T) {
 				t.Errorf("%s line %d: non-canonical surah name %q", file, line, name)
 			}
 		}
+	}
+}
+
+func TestQuranContentAndPageMapAreComplete(t *testing.T) {
+	type surahMeta struct {
+		ID          int `json:"id"`
+		TotalVerses int `json:"total_verses"`
+	}
+	type quranFile struct {
+		Number    int `json:"number"`
+		AyahCount int `json:"ayah_count"`
+		Ayahs     []struct {
+			Number int `json:"number"`
+		} `json:"ayahs"`
+	}
+
+	surahData, err := islamiclick.ContentFS.ReadFile("content/quran-surahs.json")
+	if err != nil {
+		t.Fatalf("read quran-surahs.json: %v", err)
+	}
+	var surahs []surahMeta
+	if err := json.Unmarshal(surahData, &surahs); err != nil {
+		t.Fatalf("parse quran-surahs.json: %v", err)
+	}
+	if len(surahs) != 114 {
+		t.Fatalf("surah count = %d, want 114", len(surahs))
+	}
+
+	totalAyahs := 0
+	for _, meta := range surahs {
+		path := fmt.Sprintf("content/quran/%03d.json", meta.ID)
+		data, err := islamiclick.ContentFS.ReadFile(path)
+		if err != nil {
+			t.Fatalf("read %s: %v", path, err)
+		}
+		var detail quranFile
+		if err := json.Unmarshal(data, &detail); err != nil {
+			t.Fatalf("parse %s: %v", path, err)
+		}
+		if detail.Number != meta.ID {
+			t.Errorf("%s number = %d, want %d", path, detail.Number, meta.ID)
+		}
+		if detail.AyahCount != meta.TotalVerses || len(detail.Ayahs) != meta.TotalVerses {
+			t.Errorf("%s ayah count = %d/%d, metadata = %d", path, detail.AyahCount, len(detail.Ayahs), meta.TotalVerses)
+		}
+		totalAyahs += len(detail.Ayahs)
+	}
+	if totalAyahs != 6236 {
+		t.Fatalf("total ayah count = %d, want 6236", totalAyahs)
+	}
+
+	pageData, err := islamiclick.ContentFS.ReadFile("content/quran-pages.json")
+	if err != nil {
+		t.Fatalf("read quran-pages.json: %v", err)
+	}
+	var pages map[string]int
+	if err := json.Unmarshal(pageData, &pages); err != nil {
+		t.Fatalf("parse quran-pages.json: %v", err)
+	}
+	if len(pages) != totalAyahs {
+		t.Fatalf("page map entries = %d, want %d", len(pages), totalAyahs)
+	}
+	for key, page := range pages {
+		if page < 1 || page > 604 {
+			t.Errorf("page map %q = %d, want 1..604", key, page)
+		}
+	}
+	for _, meta := range surahs {
+		path := fmt.Sprintf("content/quran/%03d.json", meta.ID)
+		data, err := islamiclick.ContentFS.ReadFile(path)
+		if err != nil {
+			t.Fatalf("read %s: %v", path, err)
+		}
+		var detail quranFile
+		if err := json.Unmarshal(data, &detail); err != nil {
+			t.Fatalf("parse %s: %v", path, err)
+		}
+		for _, ayah := range detail.Ayahs {
+			key := fmt.Sprintf("%d:%d", meta.ID, ayah.Number)
+			if _, ok := pages[key]; !ok {
+				t.Errorf("missing page map entry for %s", key)
+			}
+		}
+	}
+}
+
+func TestQuizContentMatchesPublishedContract(t *testing.T) {
+	type question struct {
+		Question    string   `json:"q"`
+		Options     []string `json:"options"`
+		Answer      int      `json:"answer"`
+		Explanation string   `json:"explanation"`
+	}
+	type category struct {
+		Slug      string `json:"slug"`
+		Questions struct {
+			Basic        []question `json:"basic"`
+			Intermediate []question `json:"intermediate"`
+			Advanced     []question `json:"advanced"`
+		} `json:"questions"`
+	}
+
+	entries, err := iofs.ReadDir(islamiclick.ContentFS, "content/quiz")
+	if err != nil {
+		t.Fatalf("read quiz content directory: %v", err)
+	}
+	expected := map[string]int{"basic": 15, "intermediate": 15, "advanced": 15}
+	categoryCount := 0
+	for _, entry := range entries {
+		if entry.IsDir() || !strings.HasSuffix(entry.Name(), ".json") {
+			continue
+		}
+		categoryCount++
+		path := "content/quiz/" + entry.Name()
+		data, err := islamiclick.ContentFS.ReadFile(path)
+		if err != nil {
+			t.Fatalf("read %s: %v", path, err)
+		}
+		var cat category
+		if err := json.Unmarshal(data, &cat); err != nil {
+			t.Fatalf("parse %s: %v", path, err)
+		}
+		if strings.TrimSpace(cat.Slug) == "" {
+			t.Errorf("%s has empty slug", path)
+		}
+		difficulties := map[string][]question{
+			"basic":        cat.Questions.Basic,
+			"intermediate": cat.Questions.Intermediate,
+			"advanced":     cat.Questions.Advanced,
+		}
+		for difficulty, questions := range difficulties {
+			if len(questions) != expected[difficulty] {
+				t.Errorf("%s %s question count = %d, want %d", path, difficulty, len(questions), expected[difficulty])
+			}
+			for index, q := range questions {
+				if strings.TrimSpace(q.Question) == "" || strings.TrimSpace(q.Explanation) == "" {
+					t.Errorf("%s %s question %d has empty text or explanation", path, difficulty, index+1)
+				}
+				if len(q.Options) != 4 || q.Answer < 0 || q.Answer >= len(q.Options) {
+					t.Errorf("%s %s question %d has invalid options/answer", path, difficulty, index+1)
+				}
+				for optionIndex, option := range q.Options {
+					if strings.TrimSpace(option) == "" {
+						t.Errorf("%s %s question %d option %d is empty", path, difficulty, index+1, optionIndex+1)
+					}
+				}
+			}
+		}
+	}
+	if categoryCount != 8 {
+		t.Fatalf("quiz category count = %d, want 8", categoryCount)
 	}
 }

@@ -16,6 +16,7 @@ const (
 	quizTimerSeconds     = 30
 	quizScorePerCorrect  = 10
 	quizTimeBonusMax     = 10
+	quizSessionRetention = 24 * time.Hour
 )
 
 var quizQuestionsPerDifficulty = map[string]int{
@@ -93,6 +94,9 @@ func (h *Handler) QuizStartAPI(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
+	if !allowQuizRequest(w, r, h.quizStartLimiter) {
+		return
+	}
 
 	var req struct {
 		PlayerName string `json:"player_name"`
@@ -112,6 +116,10 @@ func (h *Handler) QuizStartAPI(w http.ResponseWriter, r *http.Request) {
 	if !validQuizDifficulty(req.Difficulty) {
 		http.Error(w, "invalid difficulty", http.StatusBadRequest)
 		return
+	}
+
+	if err := h.contentStore.CleanupQuizSessions(r.Context(), time.Now().UTC().Add(-quizSessionRetention)); err != nil {
+		log.Printf("quiz session cleanup: %v", err)
 	}
 
 	limit := quizQuestionsPerDifficulty[req.Difficulty]
@@ -143,6 +151,9 @@ func (h *Handler) QuizAnswerAPI(w http.ResponseWriter, r *http.Request) {
 	slug, ok := quizSlugFromAPIPath(r.URL.Path)
 	if !ok {
 		http.NotFound(w, r)
+		return
+	}
+	if !allowQuizRequest(w, r, h.quizAnswerLimiter) {
 		return
 	}
 
@@ -261,9 +272,16 @@ func (h *Handler) QuizAnswerAPI(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) QuizLeaderboardAPI(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
 	slug, ok := quizSlugFromAPIPath(r.URL.Path)
 	if !ok {
 		http.NotFound(w, r)
+		return
+	}
+	if !allowQuizRequest(w, r, h.quizLeaderboardLimiter) {
 		return
 	}
 	difficulty := r.URL.Query().Get("difficulty")
@@ -379,7 +397,7 @@ func (h *Handler) quizFinishSession(w http.ResponseWriter, r *http.Request, sess
 
 func quizSlugFromAPIPath(path string) (string, bool) {
 	parts := strings.Split(strings.Trim(path, "/"), "/")
-	if len(parts) < 4 || parts[0] != "api" || parts[1] != "quiz" {
+	if len(parts) != 4 || parts[0] != "api" || parts[1] != "quiz" || strings.TrimSpace(parts[2]) == "" {
 		return "", false
 	}
 	return parts[2], true
@@ -431,6 +449,7 @@ func containsQuizMonth(months []string, target string) bool {
 
 func writeJSON(w http.ResponseWriter, status int, v interface{}) {
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Cache-Control", "no-store")
 	w.WriteHeader(status)
 	if err := json.NewEncoder(w).Encode(v); err != nil {
 		log.Printf("write json: %v", err)

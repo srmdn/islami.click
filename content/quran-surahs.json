@@ -267,7 +267,7 @@
     "id": 34,
     "name": "سبإ",
     "transliteration": "Saba",
-    "translation": "Saba\\'",
+    "translation": "Saba'",
     "type": "meccan",
     "total_verses": 54
   },
@@ -363,7 +363,7 @@
     "id": 46,
     "name": "الأحقاف",
     "transliteration": "Al-Ahqaf",
-    "translation": "Bukit-bukir Pasir",
+    "translation": "Bukit-bukit Pasir",
     "type": "meccan",
     "total_verses": 35
   },
@@ -491,7 +491,7 @@
     "id": 62,
     "name": "الجمعة",
     "transliteration": "Al-Jumu'ah",
-    "translation": "Hari Jum\\'at",
+    "translation": "Hari Jum'at",
     "type": "medinan",
     "total_verses": 11
   },
@@ -611,7 +611,7 @@
     "id": 77,
     "name": "المرسلات",
     "transliteration": "Al-Mursalat",
-    "translation": "Malaikat-malaikan yang Diutus",
+    "translation": "Malaikat-malaikat yang Diutus",
     "type": "meccan",
     "total_verses": 50
   },
