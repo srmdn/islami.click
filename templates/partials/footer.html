@@ -1,34 +1,37 @@
 {{define "footer"}}
-<footer class="mt-auto border-t border-[#E2D9CE]/80 dark:border-[#1E4458]/50 bg-[#EDE7DD]/80 dark:bg-[#08161C]/80 relative overflow-hidden">
-    <div class="max-w-3xl mx-auto px-4 py-8 relative">
-        <div class="flex flex-col items-center gap-4">
-            <div class="flex items-center gap-2">
-                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-[#0E5C73] to-[#0A4A5C] flex items-center justify-center">
-                    <svg class="w-4 h-4 text-white" viewBox="0 0 32 32" fill="none">
-                        <g transform="translate(16,16)">
-                            <rect x="-4" y="-4" width="8" height="8" rx="1" fill="currentColor" opacity="0.9"/>
-                            <rect x="-4" y="-4" width="8" height="8" rx="1" fill="currentColor" opacity="0.9" transform="rotate(45)"/>
-                        </g>
-                    </svg>
-                </div>
-                <span class="text-sm font-medium text-[#5A4C40] dark:text-[#D6C9B8]">islami.click</span>
+<footer class="mt-auto border-t border-[#E2D9CE]/80 bg-[#EDE7DD]/80 dark:border-[#1E4458]/50 dark:bg-[#08161C]/80">
+    <div class="max-w-6xl mx-auto px-4 py-10 sm:px-6 sm:py-12">
+        <div class="flex flex-col gap-8 md:flex-row md:items-start md:justify-between md:gap-12">
+            <div class="max-w-xs">
+                <a href="/" class="group inline-flex items-center gap-3 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0E5C73]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#EDE7DD] dark:focus-visible:ring-offset-[#08161C]">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#0E5C73] to-[#0A4A5C] shadow-md shadow-[#0E5C73]/20">
+                        <svg class="h-5 w-5 text-white" viewBox="0 0 32 32" fill="none">
+                            <g transform="translate(16,16)">
+                                <rect x="-4" y="-4" width="8" height="8" rx="1" fill="currentColor" opacity="0.9"/>
+                                <rect x="-4" y="-4" width="8" height="8" rx="1" fill="currentColor" opacity="0.9" transform="rotate(45)"/>
+                            </g>
+                            <circle cx="16" cy="16" r="2" fill="#0C1E26"/>
+                        </svg>
+                    </div>
+                    <span class="text-base font-bold tracking-tight text-[#1A2E35] transition-colors group-hover:text-[#0E5C73] dark:text-[#F5EFE4]">islami<span class="text-[#0E5C73] dark:text-[#83C0CC]">.click</span></span>
+                </a>
+                <p class="mt-4 text-sm leading-relaxed text-[#766A5E] dark:text-[#AFC5C9]">Kumpulan konten Islami untuk menemani ibadah harian.</p>
             </div>
-            <nav aria-label="Navigasi footer" class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-[#8A7E72] dark:text-[#9AB5BC]">
-                <a href="/" class="hover:text-[#0E5C73] transition-colors">Beranda</a>
-                <span class="text-[#D5C9BB] dark:text-[#3C6574]">·</span>
-                <a href="/almatsurat" class="hover:text-[#0E5C73] transition-colors">Al-Ma'tsurat</a>
-                <span class="text-[#D5C9BB] dark:text-[#3C6574]">·</span>
-                <a href="/doa" class="hover:text-[#0E5C73] transition-colors">Doa</a>
-                <span class="text-[#D5C9BB] dark:text-[#3C6574]">·</span>
-                <a href="/quran" class="hover:text-[#0E5C73] transition-colors">Al-Qur'an</a>
-                <span class="text-[#D5C9BB] dark:text-[#3C6574]">·</span>
-                <a href="/shalat" class="hover:text-[#0E5C73] transition-colors">Shalat</a>
-                <span class="text-[#D5C9BB] dark:text-[#3C6574]">·</span>
-                <a href="/kiblat" class="hover:text-[#0E5C73] transition-colors">Kiblat</a>
-                <span class="text-[#D5C9BB] dark:text-[#3C6574]">·</span>
-                <a href="/quiz" class="hover:text-[#0E5C73] transition-colors">Quiz</a>
+
+            <nav aria-label="Navigasi footer" class="flex max-w-xl flex-wrap items-center gap-x-1 gap-y-1 text-sm text-[#6F6256] dark:text-[#AFC5C9]">
+                <a href="/" class="inline-flex min-h-11 items-center rounded-lg px-2 transition-colors hover:bg-[#F8F2E8] hover:text-[#0E5C73] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0E5C73]/50 dark:hover:bg-[#143444] dark:hover:text-[#A9D7DE]">Beranda</a>
+                <a href="/almatsurat" class="inline-flex min-h-11 items-center rounded-lg px-2 transition-colors hover:bg-[#F8F2E8] hover:text-[#0E5C73] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0E5C73]/50 dark:hover:bg-[#143444] dark:hover:text-[#A9D7DE]">Al-Ma'tsurat</a>
+                <a href="/doa" class="inline-flex min-h-11 items-center rounded-lg px-2 transition-colors hover:bg-[#F8F2E8] hover:text-[#0E5C73] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0E5C73]/50 dark:hover:bg-[#143444] dark:hover:text-[#A9D7DE]">Doa</a>
+                <a href="/quran" class="inline-flex min-h-11 items-center rounded-lg px-2 transition-colors hover:bg-[#F8F2E8] hover:text-[#0E5C73] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0E5C73]/50 dark:hover:bg-[#143444] dark:hover:text-[#A9D7DE]">Al-Qur'an</a>
+                <a href="/shalat" class="inline-flex min-h-11 items-center rounded-lg px-2 transition-colors hover:bg-[#F8F2E8] hover:text-[#0E5C73] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0E5C73]/50 dark:hover:bg-[#143444] dark:hover:text-[#A9D7DE]">Shalat</a>
+                <a href="/kiblat" class="inline-flex min-h-11 items-center rounded-lg px-2 transition-colors hover:bg-[#F8F2E8] hover:text-[#0E5C73] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0E5C73]/50 dark:hover:bg-[#143444] dark:hover:text-[#A9D7DE]">Kiblat</a>
+                <a href="/quiz" class="inline-flex min-h-11 items-center rounded-lg px-2 transition-colors hover:bg-[#F8F2E8] hover:text-[#0E5C73] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0E5C73]/50 dark:hover:bg-[#143444] dark:hover:text-[#A9D7DE]">Quiz</a>
             </nav>
-            <p class="text-xs text-[#8A7E72] dark:text-[#9AB5BC]">Kumpulan konten Islami untuk ibadah harian</p>
+        </div>
+
+        <div class="mt-8 flex flex-col gap-2 border-t border-[#E2D9CE] pt-5 text-xs text-[#8A7E72] dark:border-[#1E4458] dark:text-[#89AAB3] sm:flex-row sm:items-center sm:justify-between">
+            <p>© 2026 islami.click</p>
+            <p>Untuk ibadah harian Muslim Indonesia</p>
         </div>
     </div>
 </footer>

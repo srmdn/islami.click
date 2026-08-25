@@ -157,31 +157,6 @@
     animation: float 3s ease-in-out infinite;
   }
 
-  /* Hero bismillah — sacred text as ambient texture.
-     Max opacity: 0.10. Exceeding this risks disrespect.
-     Under prefers-contrast: bump to 0.20 so it remains perceptible. */
-  .hero-bismillah {
-    font-family: var(--font-arabic);
-    direction: rtl;
-    text-align: center;
-    line-height: 1.3;
-    opacity: 0.09;
-    pointer-events: none;
-    user-select: none;
-  }
-  @media (prefers-contrast: more) {
-    .hero-bismillah { opacity: 0.20; }
-  }
-
-  .hero-star {
-    opacity: 0.06;
-    pointer-events: none;
-    user-select: none;
-  }
-  @media (prefers-contrast: more) {
-    .hero-star { opacity: 0.15; }
-  }
-
   .coming-soon-pill {
     display: inline-flex;
     align-items: center;
