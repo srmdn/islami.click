@@ -75,3 +75,25 @@ func TestSourceFallsBackOutsideCoverage(t *testing.T) {
 		t.Fatalf("fallback 2030-01-01 = %+v", got)
 	}
 }
+
+// TestAnchorsCoverNearFuture is the maintenance alarm: official month
+// starts must be refreshed (yearly from SIHAT, plus sidang-isbat
+// corrections for Ramadan/Syawal/Zulhijah) before coverage runs out.
+// When this fails, add new entries to content/hijri-anchors.json.
+func TestAnchorsCoverNearFuture(t *testing.T) {
+	a := loadAnchors()
+	if len(a) == 0 {
+		t.Fatal("no hijri anchors loaded")
+	}
+	maxStart := a[0].Start
+	for _, an := range a[1:] {
+		if an.Start.After(maxStart) {
+			maxStart = an.Start
+		}
+	}
+	today := time.Now().UTC().Truncate(24 * time.Hour)
+	if maxStart.Before(today.AddDate(0, 0, 45)) {
+		t.Fatalf("hijri anchors end %s — refresh content/hijri-anchors.json from SIHAT",
+			maxStart.Format("2006-01-02"))
+	}
+}
