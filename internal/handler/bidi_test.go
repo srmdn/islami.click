@@ -19,7 +19,7 @@ func assertNoBidiControls(t *testing.T, s, what string) {
 
 func TestOrnateParensBasic(t *testing.T) {
 	out := ornateParens("أَصْبَحْتُ (أَمْسَيتُ) مِنْكَ")
-	want := `<span class="paren-orn"><span class="paren-flip">﴾</span>أَمْسَيتُ<span class="paren-flip">﴿</span></span>`
+	want := `<span class="paren-orn">﴿أَمْسَيتُ﴾</span>`
 	if !strings.Contains(out, want) {
 		t.Fatalf("unexpected conversion: %s", out)
 	}
@@ -36,7 +36,7 @@ func TestOrnateParensMultipleGroups(t *testing.T) {
 func TestOrnateParensPreservesTags(t *testing.T) {
 	in := `أبتدئ <mark class="tafsir-key">(اللهِ)</mark> علم`
 	out := ornateParens(in)
-	if !strings.Contains(out, `<mark class="tafsir-key"><span class="paren-orn">`) {
+	if !strings.Contains(out, `<mark class="tafsir-key"><span class="paren-orn">﴿`) {
 		t.Fatalf("group not converted inside mark: %s", out)
 	}
 	if strings.Contains(out, "&lt;") {
@@ -59,7 +59,7 @@ func TestOrnateParensNestedConvertsInnermostOnly(t *testing.T) {
 	if !strings.HasPrefix(out, "(nest ") {
 		t.Fatalf("outer group should stay raw: %s", out)
 	}
-	if !strings.Contains(out, `<span class="paren-flip">﴾</span>ed<span class="paren-flip">﴿</span>`) {
+	if !strings.Contains(out, `﴿ed﴾`) {
 		t.Fatalf("inner group should convert: %s", out)
 	}
 }
@@ -73,9 +73,9 @@ func TestArabicHTMLEscapesAndOrnates(t *testing.T) {
 	if !strings.Contains(s, "&lt;b&gt;") {
 		t.Fatalf("expected escaping: %s", s)
 	}
-	// Logical order stays open-first for clean copy-paste; visual hug comes
-	// from .paren-flip CSS, not character order.
-	want := `<span class="paren-orn"><span class="paren-flip">﴾</span>ي<span class="paren-flip">﴿</span></span>`
+	// Hug order is close-shape-first by emission: correct in every target
+	// with no CSS, at the cost of logical close-first order.
+	want := `<span class="paren-orn">﴿ي﴾</span>`
 	if !strings.Contains(s, want) {
 		t.Fatalf("expected flipped ornate pair, got: %s", s)
 	}
@@ -88,7 +88,7 @@ func TestArabicHTMLEscapesAndOrnates(t *testing.T) {
 func TestTafsirHTMLOrnatesAndStaysClean(t *testing.T) {
 	out := TafsirHTML(template.HTML(`أبتدئ <mark class="tafsir-key">(اللهِ)</mark> علم`))
 	s := string(out)
-	if !strings.Contains(s, `<mark class="tafsir-key"><span class="paren-orn">`) {
+	if !strings.Contains(s, `<mark class="tafsir-key"><span class="paren-orn">﴿`) {
 		t.Fatalf("group not converted inside mark: %s", s)
 	}
 	if strings.Contains(s, "(اللهِ)") {

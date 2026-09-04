@@ -191,15 +191,10 @@
     background: rgba(201, 168, 76, 0.25);
   }
 
-  /* Ornate Arabic parens: slightly larger to match ASCII paren height,
-     and each glyph visually mirrored so the pair hugs RTL text while
-     logical (copy-paste) order stays open-first */
+  /* Ornate Arabic parens: slightly larger to match ASCII paren height.
+     Hug order comes from emission order (close-shape first), not CSS. */
   .paren-orn {
     font-size: 1.12em;
-  }
-  .paren-flip {
-    display: inline-block;
-    transform: scaleX(-1);
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {

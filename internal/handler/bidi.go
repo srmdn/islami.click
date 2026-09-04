@@ -14,14 +14,17 @@ const (
 )
 
 // ornateParens replaces every balanced, non-nested (...) group with an
-// ornate pair. Logical order stays open-first (﴾...﴿) so copy-paste, screen
-// readers, and search see clean data; each glyph is visually mirrored via
-// .paren-flip CSS so the pair hugs RTL text (open on the right opens
-// leftward toward the text and vice versa). Tags pass through verbatim;
-// unbalanced and nested parens are left untouched.
+// ornate pair emitted in hug order: CLOSE-shape char (﴿) first, OPEN-shape
+// char (﴾) last. Amiri draws FD3E (-like, opens right) and FD3F )-like,
+// opens left; in RTL flow the first char lands on the right opening
+// leftward toward the text and the last lands on the left opening rightward,
+// so the pair hugs the text in EVERY target (page, clipboard, WhatsApp)
+// with no CSS and no bidi controls. The trade-off is deliberate: logical
+// order is close-first, but inner text, search, and selection are unaffected.
+// Tags pass through verbatim; unbalanced and nested parens are left untouched.
 func ornateParens(s string) string {
 	var b strings.Builder
-	b.Grow(len(s) + 96)
+	b.Grow(len(s) + 64)
 	i := 0
 	for i < len(s) {
 		c := s[i]
@@ -37,9 +40,9 @@ func ornateParens(s string) string {
 		}
 		if c == '(' {
 			if end, ok := parenGroupEnd(s, i); ok {
-				b.WriteString(`<span class="paren-orn"><span class="paren-flip">` + ornateOpen + `</span>`)
+				b.WriteString(`<span class="paren-orn">` + ornateClose)
 				b.WriteString(s[i+1 : end])
-				b.WriteString(`<span class="paren-flip">` + ornateClose + `</span></span>`)
+				b.WriteString(ornateOpen + `</span>`)
 				i = end + 1
 				continue
 			}
