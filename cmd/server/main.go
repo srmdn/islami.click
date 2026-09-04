@@ -32,6 +32,7 @@ func main() {
 
 	funcMap := template.FuncMap{
 		"add": func(a, b int) int { return a + b },
+		"hasPrefix": func(s, prefix string) bool { return strings.HasPrefix(s, prefix) },
 		"arabicHTML": func(s string) template.HTML {
 			escaped := template.HTMLEscapeString(s)
 			result := arabicParenRe.ReplaceAllString(escaped, `<span dir="ltr">(<bdi>$1</bdi>)</span>`)

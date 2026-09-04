@@ -97,6 +97,7 @@ const defaultOGImage = "https://islami.click/static/images/og-image.png"
 
 func pageMeta(r *http.Request, title, description string) model.PageMeta {
 	return model.PageMeta{
+		Path:          r.URL.Path,
 		CanonicalURL:  siteURL + r.URL.Path,
 		OGTitle:       title + " | islami.click",
 		OGDescription: description,
@@ -189,6 +190,7 @@ func (h *Handler) Home(w http.ResponseWriter, r *http.Request) {
 		Meta:        meta,
 		HijriToday:  fmt.Sprintf("%d %s %d H", hijriDate.Day, hijri.MonthNamesID[hijriDate.Month], hijriDate.Year),
 		MasehiToday: hijri.FormatGregorianID(now),
+		Features:    model.HomeFeatures,
 	})
 }
 
