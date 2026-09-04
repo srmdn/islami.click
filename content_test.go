@@ -1,6 +1,8 @@
 package islamiclick_test
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	iofs "io/fs"
@@ -12,6 +14,12 @@ import (
 	islamiclick "github.com/srmdn/islami.click"
 	"github.com/srmdn/islami.click/internal/model"
 )
+
+func sha256Of(t *testing.T, data []byte) string {
+	t.Helper()
+	sum := sha256.Sum256(data)
+	return hex.EncodeToString(sum[:])
+}
 
 func TestDoaContentIsComplete(t *testing.T) {
 	data, err := islamiclick.ContentFS.ReadFile("content/doa-harian.json")
@@ -208,6 +216,75 @@ func TestQuranContentAndPageMapAreComplete(t *testing.T) {
 				t.Errorf("missing page map entry for %s", key)
 			}
 		}
+	}
+}
+
+func TestTafsirMuyassarContentIsComplete(t *testing.T) {
+	type manifestSurah struct {
+		Number int    `json:"number"`
+		Ayahs  int    `json:"ayahs"`
+		SHA256 string `json:"sha256"`
+	}
+	type manifest struct {
+		Resource string          `json:"resource"`
+		Language string          `json:"language"`
+		Surahs   []manifestSurah `json:"surahs"`
+	}
+	type tafsirFile struct {
+		Number int `json:"number"`
+		Ayahs  []struct {
+			Number int    `json:"number"`
+			Tafsir string `json:"tafsir"`
+		} `json:"ayahs"`
+	}
+
+	manifestData, err := islamiclick.ContentFS.ReadFile("content/tafsir/manifest.json")
+	if err != nil {
+		t.Fatalf("read tafsir manifest: %v", err)
+	}
+	var m manifest
+	if err := json.Unmarshal(manifestData, &m); err != nil {
+		t.Fatalf("parse tafsir manifest: %v", err)
+	}
+	if m.Resource == "" || m.Language != "arabic" {
+		t.Fatalf("tafsir manifest resource/language unexpected: %q/%q", m.Resource, m.Language)
+	}
+	if len(m.Surahs) != 114 {
+		t.Fatalf("tafsir manifest surah count = %d, want 114", len(m.Surahs))
+	}
+
+	totalAyahs := 0
+	for _, ms := range m.Surahs {
+		path := fmt.Sprintf("content/tafsir/%03d.json", ms.Number)
+		data, err := islamiclick.ContentFS.ReadFile(path)
+		if err != nil {
+			t.Fatalf("read %s: %v", path, err)
+		}
+		if got := sha256Of(t, data); got != ms.SHA256 {
+			t.Errorf("%s sha256 mismatch: manifest %s, file %s", path, ms.SHA256, got)
+		}
+		var detail tafsirFile
+		if err := json.Unmarshal(data, &detail); err != nil {
+			t.Fatalf("parse %s: %v", path, err)
+		}
+		if detail.Number != ms.Number {
+			t.Errorf("%s number = %d, want %d", path, detail.Number, ms.Number)
+		}
+		if len(detail.Ayahs) != ms.Ayahs {
+			t.Errorf("%s ayah count = %d, manifest = %d", path, len(detail.Ayahs), ms.Ayahs)
+		}
+		for i, ayah := range detail.Ayahs {
+			if ayah.Number != i+1 {
+				t.Errorf("%s ayah order broken at index %d (got #%d)", path, i, ayah.Number)
+			}
+			if strings.TrimSpace(ayah.Tafsir) == "" {
+				t.Errorf("%s ayah %d has empty tafsir", path, ayah.Number)
+			}
+		}
+		totalAyahs += len(detail.Ayahs)
+	}
+	if totalAyahs != 6236 {
+		t.Fatalf("total tafsir ayah count = %d, want 6236", totalAyahs)
 	}
 }
 

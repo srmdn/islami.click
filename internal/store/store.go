@@ -115,10 +115,11 @@ func (s *Store) Migrate(ctx context.Context, migrationFS embed.FS) error {
 
 func (s *Store) SeedContent(ctx context.Context, contentFS embed.FS) error {
 	type collectionDef struct {
-		id    string
-		path  string
-		order int
-		seed  func(ctx context.Context, tx *sql.Tx, contentFS embed.FS, collectionID, path string, order int) error
+		id            string
+		path          string
+		order         int
+		checksumExtra func(embed.FS) string
+		seed          func(ctx context.Context, tx *sql.Tx, contentFS embed.FS, collectionID, path string, order int) error
 	}
 
 	collections := []collectionDef{
@@ -128,6 +129,9 @@ func (s *Store) SeedContent(ctx context.Context, contentFS embed.FS) error {
 		{id: "ayat-doa-ruqyah", path: "content/ayat-doa-ruqyah.json", order: 40, seed: seedDoa},
 		{id: "asmaul-husna", path: "content/asmaul-husna.json", order: 50, seed: seedAsmaulHusna},
 		{id: "quran", path: "content/quran-surahs.json", order: 60, seed: seedQuran},
+		// Tafsir UPDATEs quran_ayahs rows, so it seeds after quran and its
+		// checksum folds in the quran checksum (a quran reseed clears ayahs).
+		{id: "tafsir-muyassar", path: "content/tafsir/manifest.json", order: 70, checksumExtra: quranChecksum, seed: seedTafsir},
 	}
 
 	for _, col := range collections {
@@ -137,6 +141,9 @@ func (s *Store) SeedContent(ctx context.Context, contentFS embed.FS) error {
 		}
 
 		sum := checksum(data)
+		if col.checksumExtra != nil {
+			sum += col.checksumExtra(contentFS)
+		}
 
 		var existingChecksum string
 		err = s.db.QueryRowContext(ctx, "SELECT source_checksum FROM content_collections WHERE id = ?", col.id).Scan(&existingChecksum)

@@ -179,6 +179,23 @@
   .compass-needle {
     will-change: transform;
   }
+
+  /* Tafsir keyword highlight (from <mark class="tafsir-key">) */
+  .tafsir-body mark.tafsir-key {
+    background: rgba(201, 168, 76, 0.18);
+    color: inherit;
+    border-radius: 0.25rem;
+    padding: 0 0.2em;
+  }
+  .dark .tafsir-body mark.tafsir-key {
+    background: rgba(201, 168, 76, 0.25);
+  }
+
+  /* Ornate Arabic parens: slightly larger to match ASCII paren height.
+     Hug order comes from emission order (close-shape first), not CSS. */
+  .paren-orn {
+    font-size: 1.12em;
+  }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       transition: none !important;

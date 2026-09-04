@@ -162,6 +162,9 @@ func (h *Handler) renderPartial(w http.ResponseWriter, name string, data any) {
 		http.Error(w, "Partial not found", http.StatusNotFound)
 		return
 	}
+	// Dynamic HTML must not be heuristically cached: Arabic markup went
+	// through several bidi treatments and stale copies corrupt clipboards.
+	w.Header().Set("Cache-Control", "no-cache")
 	if err := t.ExecuteTemplate(w, name, data); err != nil {
 		log.Printf("renderPartial %s: %v", name, err)
 		http.Error(w, "Internal error", http.StatusInternalServerError)
@@ -174,6 +177,9 @@ func (h *Handler) render(w http.ResponseWriter, page string, data any) {
 		http.Error(w, "Page not found", http.StatusNotFound)
 		return
 	}
+	// Dynamic HTML must not be heuristically cached: Arabic markup went
+	// through several bidi treatments and stale copies corrupt clipboards.
+	w.Header().Set("Cache-Control", "no-cache")
 	if err := t.ExecuteTemplate(w, "base", data); err != nil {
 		log.Printf("render %s: %v", page, err)
 		http.Error(w, "Internal error", http.StatusInternalServerError)
@@ -1069,6 +1075,7 @@ func (h *Handler) Sitemap(w http.ResponseWriter, r *http.Request) {
 		"/kiblat",
 		"/hisab",
 		"/quran",
+		"/tafsir",
 		"/quiz",
 	}
 
@@ -1099,6 +1106,8 @@ func (h *Handler) Sitemap(w http.ResponseWriter, r *http.Request) {
 	for _, s := range surahs {
 		fmt.Fprintf(w, "  <url><loc>%s/quran/%d</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>\n",
 			siteURL, s.Number)
+		fmt.Fprintf(w, "  <url><loc>%s/tafsir/%d</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>\n",
+			siteURL, s.Number)
 	}
 
 	for _, c := range quizCats {
@@ -1117,13 +1126,14 @@ func (h *Handler) LLMsTxt(w http.ResponseWriter, r *http.Request) {
 
 Author: srmdn
 Language: id
-Topics: Al-Quran, dzikir, doa Islam, jadwal shalat, Asmaul Husna, kiblat, kalender Hijriyah, quiz Islam
+Topics: Al-Quran, tafsir, dzikir, doa Islam, jadwal shalat, Asmaul Husna, kiblat, kalender Hijriyah, quiz Islam
 Content-Type: Islamic reference tools and content
 Update-Cadence: irregular
 
 ## Key Pages
 - /: Beranda - portal islami utama
 - /quran: Al-Quran 30 juz dengan terjemahan Indonesia
+- /tafsir: Tafsir Al-Muyassar per ayat (Arab) dengan terjemahan Indonesia
 - /almatsurat: Al-Matsurat Sugro dan Kubro (dzikir pagi-petang)
 - /doa: Kumpulan doa harian Islam
 - /shalat: Jadwal shalat harian per kota Indonesia
