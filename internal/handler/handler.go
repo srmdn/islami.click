@@ -5,10 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
-	"io"
 	"log"
 	"net/http"
-	"net/url"
 	"strconv"
 	"strings"
 	"sync"
@@ -31,16 +29,6 @@ var masehiMonthsID = [13]string{
 }
 
 var masehiDaysID = [7]string{"Ahad", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"}
-
-var indonesianCities = []string{
-	"Aceh", "Ambon", "Balikpapan", "Banda Aceh", "Bandar Lampung",
-	"Bandung", "Banjarmasin", "Batam", "Bekasi", "Bogor",
-	"Denpasar", "Depok", "Jakarta", "Jambi", "Jayapura",
-	"Kupang", "Makassar", "Malang", "Manado", "Mataram",
-	"Medan", "Padang", "Palembang", "Pekanbaru", "Pontianak",
-	"Samarinda", "Semarang", "Surabaya", "Surakarta", "Tangerang",
-	"Tasikmalaya", "Yogyakarta",
-}
 
 var aladhanClient = &http.Client{Timeout: 10 * time.Second}
 
@@ -713,108 +701,47 @@ func (h *Handler) DoaMore(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) Shalat(w http.ResponseWriter, r *http.Request) {
-	city := strings.TrimSpace(r.URL.Query().Get("city"))
-	validCity := false
-	for _, c := range indonesianCities {
-		if c == city {
-			validCity = true
-			break
-		}
-	}
-	if !validCity {
-		city = "Jakarta"
-	}
+	cities, byName := getPrayerCities()
+	city := lookupPrayerCity(byName, strings.TrimSpace(r.URL.Query().Get("city")))
+	zone := city.Zone()
+	now := time.Now().In(zone)
 
-	shalatMeta := pageMeta(r, "Jadwal Shalat", "Jadwal shalat harian akurat berdasarkan lokasi kota di Indonesia, dilengkapi waktu imsak dan terbit.")
+	shalatMeta := pageMeta(r, "Jadwal Shalat "+city.Name, "Jadwal shalat hari ini untuk "+city.Name+" — kriteria Kemenag (Subuh 20°, Isya 18°) plus ihtiyati.")
 	shalatMeta.JSONLD = breadcrumbJSONLD(homeCrumb(), crumb(2, "Jadwal Shalat", siteURL+"/shalat"))
 	page := model.ShalatPageData{
-		Meta:   shalatMeta,
-		City:   city,
-		Cities: indonesianCities,
-	}
-
-	cacheRow, err := h.fetchShalatCache(r.Context(), city)
-	if err != nil {
-		log.Printf("shalat cache for %s: %v", city, err)
-	}
-
-	if cacheRow != nil {
-		page.Times = model.PrayerTimes{
-			Imsyak:  stripSeconds(cacheRow.Imsak),
-			Subuh:   stripSeconds(cacheRow.Fajr),
-			Terbit:  stripSeconds(cacheRow.Sunrise),
-			Dhuha:   addMinutes(cacheRow.Sunrise, 16),
-			Dzuhur:  stripSeconds(cacheRow.Dhuhr),
-			Ashr:    stripSeconds(cacheRow.Asr),
-			Maghrib: stripSeconds(cacheRow.Maghrib),
-			Isya:    stripSeconds(cacheRow.Isha),
-		}
-
-		hijriParts := strings.SplitN(cacheRow.HijriDate, "-", 3)
-		hijriDay := ""
-		hijriYear := ""
-		hijriMonthNum := 0
-		if len(hijriParts) == 3 {
-			hijriYear = hijriParts[0]
-			hijriMonthNum, _ = strconv.Atoi(hijriParts[1])
-			hijriDay = hijriParts[2]
-		}
-		monthID := ""
-		if hijriMonthNum >= 1 && hijriMonthNum <= 12 {
-			monthID = hijriMonthsID[hijriMonthNum]
-		}
-		page.Hijri = model.HijriDate{
-			Day:   hijriDay,
-			Month: monthID,
-			Year:  hijriYear,
-		}
-
-		wib := time.FixedZone("WIB", 7*3600)
-		now := time.Now().In(wib)
-		page.MasehiDate = fmt.Sprintf("%s, %d %s %d",
+		Meta:         shalatMeta,
+		City:         city.Name,
+		Cities:       cities,
+		TZLabel:      city.TZ,
+		TZOffsetMins: city.OffsetSeconds() / 60,
+		Lat:          city.Lat,
+		Lon:          city.Lon,
+		MasehiDate: fmt.Sprintf("%s, %d %s %d",
 			masehiDaysID[now.Weekday()],
 			now.Day(),
 			masehiMonthsID[now.Month()],
 			now.Year(),
-		)
+		),
+	}
 
-		if hijriMonthNum >= 1 && hijriMonthNum <= 12 {
-			page.Hijri.Month = hijriMonthsID[hijriMonthNum]
-		}
+	cacheRow, err := h.fetchShalatCache(r.Context(), city, now)
+	if err != nil {
+		log.Printf("shalat cache for %s: %v", city.Name, err)
+	}
 
+	if cacheRow != nil {
+		page.Times = prayerTimesFromRow(cacheRow)
+		page.Hijri = hijriFromStored(cacheRow.HijriDate)
 		h.render(w, "shalat.html", page)
 		return
 	}
 
-	apiURL := fmt.Sprintf(
-		"https://api.aladhan.com/v1/timingsByCity?city=%s&country=Indonesia&method=20",
-		url.QueryEscape(city),
-	)
-
-	resp, err := aladhanClient.Get(apiURL)
+	result, body, err := fetchTimingsByCoords(r.Context(), city, now)
 	if err != nil {
-		wib := time.FixedZone("WIB", 7*3600)
-		stale, staleErr := h.contentStore.GetShalatCacheStale(r.Context(), city, 20)
-		if staleErr != nil {
-			log.Printf("stalat stale cache for %s: %v", city, staleErr)
-		}
-		if stale != nil {
-			page.Times = model.PrayerTimes{
-				Imsyak:  stripSeconds(stale.Imsak),
-				Subuh:   stripSeconds(stale.Fajr),
-				Terbit:  stripSeconds(stale.Sunrise),
-				Dhuha:   addMinutes(stale.Sunrise, 16),
-				Dzuhur:  stripSeconds(stale.Dhuhr),
-				Ashr:    stripSeconds(stale.Asr),
-				Maghrib: stripSeconds(stale.Maghrib),
-				Isya:    stripSeconds(stale.Isha),
-			}
-			page.MasehiDate = fmt.Sprintf("%s, %d %s %d",
-				masehiDaysID[time.Now().In(wib).Weekday()],
-				time.Now().In(wib).Day(),
-				masehiMonthsID[time.Now().In(wib).Month()],
-				time.Now().In(wib).Year(),
-			)
+		log.Printf("shalat fetch for %s: %v", city.Name, err)
+		if stale := h.staleShalat(r.Context(), city); stale != nil {
+			page.Times = prayerTimesFromRow(stale)
+			page.Hijri = hijriFromStored(stale.HijriDate)
 			h.render(w, "shalat.html", page)
 			return
 		}
@@ -822,33 +749,9 @@ func (h *Handler) Shalat(w http.ResponseWriter, r *http.Request) {
 		h.render(w, "shalat.html", page)
 		return
 	}
-	defer resp.Body.Close()
-
-	body, err := io.ReadAll(io.LimitReader(resp.Body, 64*1024))
-	if err != nil {
-		page.Error = "Gagal membaca data jadwal shalat."
-		h.render(w, "shalat.html", page)
-		return
-	}
-
-	var result aladhanResponse
-	if err := json.Unmarshal(body, &result); err != nil || result.Code != 200 {
-		page.Error = "Kota tidak ditemukan atau data tidak tersedia."
-		h.render(w, "shalat.html", page)
-		return
-	}
 
 	t := result.Data.Timings
-	page.Times = model.PrayerTimes{
-		Imsyak:  stripSeconds(t.Imsak),
-		Subuh:   stripSeconds(t.Fajr),
-		Terbit:  stripSeconds(t.Sunrise),
-		Dhuha:   addMinutes(t.Sunrise, 16),
-		Dzuhur:  stripSeconds(t.Dhuhr),
-		Ashr:    stripSeconds(t.Asr),
-		Maghrib: stripSeconds(t.Maghrib),
-		Isya:    stripSeconds(t.Isha),
-	}
+	page.Times = prayerTimesFromRaw(t.Imsak, t.Fajr, t.Sunrise, t.Dhuhr, t.Asr, t.Maghrib, t.Isha)
 
 	hijri := result.Data.Date.Hijri
 	monthID := hijri.Month.En
@@ -862,15 +765,7 @@ func (h *Handler) Shalat(w http.ResponseWriter, r *http.Request) {
 		Weekday: hijri.Weekday.En,
 	}
 
-	now := time.Now().In(time.FixedZone("WIB", 7*3600))
-	page.MasehiDate = fmt.Sprintf("%s, %d %s %d",
-		masehiDaysID[now.Weekday()],
-		now.Day(),
-		masehiMonthsID[now.Month()],
-		now.Year(),
-	)
-
-	h.saveShalatToCache(r.Context(), city, &result, body)
+	h.saveShalatToCache(r.Context(), city, now, result, body)
 
 	h.render(w, "shalat.html", page)
 }
@@ -880,46 +775,44 @@ func (h *Handler) ShalatMini(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) fetchShalatMini(ctx context.Context) model.ShalatMiniData {
-	const city = "Jakarta"
+	_, byName := getPrayerCities()
+	city := lookupPrayerCity(byName, "Jakarta")
+	now := time.Now().In(city.Zone())
 
-	cacheRow, err := h.fetchShalatCache(ctx, city)
+	cacheRow, err := h.fetchShalatCache(ctx, city, now)
 	if err != nil {
-		log.Printf("shalat mini cache for %s: %v", city, err)
+		log.Printf("shalat mini cache for %s: %v", city.Name, err)
 	}
 
 	if cacheRow != nil {
 		return miniDataFromCache(cacheRow)
 	}
 
-	resp, err := aladhanClient.Get("https://api.aladhan.com/v1/timingsByCity?city=Jakarta&country=Indonesia&method=20")
+	result, body, err := fetchTimingsByCoords(ctx, city, now)
 	if err != nil {
-		stale, _ := h.contentStore.GetShalatCacheStale(ctx, city, 20)
-		if stale != nil {
+		if stale := h.staleShalat(ctx, city); stale != nil {
 			return miniDataFromCache(stale)
 		}
 		return model.ShalatMiniData{Error: "Gagal memuat waktu shalat."}
 	}
-	defer resp.Body.Close()
 
-	body, err := io.ReadAll(io.LimitReader(resp.Body, 64*1024))
-	if err != nil {
-		return model.ShalatMiniData{Error: "Gagal memuat waktu shalat."}
-	}
-
-	var result aladhanResponse
-	if err := json.Unmarshal(body, &result); err != nil || result.Code != 200 {
-		return model.ShalatMiniData{Error: "Data tidak tersedia."}
-	}
-
-	h.saveShalatToCache(ctx, city, &result, body)
+	h.saveShalatToCache(ctx, city, now, result, body)
 
 	t := result.Data.Timings
-	return miniDataFromTimings(stripSeconds(t.Fajr), stripSeconds(t.Dhuhr), stripSeconds(t.Asr), stripSeconds(t.Maghrib), stripSeconds(t.Isha))
+	pt := prayerTimesFromRaw(t.Imsak, t.Fajr, t.Sunrise, t.Dhuhr, t.Asr, t.Maghrib, t.Isha)
+	return miniDataFromTimings(pt.Subuh, pt.Dzuhur, pt.Ashr, pt.Maghrib, pt.Isya)
 }
 
-func (h *Handler) fetchShalatCache(ctx context.Context, city string) (*model.ShalatCacheRow, error) {
-	today := store.TodayDateWIB()
-	row, err := h.contentStore.GetShalatCache(ctx, city, today, 20)
+func (h *Handler) staleShalat(ctx context.Context, city model.PrayerCity) *model.ShalatCacheRow {
+	stale, err := h.contentStore.GetShalatCacheStale(ctx, city.Name, aladhanMethodKemenag)
+	if err != nil {
+		log.Printf("shalat stale cache for %s: %v", city.Name, err)
+	}
+	return stale
+}
+
+func (h *Handler) fetchShalatCache(ctx context.Context, city model.PrayerCity, now time.Time) (*model.ShalatCacheRow, error) {
+	row, err := h.contentStore.GetShalatCache(ctx, city.Name, now.Format("2006-01-02"), aladhanMethodKemenag)
 	if err != nil {
 		return nil, fmt.Errorf("get shalat cache: %w", err)
 	}
@@ -930,24 +823,23 @@ func (h *Handler) fetchShalatCache(ctx context.Context, city string) (*model.Sha
 	if err != nil {
 		return row, nil
 	}
-	wib := time.FixedZone("WIB", 7*3600)
-	if time.Now().In(wib).After(expires) {
+	if now.After(expires) {
 		return nil, nil
 	}
 	return row, nil
 }
 
-func (h *Handler) saveShalatToCache(ctx context.Context, city string, result *aladhanResponse, rawBody []byte) {
-	wib := time.FixedZone("WIB", 7*3600)
-	now := time.Now().In(wib)
+func (h *Handler) saveShalatToCache(ctx context.Context, city model.PrayerCity, now time.Time, result *aladhanResponse, rawBody []byte) {
 	t := result.Data.Timings
 	hijri := result.Data.Date.Hijri
 	hijriDate := fmt.Sprintf("%s-%02d-%s", hijri.Year, hijri.Month.Number, hijri.Day)
 
+	// Cache holds raw API values; the ihtiyati margin is applied at display.
+	tomorrow := time.Date(now.Year(), now.Month(), now.Day()+1, 1, 0, 0, 0, city.Zone())
 	row := &model.ShalatCacheRow{
-		City:       city,
+		City:       city.Name,
 		PrayerDate: now.Format("2006-01-02"),
-		Method:     20,
+		Method:     aladhanMethodKemenag,
 		Imsak:      stripSeconds(t.Imsak),
 		Fajr:       stripSeconds(t.Fajr),
 		Sunrise:    stripSeconds(t.Sunrise),
@@ -958,15 +850,16 @@ func (h *Handler) saveShalatToCache(ctx context.Context, city string, result *al
 		HijriDate:  hijriDate,
 		RawJSON:    string(rawBody),
 		FetchedAt:  now.Format(time.RFC3339),
-		ExpiresAt:  now.AddDate(0, 0, 1).Truncate(24 * time.Hour).Add(time.Hour).Format(time.RFC3339),
+		ExpiresAt:  tomorrow.Format(time.RFC3339),
 	}
 	if err := h.contentStore.SaveShalatCache(ctx, row); err != nil {
-		log.Printf("save shalat cache for %s: %v", city, err)
+		log.Printf("save shalat cache for %s: %v", city.Name, err)
 	}
 }
 
 func miniDataFromCache(row *model.ShalatCacheRow) model.ShalatMiniData {
-	return miniDataFromTimings(row.Fajr, row.Dhuhr, row.Asr, row.Maghrib, row.Isha)
+	pt := prayerTimesFromRow(row)
+	return miniDataFromTimings(pt.Subuh, pt.Dzuhur, pt.Ashr, pt.Maghrib, pt.Isya)
 }
 
 func miniDataFromTimings(subuh, dzuhur, ashr, maghrib, isya string) model.ShalatMiniData {
@@ -1053,8 +946,11 @@ func addMinutes(t string, mins int) string {
 	}
 	h, _ := strconv.Atoi(parts[0])
 	m, _ := strconv.Atoi(parts[1])
-	total := h*60 + m + mins
-	return fmt.Sprintf("%02d:%02d", total/60%24, total%60)
+	total := (h*60 + m + mins) % 1440
+	if total < 0 {
+		total += 1440
+	}
+	return fmt.Sprintf("%02d:%02d", total/60, total%60)
 }
 
 func (h *Handler) RobotsTxt(w http.ResponseWriter, r *http.Request) {
