@@ -162,6 +162,9 @@ func (h *Handler) renderPartial(w http.ResponseWriter, name string, data any) {
 		http.Error(w, "Partial not found", http.StatusNotFound)
 		return
 	}
+	// Dynamic HTML must not be heuristically cached: Arabic markup went
+	// through several bidi treatments and stale copies corrupt clipboards.
+	w.Header().Set("Cache-Control", "no-cache")
 	if err := t.ExecuteTemplate(w, name, data); err != nil {
 		log.Printf("renderPartial %s: %v", name, err)
 		http.Error(w, "Internal error", http.StatusInternalServerError)
@@ -174,6 +177,9 @@ func (h *Handler) render(w http.ResponseWriter, page string, data any) {
 		http.Error(w, "Page not found", http.StatusNotFound)
 		return
 	}
+	// Dynamic HTML must not be heuristically cached: Arabic markup went
+	// through several bidi treatments and stale copies corrupt clipboards.
+	w.Header().Set("Cache-Control", "no-cache")
 	if err := t.ExecuteTemplate(w, "base", data); err != nil {
 		log.Printf("render %s: %v", page, err)
 		http.Error(w, "Internal error", http.StatusInternalServerError)
