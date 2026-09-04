@@ -27,6 +27,9 @@ Thumbs.db
 # Local plans
 .plans/
 
+# Local/agent state
+.local/
+
 # Editor
 .vscode/
 .idea/
