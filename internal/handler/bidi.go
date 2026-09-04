@@ -19,11 +19,14 @@ const (
 )
 
 // ornateParens replaces every balanced, non-nested (...) group with an
-// ornate ﴾...﴿ pair wrapped in a styling hook. Tags pass through verbatim;
+// ornate pair. Logical order stays open-first (﴾...﴿) so copy-paste, screen
+// readers, and search see clean data; each glyph is visually mirrored via
+// .paren-flip CSS so the pair hugs RTL text (open on the right opens
+// leftward toward the text and vice versa). Tags pass through verbatim;
 // unbalanced and nested parens are left untouched.
 func ornateParens(s string) string {
 	var b strings.Builder
-	b.Grow(len(s) + 64)
+	b.Grow(len(s) + 96)
 	i := 0
 	for i < len(s) {
 		c := s[i]
@@ -39,9 +42,9 @@ func ornateParens(s string) string {
 		}
 		if c == '(' {
 			if end, ok := parenGroupEnd(s, i); ok {
-				b.WriteString(`<span class="paren-orn">` + ornateOpen)
+				b.WriteString(`<span class="paren-orn"><span class="paren-flip">` + ornateOpen + `</span>`)
 				b.WriteString(s[i+1 : end])
-				b.WriteString(ornateClose + `</span>`)
+				b.WriteString(`<span class="paren-flip">` + ornateClose + `</span></span>`)
 				i = end + 1
 				continue
 			}

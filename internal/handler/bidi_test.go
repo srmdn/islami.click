@@ -67,8 +67,11 @@ func TestArabicHTMLEscapesAndOrnates(t *testing.T) {
 	if !strings.Contains(s, "&lt;b&gt;") {
 		t.Fatalf("expected escaping: %s", s)
 	}
-	if !strings.Contains(s, `<span class="paren-orn">﴾ي﴿</span>`) {
-		t.Fatalf("expected ornate pair: %s", s)
+	// Logical order stays open-first for clean copy-paste; visual hug comes
+	// from .paren-flip CSS, not character order.
+	want := `<span class="paren-orn"><span class="paren-flip">﴾</span>ي<span class="paren-flip">﴿</span></span>`
+	if !strings.Contains(s, want) {
+		t.Fatalf("expected flipped ornate pair, got: %s", s)
 	}
 	if strings.Contains(s, "(ي)") {
 		t.Fatalf("ascii parens remain: %s", s)
@@ -89,7 +92,7 @@ func TestOrnateParensNestedConvertsInnermostOnly(t *testing.T) {
 	if !strings.HasPrefix(out, "(nest ") {
 		t.Fatalf("outer group should stay raw: %s", out)
 	}
-	if !strings.Contains(out, `<span class="paren-orn">﴾ed﴿</span>`) {
+	if !strings.Contains(out, `<span class="paren-flip">﴾</span>ed<span class="paren-flip">﴿</span>`) {
 		t.Fatalf("inner group should convert: %s", out)
 	}
 }
