@@ -40,6 +40,7 @@ type ShalatMiniData struct {
 	Prayers        []PrayerMiniRow
 	NextPrayerUnix int64
 	NextPrayerName string
+	NextPrayerTime string
 	Error          string
 }
 

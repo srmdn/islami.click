@@ -182,7 +182,14 @@ func (h *Handler) render(w http.ResponseWriter, page string, data any) {
 func (h *Handler) Home(w http.ResponseWriter, r *http.Request) {
 	meta := pageMeta(r, "Beranda", "Portal islami lengkap: Al-Matsurat, jadwal shalat, Al-Quran, doa harian, Asmaul Husna, dan kiblat untuk Muslim Indonesia.")
 	meta.JSONLD = websiteJSONLD()
-	h.render(w, "home.html", struct{ Meta model.PageMeta }{Meta: meta})
+	wib := time.FixedZone("WIB", 7*3600)
+	now := time.Now().In(wib)
+	hijriDate := hijri.FromGregorian(now)
+	h.render(w, "home.html", model.HomePageData{
+		Meta:        meta,
+		HijriToday:  fmt.Sprintf("%d %s %d H", hijriDate.Day, hijri.MonthNamesID[hijriDate.Month], hijriDate.Year),
+		MasehiToday: hijri.FormatGregorianID(now),
+	})
 }
 
 func (h *Handler) AlMatsurat(w http.ResponseWriter, r *http.Request) {
@@ -1009,7 +1016,7 @@ func miniDataFromTimings(subuh, dzuhur, ashr, maghrib, isya string) model.Shalat
 		nextT = nextT.Add(24 * time.Hour)
 	}
 
-	return model.ShalatMiniData{City: "Jakarta", Prayers: rows, NextPrayerUnix: nextT.Unix(), NextPrayerName: nextName}
+	return model.ShalatMiniData{City: "Jakarta", Prayers: rows, NextPrayerUnix: nextT.Unix(), NextPrayerName: nextName, NextPrayerTime: nextTime}
 }
 
 func stripSeconds(t string) string {
