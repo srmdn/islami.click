@@ -1,60 +1,66 @@
 package handler
 
 import (
+	"html/template"
 	"strings"
 	"testing"
 )
 
-func TestIsolateParensBasic(t *testing.T) {
-	out := isolateParens("أَصْبَحْتُ (أَمْسَيتُ) مِنْكَ")
-	if !strings.Contains(out, `<span dir="ltr">(`+"\u200E"+`<bdi>أَمْسَيتُ</bdi>`+"\u200E"+`)</span>`) {
-		t.Fatalf("unexpected isolation: %s", out)
-	}
-	if strings.Count(out, "(") != 1 || strings.Count(out, ")") != 1 {
-		t.Fatalf("paren count changed: %s", out)
-	}
-}
-
-func TestIsolateParensMultipleGroups(t *testing.T) {
-	out := isolateParens("(أ) dan (ب)")
-	if strings.Count(out, `<span dir="ltr">`) != 2 {
-		t.Fatalf("expected 2 groups: %s", out)
-	}
-}
-
-func TestIsolateParensPreservesTags(t *testing.T) {
-	in := `أبتدئ <mark class="tafsir-key">(اللهِ)</mark> علم`
-	out := isolateParens(in)
-	// Outer markup stays outside the isolation span; inner text is isolated.
-	if !strings.Contains(out, `<mark class="tafsir-key"><span dir="ltr">(`) {
-		t.Fatalf("group not isolated inside mark: %s", out)
-	}
-	if !strings.Contains(out, "<bdi>اللهِ</bdi>") {
-		t.Fatalf("inner text not in bdi: %s", out)
-	}
-	if strings.Contains(out, "&lt;") {
-		t.Fatalf("tag escaped unexpectedly: %s", out)
-	}
-}
-
-func TestIsolateParensLeavesUnbalancedAlone(t *testing.T) {
-	for _, in := range []string{"tanpa kurung", "(buka saja", "tutup saja)"} {
-		out := isolateParens(in)
-		if strings.Contains(out, "<span") {
-			t.Fatalf("should not wrap %q: %s", in, out)
+// bidiControls must never appear in rendered Arabic: they leak into
+// clipboards and permanently scramble pasted text in every target.
+func assertNoBidiControls(t *testing.T, s, what string) {
+	t.Helper()
+	for _, c := range []string{"\u200E", "\u200F", "\u202A", "\u202B", "\u202C", "\u2066", "\u2067", "\u2069"} {
+		if strings.Contains(s, c) {
+			t.Fatalf("%s contains bidi control U+%04X", what, []rune(c)[0])
 		}
 	}
 }
 
-func TestIsolateParensNestedWrapsInnermostOnly(t *testing.T) {
-	// No vendored content nests parens (enforced by content tests), but the
-	// isolator degrades gracefully: outer group stays raw, inner is isolated.
-	out := isolateParens("(nest (ed))")
+func TestOrnateParensBasic(t *testing.T) {
+	out := ornateParens("أَصْبَحْتُ (أَمْسَيتُ) مِنْكَ")
+	want := `<span class="paren-orn"><span class="paren-flip">﴾</span>أَمْسَيتُ<span class="paren-flip">﴿</span></span>`
+	if !strings.Contains(out, want) {
+		t.Fatalf("unexpected conversion: %s", out)
+	}
+	assertNoBidiControls(t, out, "ornate output")
+}
+
+func TestOrnateParensMultipleGroups(t *testing.T) {
+	out := ornateParens("(أ) dan (ب)")
+	if strings.Count(out, `paren-orn`) != 2 {
+		t.Fatalf("expected 2 groups: %s", out)
+	}
+}
+
+func TestOrnateParensPreservesTags(t *testing.T) {
+	in := `أبتدئ <mark class="tafsir-key">(اللهِ)</mark> علم`
+	out := ornateParens(in)
+	if !strings.Contains(out, `<mark class="tafsir-key"><span class="paren-orn">`) {
+		t.Fatalf("group not converted inside mark: %s", out)
+	}
+	if strings.Contains(out, "&lt;") {
+		t.Fatalf("tag escaped unexpectedly: %s", out)
+	}
+	assertNoBidiControls(t, out, "ornate output")
+}
+
+func TestOrnateParensLeavesUnbalancedAlone(t *testing.T) {
+	for _, in := range []string{"tanpa kurung", "(buka saja", "tutup saja)"} {
+		if out := ornateParens(in); strings.Contains(out, "paren-orn") {
+			t.Fatalf("should not convert %q: %s", in, out)
+		}
+	}
+}
+
+func TestOrnateParensNestedConvertsInnermostOnly(t *testing.T) {
+	// No vendored content nests parens; graceful degradation only.
+	out := ornateParens("(nest (ed))")
 	if !strings.HasPrefix(out, "(nest ") {
 		t.Fatalf("outer group should stay raw: %s", out)
 	}
-	if !strings.Contains(out, "<bdi>ed</bdi>") {
-		t.Fatalf("inner group should be isolated: %s", out)
+	if !strings.Contains(out, `<span class="paren-flip">﴾</span>ed<span class="paren-flip">﴿</span>`) {
+		t.Fatalf("inner group should convert: %s", out)
 	}
 }
 
@@ -76,23 +82,17 @@ func TestArabicHTMLEscapesAndOrnates(t *testing.T) {
 	if strings.Contains(s, "(ي)") {
 		t.Fatalf("ascii parens remain: %s", s)
 	}
+	assertNoBidiControls(t, s, "arabicHTML output")
 }
 
-func TestOrnateParensLeavesUnbalancedAlone(t *testing.T) {
-	for _, in := range []string{"tanpa kurung", "(buka saja", "tutup saja)"} {
-		if out := ornateParens(in); strings.Contains(out, "paren-orn") {
-			t.Fatalf("should not convert %q: %s", in, out)
-		}
+func TestTafsirHTMLOrnatesAndStaysClean(t *testing.T) {
+	out := TafsirHTML(template.HTML(`أبتدئ <mark class="tafsir-key">(اللهِ)</mark> علم`))
+	s := string(out)
+	if !strings.Contains(s, `<mark class="tafsir-key"><span class="paren-orn">`) {
+		t.Fatalf("group not converted inside mark: %s", s)
 	}
-}
-
-func TestOrnateParensNestedConvertsInnermostOnly(t *testing.T) {
-	// No vendored content nests parens; graceful degradation only.
-	out := ornateParens("(nest (ed))")
-	if !strings.HasPrefix(out, "(nest ") {
-		t.Fatalf("outer group should stay raw: %s", out)
+	if strings.Contains(s, "(اللهِ)") {
+		t.Fatalf("ascii parens remain: %s", s)
 	}
-	if !strings.Contains(out, `<span class="paren-flip">﴾</span>ed<span class="paren-flip">﴿</span>`) {
-		t.Fatalf("inner group should convert: %s", out)
-	}
+	assertNoBidiControls(t, s, "tafsirHTML output")
 }

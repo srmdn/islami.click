@@ -87,9 +87,14 @@ func TestTafsirSurahRenders(t *testing.T) {
 		t.Fatalf("status = %d, want 200", rec.Code)
 	}
 	body := rec.Body.String()
-	for _, want := range []string{"Tafsir Al-Muyassar", "tafsir-key", "Tafsir Berikutnya", "\u200E"} {
+	for _, want := range []string{"Tafsir Al-Muyassar", "tafsir-key", "Tafsir Berikutnya", "﴾", "﴿"} {
 		if !strings.Contains(body, want) {
 			t.Fatalf("surah page missing %q", want)
+		}
+	}
+	for _, bad := range []string{"\u200E", "\u200F", "\u202A", "\u202B", "\u202C", "\u2066", "\u2067", "\u2069"} {
+		if strings.Contains(body, bad) {
+			t.Fatalf("surah page leaks bidi control U+%04X into copy-pasteable text", []rune(bad)[0])
 		}
 	}
 	if strings.Contains(body, "onerror=") || strings.Contains(body, "onclick=") {
