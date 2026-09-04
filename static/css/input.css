@@ -69,6 +69,19 @@
   }
 }
 
+/* Live indicator keyframes live at top level (never inside @layer):
+   keyframes nested in a layer are silently dropped by some browsers,
+   which kills the animation with no fallback. */
+@keyframes live-ping {
+  0% { transform: scale(1); opacity: 0.8; }
+  75% { opacity: 0.25; }
+  100% { transform: scale(3); opacity: 0; }
+}
+@keyframes live-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.15; }
+}
+
 @layer base {
   .arabic {
     font-family: var(--font-arabic);
@@ -157,25 +170,19 @@
     animation: float 3s ease-in-out infinite;
   }
 
-  /* Live indicator: wide expanding ring + glowing core */
-  @keyframes live-ping {
-    0% { transform: scale(1); opacity: 0.8; }
-    75% { opacity: 0.25; }
-    100% { transform: scale(3); opacity: 0; }
-  }
+  /* Live indicator: wide expanding ring + blinking core.
+     Keyframes are top-level (see above); classes stay layered. */
   .animate-live-ping {
     animation: live-ping 1.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+  .animate-live-blink {
+    animation: live-blink 1.2s ease-in-out infinite;
   }
   .live-dot {
     box-shadow: 0 0 0 3px rgba(14, 92, 115, 0.18);
   }
   .dark .live-dot {
     box-shadow: 0 0 0 3px rgba(131, 192, 204, 0.2);
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .animate-live-ping {
-      animation: none;
-    }
   }
 
   .coming-soon-pill {
