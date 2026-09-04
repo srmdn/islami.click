@@ -3,41 +3,43 @@
 
 {{define "content"}}
 <div class="max-w-2xl mx-auto px-4 py-8"
-  x-data="quizApp('{{.Category.Slug}}')"
+  x-data="quizApp({{js .Category.Slug}})"
   x-init="init()"
 >
 
   <!-- Idle: start screen -->
   <div x-show="state === 'idle'" x-cloak>
     <div class="mb-6 text-center">
-      <a href="/quiz" class="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400 hover:text-[#0E5C73] dark:hover:text-[#14B8A6] mb-6 transition-colors">
+      <a href="/quiz" class="inline-flex items-center gap-1.5 text-sm text-stone-500 dark:text-stone-400 hover:text-[#0E5C73] dark:hover:text-[#0E5C73] mb-6 transition-colors">
         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
         Semua Kategori
       </a>
-      <h1 class="text-2xl font-bold text-slate-800 dark:text-white mt-2">Quiz {{.Category.Label}}</h1>
-      <p class="text-slate-500 dark:text-slate-400 text-sm mt-1.5">{{.Category.Description}}</p>
+      <h1 class="text-2xl font-bold text-stone-800 dark:text-white mt-2">Quiz {{.Category.Label}}</h1>
+      <p class="text-stone-500 dark:text-stone-400 text-sm mt-1.5">{{.Category.Description}}</p>
     </div>
 
-    <div class="rounded-2xl border border-slate-200/80 dark:border-slate-700/50 bg-white dark:bg-slate-800 p-6 space-y-6">
+    <div class="rounded-2xl border border-stone-200/80 dark:border-rose-800/50 bg-white dark:bg-rose-950/20 p-6 space-y-6">
 
       <div>
-        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Nama Kamu</label>
+        <label for="quiz-player-name" class="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-2">Nama Kamu</label>
         <input
+          id="quiz-player-name"
           type="text"
           x-model="playerName"
           maxlength="30"
           placeholder="Masukkan nama (maks 30 karakter)"
-          class="w-full px-4 py-3 rounded-xl border border-slate-200/80 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/30 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0E5C73] transition text-sm"
+          class="w-full px-4 py-3 rounded-xl border border-stone-200/80 dark:border-[#1E4458] bg-stone-50 dark:bg-[#102D37] text-stone-800 dark:text-white placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-[#0E5C73] transition text-sm"
         />
       </div>
 
       <div>
-        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Tingkat Kesulitan</label>
+        <fieldset>
+        <legend class="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-2">Tingkat Kesulitan</legend>
         <div class="grid grid-cols-3 gap-3">
           <button
             @click="changeDifficulty('basic')"
             :disabled="leaderboardLoading"
-            :class="difficulty === 'basic' ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400' : 'border-slate-200/80 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/30 text-slate-600 dark:text-slate-300 hover:border-emerald-400'"
+            :class="difficulty === 'basic' ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400' : 'border-stone-200/80 dark:border-[#1E4458] bg-stone-50 dark:bg-[#102D37] text-stone-600 dark:text-stone-300 hover:border-emerald-400'"
             class="flex flex-col items-center gap-1 px-3 py-3 rounded-xl border-2 transition-all text-sm font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <span class="text-lg">🟢</span>
@@ -47,7 +49,7 @@
           <button
             @click="changeDifficulty('intermediate')"
             :disabled="leaderboardLoading"
-            :class="difficulty === 'intermediate' ? 'border-amber-500 bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400' : 'border-slate-200/80 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/30 text-slate-600 dark:text-slate-300 hover:border-amber-400'"
+            :class="difficulty === 'intermediate' ? 'border-amber-500 bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400' : 'border-stone-200/80 dark:border-[#1E4458] bg-stone-50 dark:bg-[#102D37] text-stone-600 dark:text-stone-300 hover:border-amber-400'"
             class="flex flex-col items-center gap-1 px-3 py-3 rounded-xl border-2 transition-all text-sm font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <span class="text-lg">🟡</span>
@@ -57,7 +59,7 @@
           <button
             @click="changeDifficulty('advanced')"
             :disabled="leaderboardLoading"
-            :class="difficulty === 'advanced' ? 'border-red-500 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400' : 'border-slate-200/80 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/30 text-slate-600 dark:text-slate-300 hover:border-red-400'"
+            :class="difficulty === 'advanced' ? 'border-red-500 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400' : 'border-stone-200/80 dark:border-[#1E4458] bg-stone-50 dark:bg-[#102D37] text-stone-600 dark:text-stone-300 hover:border-red-400'"
             class="flex flex-col items-center gap-1 px-3 py-3 rounded-xl border-2 transition-all text-sm font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <span class="text-lg">🔴</span>
@@ -65,6 +67,7 @@
             <span class="text-xs opacity-70">15 soal</span>
           </button>
         </div>
+        </fieldset>
       </div>
 
       <button
@@ -78,41 +81,41 @@
 
     <!-- Leaderboard preview on idle -->
     <div class="mt-8" x-show="leaderboardMonths.length > 0 || leaderboard.length > 0 || leaderboardLoading">
-      <div class="mb-4 rounded-xl border border-slate-200/80 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/30 p-4">
-        <h2 class="text-sm font-semibold text-slate-700 dark:text-slate-200">Cara hitung poin</h2>
-        <div class="mt-2 space-y-1.5 text-sm text-slate-500 dark:text-slate-400">
+      <div class="mb-4 rounded-xl border border-stone-200/80 dark:border-[#1E4458] bg-stone-50 dark:bg-[#102D37] p-4">
+        <h2 class="text-sm font-semibold text-stone-700 dark:text-stone-200">Cara hitung poin</h2>
+        <div class="mt-2 space-y-1.5 text-sm text-stone-500 dark:text-stone-400">
           <p>Waktu memengaruhi poin. Semakin cepat kamu menjawab dengan benar, semakin besar bonus poin.</p>
-          <p><span class="font-medium text-[#0E5C73] dark:text-[#14B8A6]">Rumus:</span> 10 poin + bonus waktu.</p>
-          <p><span class="font-medium text-[#0E5C73] dark:text-[#14B8A6]">Bonus waktu:</span> dibulatkan dari (sisa detik / 30) x 10.</p>
-          <p><span class="font-medium text-[#0E5C73] dark:text-[#14B8A6]">Jawaban salah atau waktu habis:</span> 0 poin.</p>
+          <p><span class="font-medium text-[#0E5C73] dark:text-[#0E5C73]">Rumus:</span> 10 poin + bonus waktu.</p>
+          <p><span class="font-medium text-[#0E5C73] dark:text-[#0E5C73]">Bonus waktu:</span> dibulatkan dari (sisa detik / 30) x 10.</p>
+          <p><span class="font-medium text-[#0E5C73] dark:text-[#0E5C73]">Jawaban salah atau waktu habis:</span> 0 poin.</p>
         </div>
       </div>
 
-      <h2 class="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-3 uppercase tracking-wide">
+      <h2 class="text-sm font-semibold text-stone-600 dark:text-stone-400 mb-3 uppercase tracking-wide">
         Leaderboard: <span x-text="difficultyLabel()"></span>
-        <span x-show="leaderboardLoading" class="ml-2 text-xs font-normal normal-case tracking-normal text-slate-400">Memuat...</span>
+        <span x-show="leaderboardLoading" class="ml-2 text-xs font-normal normal-case tracking-normal text-stone-400">Memuat...</span>
       </h2>
       <div x-show="leaderboardMonths.length > 0" class="mb-3 flex flex-wrap gap-2">
         <template x-for="month in leaderboardMonths" :key="month">
           <button
             @click="selectLeaderboardMonth(month)"
             :disabled="leaderboardLoading"
-            :class="selectedLeaderboardMonth === month ? 'border-[#0E5C73] bg-[#0E5C73] text-white dark:border-[#14B8A6] dark:bg-[#14B8A6] dark:text-[#0C1E26]' : 'border-slate-200/80 dark:border-slate-700/50 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:border-[#0E5C73] dark:hover:border-[#14B8A6]'"
+            :class="selectedLeaderboardMonth === month ? 'border-[#0E5C73] bg-[#0E5C73] text-white dark:border-[#0E5C73] dark:bg-[#0E5C73] dark:text-[#0C1E26]' : 'border-stone-200/80 dark:border-[#1E4458] bg-white dark:bg-[#143444] text-stone-600 dark:text-stone-300 hover:border-[#0E5C73] dark:hover:border-[#0E5C73]'"
             class="px-3 py-1.5 rounded-full border text-xs font-semibold transition-colors disabled:opacity-50"
             x-text="formatLeaderboardMonth(month)"
           ></button>
         </template>
       </div>
-      <div class="rounded-2xl border border-slate-200/80 dark:border-slate-700/50 overflow-hidden">
+      <div class="rounded-2xl border border-stone-200/80 dark:border-[#1E4458] bg-teal-950/10 overflow-hidden">
         <template x-for="(sc, i) in leaderboard" :key="sc.rank">
-          <div class="flex items-center gap-3 px-4 py-3 border-b border-slate-200 dark:border-slate-700/50 last:border-0">
-            <span class="w-6 text-center text-sm font-bold" :class="i === 0 ? 'text-amber-500' : i === 1 ? 'text-slate-400' : i === 2 ? 'text-amber-700' : 'text-slate-400'" x-text="i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i+1)"></span>
-            <span class="flex-1 text-sm font-medium text-slate-700 dark:text-slate-200" x-text="sc.player_name"></span>
-            <span class="text-sm font-semibold text-[#0E5C73] dark:text-[#14B8A6]" x-text="sc.score + ' pts'"></span>
-            <span class="text-xs text-slate-400" x-text="sc.correct + '/' + sc.total"></span>
+          <div class="flex items-center gap-3 px-4 py-3 border-b border-stone-200 dark:border-[#1E4458]/70 last:border-0">
+            <span class="w-6 text-center text-sm font-bold" :class="i === 0 ? 'text-amber-500' : i === 1 ? 'text-stone-400' : i === 2 ? 'text-amber-700' : 'text-stone-400'" x-text="i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i+1)"></span>
+            <span class="flex-1 text-sm font-medium text-stone-700 dark:text-stone-200" x-text="sc.player_name"></span>
+            <span class="text-sm font-semibold text-[#0E5C73] dark:text-[#0E5C73]" x-text="sc.score + ' pts'"></span>
+            <span class="text-xs text-stone-400" x-text="sc.correct + '/' + sc.total"></span>
           </div>
         </template>
-        <div x-show="!leaderboardLoading && leaderboard.length === 0" class="px-4 py-5 text-sm text-slate-500 dark:text-slate-400">
+        <div x-show="!leaderboardLoading && leaderboard.length === 0" class="px-4 py-5 text-sm text-stone-500 dark:text-stone-400">
           Belum ada skor untuk <span class="font-medium" x-text="formatLeaderboardMonth(selectedLeaderboardMonth || currentLeaderboardMonth)"></span>.
         </div>
       </div>
@@ -122,7 +125,7 @@
   <!-- Loading questions -->
   <div x-show="state === 'loading'" x-cloak class="flex flex-col items-center justify-center py-24 gap-4">
     <div class="w-10 h-10 rounded-full border-4 border-[#0E5C73]/20 border-t-[#0E5C73] animate-spin"></div>
-    <p class="text-slate-500 dark:text-slate-400 text-sm">Memuat soal...</p>
+    <p class="text-stone-500 dark:text-stone-400 text-sm">Memuat soal...</p>
   </div>
 
   <!-- Playing & Answered -->
@@ -130,14 +133,14 @@
 
     <!-- Header bar -->
     <div class="flex items-center justify-between mb-5">
-      <div class="text-sm text-slate-500 dark:text-slate-400">
-        Soal <span class="font-semibold text-slate-700 dark:text-slate-200" x-text="currentIndex + 1"></span> / <span x-text="totalQuestions"></span>
+      <div class="text-sm text-stone-500 dark:text-stone-400">
+        Soal <span class="font-semibold text-stone-700 dark:text-stone-200" x-text="currentIndex + 1"></span> / <span x-text="totalQuestions"></span>
       </div>
       <div class="flex items-center gap-3">
-        <span class="text-sm font-medium text-slate-400 dark:text-slate-500" x-text="answeredCount() + ' dijawab'"></span>
+        <span class="text-sm font-medium text-stone-400 dark:text-stone-500" x-text="answeredCount() + ' dijawab'"></span>
         <!-- Timer -->
         <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-mono font-semibold"
-          :class="timeLeft <= 5 ? 'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'"
+          :class="timeLeft <= 5 ? 'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400' : 'bg-stone-100 dark:bg-[#143444] text-stone-600 dark:text-stone-300'"
         >
           <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
           <span x-text="timeLeft + 's'"></span>
@@ -146,15 +149,15 @@
     </div>
 
     <!-- Progress bar -->
-    <div class="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full mb-6 overflow-hidden">
+    <div class="w-full h-1.5 bg-stone-100 dark:bg-[#143444] rounded-full mb-6 overflow-hidden">
       <div class="h-full bg-[#0E5C73] rounded-full transition-all duration-300"
         :style="'width: ' + (totalQuestions > 0 ? ((currentIndex) / totalQuestions * 100) : 0) + '%'"
       ></div>
     </div>
 
     <!-- Question -->
-    <div class="rounded-2xl border border-slate-200/80 dark:border-slate-700/50 bg-white dark:bg-slate-800 p-6 mb-4">
-      <p class="text-base font-medium text-slate-800 dark:text-white leading-relaxed" x-text="currentQuestion().question"></p>
+    <div class="rounded-2xl border border-stone-200/80 dark:border-[#1E4458] bg-white dark:bg-[#143444] p-6 mb-4">
+      <p class="text-base font-medium text-stone-800 dark:text-white leading-relaxed" x-text="currentQuestion().question"></p>
     </div>
 
     <!-- Options -->
@@ -171,8 +174,8 @@
     </div>
 
     <!-- Answered feedback (no correct/wrong reveal) -->
-    <div x-show="state === 'answered'" x-cloak class="rounded-xl px-4 py-3 mb-5 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/50 text-center">
-      <p class="text-sm text-slate-500 dark:text-slate-400" x-text="selectedAnswer >= 0 ? 'Jawaban dicatat.' : 'Waktu habis!'"></p>
+    <div x-show="state === 'answered'" x-cloak class="rounded-xl px-4 py-3 mb-5 bg-stone-50 dark:bg-[#102D37] border border-stone-200 dark:border-[#1E4458] text-center">
+      <p class="text-sm text-stone-500 dark:text-stone-400" x-text="selectedAnswer >= 0 ? 'Jawaban dicatat.' : 'Waktu habis!'"></p>
     </div>
 
     <!-- Next button -->
@@ -188,72 +191,78 @@
   <!-- Submitting to server -->
   <div x-show="state === 'submitting'" x-cloak class="flex flex-col items-center justify-center py-24 gap-4">
     <div class="w-10 h-10 rounded-full border-4 border-[#0E5C73]/20 border-t-[#0E5C73] animate-spin"></div>
-    <p class="text-slate-500 dark:text-slate-400 text-sm">Menghitung hasil...</p>
+    <p class="text-stone-500 dark:text-stone-400 text-sm">Menghitung hasil...</p>
+  </div>
+
+  <div x-show="state === 'error'" x-cloak class="rounded-2xl border border-red-200 dark:border-red-800/60 bg-red-50 dark:bg-red-950/20 px-6 py-10 text-center" role="alert">
+    <h2 class="text-lg font-bold text-red-700 dark:text-red-400">Koneksi terputus</h2>
+    <p class="mt-2 text-sm text-red-600 dark:text-red-300" x-text="errorMessage"></p>
+    <button @click="restart()" class="mt-6 px-6 py-3 rounded-xl bg-[#0E5C73] hover:bg-[#0A4A5C] text-white font-semibold transition-colors">Mulai ulang</button>
   </div>
 
   <!-- Finished: results -->
   <div x-show="state === 'finished'" x-cloak>
     <div class="text-center mb-8">
       <div class="text-5xl mb-3" x-text="resultEmoji()"></div>
-      <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-1">Quiz Selesai!</h2>
-      <p class="text-slate-500 dark:text-slate-400 text-sm" x-text="'Kategori: {{.Category.Label}} | ' + difficultyLabel()"></p>
+      <h2 class="text-2xl font-bold text-stone-800 dark:text-white mb-1">Quiz Selesai!</h2>
+      <p class="text-stone-500 dark:text-stone-400 text-sm" x-text="'Kategori: ' + categoryLabel + ' | ' + difficultyLabel()"></p>
     </div>
 
     <div class="grid grid-cols-3 gap-3 mb-8">
-      <div class="text-center rounded-2xl border border-slate-200/80 dark:border-slate-700/50 bg-white dark:bg-slate-800 p-4">
-        <div class="text-2xl font-bold text-[#0E5C73] dark:text-[#14B8A6]" x-text="score"></div>
-        <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Poin</div>
+      <div class="text-center rounded-2xl border border-stone-200/80 dark:border-rose-800/50 bg-white dark:bg-rose-950/20 p-4">
+        <div class="text-2xl font-bold text-[#0E5C73] dark:text-[#0E5C73]" x-text="score"></div>
+        <div class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Poin</div>
       </div>
-      <div class="text-center rounded-2xl border border-slate-200/80 dark:border-slate-700/50 bg-white dark:bg-slate-800 p-4">
+      <div class="text-center rounded-2xl border border-stone-200/80 dark:border-rose-800/50 bg-white dark:bg-rose-950/20 p-4">
         <div class="text-2xl font-bold text-emerald-500" x-text="correctCount + '/' + totalCount"></div>
-        <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Benar</div>
+        <div class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Benar</div>
       </div>
-      <div class="text-center rounded-2xl border border-slate-200/80 dark:border-slate-700/50 bg-white dark:bg-slate-800 p-4">
+      <div class="text-center rounded-2xl border border-stone-200/80 dark:border-rose-800/50 bg-white dark:bg-rose-950/20 p-4">
         <div class="text-2xl font-bold text-amber-500" x-text="totalCount > 0 ? Math.round(correctCount / totalCount * 100) + '%' : '0%'"></div>
-        <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Akurasi</div>
+        <div class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">Akurasi</div>
       </div>
     </div>
 
-    <p class="mb-8 text-center text-xs text-slate-500 dark:text-slate-400">
+    <p class="mb-8 text-center text-xs text-stone-500 dark:text-stone-400">
       Total poin = 10 poin per jawaban benar + bonus cepat sampai 10 poin per soal.
     </p>
 
     <!-- Leaderboard -->
     <div x-show="leaderboardMonths.length > 0 || leaderboard.length > 0" class="mb-8">
-      <div class="mb-4 rounded-xl border border-slate-200/80 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/30 p-4 text-left">
-        <h2 class="text-sm font-semibold text-slate-700 dark:text-slate-200">Cara hitung poin</h2>
-        <div class="mt-2 space-y-1.5 text-sm text-slate-500 dark:text-slate-400">
+      <div class="mb-4 rounded-xl border border-stone-200/80 dark:border-[#1E4458] bg-stone-50 dark:bg-[#102D37] p-4 text-left">
+        <h2 class="text-sm font-semibold text-stone-700 dark:text-stone-200">Cara hitung poin</h2>
+        <div class="mt-2 space-y-1.5 text-sm text-stone-500 dark:text-stone-400">
           <p>Waktu memengaruhi poin. Semakin cepat kamu menjawab dengan benar, semakin besar bonus poin.</p>
-          <p><span class="font-medium text-[#0E5C73] dark:text-[#14B8A6]">Rumus:</span> 10 poin + bonus waktu.</p>
-          <p><span class="font-medium text-[#0E5C73] dark:text-[#14B8A6]">Bonus waktu:</span> dibulatkan dari (sisa detik / 30) x 10.</p>
-          <p><span class="font-medium text-[#0E5C73] dark:text-[#14B8A6]">Jawaban salah atau waktu habis:</span> 0 poin.</p>
+          <p><span class="font-medium text-[#0E5C73] dark:text-[#0E5C73]">Rumus:</span> 10 poin + bonus waktu.</p>
+          <p><span class="font-medium text-[#0E5C73] dark:text-[#0E5C73]">Bonus waktu:</span> dibulatkan dari (sisa detik / 30) x 10.</p>
+          <p><span class="font-medium text-[#0E5C73] dark:text-[#0E5C73]">Jawaban salah atau waktu habis:</span> 0 poin.</p>
         </div>
       </div>
 
-      <h2 class="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-3 uppercase tracking-wide">Leaderboard: <span x-text="difficultyLabel()"></span></h2>
+      <h2 class="text-sm font-semibold text-stone-600 dark:text-stone-400 mb-3 uppercase tracking-wide">Leaderboard: <span x-text="difficultyLabel()"></span></h2>
       <div x-show="leaderboardMonths.length > 0" class="mb-3 flex flex-wrap gap-2">
         <template x-for="month in leaderboardMonths" :key="month">
           <button
             @click="selectLeaderboardMonth(month)"
             :disabled="leaderboardLoading"
-            :class="selectedLeaderboardMonth === month ? 'border-[#0E5C73] bg-[#0E5C73] text-white dark:border-[#14B8A6] dark:bg-[#14B8A6] dark:text-[#0C1E26]' : 'border-slate-200/80 dark:border-slate-700/50 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:border-[#0E5C73] dark:hover:border-[#14B8A6]'"
+            :class="selectedLeaderboardMonth === month ? 'border-[#0E5C73] bg-[#0E5C73] text-white dark:border-[#0E5C73] dark:bg-[#0E5C73] dark:text-[#0C1E26]' : 'border-stone-200/80 dark:border-[#1E4458] bg-white dark:bg-[#143444] text-stone-600 dark:text-stone-300 hover:border-[#0E5C73] dark:hover:border-[#0E5C73]'"
             class="px-3 py-1.5 rounded-full border text-xs font-semibold transition-colors disabled:opacity-50"
             x-text="formatLeaderboardMonth(month)"
           ></button>
         </template>
       </div>
-      <div class="rounded-2xl border border-slate-200/80 dark:border-slate-700/50 overflow-hidden">
+      <div class="rounded-2xl border border-stone-200/80 dark:border-[#1E4458] bg-teal-950/10 overflow-hidden">
         <template x-for="(sc, i) in leaderboard" :key="sc.rank">
-          <div class="flex items-center gap-3 px-4 py-3 border-b border-slate-200 dark:border-slate-700/50 last:border-0"
+          <div class="flex items-center gap-3 px-4 py-3 border-b border-stone-200 dark:border-[#1E4458]/70 last:border-0"
             :class="sc.player_name === playerName && sc.score === score ? 'bg-amber-50/50 dark:bg-amber-900/10' : ''"
           >
-            <span class="w-6 text-center text-sm font-bold" :class="i === 0 ? 'text-amber-500' : i === 1 ? 'text-slate-400' : i === 2 ? 'text-amber-700' : 'text-slate-400'" x-text="i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i+1)"></span>
-            <span class="flex-1 text-sm font-medium text-slate-700 dark:text-slate-200" x-text="sc.player_name"></span>
-            <span class="text-sm font-semibold text-[#0E5C73] dark:text-[#14B8A6]" x-text="sc.score + ' pts'"></span>
-            <span class="text-xs text-slate-400" x-text="sc.correct + '/' + sc.total"></span>
+            <span class="w-6 text-center text-sm font-bold" :class="i === 0 ? 'text-amber-500' : i === 1 ? 'text-stone-400' : i === 2 ? 'text-amber-700' : 'text-stone-400'" x-text="i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i+1)"></span>
+            <span class="flex-1 text-sm font-medium text-stone-700 dark:text-stone-200" x-text="sc.player_name"></span>
+            <span class="text-sm font-semibold text-[#0E5C73] dark:text-[#0E5C73]" x-text="sc.score + ' pts'"></span>
+            <span class="text-xs text-stone-400" x-text="sc.correct + '/' + sc.total"></span>
           </div>
         </template>
-        <div x-show="!leaderboardLoading && leaderboard.length === 0" class="px-4 py-5 text-sm text-slate-500 dark:text-slate-400">
+        <div x-show="!leaderboardLoading && leaderboard.length === 0" class="px-4 py-5 text-sm text-stone-500 dark:text-stone-400">
           Belum ada skor untuk <span class="font-medium" x-text="formatLeaderboardMonth(selectedLeaderboardMonth || currentLeaderboardMonth)"></span>.
         </div>
       </div>
@@ -261,7 +270,7 @@
 
     <!-- Review: per-question results -->
     <div x-show="reviewItems().length > 0" class="mb-8">
-      <h2 class="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-3 uppercase tracking-wide">Pembahasan</h2>
+      <h2 class="text-sm font-semibold text-stone-600 dark:text-stone-400 mb-3 uppercase tracking-wide">Pembahasan</h2>
       <div class="space-y-4">
         <template x-for="(item, i) in reviewItems()" :key="i">
           <div class="rounded-2xl border p-4"
@@ -270,7 +279,7 @@
             <div class="mb-3 flex items-start justify-between gap-3">
               <div class="flex items-start gap-2 min-w-0">
                 <span class="text-base mt-0.5" x-text="item.correct ? '✅' : '❌'"></span>
-                <p class="text-sm font-medium text-slate-800 dark:text-white leading-snug" x-text="(i+1) + '. ' + item.question"></p>
+                <p class="text-sm font-medium text-stone-800 dark:text-white leading-snug" x-text="(i+1) + '. ' + item.question"></p>
               </div>
               <span
                 class="shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold"
@@ -281,19 +290,19 @@
             <div class="space-y-1.5 mb-3 pl-6">
               <template x-for="(opt, idx) in item.options" :key="idx">
                 <div class="text-sm px-3 py-2 rounded-lg"
-                  :class="idx === item.correctIndex ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 font-medium' : (idx === item.selected && idx !== item.correctIndex ? 'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 line-through' : 'text-slate-500 dark:text-slate-500')"
+                  :class="idx === item.correctIndex ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 font-medium' : (idx === item.selected && idx !== item.correctIndex ? 'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 line-through' : 'text-stone-500 dark:text-stone-500')"
                   x-text="opt"
                 ></div>
               </template>
             </div>
-            <p class="text-xs text-slate-500 dark:text-slate-400 pl-6 italic" x-text="item.explanation"></p>
+            <p class="text-xs text-stone-500 dark:text-stone-400 pl-6 italic" x-text="item.explanation"></p>
           </div>
         </template>
       </div>
     </div>
 
     <div class="flex gap-3">
-      <button @click="restart()" class="flex-1 py-3 rounded-xl border-2 border-[#0E5C73] text-[#0E5C73] dark:text-[#14B8A6] dark:border-[#14B8A6] font-semibold text-sm hover:bg-[#0E5C73]/5 transition-colors">
+      <button @click="restart()" class="flex-1 py-3 rounded-xl border-2 border-[#0E5C73] text-[#0E5C73] dark:text-[#0E5C73] dark:border-[#0E5C73] font-semibold text-sm hover:bg-[#0E5C73]/5 transition-colors">
         Main Lagi
       </button>
       <button @click="openShare($event)" class="flex-1 py-3 rounded-xl border-2 border-[#C9A84C] text-[#8A6F22] dark:text-[#E8C76A] dark:border-[#C9A84C] font-semibold text-sm hover:bg-[#C9A84C]/10 transition-colors">
@@ -329,7 +338,7 @@
               </div>
               <button
                 @click="closeShare()"
-                class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#E2D9CE] dark:border-[#21495E] bg-[#FFFDFC] dark:bg-[#143444] text-[#7A6A5A] dark:text-[#E3D6C6] hover:bg-white dark:hover:bg-[#1A4152] focus:outline-none focus:ring-2 focus:ring-[#0E5C73]/30 dark:focus:ring-[#14B8A6]/30 transition-colors"
+                class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#E2D9CE] dark:border-[#21495E] bg-[#FFFDFC] dark:bg-[#143444] text-[#7A6A5A] dark:text-[#E3D6C6] hover:bg-white dark:hover:bg-[#1A4152] focus:outline-none focus:ring-2 focus:ring-[#0E5C73]/30 dark:focus:ring-[#0E5C73]/30 transition-colors"
                 aria-label="Tutup"
               >
                 <span class="text-xl leading-none">×</span>
@@ -337,7 +346,7 @@
             </div>
 
             <div class="mb-4 rounded-[1.6rem] border border-[#E2D9CE] dark:border-[#21495E] bg-[#FFFDFC] dark:bg-[#143444] p-4 sm:p-5">
-              <p class="mb-1 text-sm font-semibold text-[#183642] dark:text-[#F5EFE4]" x-text="'Quiz {{.Category.Label}} - ' + difficultyLabel()"></p>
+              <p class="mb-1 text-sm font-semibold text-[#183642] dark:text-[#F5EFE4]" x-text="'Quiz ' + categoryLabel + ' - ' + difficultyLabel()"></p>
               <p class="text-sm leading-7 text-[#5C5247] dark:text-[#E3D6C6]" x-text="shareText()"></p>
               <p class="mt-3 text-xs tracking-wide text-[#8B7B6B] dark:text-[#97B6C3]">Salin hasil atau bagikan langsung ke aplikasi favoritmu.</p>
             </div>
@@ -345,7 +354,7 @@
             <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <button
                 @click="copyShareText()"
-                class="py-3.5 rounded-[1.35rem] bg-[#0E5C73] hover:bg-[#0b4e61] dark:bg-[#12718A] dark:hover:bg-[#1787A5] text-white font-semibold text-sm focus:outline-none focus:ring-2 focus:ring-[#0E5C73]/30 dark:focus:ring-[#14B8A6]/30 transition-colors"
+                class="py-3.5 rounded-[1.35rem] bg-[#0E5C73] hover:bg-[#0b4e61] dark:bg-[#12718A] dark:hover:bg-[#1787A5] text-white font-semibold text-sm focus:outline-none focus:ring-2 focus:ring-[#0E5C73]/30 dark:focus:ring-[#0E5C73]/30 transition-colors"
               >
                 <span x-text="shareCopied ? 'Tersalin' : 'Salin Hasil'"></span>
               </button>
@@ -360,9 +369,9 @@
             </div>
 
             <div class="mt-4 grid grid-cols-3 gap-2.5 sm:gap-3">
-              <button @click="shareToWhatsApp()" class="py-3 rounded-[1.25rem] border border-[#E2D9CE] dark:border-[#21495E] bg-[#FFFDFC] dark:bg-[#143444] text-sm font-medium text-[#183642] dark:text-[#E8E1D3] hover:bg-white dark:hover:bg-[#1A4152] focus:outline-none focus:ring-2 focus:ring-[#0E5C73]/20 dark:focus:ring-[#14B8A6]/20 transition-colors">WhatsApp</button>
-              <button @click="shareToTelegram()" class="py-3 rounded-[1.25rem] border border-[#E2D9CE] dark:border-[#21495E] bg-[#FFFDFC] dark:bg-[#143444] text-sm font-medium text-[#183642] dark:text-[#E8E1D3] hover:bg-white dark:hover:bg-[#1A4152] focus:outline-none focus:ring-2 focus:ring-[#0E5C73]/20 dark:focus:ring-[#14B8A6]/20 transition-colors">Telegram</button>
-              <button @click="shareToX()" class="py-3 rounded-[1.25rem] border border-[#E2D9CE] dark:border-[#21495E] bg-[#FFFDFC] dark:bg-[#143444] text-sm font-medium text-[#183642] dark:text-[#E8E1D3] hover:bg-white dark:hover:bg-[#1A4152] focus:outline-none focus:ring-2 focus:ring-[#0E5C73]/20 dark:focus:ring-[#14B8A6]/20 transition-colors">X</button>
+              <button @click="shareToWhatsApp()" class="py-3 rounded-[1.25rem] border border-[#E2D9CE] dark:border-[#21495E] bg-[#FFFDFC] dark:bg-[#143444] text-sm font-medium text-[#183642] dark:text-[#E8E1D3] hover:bg-white dark:hover:bg-[#1A4152] focus:outline-none focus:ring-2 focus:ring-[#0E5C73]/20 dark:focus:ring-[#0E5C73]/20 transition-colors">WhatsApp</button>
+              <button @click="shareToTelegram()" class="py-3 rounded-[1.25rem] border border-[#E2D9CE] dark:border-[#21495E] bg-[#FFFDFC] dark:bg-[#143444] text-sm font-medium text-[#183642] dark:text-[#E8E1D3] hover:bg-white dark:hover:bg-[#1A4152] focus:outline-none focus:ring-2 focus:ring-[#0E5C73]/20 dark:focus:ring-[#0E5C73]/20 transition-colors">Telegram</button>
+              <button @click="shareToX()" class="py-3 rounded-[1.25rem] border border-[#E2D9CE] dark:border-[#21495E] bg-[#FFFDFC] dark:bg-[#143444] text-sm font-medium text-[#183642] dark:text-[#E8E1D3] hover:bg-white dark:hover:bg-[#1A4152] focus:outline-none focus:ring-2 focus:ring-[#0E5C73]/20 dark:focus:ring-[#0E5C73]/20 transition-colors">X</button>
             </div>
           </div>
         </div>
@@ -377,9 +386,11 @@
 <script>
 function quizApp(categorySlug) {
   const TIMER = 30;
+  const categoryLabel = {{js .Category.Label}};
 
   return {
     categorySlug,
+    categoryLabel,
     state: 'idle',
     sessionToken: '',
     playerName: '',
@@ -405,6 +416,7 @@ function quizApp(categorySlug) {
     shareBusy: false,
     shareCopied: false,
     shareTrigger: null,
+    errorMessage: '',
 
     init() {
       this.loadLeaderboard();
@@ -462,6 +474,7 @@ function quizApp(categorySlug) {
       this.score = 0;
       this.correctCount = 0;
       this.totalCount = 0;
+      this.errorMessage = '';
 
       try {
         const res = await fetch(`/api/quiz/${this.categorySlug}/start`, {
@@ -482,8 +495,8 @@ function quizApp(categorySlug) {
         this.state = 'playing';
         this.startTimer();
       } catch (_) {
-        this.state = 'idle';
-        alert('Gagal memuat soal. Coba lagi.');
+        this.errorMessage = 'Soal tidak dapat dimuat. Periksa koneksi lalu mulai ulang.';
+        this.state = 'error';
       }
     },
 
@@ -555,10 +568,9 @@ function quizApp(categorySlug) {
         this.state = 'playing';
         this.startTimer();
       } catch (_) {
-        this.state = 'finished';
-        this.score = 0;
-        this.correctCount = 0;
-        this.totalCount = this.totalQuestions;
+        clearInterval(this.timerInterval);
+        this.errorMessage = 'Jawaban belum dapat dikirim. Sesi ini tidak ditandai selesai agar hasilnya tidak keliru.';
+        this.state = 'error';
       }
     },
 
@@ -590,11 +602,11 @@ function quizApp(categorySlug) {
       const correct = this.correctCount || 0;
       const score = this.score || 0;
       const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
-      return `Saya baru selesai kuis ${'{{.Category.Label}}'} (${this.difficultyLabel()}) dengan skor ${score} poin, ${correct}/${total} benar (${pct}%). Yuk coba kalahkan skorku di islami.click/quiz/{{.Category.Slug}}`;
+      return `Saya baru selesai kuis ${categoryLabel} (${this.difficultyLabel()}) dengan skor ${score} poin, ${correct}/${total} benar (${pct}%). Yuk coba kalahkan skorku di islami.click/quiz/${categorySlug}`;
     },
 
     shareUrl() {
-      return `${window.location.origin}/quiz/{{.Category.Slug}}`;
+      return `${window.location.origin}/quiz/${categorySlug}`;
     },
 
     shareDialogEl() {
@@ -668,7 +680,7 @@ function quizApp(categorySlug) {
       this.shareBusy = true;
       try {
         await window.navigator.share.call(window.navigator, {
-          title: `Quiz ${'{{.Category.Label}}'}`,
+          title: `Quiz ${categoryLabel}`,
           text: this.shareText(),
           url: this.shareUrl(),
         });
@@ -693,12 +705,12 @@ function quizApp(categorySlug) {
 
     optionClass(idx) {
       if (this.state === 'playing') {
-        return 'border-slate-200/80 dark:border-slate-700/50 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:border-[#0E5C73] hover:bg-[#0E5C73]/5 dark:hover:bg-[#0E5C73]/10';
+        return 'border-stone-200/80 dark:border-[#1E4458] bg-white dark:bg-[#143444] text-stone-700 dark:text-stone-200 hover:border-[#0E5C73] hover:bg-[#0E5C73]/5 dark:hover:bg-[#0E5C73]/10';
       }
       if (idx === this.selectedAnswer && this.selectedAnswer >= 0) {
-        return 'border-[#0E5C73] bg-[#0E5C73]/10 dark:bg-[#0E5C73]/20 text-[#0E5C73] dark:text-[#14B8A6]';
+        return 'border-[#0E5C73] bg-[#0E5C73]/10 dark:bg-[#0E5C73]/20 text-[#0E5C73] dark:text-[#0E5C73]';
       }
-      return 'border-slate-200/80 dark:border-slate-700/50 bg-white dark:bg-slate-800 text-slate-400 dark:text-slate-500 opacity-50';
+      return 'border-stone-200/80 dark:border-[#1E4458] bg-white dark:bg-[#143444] text-stone-400 dark:text-stone-500 opacity-50';
     },
 
     restart() {
@@ -713,6 +725,7 @@ function quizApp(categorySlug) {
       this.correctCount = 0;
       this.totalCount = 0;
       this.selectedAnswer = null;
+      this.errorMessage = '';
       this.selectedLeaderboardMonth = this.currentLeaderboardMonth || '';
       this.loadLeaderboard();
     },

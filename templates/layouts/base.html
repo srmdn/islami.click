@@ -25,12 +25,13 @@
     <meta name="twitter:description" content="{{if .Meta.OGDescription}}{{.Meta.OGDescription}}{{else}}{{template "description" .}}{{end}}">
     <meta name="twitter:image" content="{{if .Meta.OGImage}}{{.Meta.OGImage}}{{else}}https://islami.click/static/images/og-image.png{{end}}">
     <meta name="twitter:image:alt" content="islami.click - portal islami untuk Muslim Indonesia">
-    {{if .Meta.JSONLD}}<script type="application/ld+json">{{.Meta.JSONLD}}</script>{{end}}
+    {{if .Meta.JSONLD}}<script type="application/ld+json">{{jsonLD .Meta.JSONLD}}</script>{{end}}
     <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="/static/css/out.css?v=3">
+    <link rel="stylesheet" href="/static/css/out.css?v=7">
     <script>
         (function() {
-            var theme = localStorage.getItem('theme');
+            var theme = null;
+            try { theme = localStorage.getItem('theme'); } catch (_) {}
             if (theme === 'dark' || (!theme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                 document.documentElement.classList.add('dark');
             }
@@ -40,10 +41,11 @@
     <style>[x-cloak] { display: none !important; }</style>
     <script defer src="https://analytics.srmdn.com/script.js" data-website-id="c7f70042-f875-4cce-b24f-75f7f8710602"></script>
 </head>
-<body class="bg-gradient-to-b from-[#FAF7F2] to-[#EDE7DD] dark:from-[#0B1120] dark:to-[#070F18] text-slate-800 dark:text-white min-h-screen antialiased flex flex-col font-sans transition-colors duration-300">
+<body class="bg-gradient-to-b from-[#FAF7F2] to-[#EDE7DD] dark:from-[#0C1E26] dark:to-[#08161C] text-[#1A2E35] dark:text-[#F5EFE4] min-h-screen antialiased flex flex-col font-sans transition-colors duration-300">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-[#0E5C73] focus:px-4 focus:py-3 focus:text-white">Lewati ke konten utama</a>
     {{template "header" .}}
 
-    <main class="flex-1">
+    <main id="main-content" class="flex-1">
         {{template "content" .}}
     </main>
 

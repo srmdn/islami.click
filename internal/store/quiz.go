@@ -272,6 +272,22 @@ func (s *Store) SaveQuizScore(ctx context.Context, sc model.QuizScore) error {
 
 const quizSessionTTL = 15 * time.Minute
 
+// CleanupQuizSessions removes session state that is no longer needed to serve
+// an active quiz or its immediate result page. Leaderboard scores are retained.
+func (s *Store) CleanupQuizSessions(ctx context.Context, before time.Time) error {
+	cutoff := before.UTC().Format(time.RFC3339Nano)
+	_, err := s.db.ExecContext(ctx,
+		`DELETE FROM quiz_sessions
+		 WHERE (status = 'active' AND expires_at < ?)
+		    OR (status IN ('completed', 'expired') AND COALESCE(completed_at, expires_at) < ?)`,
+		cutoff, cutoff,
+	)
+	if err != nil {
+		return fmt.Errorf("cleanup quiz sessions: %w", err)
+	}
+	return nil
+}
+
 func quizSessionToken() (string, error) {
 	var buf [16]byte
 	if _, err := rand.Read(buf[:]); err != nil {

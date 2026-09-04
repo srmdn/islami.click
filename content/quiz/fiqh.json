@@ -272,6 +272,12 @@
         "options": ["Hanya masalah tradisi lokal", "Sunni: Nabi SAW mengharamkan setelah mengizinkannya, ini mansukh; Syiah Imamiyah: pengharaman oleh Umar dianggap bid'ah karena menurut mereka tidak ada dalil qath'i penghapusannya dari Nabi SAW", "Tidak ada perbedaan, keduanya membolehkan", "Perbedaan hanya dalam persyaratan administratif"],
         "answer": 1,
         "explanation": "Sunni berpendapat Nabi SAW sendiri yang mengharamkan nikah mut'ah secara permanen setelah mengizinkannya dalam kondisi tertentu (hadits sahih Bukhari-Muslim). Syiah Dua Belas berpendapat pengharamannya oleh Umar RA adalah ijtihad yang tidak mengikat karena mereka tidak menerima otoritas Umar seperti Sunni."
+      },
+      {
+        "q": "Apa kaidah umum yang menjadi dasar hukum asal muamalah?",
+        "options": ["Semua muamalah wajib dilakukan", "Muamalah pada dasarnya boleh selama tidak ada dalil yang melarangnya", "Semua muamalah haram sampai ada perintah", "Muamalah hanya boleh dilakukan di masjid"],
+        "answer": 1,
+        "explanation": "Kaidah umum menyatakan hukum asal muamalah adalah boleh. Kebolehan itu tetap dibatasi larangan syariat, seperti riba, gharar yang berlebihan, penipuan, dan kezhaliman."
       }
     ]
   }

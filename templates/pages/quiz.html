@@ -10,20 +10,20 @@
         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/>
       </svg>
     </div>
-    <h1 class="text-3xl font-bold text-slate-800 dark:text-white mb-2">Quiz Islami</h1>
-    <p class="text-slate-500 dark:text-slate-400 text-base max-w-md mx-auto">Pilih kategori dan uji pengetahuan Islammu. Tersedia 3 tingkat kesulitan dengan leaderboard bersama.</p>
+    <h1 class="text-3xl font-bold text-stone-800 dark:text-white mb-2">Quiz Islami</h1>
+    <p class="text-stone-500 dark:text-stone-400 text-base max-w-md mx-auto">Pilih kategori dan uji pengetahuan Islammu. Tersedia 3 tingkat kesulitan dengan leaderboard bersama.</p>
   </div>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
     {{range .Categories}}
-    <a href="/quiz/{{.Slug}}" class="group flex flex-col gap-3 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-700/50 bg-white dark:bg-slate-800 hover:border-[#C9A84C] dark:hover:border-[#C9A84C] hover:shadow-md transition-all">
+    <a href="/quiz/{{.Slug}}" class="group flex flex-col gap-3 p-5 rounded-2xl border border-stone-200/80 dark:border-rose-800/50 bg-white dark:bg-rose-950/20 hover:border-[#C9A84C] dark:hover:border-rose-600 hover:shadow-md transition-all">
       <div class="flex items-center justify-between">
-        <span class="text-lg font-semibold text-slate-800 dark:text-white group-hover:text-[#0E5C73] dark:group-hover:text-[#14B8A6] transition-colors">{{.Label}}</span>
-        <svg class="w-5 h-5 text-slate-300 dark:text-slate-600 group-hover:text-[#C9A84C] transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <span class="text-lg font-semibold text-stone-800 dark:text-white group-hover:text-[#0E5C73] dark:group-hover:text-[#0E5C73] transition-colors">{{.Label}}</span>
+        <svg class="w-5 h-5 text-stone-300 dark:text-stone-600 group-hover:text-[#C9A84C] transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M9 18l6-6-6-6"/>
         </svg>
       </div>
-      <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">{{.Description}}</p>
+      <p class="text-sm text-stone-500 dark:text-stone-400 leading-relaxed">{{.Description}}</p>
       <div class="flex gap-2 mt-1">
         <span class="text-xs px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 font-medium">Basic</span>
         <span class="text-xs px-2.5 py-1 rounded-full bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 font-medium">Intermediate</span>

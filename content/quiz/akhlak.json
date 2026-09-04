@@ -272,6 +272,12 @@
         "options": ["Hanya berlaku dalam konteks medis", "Prinsip ini menjadi fondasi etika lingkungan, etika bisnis, etika sosial: setiap tindakan yang merugikan diri atau orang lain tanpa dasar syar'i adalah terlarang, meletakkan tanggung jawab pada pelaku kerusakan", "Hanya berlaku dalam perang", "Prinsip ini kurang penting dibanding ibadah ritual"],
         "answer": 1,
         "explanation": "Hadits 'la dharara wa la dhirar' (HR. Ibnu Majah, dinilai shahih li ghairihi) adalah kaidah fundamental dalam fiqh dan etika Islam. Implikasinya luas: etika lingkungan (tidak merusak alam), etika bisnis (tidak menipu), etika sosial (tidak menindas), etika medis (primum non nocere/pertama tidak membahayakan)."
+      },
+      {
+        "q": "Apa lawan dari sifat tawadhu dalam akhlak Islam?",
+        "options": ["Sabar", "Takabbur atau sombong", "Syukur", "Qanaah"],
+        "answer": 1,
+        "explanation": "Takabbur adalah merasa diri lebih tinggi dan merendahkan orang lain. Tawadhu adalah kerendahan hati yang tetap menjaga kehormatan diri tanpa menyombongkan kelebihan."
       }
     ]
   }

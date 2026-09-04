@@ -20,36 +20,39 @@
                  if (s === 'ruqyah' && d.ruqyah !== 'true') return false;
              }
 
-             if (q && ![d.title, d.latin, d.translation].some(t => t.toLowerCase().includes(q))) return false;
+            if (q && ![d.title, d.latin, d.translation].some(t => t.toLowerCase().includes(q))) return false;
              return true;
+         },
+         visibleCount() {
+             return Array.from(this.$root.querySelectorAll('#doa-list article')).filter(el => this.matches(el)).length;
          }
      }">
 
-    <nav class="text-sm text-slate-500 dark:text-slate-400 mb-6">
-        <a href="/" class="hover:text-[#14B8A6] transition-colors">Beranda</a>
+    <nav class="text-sm text-stone-500 dark:text-stone-400 mb-6">
+        <a href="/" class="hover:text-[#0E5C73] transition-colors">Beranda</a>
         <span class="mx-2">/</span>
-        <span class="text-slate-800 dark:text-slate-100">Doa</span>
+        <span class="text-stone-800 dark:text-stone-100">Doa</span>
     </nav>
 
     <div class="mb-6">
-        <h1 class="text-3xl font-semibold tracking-tight mb-2 text-slate-800 dark:text-slate-100">{{.Title}}</h1>
-        <p class="text-slate-500 dark:text-slate-400 leading-relaxed">{{.Description}}</p>
+        <h1 class="text-3xl font-semibold tracking-tight mb-2 text-stone-800 dark:text-stone-100">{{.Title}}</h1>
+        <p class="text-stone-500 dark:text-stone-400 leading-relaxed">{{.Description}}</p>
     </div>
 
-    <div class="sticky top-0 z-10 -mx-4 px-4 pb-4 pt-2 bg-slate-50/95 dark:bg-[#0B1120]/95 backdrop-blur border-b border-slate-200/70 dark:border-slate-700/40 mb-6">
-        <div class="flex gap-1 p-1 rounded-xl bg-slate-100 dark:bg-slate-800/80 mb-3">
+    <div class="sticky top-0 z-10 -mx-4 px-4 pb-4 pt-2 bg-stone-50/95 dark:bg-[#0C1E26]/95 backdrop-blur border-b border-stone-200/70 dark:border-[#1E4458]/60 mb-6">
+        <div class="flex gap-1 p-1 rounded-xl bg-stone-100 dark:bg-teal-950/20 dark:border dark:border-teal-800/50 mb-3">
             <button @click="activeSource='all'"
                     :class="activeSource==='all'
-                        ? 'bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-100 shadow-sm'
-                        : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'"
+                        ? 'bg-white dark:bg-teal-900/50 text-stone-800 dark:text-stone-100 shadow-sm'
+                        : 'text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200'"
                     class="flex-1 py-1.5 text-sm font-medium rounded-lg transition-all duration-150">
                 Semua
             </button>
             {{range .SourceTypes}}
             <button @click="activeSource='{{.ID}}'"
                     :class="activeSource==='{{.ID}}'
-                        ? 'bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-100 shadow-sm'
-                        : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'"
+                        ? 'bg-white dark:bg-teal-900/50 text-stone-800 dark:text-stone-100 shadow-sm'
+                        : 'text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200'"
                     class="flex-1 py-1.5 text-sm font-medium rounded-lg transition-all duration-150">
                 {{.Title}} <span class="text-xs opacity-60">({{.Count}})</span>
             </button>
@@ -57,13 +60,13 @@
         </div>
 
         <div class="relative">
-            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
             </svg>
             <input x-model.debounce.300ms="search"
                    type="search"
                    placeholder="Cari doa..."
-                   class="w-full pl-9 pr-4 py-2 text-sm rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0E5C73]/30 focus:border-[#0E5C73] transition-colors"/>
+                   class="w-full pl-9 pr-4 py-2 text-sm rounded-xl border border-stone-200 dark:border-[#1E4458] bg-white dark:bg-[#143444] text-stone-800 dark:text-stone-100 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-[#0E5C73]/30 focus:border-[#0E5C73] transition-colors"/>
         </div>
     </div>
 
@@ -82,12 +85,14 @@
             x-transition:leave="transition-opacity duration-100"
             x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0"
-            class="rounded-2xl border border-slate-200/80 dark:border-slate-700/50 overflow-hidden bg-white dark:bg-slate-800 shadow-sm">
+            class="rounded-2xl border border-stone-200/80 dark:border-[#1E4458] overflow-hidden bg-white dark:bg-[#122E38] shadow-sm">
 
-            <button @click="toggle('{{js .ID}}')"
-                    class="w-full px-5 py-4 flex items-center justify-between gap-3 text-left hover:bg-slate-50/80 dark:hover:bg-slate-700/30 transition-colors">
+            <button @click="toggle({{js .ID}})"
+                    :aria-expanded="isOpen({{js .ID}})"
+                    aria-controls="doa-content-{{.ID}}"
+                    class="w-full px-5 py-4 flex items-center justify-between gap-3 text-left hover:bg-stone-50/80 dark:hover:bg-[#1A4152] transition-colors">
                 <div class="flex items-center gap-3 min-w-0">
-                    <h3 class="font-semibold text-slate-800 dark:text-slate-100 truncate">{{.Title}}</h3>
+                    <h3 class="font-semibold text-stone-800 dark:text-stone-100 truncate">{{.Title}}</h3>
                     {{if eq .SourceType "quran"}}
                     <span class="shrink-0 text-[10px] font-semibold px-2 py-0.5 rounded-md bg-amber-50 dark:bg-amber-950/30 border border-amber-100 dark:border-amber-900/40 text-amber-700 dark:text-amber-400">Al-Qur'an</span>
                     {{else if eq .SourceType "hadith"}}
@@ -96,37 +101,37 @@
                     <span class="shrink-0 text-[10px] font-semibold px-2 py-0.5 rounded-md bg-purple-50 dark:bg-purple-950/30 border border-purple-100 dark:border-purple-900/40 text-purple-700 dark:text-purple-400">Ruqyah</span>
                     {{end}}
                 </div>
-                <svg class="shrink-0 w-4 h-4 text-slate-400 transition-transform duration-200"
-                     :class="isOpen('{{js .ID}}') ? 'rotate-180' : ''"
+                <svg class="shrink-0 w-4 h-4 text-stone-400 transition-transform duration-200"
+                     :class="isOpen({{js .ID}}) ? 'rotate-180' : ''"
                      fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                 </svg>
             </button>
 
-             <div x-show="isOpen('{{js .ID}}')"
+             <div id="doa-content-{{.ID}}" x-show="isOpen({{js .ID}})"
                  x-transition:enter="transition ease-out duration-200"
                  x-transition:enter-start="opacity-0 -translate-y-1"
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150"
                  x-transition:leave-start="opacity-100 translate-y-0"
                  x-transition:leave-end="opacity-0 -translate-y-1"
-                 class="border-t border-slate-200 dark:border-slate-700 p-5 sm:p-6">
+                 class="border-t border-stone-200 dark:border-[#1E4458] p-5 sm:p-6">
 
-                <div class="arabic text-3xl leading-[2.4] text-slate-800 dark:text-slate-100 text-right" dir="rtl">{{.Arabic}}</div>
+                <div class="arabic text-3xl leading-[2.4] text-stone-800 dark:text-stone-100 text-right" dir="rtl">{{.Arabic}}</div>
 
                 {{if .Latin}}
-                <div class="mt-5 rounded-xl bg-slate-50 dark:bg-slate-900/30 border border-slate-100 dark:border-slate-700/50 px-4 py-3">
-                    <div class="text-xs font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500 mb-1">Latin</div>
-                    <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-300 italic">{{.Latin}}</p>
+                <div class="mt-5 rounded-xl bg-stone-50 dark:bg-[#102D37] border border-stone-100 dark:border-[#1E4458] px-4 py-3">
+                    <div class="text-xs font-semibold uppercase tracking-wide text-stone-400 dark:text-stone-500 mb-1">Latin</div>
+                    <p class="text-sm leading-relaxed text-stone-600 dark:text-stone-300 italic">{{.Latin}}</p>
                 </div>
                 {{end}}
 
-                <div class="mt-4 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">{{.Translation}}</div>
+                <div class="mt-4 text-sm text-stone-600 dark:text-stone-300 leading-relaxed">{{.Translation}}</div>
 
-                <div class="mt-5 pt-4 border-t border-dashed border-slate-200 dark:border-slate-700 space-y-2">
+                <div class="mt-5 pt-4 border-t border-dashed border-stone-200 dark:border-[#1E4458] space-y-2">
                     {{if .Source}}
-                    <p class="text-xs text-slate-500 dark:text-slate-400">
-                        <span class="font-semibold text-slate-600 dark:text-slate-300">Rujukan:</span>
+                    <p class="text-xs text-stone-500 dark:text-stone-400">
+                        <span class="font-semibold text-stone-600 dark:text-stone-300">Rujukan:</span>
                         {{.Source}}
                     </p>
                     {{end}}
@@ -150,13 +155,17 @@
         </article>
         {{end}}
 
+        <div x-show="visibleCount() === 0" x-cloak role="status" class="rounded-2xl border border-dashed border-[#E2D9CE] dark:border-[#1E4458] px-5 py-8 text-center text-sm text-[#6B5D50] dark:text-[#B5C7CB]">
+            Tidak ada doa yang cocok pada item yang sudah dimuat. Tekan “Muat lagi” untuk mencari di koleksi berikutnya.
+        </div>
+
         {{if .HasMore}}
         <div id="doa-load-more" class="pt-2">
             <button hx-get="/doa/more?page={{.NextPage}}"
                     hx-target="#doa-load-more"
                     hx-swap="outerHTML"
                     hx-indicator="#doa-load-more"
-                    class="w-full py-3 rounded-2xl border border-dashed border-slate-300 dark:border-slate-600 text-sm font-medium text-slate-500 dark:text-slate-400 hover:border-[#0E5C73] hover:text-[#0E5C73] dark:hover:border-teal-500 dark:hover:text-teal-400 transition-colors">
+                    class="w-full py-3 rounded-2xl border border-dashed border-stone-300 dark:border-[#1E4458] text-sm font-medium text-stone-500 dark:text-stone-400 hover:border-[#0E5C73] hover:text-[#0E5C73] dark:hover:border-teal-500 dark:hover:text-teal-400 transition-colors">
                 <span class="htmx-indicator">
                     <svg class="inline w-4 h-4 animate-spin mr-1" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
