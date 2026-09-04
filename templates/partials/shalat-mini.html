@@ -32,9 +32,9 @@
     {{if and (not .Error) .NextPrayerUnix}}
     <div class="mb-5 flex justify-center px-1">
         <p class="inline-flex max-w-full flex-wrap items-center justify-center gap-x-3 gap-y-1.5 rounded-full border border-[#E2D9CE] bg-white/70 px-5 py-2.5 text-sm tabular-nums text-[#5A4C40] dark:border-[#1E4458] dark:bg-[#102D37] dark:text-[#D6E3E4]">
-            <span class="relative flex h-2.5 w-2.5" aria-hidden="true">
-                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#0E5C73]/40 dark:bg-[#83C0CC]/40"></span>
-                <span class="relative inline-flex h-2.5 w-2.5 animate-pulse rounded-full bg-[#0E5C73] dark:bg-[#83C0CC]"></span>
+            <span class="relative flex h-3 w-3" aria-hidden="true">
+                <span class="absolute inline-flex h-full w-full animate-live-ping rounded-full bg-[#0E5C73]/50 dark:bg-[#83C0CC]/50"></span>
+                <span class="live-dot relative inline-flex h-3 w-3 animate-pulse rounded-full bg-[#0E5C73] dark:bg-[#83C0CC]"></span>
             </span>
             <span x-text="'Sekarang ' + hh+':'+mm+':'+ss + ' {{.TZLabel}}'">Sekarang --:--:-- {{.TZLabel}}</span>
             <span class="text-[#C9A84C]" aria-hidden="true">&middot;</span>
