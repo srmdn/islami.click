@@ -207,30 +207,32 @@ func (h *Handler) Hisab(w http.ResponseWriter, r *http.Request) {
 
 	months := make([]model.HijriMonthEntry, 12)
 	for i := 1; i <= 12; i++ {
-		days := 30
-		if i%2 != 0 {
-			days = 29
-		}
 		isHaram := i == 1 || i == 7 || i == 11 || i == 12
 		months[i-1] = model.HijriMonthEntry{
 			Number:  i,
 			Name:    hijri.MonthNamesID[i],
-			Days:    days,
+			Days:    hijri.MonthLength(hijriDate.Year, i),
 			IsHaram: isHaram,
 		}
 	}
 
 	hisabMeta := pageMeta(r, "Hisab Kalender Hijriyah", "Konversi tanggal Hijriyah dan Masehi, kalender bulan Hijriyah lengkap.")
 	hisabMeta.JSONLD = breadcrumbJSONLD(homeCrumb(), crumb(2, "Hisab Hijriyah", siteURL+"/hisab"))
+	sourceLabel := "Perkiraan hisab (di luar kalender resmi)"
+	if hijri.Source(now) == "kemenag" {
+		sourceLabel = "Kalender Hijriah Indonesia · Kemenag"
+	}
 	data := model.HisabPageData{
-		Meta:           hisabMeta,
-		HijriToday:     hijriDate.FormatID(),
-		MasehiToday:    hijri.FormatGregorianID(now),
-		HijriDay:       hijriDate.Day,
-		HijriMonth:     hijriDate.Month,
-		HijriMonthName: hijri.MonthNamesID[hijriDate.Month],
-		HijriYear:      hijriDate.Year,
-		Months:         months,
+		Meta:             hisabMeta,
+		HijriToday:       hijriDate.FormatID(),
+		MasehiToday:      hijri.FormatGregorianID(now),
+		HijriDay:         hijriDate.Day,
+		HijriMonth:       hijriDate.Month,
+		HijriMonthName:   hijri.MonthNamesID[hijriDate.Month],
+		HijriYear:        hijriDate.Year,
+		HijriSourceLabel: sourceLabel,
+		HijriAnchorsJS:   hijri.AnchorsJS(),
+		Months:           months,
 	}
 
 	h.render(w, "hisab.html", data)
