@@ -58,7 +58,7 @@ func TestIsolateParensNestedWrapsInnermostOnly(t *testing.T) {
 	}
 }
 
-func TestArabicHTMLEscapesAndIsolates(t *testing.T) {
+func TestArabicHTMLEscapesAndOrnates(t *testing.T) {
 	out := ArabicHTML(`x <b>(ي)</b>`)
 	s := string(out)
 	if strings.Contains(s, "<b>") {
@@ -67,7 +67,29 @@ func TestArabicHTMLEscapesAndIsolates(t *testing.T) {
 	if !strings.Contains(s, "&lt;b&gt;") {
 		t.Fatalf("expected escaping: %s", s)
 	}
-	if !strings.Contains(s, "<bdi>ي</bdi>") {
-		t.Fatalf("expected isolation: %s", s)
+	if !strings.Contains(s, `<span class="paren-orn">﴾ي﴿</span>`) {
+		t.Fatalf("expected ornate pair: %s", s)
+	}
+	if strings.Contains(s, "(ي)") {
+		t.Fatalf("ascii parens remain: %s", s)
+	}
+}
+
+func TestOrnateParensLeavesUnbalancedAlone(t *testing.T) {
+	for _, in := range []string{"tanpa kurung", "(buka saja", "tutup saja)"} {
+		if out := ornateParens(in); strings.Contains(out, "paren-orn") {
+			t.Fatalf("should not convert %q: %s", in, out)
+		}
+	}
+}
+
+func TestOrnateParensNestedConvertsInnermostOnly(t *testing.T) {
+	// No vendored content nests parens; graceful degradation only.
+	out := ornateParens("(nest (ed))")
+	if !strings.HasPrefix(out, "(nest ") {
+		t.Fatalf("outer group should stay raw: %s", out)
+	}
+	if !strings.Contains(out, `<span class="paren-orn">﴾ed﴿</span>`) {
+		t.Fatalf("inner group should convert: %s", out)
 	}
 }

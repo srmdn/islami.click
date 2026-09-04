@@ -190,6 +190,11 @@
   .dark .tafsir-body mark.tafsir-key {
     background: rgba(201, 168, 76, 0.25);
   }
+
+  /* Ornate Arabic parens: slightly larger to match ASCII paren height */
+  .paren-orn {
+    font-size: 1.12em;
+  }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       transition: none !important;

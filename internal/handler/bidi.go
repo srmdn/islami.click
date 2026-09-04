@@ -5,15 +5,55 @@ import (
 	"strings"
 )
 
-// leftToRightMark forces the Unicode bidi algorithm (rule N0, bracket pairs)
-// to resolve a parenthesis group in LTR order even when the group sits in
-// RTL Arabic text. Without it, a parenthesized Arabic run renders mirrored
-// (both parens showing as opens) because N0 assigns the pair the direction
-// of its RTL content.
-//
-// If this ever proves insufficient in some renderer, the deterministic
-// fallback is U+FD3E/U+FD3F (﴾ ﴿, ornate parentheses, Mirrored=No).
+// leftToRightMark is used by isolateParens (tafsir pipeline): it pads an
+// LTR-isolated parenthesis group so the bidi bracket-pair rule resolves the
+// pair in LTR order.
 const leftToRightMark = "\u200E"
+
+// Arabic ornate parentheses (Mirrored=No): symmetric by construction in
+// every renderer, the standard mushaf choice. Slightly more compact than
+// ASCII parens; .paren-orn in input.css compensates the size.
+const (
+	ornateOpen  = "﴾"
+	ornateClose = "﴿"
+)
+
+// ornateParens replaces every balanced, non-nested (...) group with an
+// ornate ﴾...﴿ pair wrapped in a styling hook. Tags pass through verbatim;
+// unbalanced and nested parens are left untouched.
+func ornateParens(s string) string {
+	var b strings.Builder
+	b.Grow(len(s) + 64)
+	i := 0
+	for i < len(s) {
+		c := s[i]
+		if c == '<' {
+			j := strings.IndexByte(s[i:], '>')
+			if j < 0 {
+				b.WriteString(s[i:])
+				break
+			}
+			b.WriteString(s[i : i+j+1])
+			i += j + 1
+			continue
+		}
+		if c == '(' {
+			if end, ok := parenGroupEnd(s, i); ok {
+				b.WriteString(`<span class="paren-orn">` + ornateOpen)
+				b.WriteString(s[i+1 : end])
+				b.WriteString(ornateClose + `</span>`)
+				i = end + 1
+				continue
+			}
+			b.WriteByte(c)
+			i++
+			continue
+		}
+		b.WriteByte(c)
+		i++
+	}
+	return b.String()
+}
 
 // isolateParens wraps every balanced, non-nested (...) group in an LTR span
 // with LRM padding, keeping any inner markup verbatim and leaving tags,
@@ -77,10 +117,12 @@ func parenGroupEnd(s string, openIdx int) (int, bool) {
 	return 0, false
 }
 
-// ArabicHTML escapes plain Arabic text and isolates parenthesized runs so
-// opening/closing parens render symmetric in RTL context.
+// ArabicHTML escapes plain Arabic text and converts parenthesized runs to
+// ornate ﴾...﴿ pairs, which stay symmetric in RTL context by construction
+// (ASCII parens cannot be made reliable: raw text mirrors, and LTR-span
+// isolation renders Latin order, backwards for RTL readers).
 func ArabicHTML(s string) template.HTML {
-	return template.HTML(isolateParens(template.HTMLEscapeString(s)))
+	return template.HTML(ornateParens(template.HTMLEscapeString(s)))
 }
 
 // TafsirHTML isolates parenthesized runs in already-sanitized tafsir HTML
