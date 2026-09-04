@@ -20,6 +20,7 @@
             <p class="text-sm text-stone-500 dark:text-stone-400 mb-2">Hari ini</p>
             <p class="text-2xl sm:text-3xl font-semibold text-stone-800 dark:text-white mb-1">{{.HijriToday}}</p>
             <p class="text-base text-stone-500 dark:text-stone-400">{{.MasehiToday}}</p>
+            <p class="mt-1 text-xs text-stone-400 dark:text-stone-500">{{.HijriSourceLabel}}</p>
         </div>
 
         <div class="border-t border-stone-200/80 dark:border-[#1E4458] my-6"></div>
@@ -224,7 +225,7 @@
     </div>
 
     <p class="mt-6 text-xs text-stone-400 dark:text-stone-500 text-center">
-        Perhitungan menggunakan kalender tabular (hisab). Hasil dapat berbeda &plusmn;1 hari dari penentuan ruyatul hilal.
+        Sumber tanggal: {{.HijriSourceLabel}}. Konversi di luar cakupan resmi bersifat perkiraan &mdash; hasil dapat berbeda &plusmn;1 hari dari rukyatul hilal setempat.
     </p>
 </div>
 {{end}}
@@ -281,7 +282,55 @@ function hisab() {
         return dayNames[(jd + 1) % 7];
     }
 
+    // Awal bulan resmi Kalender Hijriah Indonesia (Kemenag), disuntik server.
+    // Bentuk: [{y: 1448, m: 3, start: "2026-08-14"}, ...]
+    var HIJRI_ANCHORS = {{.HijriAnchorsJS}};
+
+    function anchorStartHM(y, m) {
+        for (var i = 0; i < HIJRI_ANCHORS.length; i++) {
+            if (HIJRI_ANCHORS[i].y === y && HIJRI_ANCHORS[i].m === m) return HIJRI_ANCHORS[i].start;
+        }
+        return null;
+    }
+
+    function anchoredToHijri(y, m, d) {
+        var t = Date.UTC(y, m - 1, d);
+        for (var i = HIJRI_ANCHORS.length - 1; i >= 0; i--) {
+            var s = Date.parse(HIJRI_ANCHORS[i].start + 'T00:00:00Z');
+            if (t < s) continue;
+            if (i + 1 >= HIJRI_ANCHORS.length) return null;
+            var n = Date.parse(HIJRI_ANCHORS[i + 1].start + 'T00:00:00Z');
+            if (t >= n) return null;
+            return { year: HIJRI_ANCHORS[i].y, month: HIJRI_ANCHORS[i].m, day: Math.round((t - s) / 864e5) + 1 };
+        }
+        return null;
+    }
+
+    function anchoredToGregorian(y, m, d) {
+        var s = anchorStartHM(y, m);
+        if (!s) return null;
+        var g = new Date(Date.parse(s + 'T00:00:00Z') + (d - 1) * 864e5);
+        return { year: g.getUTCFullYear(), month: g.getUTCMonth() + 1, day: g.getUTCDate() };
+    }
+
+    // Sumber resmi dulu, hisab tabular sebagai cadangan.
+    function toHijri(y, m, d) {
+        return anchoredToHijri(y, m, d) || jdnToHijri(gregorianToJDN(y, m, d));
+    }
+
+    function toGregorian(y, m, d) {
+        return anchoredToGregorian(y, m, d) || jdnToGregorian(hijriToJDN(y, m, d));
+    }
+
+    function gregDayNum(y, m, d) {
+        return Math.floor(Date.UTC(y, m - 1, d) / 864e5);
+    }
+
     function daysInHijriMonth(y, m) {
+        var s = anchorStartHM(y, m);
+        var nm = m < 12 ? m + 1 : 1, ny = m < 12 ? y : y + 1;
+        var n = anchorStartHM(ny, nm);
+        if (s && n) return Math.round((Date.parse(n + 'T00:00:00Z') - Date.parse(s + 'T00:00:00Z')) / 864e5);
         var start = hijriToJDN(y, m, 1);
         var nextStart;
         if (m < 12) { nextStart = hijriToJDN(y, m + 1, 1); }
@@ -300,7 +349,7 @@ function hisab() {
 
     var now = new Date();
     var todayJDN = gregorianToJDN(now.getFullYear(), now.getMonth() + 1, now.getDate());
-    var todayH = jdnToHijri(todayJDN);
+    var todayH = toHijri(now.getFullYear(), now.getMonth() + 1, now.getDate());
 
     return {
         hijriDay: '',
@@ -343,10 +392,8 @@ function hisab() {
         get monthSubTitle() {
             if (this.calendarMode === 'hijri') {
                 var numDays = daysInHijriMonth(this.currentYear, this.currentMonth);
-                var firstJDN = hijriToJDN(this.currentYear, this.currentMonth, 1);
-                var lastJDN = hijriToJDN(this.currentYear, this.currentMonth, numDays);
-                var first = jdnToGregorian(firstJDN);
-                var last = jdnToGregorian(lastJDN);
+                var first = toGregorian(this.currentYear, this.currentMonth, 1);
+                var last = toGregorian(this.currentYear, this.currentMonth, numDays);
                 if (first.month === last.month) {
                     return first.day + '–' + last.day + ' ' + masehiMonths[first.month] + ' ' + first.year;
                 }
@@ -358,8 +405,8 @@ function hisab() {
             var daysInMonth = new Date(this.currentGregYear, this.currentGregMonth, 0).getDate();
             var firstJDN = gregorianToJDN(this.currentGregYear, this.currentGregMonth, 1);
             var lastJDN = gregorianToJDN(this.currentGregYear, this.currentGregMonth, daysInMonth);
-            var firstH = jdnToHijri(firstJDN);
-            var lastH = jdnToHijri(lastJDN);
+            var firstH = toHijri(this.currentGregYear, this.currentGregMonth, 1);
+            var lastH = toHijri(this.currentGregYear, this.currentGregMonth, daysInMonth);
             if (firstH.month === lastH.month && firstH.year === lastH.year) {
                 return firstH.day + '–' + lastH.day + ' ' + hijriMonths[firstH.month] + ' ' + firstH.year + ' H';
             }
@@ -381,7 +428,7 @@ function hisab() {
             for (var i = 0; i < startWeekday; i++) { grid.push(null); }
             for (var d = 1; d <= numDays; d++) {
                 var jd = hijriToJDN(this.currentYear, this.currentMonth, d);
-                var g = jdnToGregorian(jd);
+                var g = toGregorian(this.currentYear, this.currentMonth, d);
                 var impLabel = getImportantLabel(this.currentMonth, d);
                 grid.push({
                     primary: d,
@@ -404,7 +451,7 @@ function hisab() {
             for (var i = 0; i < firstDay; i++) { grid.push(null); }
             for (var d = 1; d <= daysInMonth; d++) {
                 var jd = gregorianToJDN(this.currentGregYear, this.currentGregMonth, d);
-                var h = jdnToHijri(jd);
+                var h = toHijri(this.currentGregYear, this.currentGregMonth, d);
                 var impLabel = getImportantLabel(h.month, h.day);
                 grid.push({
                     primary: d,
@@ -421,14 +468,16 @@ function hisab() {
         },
 
         get nextEvent() {
+            var todayNum = gregDayNum(now.getFullYear(), now.getMonth() + 1, now.getDate());
             for (var yr = this.todayHijriYear; yr <= this.todayHijriYear + 2; yr++) {
                 for (var i = 0; i < importantDatesList.length; i++) {
                     var ev = importantDatesList[i];
-                    var jd = hijriToJDN(yr, ev.month, ev.day);
-                    if (jd >= this.todayJDN) {
-                        var g = jdnToGregorian(jd);
+                    var g = toGregorian(yr, ev.month, ev.day);
+                    var num = gregDayNum(g.year, g.month, g.day);
+                    if (num >= todayNum) {
+                        var jd = gregorianToJDN(g.year, g.month, g.day);
                         var wd = jdnToWeekday(jd);
-                        var daysAway = jd - this.todayJDN;
+                        var daysAway = num - todayNum;
                         return {
                             label: ev.label,
                             hijri: ev.day + ' ' + hijriMonths[ev.month] + ' ' + yr + ' H',
@@ -452,8 +501,8 @@ function hisab() {
             for (var i = 0; i < importantDatesList.length; i++) {
                 var ev = importantDatesList[i];
                 if (ev.month === this.currentMonth) {
-                    var jd = hijriToJDN(this.currentYear, ev.month, ev.day);
-                    var g = jdnToGregorian(jd);
+                    var g = toGregorian(this.currentYear, ev.month, ev.day);
+                    var jd = gregorianToJDN(g.year, g.month, g.day);
                     var wd = jdnToWeekday(jd);
                     result.push({
                         key: ev.month + '-' + ev.day,
@@ -470,7 +519,7 @@ function hisab() {
             var daysInMonth = new Date(this.currentGregYear, this.currentGregMonth, 0).getDate();
             for (var d = 1; d <= daysInMonth; d++) {
                 var jd = gregorianToJDN(this.currentGregYear, this.currentGregMonth, d);
-                var h = jdnToHijri(jd);
+                var h = toHijri(this.currentGregYear, this.currentGregMonth, d);
                 var label = getImportantLabel(h.month, h.day);
                 if (label) {
                     var key = h.month + '-' + h.day;
@@ -488,16 +537,14 @@ function hisab() {
         },
 
         switchToHijri() {
-            var jd = gregorianToJDN(this.currentGregYear, this.currentGregMonth, 1);
-            var h = jdnToHijri(jd);
+            var h = toHijri(this.currentGregYear, this.currentGregMonth, 1);
             this.currentMonth = h.month;
             this.currentYear = h.year;
             this.calendarMode = 'hijri';
         },
 
         switchToMasehi() {
-            var jd = hijriToJDN(this.currentYear, this.currentMonth, 1);
-            var g = jdnToGregorian(jd);
+            var g = toGregorian(this.currentYear, this.currentMonth, 1);
             this.currentGregMonth = g.month;
             this.currentGregYear = g.year;
             this.calendarMode = 'masehi';
@@ -564,8 +611,12 @@ function hisab() {
                 this.error = 'Tanggal atau bulan di luar jangkauan.';
                 return;
             }
-            var jd = hijriToJDN(y, m, d);
-            var g = jdnToGregorian(jd);
+            if (d > daysInHijriMonth(y, m)) {
+                this.error = 'Bulan itu hanya ' + daysInHijriMonth(y, m) + ' hari.';
+                return;
+            }
+            var g = toGregorian(y, m, d);
+            var jd = gregorianToJDN(g.year, g.month, g.day);
             var wd = jdnToWeekday(jd);
             this.result = wd + ', ' + g.day + ' ' + masehiMonths[g.month] + ' ' + g.year;
             this.resultSub = g.day + '/' + g.month + '/' + g.year + ' M';
@@ -587,7 +638,7 @@ function hisab() {
                 return;
             }
             var jd = gregorianToJDN(y, m, d);
-            var h = jdnToHijri(jd);
+            var h = toHijri(y, m, d);
             var wd = jdnToWeekday(jd);
             this.result = wd + ', ' + h.day + ' ' + hijriMonths[h.month] + ' ' + h.year + ' H';
             this.resultSub = h.day + '/' + h.month + '/' + h.year + ' H';
