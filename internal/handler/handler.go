@@ -704,7 +704,10 @@ func (h *Handler) DoaMore(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) Shalat(w http.ResponseWriter, r *http.Request) {
 	cities, byName := getPrayerCities()
-	city := lookupPrayerCity(byName, strings.TrimSpace(r.URL.Query().Get("city")))
+	city, explicit := cityFromRequest(r, byName)
+	if explicit {
+		setPrayerCityCookie(w, city)
+	}
 	zone := city.Zone()
 	now := time.Now().In(zone)
 
@@ -770,12 +773,12 @@ func (h *Handler) Shalat(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) ShalatMini(w http.ResponseWriter, r *http.Request) {
-	h.renderPartial(w, "shalat-mini", h.fetchShalatMini(r.Context()))
+	_, byName := getPrayerCities()
+	city, _ := cityFromRequest(r, byName)
+	h.renderPartial(w, "shalat-mini", h.fetchShalatMini(r.Context(), city))
 }
 
-func (h *Handler) fetchShalatMini(ctx context.Context) model.ShalatMiniData {
-	_, byName := getPrayerCities()
-	city := lookupPrayerCity(byName, "Jakarta")
+func (h *Handler) fetchShalatMini(ctx context.Context, city model.PrayerCity) model.ShalatMiniData {
 	now := time.Now().In(city.Zone())
 
 	cacheRow, err := h.fetchShalatCache(ctx, city, now)
@@ -784,13 +787,13 @@ func (h *Handler) fetchShalatMini(ctx context.Context) model.ShalatMiniData {
 	}
 
 	if cacheRow != nil {
-		return miniDataFromCache(cacheRow)
+		return miniDataFromCache(city, cacheRow)
 	}
 
 	result, body, err := fetchTimingsByCoords(ctx, city, now)
 	if err != nil {
 		if stale := h.staleShalat(ctx, city); stale != nil {
-			return miniDataFromCache(stale)
+			return miniDataFromCache(city, stale)
 		}
 		return model.ShalatMiniData{Error: "Gagal memuat waktu shalat."}
 	}
@@ -799,7 +802,7 @@ func (h *Handler) fetchShalatMini(ctx context.Context) model.ShalatMiniData {
 
 	t := result.Data.Timings
 	pt := prayerTimesFromRaw(t.Imsak, t.Fajr, t.Sunrise, t.Dhuhr, t.Asr, t.Maghrib, t.Isha)
-	return miniDataFromTimings(pt.Subuh, pt.Dzuhur, pt.Ashr, pt.Maghrib, pt.Isya)
+	return miniDataFromTimings(city, pt.Subuh, pt.Dzuhur, pt.Ashr, pt.Maghrib, pt.Isya)
 }
 
 func (h *Handler) staleShalat(ctx context.Context, city model.PrayerCity) *model.ShalatCacheRow {
@@ -856,12 +859,12 @@ func (h *Handler) saveShalatToCache(ctx context.Context, city model.PrayerCity, 
 	}
 }
 
-func miniDataFromCache(row *model.ShalatCacheRow) model.ShalatMiniData {
+func miniDataFromCache(city model.PrayerCity, row *model.ShalatCacheRow) model.ShalatMiniData {
 	pt := prayerTimesFromRow(row)
-	return miniDataFromTimings(pt.Subuh, pt.Dzuhur, pt.Ashr, pt.Maghrib, pt.Isya)
+	return miniDataFromTimings(city, pt.Subuh, pt.Dzuhur, pt.Ashr, pt.Maghrib, pt.Isya)
 }
 
-func miniDataFromTimings(subuh, dzuhur, ashr, maghrib, isya string) model.ShalatMiniData {
+func miniDataFromTimings(city model.PrayerCity, subuh, dzuhur, ashr, maghrib, isya string) model.ShalatMiniData {
 	prayers := []struct{ Name, Time string }{
 		{"Subuh", subuh},
 		{"Dzuhur", dzuhur},
@@ -870,8 +873,8 @@ func miniDataFromTimings(subuh, dzuhur, ashr, maghrib, isya string) model.Shalat
 		{"Isya", isya},
 	}
 
-	wib := time.FixedZone("WIB", 7*3600)
-	now := time.Now().In(wib)
+	zone := city.Zone()
+	now := time.Now().In(zone)
 	nowMins := now.Hour()*60 + now.Minute()
 
 	parseMins := func(s string) int {
@@ -911,12 +914,20 @@ func miniDataFromTimings(subuh, dzuhur, ashr, maghrib, isya string) model.Shalat
 	parts := strings.Split(nextTime, ":")
 	nextHr, _ := strconv.Atoi(parts[0])
 	nextMn, _ := strconv.Atoi(parts[1])
-	nextT := time.Date(now.Year(), now.Month(), now.Day(), nextHr, nextMn, 0, 0, wib)
+	nextT := time.Date(now.Year(), now.Month(), now.Day(), nextHr, nextMn, 0, 0, zone)
 	if nextIdx == -1 {
 		nextT = nextT.Add(24 * time.Hour)
 	}
 
-	return model.ShalatMiniData{City: "Jakarta", Prayers: rows, NextPrayerUnix: nextT.Unix(), NextPrayerName: nextName, NextPrayerTime: nextTime}
+	return model.ShalatMiniData{
+		City:           city.Name,
+		TZLabel:        city.TZ,
+		TZOffsetMins:   city.OffsetSeconds() / 60,
+		Prayers:        rows,
+		NextPrayerUnix: nextT.Unix(),
+		NextPrayerName: nextName,
+		NextPrayerTime: nextTime,
+	}
 }
 
 func stripSeconds(t string) string {

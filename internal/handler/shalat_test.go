@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"net/http"
+	"net/http/httptest"
 	"testing"
 
 	"github.com/srmdn/islami.click/internal/model"
@@ -31,17 +33,51 @@ func TestPrayerCitiesDatasetLoads(t *testing.T) {
 	}
 }
 
-func TestLookupPrayerCity(t *testing.T) {
+func TestCityFromRequest(t *testing.T) {
 	_, byName := getPrayerCities()
 
-	jayapura := lookupPrayerCity(byName, "Jayapura")
-	if jayapura.TZ != "WIT" {
-		t.Fatalf("Jayapura tz = %s, want WIT", jayapura.TZ)
+	// Explicit valid query wins over cookie.
+	r := httptest.NewRequest(http.MethodGet, "/shalat?city=Jayapura", nil)
+	r.AddCookie(&http.Cookie{Name: prayerCityCookie, Value: "Depok"})
+	city, explicit := cityFromRequest(r, byName)
+	if city.Name != "Jayapura" || !explicit {
+		t.Fatalf("query = %+v explicit=%v", city, explicit)
 	}
 
-	def := lookupPrayerCity(byName, "Kota Tidak Ada")
-	if def.Name != "Jakarta" {
-		t.Fatalf("unknown city default = %s, want Jakarta", def.Name)
+	// No query: valid cookie is remembered.
+	r = httptest.NewRequest(http.MethodGet, "/shalat", nil)
+	r.AddCookie(&http.Cookie{Name: prayerCityCookie, Value: "Depok"})
+	city, explicit = cityFromRequest(r, byName)
+	if city.Name != "Depok" || explicit {
+		t.Fatalf("cookie = %+v explicit=%v", city, explicit)
+	}
+
+	// Escaped cookie values (spaces, commas) decode.
+	r = httptest.NewRequest(http.MethodGet, "/shalat", nil)
+	r.AddCookie(&http.Cookie{Name: prayerCityCookie, Value: "Sambas%2C+Kalbar"})
+	city, _ = cityFromRequest(r, byName)
+	if city.Name != "Sambas, Kalbar" {
+		t.Fatalf("escaped cookie = %q", city.Name)
+	}
+
+	// Invalid query and unknown cookie fall back to Jakarta.
+	r = httptest.NewRequest(http.MethodGet, "/shalat?city=Kota+Tidak+Ada", nil)
+	city, explicit = cityFromRequest(r, byName)
+	if city.Name != "Jakarta" || explicit {
+		t.Fatalf("bad query = %+v explicit=%v", city, explicit)
+	}
+	r = httptest.NewRequest(http.MethodGet, "/shalat", nil)
+	r.AddCookie(&http.Cookie{Name: prayerCityCookie, Value: "Atlantis"})
+	city, _ = cityFromRequest(r, byName)
+	if city.Name != "Jakarta" {
+		t.Fatalf("bad cookie = %q", city.Name)
+	}
+
+	// Nothing at all: Jakarta.
+	r = httptest.NewRequest(http.MethodGet, "/shalat", nil)
+	city, _ = cityFromRequest(r, byName)
+	if city.Name != "Jakarta" {
+		t.Fatalf("default = %q", city.Name)
 	}
 }
 

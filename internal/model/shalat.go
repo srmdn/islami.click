@@ -70,6 +70,8 @@ type PrayerMiniRow struct {
 
 type ShalatMiniData struct {
 	City           string
+	TZLabel        string
+	TZOffsetMins   int
 	Prayers        []PrayerMiniRow
 	NextPrayerUnix int64
 	NextPrayerName string
