@@ -7,6 +7,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"net/url"
 	"strconv"
 	"strings"
 	"sync"
@@ -61,12 +62,43 @@ func getPrayerCities() ([]model.PrayerCity, map[string]model.PrayerCity) {
 	return prayerCities, prayerCityByName
 }
 
-// lookupPrayerCity resolves a city name, defaulting to Jakarta.
-func lookupPrayerCity(byName map[string]model.PrayerCity, name string) model.PrayerCity {
-	if c, ok := byName[name]; ok {
-		return c
+// prayerCityCookie remembers the visitor's last chosen city for a year.
+// The value is URL-escaped (names contain spaces, commas, dots) and always
+// validated against the city map on read; unknown values fall back to Jakarta.
+const prayerCityCookie = "city"
+const prayerCityCookieMaxAge = 365 * 24 * 3600
+
+// cityFromRequest resolves the city: explicit ?city= first (validated),
+// then the remember-city cookie, then Jakarta. The second return value
+// reports an explicit valid query choice (worth persisting via Set-Cookie).
+func cityFromRequest(r *http.Request, byName map[string]model.PrayerCity) (model.PrayerCity, bool) {
+	def := byName["Jakarta"]
+	if q := strings.TrimSpace(r.URL.Query().Get("city")); q != "" {
+		if c, ok := byName[q]; ok {
+			return c, true
+		}
+		return def, false
 	}
-	return byName["Jakarta"]
+	if ck, err := r.Cookie(prayerCityCookie); err == nil {
+		name := ck.Value
+		if unescaped, uerr := url.QueryUnescape(ck.Value); uerr == nil {
+			name = strings.TrimSpace(unescaped)
+		}
+		if c, ok := byName[name]; ok {
+			return c, false
+		}
+	}
+	return def, false
+}
+
+func setPrayerCityCookie(w http.ResponseWriter, city model.PrayerCity) {
+	http.SetCookie(w, &http.Cookie{
+		Name:     prayerCityCookie,
+		Value:    url.QueryEscape(city.Name),
+		Path:     "/",
+		MaxAge:   prayerCityCookieMaxAge,
+		SameSite: http.SameSiteLaxMode,
+	})
 }
 
 // prayerTimesFromRaw applies the Kemenag-style safety margin on top of
