@@ -755,16 +755,13 @@ func (h *Handler) Shalat(w http.ResponseWriter, r *http.Request) {
 	t := result.Data.Timings
 	page.Times = prayerTimesFromRaw(t.Imsak, t.Fajr, t.Sunrise, t.Dhuhr, t.Asr, t.Maghrib, t.Isha)
 
-	hijri := result.Data.Date.Hijri
-	monthID := hijri.Month.En
-	if n := hijri.Month.Number; n >= 1 && n <= 12 {
-		monthID = hijriMonthsID[n]
-	}
+	// Hijri date has ONE source of truth: our Kemenag-anchored converter,
+	// never the API's (Aladhan uses HJCoSA which can differ by a day).
+	hijriNow := hijri.FromGregorian(now)
 	page.Hijri = model.HijriDate{
-		Day:     hijri.Day,
-		Month:   monthID,
-		Year:    hijri.Year,
-		Weekday: hijri.Weekday.En,
+		Day:   strconv.Itoa(hijriNow.Day),
+		Month: hijri.MonthNamesID[hijriNow.Month],
+		Year:  strconv.Itoa(hijriNow.Year),
 	}
 
 	h.saveShalatToCache(r.Context(), city, now, result, body)
@@ -833,8 +830,8 @@ func (h *Handler) fetchShalatCache(ctx context.Context, city model.PrayerCity, n
 
 func (h *Handler) saveShalatToCache(ctx context.Context, city model.PrayerCity, now time.Time, result *aladhanResponse, rawBody []byte) {
 	t := result.Data.Timings
-	hijri := result.Data.Date.Hijri
-	hijriDate := fmt.Sprintf("%s-%02d-%s", hijri.Year, hijri.Month.Number, hijri.Day)
+	hijriNow := hijri.FromGregorian(now)
+	hijriDate := fmt.Sprintf("%d-%02d-%02d", hijriNow.Year, hijriNow.Month, hijriNow.Day)
 
 	// Cache holds raw API values; the ihtiyati margin is applied at display.
 	tomorrow := time.Date(now.Year(), now.Month(), now.Day()+1, 1, 0, 0, 0, city.Zone())
