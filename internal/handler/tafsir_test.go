@@ -32,6 +32,7 @@ func newTafsirTestHandler(t *testing.T) *Handler {
 		"arabicHTML": func(s string) template.HTML {
 			return template.HTML(template.HTMLEscapeString(s))
 		},
+		"tafsirHTML": TafsirHTML,
 		"js": func(s string) template.JS {
 			encoded, _ := json.Marshal(s)
 			return template.JS(encoded)
@@ -86,7 +87,7 @@ func TestTafsirSurahRenders(t *testing.T) {
 		t.Fatalf("status = %d, want 200", rec.Code)
 	}
 	body := rec.Body.String()
-	for _, want := range []string{"Tafsir Al-Muyassar", "tafsir-key", "Tafsir Berikutnya"} {
+	for _, want := range []string{"Tafsir Al-Muyassar", "tafsir-key", "Tafsir Berikutnya", "\u200E"} {
 		if !strings.Contains(body, want) {
 			t.Fatalf("surah page missing %q", want)
 		}

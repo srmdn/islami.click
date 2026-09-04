@@ -35,7 +35,7 @@
                     {{if .Tafsir}}
                     <div class="rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] bg-[#FDFBF7] dark:bg-[#0E222B] p-4">
                         <p class="text-xs font-semibold uppercase tracking-wide text-[#A88A38] dark:text-[#C9A84C] mb-2">Tafsir Al-Muyassar</p>
-                        <div class="tafsir-body font-arabic text-lg leading-[2.2] text-[#1A2E35] dark:text-[#EEE8DF]" dir="rtl">{{.Tafsir}}</div>
+                        <div class="tafsir-body font-arabic text-lg leading-[2.2] text-[#1A2E35] dark:text-[#EEE8DF]" dir="rtl">{{.Tafsir | tafsirHTML}}</div>
                     </div>
                     {{end}}
                 </div>
