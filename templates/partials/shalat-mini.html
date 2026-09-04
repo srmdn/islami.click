@@ -5,6 +5,7 @@
     x-data="{
         hh: '--', mm: '--', ss: '--',
         ch: 0, cm: 0, cs: 0,
+        dotOn: true,
         tzOffset: {{.TZOffsetMins}},
         get countdown() {
             const p = (n) => String(n).padStart(2,'0');
@@ -14,6 +15,10 @@
         },
         init() {
             const target = {{.NextPrayerUnix}} * 1000;
+            // Kedip digerakkan JS (bukan CSS) agar tetap jalan di browser
+            // yang menonaktifkan/memblokir animasi CSS. Hormati
+            // prefers-reduced-motion: diam bila pengguna memintanya.
+            const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             const update = () => {
                 const local = new Date(Date.now() + (new Date().getTimezoneOffset() + this.tzOffset) * 60000);
                 this.hh = String(local.getHours()).padStart(2,'0');
@@ -23,6 +28,7 @@
                 this.ch = Math.floor(diff / 3600);
                 this.cm = Math.floor((diff % 3600) / 60);
                 this.cs = diff % 60;
+                this.dotOn = reduceMotion ? true : !this.dotOn;
             };
             update();
             setInterval(update, 1000);
@@ -34,7 +40,7 @@
         <p class="inline-flex max-w-full flex-wrap items-center justify-center gap-x-3 gap-y-1.5 rounded-full border border-[#E2D9CE] bg-white/70 px-5 py-2.5 text-sm tabular-nums text-[#5A4C40] dark:border-[#1E4458] dark:bg-[#102D37] dark:text-[#D6E3E4]">
             <span class="relative flex h-3 w-3" aria-hidden="true">
                 <span class="absolute inline-flex h-full w-full animate-live-ping rounded-full bg-[#0E5C73]/50 dark:bg-[#83C0CC]/50"></span>
-                <span class="live-dot relative inline-flex h-3 w-3 animate-live-blink rounded-full bg-[#0E5C73] dark:bg-[#83C0CC]"></span>
+                <span class="live-dot relative inline-flex h-3 w-3 rounded-full bg-[#0E5C73] dark:bg-[#83C0CC]" :style="{ opacity: dotOn ? 1 : 0.15 }"></span>
             </span>
             <span x-text="'Sekarang ' + hh+':'+mm+':'+ss + ' {{.TZLabel}}'">Sekarang --:--:-- {{.TZLabel}}</span>
             <span class="text-[#C9A84C]" aria-hidden="true">&middot;</span>
