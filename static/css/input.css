@@ -219,6 +219,32 @@
     background: rgba(201, 168, 76, 0.25);
   }
 
+  /* English tafsir body: structured paragraphs from the fetch allowlist.
+     Latin flow uses normal line-height (not the Arabic 2.2). */
+  .tafsir-body[lang="en"] p {
+    margin: 0 0 0.9em;
+  }
+  .tafsir-body[lang="en"] p:last-child {
+    margin-bottom: 0;
+  }
+  .tafsir-body[lang="en"] h2 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.5;
+    margin: 0 0 0.6em;
+    color: #1A2E35;
+  }
+  .dark .tafsir-body[lang="en"] h2 {
+    color: #EEE8DF;
+  }
+  /* Arabic quote paragraphs inside Latin tafsir: Amiri, RTL, roomy. */
+  .tafsir-body p.tafsir-ar {
+    font-family: var(--font-arabic);
+    font-size: 1.2rem;
+    line-height: 2.1;
+    text-align: right;
+  }
+
   /* Ornate Arabic parens: slightly larger to match ASCII paren height.
      Hug order comes from emission order (close-shape first), not CSS. */
   .paren-orn {

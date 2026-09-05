@@ -10,6 +10,13 @@ type TafsirAyah struct {
 	Arabic      string        `json:"arabic"`
 	Translation string        `json:"translation"`
 	Tafsir      template.HTML `json:"tafsir"`
+	// TafsirFirst marks the ayah that renders the card when consecutive
+	// ayahs share an identical group commentary (e.g. Ibn Kathir blocks
+	// repeated per ayah by the source API). TafsirRange holds the grouped
+	// label ("1–6"), empty when the card covers a single ayah.
+	// Render-only hints, never seeded or served as data.
+	TafsirFirst bool   `json:"-"`
+	TafsirRange string `json:"-"`
 }
 
 // TafsirEdition is one commentary book available per ayah
@@ -28,15 +35,20 @@ type TafsirIndexData struct {
 	Meta        PageMeta
 	Title       string
 	Description string
+	About       string
+	Attribution string
 	Surahs      []QuranSurah
 	Covered     map[int]int
 	TotalAyahs  int
+	Editions    []TafsirEdition
+	Edition     TafsirEdition
 }
 
 type TafsirSurahData struct {
 	Meta        PageMeta
 	Title       string
 	Description string
+	Attribution string
 	Surah       QuranSurah
 	Ayahs       []TafsirAyah
 	PrevSurah   *QuranSurah
@@ -44,4 +56,6 @@ type TafsirSurahData struct {
 	Page        int
 	FirstPage   int
 	TotalPages  int
+	Editions    []TafsirEdition
+	Edition     TafsirEdition
 }

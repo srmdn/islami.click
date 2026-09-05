@@ -2,22 +2,22 @@
   "source": "https://api.quran.com/api/v4/tafsirs/169/by_ayah/{surah}:{ayah}",
   "resource": "en-tafisr-ibn-kathir (Ibn Kathir Abridged, English)",
   "language": "english",
-  "fetched_at": "2026-09-05T04:45:13Z",
+  "fetched_at": "2026-09-05T10:00:59Z",
   "surahs": [
     {
       "number": 112,
       "ayahs": 4,
-      "sha256": "5c37ffb5b8234f986bcc67790e2a6a2f38f65319ef5ce5f3910d02f9172fe280"
+      "sha256": "c29cb4f91d719bc58b7d6955d889ff15ed9bcdab38b571d571de1873350b75cc"
     },
     {
       "number": 113,
       "ayahs": 5,
-      "sha256": "59e1b6ec06438c96bfc7e2b60e016d50af3a5189716728c8832bae336d172727"
+      "sha256": "8ed8ff8580d991238b5f64557200796ec2c55fec531053b0b246350f545227fd"
     },
     {
       "number": 114,
       "ayahs": 6,
-      "sha256": "252b54809b6ea4343617452eaa949bb405faa47774099aaa7774f6735a5bbb6a"
+      "sha256": "9c029ae62cf749b0255b006f29c78e3582bfd3151a097881a30f21bb708e5a5d"
     }
   ]
 }

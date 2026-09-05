@@ -32,7 +32,8 @@ func newTafsirTestHandler(t *testing.T) *Handler {
 		"arabicHTML": func(s string) template.HTML {
 			return template.HTML(template.HTMLEscapeString(s))
 		},
-		"tafsirHTML": TafsirHTML,
+		"tafsirHTML":    TafsirHTML,
+		"tafsirHTMLFor": TafsirHTMLFor,
 		"js": func(s string) template.JS {
 			encoded, _ := json.Marshal(s)
 			return template.JS(encoded)
@@ -69,7 +70,7 @@ func TestTafsirIndexRenders(t *testing.T) {
 		t.Fatalf("status = %d, want 200", rec.Code)
 	}
 	body := rec.Body.String()
-	for _, want := range []string{"Tafsir Al-Muyassar", "/tafsir/1", "/tafsir/114", "Quran.com"} {
+	for _, want := range []string{"Tafsir Al-Muyassar", "/tafsir/1", "/tafsir/114", "Quran.com", "Pilih kitab tafsir"} {
 		if !strings.Contains(body, want) {
 			t.Fatalf("index missing %q", want)
 		}
@@ -87,7 +88,7 @@ func TestTafsirSurahRenders(t *testing.T) {
 		t.Fatalf("status = %d, want 200", rec.Code)
 	}
 	body := rec.Body.String()
-	for _, want := range []string{"Tafsir Al-Muyassar", "tafsir-key", "Tafsir Berikutnya", "﴾", "﴿"} {
+	for _, want := range []string{"Tafsir Al-Muyassar", "tafsir-key", "Tafsir Berikutnya", "﴾", "﴿", "tafsirShare($el)", `data-share-url="/tafsir/1#ayah-1"`, "Gagal menyalin", "x-data"} {
 		if !strings.Contains(body, want) {
 			t.Fatalf("surah page missing %q", want)
 		}
@@ -99,6 +100,83 @@ func TestTafsirSurahRenders(t *testing.T) {
 	}
 	if strings.Contains(body, "onerror=") || strings.Contains(body, "onclick=") {
 		t.Fatal("surah page contains suspicious inline handlers")
+	}
+}
+
+func TestTafsirIndexEditionSwitcher(t *testing.T) {
+	h := newTafsirTestHandler(t)
+
+	req := httptest.NewRequest(http.MethodGet, "/tafsir?edition=ibn-kathir-en", nil)
+	rec := httptest.NewRecorder()
+	h.Tafsir(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want 200", rec.Code)
+	}
+	body := rec.Body.String()
+	for _, want := range []string{"Ibn Kathir (Abridged)", "Tafsir Al-Muyassar", "?edition=ibn-kathir-en", "4/4 tafsir", "0/286 tafsir"} {
+		if !strings.Contains(body, want) {
+			t.Fatalf("english index missing %q", want)
+		}
+	}
+}
+
+func TestTafsirIndexUnknownEditionFallsBack(t *testing.T) {
+	h := newTafsirTestHandler(t)
+
+	req := httptest.NewRequest(http.MethodGet, "/tafsir?edition=nope", nil)
+	rec := httptest.NewRecorder()
+	h.Tafsir(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want 200", rec.Code)
+	}
+	if body := rec.Body.String(); !strings.Contains(body, "Tafsir Al-Muyassar") {
+		t.Fatal("unknown edition should fall back to Muyassar")
+	}
+}
+
+func TestTafsirSurahEnglishRenders(t *testing.T) {
+	h := newTafsirTestHandler(t)
+
+	req := httptest.NewRequest(http.MethodGet, "/tafsir/114?edition=ibn-kathir-en", nil)
+	rec := httptest.NewRecorder()
+	h.TafsirSurah(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want 200", rec.Code)
+	}
+	body := rec.Body.String()
+	for _, want := range []string{"Ibn Kathir (Abridged)", `lang="en"`, "Which was revealed in Makkah", "Quran.com API (resource 169)", "Ayat 1–6", "<h2>Which was revealed in Makkah</h2>", `data-share-url="/tafsir/114?edition=ibn-kathir-en#ayah-1"`, "tafsirShare($el)"} {
+		if !strings.Contains(body, want) {
+			t.Fatalf("english surah page missing %q", want)
+		}
+	}
+	if got := strings.Count(body, "Which was revealed in Makkah"); got != 1 {
+		t.Fatalf("group text rendered %d times, want once", got)
+	}
+	for _, bad := range []string{"﴾", "﴿", "\u200E", "\u200F", "\u202A", "\u202B", "\u202C", "\u2066", "\u2067", "\u2069"} {
+		if strings.Contains(body, bad) {
+			t.Fatalf("english surah page leaks %q into latin text", bad)
+		}
+	}
+}
+
+func TestTafsirSurahEnglishEmptyState(t *testing.T) {
+	h := newTafsirTestHandler(t)
+
+	req := httptest.NewRequest(http.MethodGet, "/tafsir/1?edition=ibn-kathir-en", nil)
+	rec := httptest.NewRecorder()
+	h.TafsirSurah(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want 200", rec.Code)
+	}
+	body := rec.Body.String()
+	for _, want := range []string{"belum tersedia", `href="/tafsir/1"`, "Tafsir Berikutnya"} {
+		if !strings.Contains(body, want) {
+			t.Fatalf("empty-state page missing %q", want)
+		}
 	}
 }
 

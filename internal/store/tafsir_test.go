@@ -15,6 +15,10 @@ import (
 
 var tafsirTagRe = regexp.MustCompile(`<[a-zA-Z/][^>]*>`)
 
+// enTafsirTagRe strips the fetch allowlist (block/inline structure tags with
+// any attributes) so the remainder must be tag-free.
+var enTafsirTagRe = regexp.MustCompile(`</?(?:p|h2|strong|em|br|mark)(?:\s[^>]*)?>`)
+
 func stripAllowedTafsirMarks(s string) string {
 	s = strings.ReplaceAll(s, `<mark class="tafsir-key">`, "")
 	s = strings.ReplaceAll(s, `</mark>`, "")
@@ -131,6 +135,11 @@ func TestTafsirAyahsByEditionPage(t *testing.T) {
 	if len(muyassar) != 6 {
 		t.Fatalf("muyassar ayahs = %d, want 6", len(muyassar))
 	}
+	for _, a := range muyassar {
+		if !a.TafsirFirst || a.TafsirRange != "" {
+			t.Fatalf("muyassar ayah %d should render its own card (distinct per-ayah text)", a.Number)
+		}
+	}
 
 	en, err := contentStore.TafsirAyahsByEditionPage(ctx, "ibn-kathir-en", 114, pages[0])
 	if err != nil {
@@ -146,8 +155,30 @@ func TestTafsirAyahsByEditionPage(t *testing.T) {
 		if string(a.Tafsir) == string(muyassar[i].Tafsir) {
 			t.Fatalf("ayah %d english text identical to muyassar (wrong edition?)", a.Number)
 		}
-		if tafsirTagRe.MatchString(stripAllowedTafsirMarks(string(a.Tafsir))) {
-			t.Fatalf("ayah %d english tafsir has unexpected html: %.80s", a.Number, string(a.Tafsir))
+		if tafsirTagRe.MatchString(enTafsirTagRe.ReplaceAllString(stripAllowedTafsirMarks(string(a.Tafsir)), "")) {
+			t.Fatalf("ayah %d english tafsir has non-allowlist html: %.80s", a.Number, string(a.Tafsir))
+		}
+	}
+	if !strings.Contains(string(en[0].Tafsir), "<h2>Which was revealed in Makkah</h2>") {
+		t.Fatal("english tafsir lost its heading structure")
+	}
+	if !strings.Contains(string(en[0].Tafsir), `<p dir="rtl" lang="ar" class="tafsir-ar">`) {
+		t.Fatal("english tafsir lost its RTL quote paragraph")
+	}
+	if strings.Contains(string(en[0].Tafsir), "Makkahب") {
+		t.Fatal("english tafsir glued heading to arabic (structure stripped)")
+	}
+	// Only allowlist tags may remain.
+	clean := enTafsirTagRe.ReplaceAllString(stripAllowedTafsirMarks(string(en[0].Tafsir)), "")
+	if tafsirTagRe.MatchString(clean) {
+		t.Fatalf("english tafsir has non-allowlist html: %.80s", clean)
+	}
+	if !en[0].TafsirFirst || en[0].TafsirRange != "1–6" {
+		t.Fatalf("ayah 1 should open the 1–6 group card, got first=%v range=%q", en[0].TafsirFirst, en[0].TafsirRange)
+	}
+	for _, a := range en[1:] {
+		if a.TafsirFirst {
+			t.Fatalf("ayah %d repeats the group text and must not render a card", a.Number)
 		}
 	}
 }

@@ -21,6 +21,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"html"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -76,29 +77,104 @@ type Manifest struct {
 }
 
 var (
-	tagRe   = regexp.MustCompile(`<[^>]*>`)
-	spaceRe = regexp.MustCompile(`[ \t]+`)
+	spaceRe  = regexp.MustCompile(`[ \t]+`)
+	tagTok   = regexp.MustCompile(`<(/?)([a-zA-Z][a-zA-Z0-9]*)[^>]*>`)
+	paraRe   = regexp.MustCompile(`(?s)<p>(.*?)</p>`)
+	emptyPRe = regexp.MustCompile(`<p>(?:\s|<br>)*</p>`)
 )
 
-// sanitize keeps only the quran.com keyword highlight, normalized to a
-// local <mark> element, and strips every other HTML tag verbatim
-// (Ibn Kathir English ships h1/h2/p/strong markup; headings collapse
-// into plain lines). Placeholders protect our own markup from the stripper.
+// sanitize keeps the source's block structure via a strict allowlist and
+// escapes everything else, so stored English tafsir is safe HTML with real
+// paragraphs and headings instead of one glued wall of text.
+//
+// Allowed: p, h1-h3 (normalized to h2), strong/b, em/i, br, and the local
+// <mark class="tafsir-key"> keyword highlight (converted from the source
+// <span class="green">). All other tags are dropped with their attributes;
+// their inner text is kept. Placeholders protect our own markup mid-pass.
+//
+// Paragraphs whose text is dominantly Arabic (hadith quotes) are tagged
+// <p dir="rtl" lang="ar" class="tafsir-ar"> so they render right-to-left
+// like on quran.com.
 func sanitize(s string) string {
-	s = strings.ReplaceAll(s, `<span class="green">`, "")
-	s = strings.ReplaceAll(s, "</span>", "")
-	s = tagRe.ReplaceAllString(s, "")
-	s = strings.ReplaceAll(s, "", "<mark class=\"tafsir-key\">")
-	s = strings.ReplaceAll(s, "", "</mark>")
-	lines := strings.Split(s, "\n")
-	for i, l := range lines {
-		lines[i] = strings.TrimSpace(spaceRe.ReplaceAllString(l, " "))
+	s = strings.ReplaceAll(s, `<span class="green">`, "  ")
+	s = strings.ReplaceAll(s, "</span>", "  ")
+
+	var b strings.Builder
+	rest := s
+	for {
+		loc := tagTok.FindStringSubmatchIndex(rest)
+		if loc == nil {
+			b.WriteString(escapeText(rest))
+			break
+		}
+		b.WriteString(escapeText(rest[:loc[0]]))
+		closing, name := rest[loc[2]:loc[3]], strings.ToLower(rest[loc[4]:loc[5]])
+		close := closing == "/"
+		switch name {
+		case "p":
+			b.WriteString(edTag(close, "p"))
+		case "h1", "h2", "h3":
+			b.WriteString(edTag(close, "h2"))
+		case "strong", "b":
+			b.WriteString(edTag(close, "strong"))
+		case "em", "i":
+			b.WriteString(edTag(close, "em"))
+		case "br":
+			b.WriteString("<br>")
+		case "mark":
+			// Only our own placeholder marks may occur; normalize anyway.
+			b.WriteString(edTag(close, "mark"))
+		default:
+			// Drop the tag, keep its inner text.
+		}
+		rest = rest[loc[1]:]
 	}
-	out := strings.Join(lines, "\n")
-	for strings.Contains(out, "\n\n\n") {
-		out = strings.ReplaceAll(out, "\n\n\n", "\n\n")
-	}
+	out := b.String()
+	out = strings.ReplaceAll(out, "  ", `<mark class="tafsir-key">`)
+	out = strings.ReplaceAll(out, "  ", "</mark>")
+
+	out = paraRe.ReplaceAllStringFunc(out, func(m string) string {
+		inner := paraRe.FindStringSubmatch(m)[1]
+		if isArabicDominant(inner) {
+			return `<p dir="rtl" lang="ar" class="tafsir-ar">` + inner + `</p>`
+		}
+		return m
+	})
+	out = emptyPRe.ReplaceAllString(out, "")
 	return strings.TrimSpace(out)
+}
+
+func edTag(close bool, name string) string {
+	if name == "mark" && !close {
+		return `<mark class="tafsir-key">`
+	}
+	if close {
+		return "</" + name + ">"
+	}
+	return "<" + name + ">"
+}
+
+// escapeText decodes source entities, collapses horizontal whitespace,
+// trims, and re-escapes so only our allowlist tags can form markup.
+func escapeText(s string) string {
+	s = html.UnescapeString(s)
+	s = spaceRe.ReplaceAllString(s, " ")
+	return html.EscapeString(strings.TrimSpace(s))
+}
+
+// isArabicDominant reports whether a paragraph's visible text is mostly
+// Arabic script (markup stripped). Latin-dominant paragraphs stay LTR.
+func isArabicDominant(s string) bool {
+	arabic, latin := 0, 0
+	for _, r := range tagTok.ReplaceAllString(s, "") {
+		switch {
+		case r >= 0x0600 && r <= 0x06FF || r >= 0x0750 && r <= 0x077F || r >= 0xFB50 && r <= 0xFDFF || r >= 0xFE70 && r <= 0xFEFF:
+			arabic++
+		case r >= 'A' && r <= 'Z' || r >= 'a' && r <= 'z':
+			latin++
+		}
+	}
+	return arabic > 0 && arabic > latin
 }
 
 func fetchTafsir(client *http.Client, surah, ayah int) (string, error) {

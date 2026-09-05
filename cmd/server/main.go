@@ -32,6 +32,7 @@ func main() {
 		"hasPrefix": func(s, prefix string) bool { return strings.HasPrefix(s, prefix) },
 		"arabicHTML": handler.ArabicHTML,
 		"tafsirHTML": handler.TafsirHTML,
+		"tafsirHTMLFor": handler.TafsirHTMLFor,
 		"js": func(s string) template.JS {
 			encoded, _ := json.Marshal(s)
 			return template.JS(encoded)

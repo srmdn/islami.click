@@ -6,33 +6,40 @@
     <nav class="text-sm text-[#5C7A84] dark:text-[#7AAAB5] mb-6">
         <a href="/" class="hover:text-[#0E5C73] transition-colors">Beranda</a>
         <span class="mx-2">/</span>
-        <span class="text-[#1A2E35] dark:text-[#EEE8DF]">Tafsir Al-Muyassar</span>
+        <span class="text-[#1A2E35] dark:text-[#EEE8DF]">{{.Title}}</span>
     </nav>
 
-    <div class="mb-8">
+    <div class="mb-6">
         <h1 class="text-3xl font-semibold tracking-tight mb-2 text-[#1A2E35] dark:text-[#EEE8DF]">{{.Title}}</h1>
         <p class="text-[#5C7A84] dark:text-[#7AAAB5] leading-relaxed">{{.Description}}</p>
     </div>
 
+    {{if .Editions}}
+    <div class="mb-8 flex flex-wrap gap-2" role="tablist" aria-label="Pilih kitab tafsir">
+        {{range .Editions}}
+        {{if eq .ID $.Edition.ID}}
+        <span role="tab" aria-selected="true" class="inline-flex items-center min-h-[44px] px-4 py-2 rounded-xl bg-[#0E5C73] text-[#FAF7F2] text-sm font-semibold">{{.Title}}</span>
+        {{else}}
+        <a role="tab" aria-selected="false" href="/tafsir{{if ne .ID "muyassar"}}?edition={{.ID}}{{end}}" class="inline-flex items-center min-h-[44px] px-4 py-2 rounded-xl border border-[#E2D9CE] dark:border-[#1E4458] text-sm font-medium text-[#5C7A84] dark:text-[#7AAAB5] hover:border-[#0E5C73] dark:hover:border-[#0E5C73] hover:text-[#0E5C73] dark:hover:text-[#7AAAB5] transition-colors">{{.Title}}</a>
+        {{end}}
+        {{end}}
+    </div>
+    {{end}}
+
     <div class="mb-8 bg-white dark:bg-[#122E38] rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] p-5">
         <p class="text-sm leading-relaxed text-[#5C7A84] dark:text-[#7AAAB5]">
             <span class="font-semibold text-[#1A2E35] dark:text-[#EEE8DF]">Tentang tafsir ini.</span>
-            At-Tafsir Al-Muyassar adalah penjelasan ringkas makna tiap ayat Al-Qur'an dalam
-            Bahasa Arab. Setiap halaman menampilkan teks ayat, terjemahan Bahasa Indonesia,
-            dan tafsirnya berdampingan. {{.TotalAyahs}} ayat dari 114 surah tersedia.
+            {{.About}} {{.TotalAyahs}} ayat dari 114 surah tersedia.
         </p>
         <p class="mt-3 text-xs leading-relaxed text-[#8AACB5] dark:text-[#5C7A84]">
-            At-Tafsir Al-Muyassar disusun oleh sekelompok ulama
-            (<span dir="rtl" lang="ar">نخبة من العلماء</span>) di bawah bimbingan
-            Syaikh Dr. Shalih Alusy-Syaikh, terbitan Mujamma' Malik Fahd, Madinah.
-            Teks Arab via Quran.com API; terjemahan ayat mengikuti teks Al-Qur'an di islami.click.
+            {{.Attribution}}
         </p>
     </div>
 
     <div class="grid gap-3 sm:grid-cols-2">
         {{range .Surahs}}
         {{$covered := index $.Covered .Number}}
-        <a href="/tafsir/{{.Number}}" class="group block bg-white dark:bg-[#122E38] rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] p-4 hover:border-[#0E5C73] dark:hover:border-[#0E5C73] transition-colors duration-200">
+        <a href="/tafsir/{{.Number}}{{if ne $.Edition.ID "muyassar"}}?edition={{$.Edition.ID}}{{end}}" class="group block bg-white dark:bg-[#122E38] rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] p-4 hover:border-[#0E5C73] dark:hover:border-[#0E5C73] transition-colors duration-200">
             <div class="flex items-start gap-3">
                 <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-[#E6F4F8] dark:bg-[#0E3D4D] flex items-center justify-center text-sm font-bold text-[#0E5C73] dark:text-[#7AAAB5]">{{.Number}}</span>
                 <div class="min-w-0 flex-1">

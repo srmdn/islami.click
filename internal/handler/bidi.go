@@ -63,6 +63,16 @@ func ArabicHTML(s string) template.HTML {
 	return template.HTML(ornateParens(template.HTMLEscapeString(s)))
 }
 
+// TafsirHTMLFor renders already-sanitized tafsir HTML for one edition
+// language. Arabic editions get ornate parens (see ornateParens); Latin
+// editions pass through verbatim so English parentheses stay untouched.
+func TafsirHTMLFor(lang string, h template.HTML) template.HTML {
+	if lang == "arabic" {
+		return TafsirHTML(h)
+	}
+	return h
+}
+
 // TafsirHTML converts parenthesized runs in already-sanitized tafsir HTML
 // (only <mark class="tafsir-key"> tags may be present, enforced by tests) to
 // ornate pairs. Output carries no bidi control characters, so copy-paste

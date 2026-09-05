@@ -154,7 +154,30 @@ func (s *Store) TafsirAyahsByEditionPage(ctx context.Context, editionID string, 
 	if err := rows.Err(); err != nil {
 		return nil, fmt.Errorf("iterate tafsir ayahs for surah %d page %d: %w", surahNumber, pageNumber, err)
 	}
+	groupIdenticalTafsir(ayahs)
 	return ayahs, nil
+}
+
+// groupIdenticalTafsir folds runs of consecutive ayahs carrying byte-identical
+// commentary into one card: the first ayah renders it with a "1–6" style
+// range label, the rest render verse text only. Sources like the Quran.com
+// Ibn Kathir edition attach one group block to every member ayah, so without
+// this the same wall of text repeats once per ayah.
+func groupIdenticalTafsir(ayahs []model.TafsirAyah) {
+	for i := 0; i < len(ayahs); i++ {
+		ayahs[i].TafsirFirst = true
+		j := i
+		for j+1 < len(ayahs) && ayahs[j+1].Tafsir == ayahs[i].Tafsir {
+			j++
+		}
+		if j > i {
+			ayahs[i].TafsirRange = fmt.Sprintf("%d–%d", ayahs[i].Number, ayahs[j].Number)
+			for k := i + 1; k <= j; k++ {
+				ayahs[k].TafsirFirst = false
+			}
+		}
+		i = j
+	}
 }
 
 // tafsirManifest mirrors a tafsir edition manifest.json.
