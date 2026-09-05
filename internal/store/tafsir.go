@@ -261,6 +261,36 @@ func (s *Store) TafsirHeadByEdition(ctx context.Context, editionID string, surah
 	return results, nil
 }
 
+// TafsirGroupRange returns the first and last ayah of the run sharing this
+// ayah's byte-identical commentary in one edition. Grouped editions (Ibn
+// Kathir) attach one block to every member ayah, so a single-ayah peek
+// would be misleading without the "1–6" style label. Returns both ends
+// equal to ayahNumber when the ayah is not part of a group.
+func (s *Store) TafsirGroupRange(ctx context.Context, editionID string, surahNumber, ayahNumber int) (int, int, error) {
+	var text string
+	err := s.db.QueryRowContext(ctx, `
+		SELECT text FROM tafsir_texts
+		WHERE edition_id = ? AND surah_number = ? AND ayah_number = ?
+	`, editionID, surahNumber, ayahNumber).Scan(&text)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return ayahNumber, ayahNumber, nil
+		}
+		return 0, 0, fmt.Errorf("read %s tafsir %d:%d: %w", editionID, surahNumber, ayahNumber, err)
+	}
+
+	var first, last int
+	err = s.db.QueryRowContext(ctx, `
+		SELECT MIN(ayah_number), MAX(ayah_number)
+		FROM tafsir_texts
+		WHERE edition_id = ? AND surah_number = ? AND text = ?
+	`, editionID, surahNumber, text).Scan(&first, &last)
+	if err != nil {
+		return 0, 0, fmt.Errorf("group range %s %d:%d: %w", editionID, surahNumber, ayahNumber, err)
+	}
+	return first, last, nil
+}
+
 // groupIdenticalTafsir folds runs of consecutive ayahs carrying byte-identical
 // commentary into one card: the first ayah renders it with a "1–6" style
 // range label, the rest render verse text only. Sources like the Quran.com

@@ -356,7 +356,9 @@ func TestQuranTafsirPeekRenders(t *testing.T) {
 		t.Fatalf("status = %d, want 200", rec.Code)
 	}
 	body := rec.Body.String()
-	for _, want := range []string{"Tafsir Al-Muyassar", "tafsir-body", "Buka tafsir lengkap", `/tafsir/1?page=`, "#ayah-1"} {
+	for _, want := range []string{"Tafsir Al-Muyassar", "tafsir-body", "Buka tafsir lengkap", `/tafsir/1?page=`, "#ayah-1",
+		// Edition switcher offers Ibn Kathir with an htmx swap back into the peek.
+		"Ibn Kathir (Abridged)", `hx-get="/quran/1/1/tafsir?edition=ibn-kathir-en"`} {
 		if !strings.Contains(body, want) {
 			t.Fatalf("peek fragment missing %q", want)
 		}
@@ -374,6 +376,51 @@ func TestQuranTafsirPeekRenders(t *testing.T) {
 	}
 	if strings.Contains(body, "onerror=") || strings.Contains(body, "onclick=") {
 		t.Fatal("peek fragment contains suspicious inline handlers")
+	}
+}
+
+func TestQuranTafsirPeekEnglishEdition(t *testing.T) {
+	h := newTafsirTestHandler(t)
+
+	req := httptest.NewRequest(http.MethodGet, "/quran/114/1/tafsir?edition=ibn-kathir-en", nil)
+	rec := httptest.NewRecorder()
+	h.QuranSurah(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want 200", rec.Code)
+	}
+	body := rec.Body.String()
+	for _, want := range []string{
+		`lang="en"`,
+		"Ibn Kathir (Abridged)",
+		// Grouped edition labels the shared block range.
+		"Ayat 1–6",
+		`href="/tafsir/114?edition=ibn-kathir-en&amp;page=`,
+		"#ayah-1",
+	} {
+		if !strings.Contains(body, want) {
+			t.Fatalf("english peek missing %q", want)
+		}
+	}
+	for _, bad := range []string{"﴾", "﴿"} {
+		if strings.Contains(body, bad) {
+			t.Fatalf("english peek leaks ornate parens %q", bad)
+		}
+	}
+}
+
+func TestQuranTafsirPeekUnknownEditionFallsBack(t *testing.T) {
+	h := newTafsirTestHandler(t)
+
+	req := httptest.NewRequest(http.MethodGet, "/quran/1/1/tafsir?edition=nope", nil)
+	rec := httptest.NewRecorder()
+	h.QuranSurah(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want 200", rec.Code)
+	}
+	if body := rec.Body.String(); !strings.Contains(body, "Tafsir Al-Muyassar") {
+		t.Fatal("unknown edition should fall back to Muyassar")
 	}
 }
 

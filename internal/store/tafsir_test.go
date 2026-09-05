@@ -36,6 +36,38 @@ func openTafsirTestStore(t *testing.T, ctx context.Context) *store.Store {
 	return contentStore
 }
 
+func TestTafsirGroupRange(t *testing.T) {
+	ctx := context.Background()
+	contentStore := openTafsirTestStore(t, ctx)
+
+	// Ibn Kathir surah 114 is one block shared by ayahs 1–6.
+	first, last, err := contentStore.TafsirGroupRange(ctx, "ibn-kathir-en", 114, 1)
+	if err != nil {
+		t.Fatalf("group range: %v", err)
+	}
+	if first != 1 || last != 6 {
+		t.Fatalf("group range = %d–%d, want 1–6", first, last)
+	}
+
+	// Muyassar text is distinct per ayah, so no grouping.
+	first, last, err = contentStore.TafsirGroupRange(ctx, "muyassar", 2, 255)
+	if err != nil {
+		t.Fatalf("muyassar group range: %v", err)
+	}
+	if first != 255 || last != 255 {
+		t.Fatalf("muyassar group range = %d–%d, want 255–255", first, last)
+	}
+
+	// Missing address reports the ayah itself.
+	first, last, err = contentStore.TafsirGroupRange(ctx, "ibn-kathir-en", 114, 99)
+	if err != nil {
+		t.Fatalf("missing group range: %v", err)
+	}
+	if first != 99 || last != 99 {
+		t.Fatalf("missing group range = %d–%d, want 99–99", first, last)
+	}
+}
+
 func TestTafsirSeedCoversAllAyahs(t *testing.T) {
 	ctx := context.Background()
 	contentStore := openTafsirTestStore(t, ctx)

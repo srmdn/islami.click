@@ -361,10 +361,9 @@ func tafsirSearchURL(ctx context.Context, h *Handler, editionID string, r model.
 	return fmt.Sprintf("%s#ayah-%d", url, r.AyahNumber)
 }
 
-// tafsirPeekEdition is the single edition expanded inline under quran
-// ayahs. Muyassar is short per ayah, suiting a peek; the fragment links
-// out to the full surah page for other editions.
-const tafsirPeekEdition = "muyassar"
+// tafsirPeekEdition is the default edition expanded inline under quran
+// ayahs; the peek card also offers a tab switcher across all editions.
+const tafsirPeekEdition = defaultTafsirEdition
 
 // tafsirPeekTarget is a parsed /quran/{surah}/{ayah}/tafsir path.
 type tafsirPeekTarget struct {
@@ -387,13 +386,16 @@ func parseTafsirPeek(path string) (tafsirPeekTarget, bool) {
 	return tafsirPeekTarget{surah: s, ayah: a}, true
 }
 
-// serveTafsirPeek renders one ayah's Muyassar card as an htmx fragment.
-// The mushaf page comes from the ayah row itself, so the deep-link always
-// lands on the right page.
+// serveTafsirPeek renders one ayah's commentary card as an htmx fragment.
+// ?edition= switches the rendered edition (default Muyassar, unknown values
+// fall back). The mushaf page comes from the ayah row itself, so the
+// deep-link always lands on the right page.
 func (h *Handler) serveTafsirPeek(w http.ResponseWriter, r *http.Request, surahNumber, ayahNumber int) {
-	t, err := h.contentStore.GetTafsirAyah(r.Context(), tafsirPeekEdition, surahNumber, ayahNumber)
+	editions, edition := h.resolveTafsirEdition(r)
+
+	t, err := h.contentStore.GetTafsirAyah(r.Context(), edition.ID, surahNumber, ayahNumber)
 	if err != nil {
-		log.Printf("tafsir peek %d:%d: %v", surahNumber, ayahNumber, err)
+		log.Printf("tafsir peek %d:%d (%s): %v", surahNumber, ayahNumber, edition.ID, err)
 		http.Error(w, "Failed to load content", http.StatusInternalServerError)
 		return
 	}
@@ -401,11 +403,45 @@ func (h *Handler) serveTafsirPeek(w http.ResponseWriter, r *http.Request, surahN
 		http.Error(w, "Ayat tidak ditemukan", http.StatusNotFound)
 		return
 	}
+
+	groupFirst, groupLast, err := h.contentStore.TafsirGroupRange(r.Context(), edition.ID, surahNumber, ayahNumber)
+	if err != nil {
+		log.Printf("tafsir peek group %d:%d (%s): %v", surahNumber, ayahNumber, edition.ID, err)
+		http.Error(w, "Failed to load content", http.StatusInternalServerError)
+		return
+	}
+	label := ""
+	if groupLast > groupFirst {
+		label = fmt.Sprintf("Ayat %s", modelsRange(groupFirst, groupLast))
+	}
+
+	url := fmt.Sprintf("/tafsir/%d", t.SurahNumber)
+	var qs []string
+	if edition.ID != tafsirPeekEdition {
+		qs = append(qs, "edition="+edition.ID)
+	}
+	if t.Page > 0 {
+		qs = append(qs, "page="+strconv.Itoa(t.Page))
+	}
+	if len(qs) > 0 {
+		url += "?" + strings.Join(qs, "&")
+	}
+	url += fmt.Sprintf("#ayah-%d", t.AyahNumber)
+
 	h.renderPartial(w, "tafsir-peek", model.TafsirPeekData{
-		AyahNumber: t.AyahNumber,
-		Tafsir:     template.HTML(t.Text),
-		URL:        fmt.Sprintf("/tafsir/%d?page=%d#ayah-%d", t.SurahNumber, t.Page, t.AyahNumber),
+		SurahNumber: t.SurahNumber,
+		AyahNumber:  t.AyahNumber,
+		Tafsir:      template.HTML(t.Text),
+		Range:       label,
+		URL:         url,
+		Editions:    editions,
+		Edition:     edition,
 	})
+}
+
+// modelsRange formats a contiguous ayah range ("1–6") with an en dash.
+func modelsRange(first, last int) string {
+	return fmt.Sprintf("%d–%d", first, last)
 }
 
 // tafsirSnippetWidth is the excerpt length (runes) shown per search hit.
