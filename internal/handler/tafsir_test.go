@@ -304,6 +304,24 @@ func TestTafsirSearchUnknownEditionFallsBack(t *testing.T) {
 	}
 }
 
+func TestTafsirSearchIndonesianViaTranslation(t *testing.T) {
+	h := newTafsirTestHandler(t)
+
+	req := httptest.NewRequest(http.MethodGet, "/tafsir/search?q="+url.QueryEscape("Kursi"), nil)
+	rec := httptest.NewRecorder()
+	h.TafsirSearch(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want 200", rec.Code)
+	}
+	body := rec.Body.String()
+	for _, want := range []string{"/tafsir/2?page=", "#ayah-255", "penjelasan ditemukan"} {
+		if !strings.Contains(body, want) {
+			t.Fatalf("indonesian search missing %q", want)
+		}
+	}
+}
+
 func TestTafsirSnippetStripsTagsAndMarks(t *testing.T) {
 	raw := `<h2>Which was revealed in Makkah</h2><p>In the Name of Allah.</p>`
 	out := string(tafsirSnippet(raw, "makkah"))

@@ -158,10 +158,11 @@ func (s *Store) TafsirAyahsByEditionPage(ctx context.Context, editionID string, 
 	return ayahs, nil
 }
 
-// SearchTafsir returns ayahs whose edition commentary contains the query,
-// oldest surah first, capped at limit. Only the tafsir text is matched —
-// verse Arabic and translation ride along as display context. Callers build
-// display snippets because stored commentary carries HTML.
+// SearchTafsir returns ayahs whose edition commentary, verse Arabic, or
+// Indonesian translation contains the query, oldest surah first, capped at
+// limit. Translation matching lets Indonesian keywords find tafsir even
+// though no Indonesian commentary edition exists yet. Callers build display
+// snippets from the commentary because stored tafsir carries HTML.
 func (s *Store) SearchTafsir(ctx context.Context, editionID, query string, limit int) ([]model.TafsirSearchResult, error) {
 	if limit <= 0 {
 		limit = 50
@@ -175,10 +176,11 @@ func (s *Store) SearchTafsir(ctx context.Context, editionID, query string, limit
 		  ON a.surah_number = t.surah_number
 		 AND a.ayah_number = t.ayah_number
 		JOIN quran_surahs s ON s.number = t.surah_number
-		WHERE t.edition_id = ? AND t.text LIKE ?
+		WHERE t.edition_id = ?
+		  AND (t.text LIKE ? OR a.translation LIKE ? OR a.text_arabic LIKE ?)
 		ORDER BY s.number, a.ayah_number
 		LIMIT ?
-	`, editionID, searchTerm, limit)
+	`, editionID, searchTerm, searchTerm, searchTerm, limit)
 	if err != nil {
 		return nil, fmt.Errorf("search %s tafsir: %w", editionID, err)
 	}

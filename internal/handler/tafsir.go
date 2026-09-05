@@ -224,8 +224,9 @@ func (h *Handler) TafsirSurah(w http.ResponseWriter, r *http.Request) {
 
 // TafsirSearch renders the per-edition commentary search form and matches,
 // mirroring QuranSearch: the same reference grammar (5:7, "ayat 7 al
-// maidah", surah names), with content search scoped to one edition's
-// tafsir text instead of verse Arabic/translation.
+// maidah", surah names), with content search over one edition's tafsir text
+// plus verse Arabic and Indonesian translation so Indonesian keywords work
+// before any Indonesian commentary edition exists.
 func (h *Handler) TafsirSearch(w http.ResponseWriter, r *http.Request) {
 	query := strings.TrimSpace(r.URL.Query().Get("q"))
 	if len(query) > 200 {

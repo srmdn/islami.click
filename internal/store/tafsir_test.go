@@ -253,6 +253,29 @@ func TestSearchTafsir(t *testing.T) {
 		t.Fatalf("capped hits = %d, want 5", len(capped))
 	}
 
+	// Indonesian keywords match the verse translation even though the
+	// commentary itself is Arabic: "Kursi" is Latin, absent from the
+	// Muyassar text, yet 2:255 must hit via its translation.
+	id, err := contentStore.SearchTafsir(ctx, "muyassar", "Kursi", 50)
+	if err != nil {
+		t.Fatalf("search id translation: %v", err)
+	}
+	foundIDKursi := false
+	for _, r := range id {
+		if r.SurahNumber == 2 && r.AyahNumber == 255 {
+			foundIDKursi = true
+			if strings.Contains(r.Text, "Kursi") {
+				t.Fatal("2:255 Muyassar text unexpectedly contains Latin 'Kursi'")
+			}
+			if !strings.Contains(r.Translation, "Kursi") {
+				t.Fatal("2:255 translation should contain 'Kursi'")
+			}
+		}
+	}
+	if !foundIDKursi {
+		t.Fatal("expected a 2:255 hit for Indonesian 'Kursi' via translation")
+	}
+
 	none, err := contentStore.SearchTafsir(ctx, "nope", "الله", 10)
 	if err != nil {
 		t.Fatalf("unknown edition search: %v", err)
