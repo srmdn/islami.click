@@ -5,17 +5,30 @@
     x-data="{
         hh: '--', mm: '--', ss: '--',
         ch: 0, cm: 0, cs: 0,
+        dotOn: true,
+        tzOffset: {{.TZOffsetMins}},
+        get countdown() {
+            const p = (n) => String(n).padStart(2,'0');
+            if (this.ch > 0) return this.ch + ' jam ' + p(this.cm) + ' mnt ' + p(this.cs) + ' dtk';
+            if (this.cm > 0) return this.cm + ' mnt ' + p(this.cs) + ' dtk';
+            return this.cs + ' dtk';
+        },
         init() {
             const target = {{.NextPrayerUnix}} * 1000;
+            // Kedip digerakkan JS (bukan CSS) agar tetap jalan di browser
+            // yang menonaktifkan/memblokir animasi CSS. Hormati
+            // prefers-reduced-motion: diam bila pengguna memintanya.
+            const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             const update = () => {
-                const wib = new Date(Date.now() + (new Date().getTimezoneOffset() + 420) * 60000);
-                this.hh = String(wib.getHours()).padStart(2,'0');
-                this.mm = String(wib.getMinutes()).padStart(2,'0');
-                this.ss = String(wib.getSeconds()).padStart(2,'0');
+                const local = new Date(Date.now() + (new Date().getTimezoneOffset() + this.tzOffset) * 60000);
+                this.hh = String(local.getHours()).padStart(2,'0');
+                this.mm = String(local.getMinutes()).padStart(2,'0');
+                this.ss = String(local.getSeconds()).padStart(2,'0');
                 const diff = Math.max(0, Math.floor((target - Date.now()) / 1000));
                 this.ch = Math.floor(diff / 3600);
                 this.cm = Math.floor((diff % 3600) / 60);
                 this.cs = diff % 60;
+                this.dotOn = reduceMotion ? true : !this.dotOn;
             };
             update();
             setInterval(update, 1000);
@@ -23,33 +36,23 @@
     }"
 >
     {{if and (not .Error) .NextPrayerUnix}}
-    <div class="mb-4 flex flex-col items-center gap-2.5 px-1 text-sm tabular-nums sm:flex-row sm:items-center sm:justify-between">
-        <span class="flex items-center gap-2.5 font-medium text-[#6F6256] dark:text-[#B7C9CC]">
-            <span class="relative flex h-2 w-2" aria-hidden="true">
-                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#0E5C73]/40 dark:bg-[#83C0CC]/40"></span>
-                <span class="relative inline-flex h-2 w-2 rounded-full bg-[#0E5C73] dark:bg-[#83C0CC]"></span>
+    <div class="mb-5 flex justify-center px-1">
+        <p class="inline-flex max-w-full flex-wrap items-center justify-center gap-x-3 gap-y-1.5 rounded-full border border-[#E2D9CE] bg-white/70 px-5 py-2.5 text-sm tabular-nums text-[#5A4C40] dark:border-[#1E4458] dark:bg-[#102D37] dark:text-[#D6E3E4]">
+            <span class="relative flex h-3 w-3" aria-hidden="true">
+                <span class="absolute inline-flex h-full w-full animate-live-ping rounded-full bg-[#0E5C73]/50 dark:bg-[#83C0CC]/50"></span>
+                <span class="live-dot relative inline-flex h-3 w-3 rounded-full bg-[#0E5C73] dark:bg-[#83C0CC]" :style="{ opacity: dotOn ? 1 : 0.15 }"></span>
             </span>
-            <span x-text="'Sekarang ' + hh+':'+mm+':'+ss + ' WIB'">Sekarang --:--:-- WIB</span>
-        </span>
-        <span>
-            <span class="text-[#8A7E72] dark:text-[#7AAAB5]">{{.NextPrayerName}} dalam</span>
-            <span class="ml-1.5 inline-flex items-baseline rounded-full bg-[#F1ECE4] px-2.5 py-1 font-semibold text-[#5A4C40] dark:bg-[#102D37] dark:text-[#D6E3E4]">
-            <template x-if="ch > 0">
-                <span x-text="ch + ' jam'"></span>
-            </template>
-            <template x-if="ch > 0 || cm > 0">
-                <span x-text="' ' + String(cm).padStart(2,'0') + ' menit'"></span>
-            </template>
-            <span x-text="' ' + String(cs).padStart(2,'0') + ' detik'"></span>
-            </span>
-        </span>
+            <span x-text="'Sekarang ' + hh+':'+mm+':'+ss + ' {{.TZLabel}}'">Sekarang --:--:-- {{.TZLabel}}</span>
+            <span class="text-[#C9A84C]" aria-hidden="true">&middot;</span>
+            <span><span class="text-[#8A7E72] dark:text-[#7AAAB5]">{{.NextPrayerName}} dalam</span> <span class="font-semibold" x-text="countdown"></span></span>
+        </p>
     </div>
     {{end}}
 
     <div class="rounded-[1.75rem] border border-[#E2D9CE] bg-white p-5 shadow-[0_20px_42px_-30px_rgba(35,55,61,0.7)] dark:border-[#1E4458] dark:bg-[#122E38] sm:p-6">
         <div class="flex items-center justify-between mb-4">
             <span class="text-[13px] font-bold tracking-wide text-[#0E5C73] dark:text-[#83C0CC]">Waktu Shalat {{.City}}</span>
-            <a href="/shalat" class="flex min-h-11 items-center gap-1 rounded-lg px-2 text-xs font-semibold text-[#766A5E] transition-colors hover:text-[#0E5C73] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0E5C73]/50 dark:text-[#AFC5C9] dark:hover:text-[#A9D7DE] arrow-slide">
+            <a href="/shalat?city={{.City | urlquery}}" class="flex min-h-11 items-center gap-1 rounded-lg px-2 text-xs font-semibold text-[#766A5E] transition-colors hover:text-[#0E5C73] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0E5C73]/50 dark:text-[#AFC5C9] dark:hover:text-[#A9D7DE] arrow-slide">
                 Lihat semua
                 <svg class="w-3 h-3" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
             </a>

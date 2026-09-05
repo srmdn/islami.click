@@ -1,0 +1,578 @@
+{
+  "source": "https://api.quran.com/api/v4/tafsirs/169/by_ayah/{surah}:{ayah}",
+  "resource": "en-tafisr-ibn-kathir (Ibn Kathir Abridged, English)",
+  "language": "english",
+  "fetched_at": "2026-09-05T10:47:07Z",
+  "surahs": [
+    {
+      "number": 1,
+      "ayahs": 7,
+      "sha256": "2f4eda54ad09ee5d9257914c4774d8bec887a0933a2f209acd0e4ba562799780"
+    },
+    {
+      "number": 2,
+      "ayahs": 286,
+      "sha256": "6604d5f6417e26b4ba795c0309ef922353c8f20d67b301d5fd6ddc8b997f93e1"
+    },
+    {
+      "number": 3,
+      "ayahs": 200,
+      "sha256": "d8af573c35ae6a66be78c32e6da2b59902b13eb5d67694f4f1f281a8e2be5351"
+    },
+    {
+      "number": 4,
+      "ayahs": 176,
+      "sha256": "3a22491983ede60e93ba7afbfa91b177923ac22aaebb441efe34c8aac7bcad51"
+    },
+    {
+      "number": 5,
+      "ayahs": 120,
+      "sha256": "1a02ccbb533a7c040434083069bbe7fe6d9718a4e40f26498654f30e77088343"
+    },
+    {
+      "number": 6,
+      "ayahs": 165,
+      "sha256": "323be7b801595d959a208678cef6d5f5647c194d095143867db849a9ead584ad"
+    },
+    {
+      "number": 7,
+      "ayahs": 206,
+      "sha256": "be767ab8d67db69e79f22653c222cafead1d46f5dd3dc9b7b8194fb16bb672e5"
+    },
+    {
+      "number": 8,
+      "ayahs": 75,
+      "sha256": "8f3def280845b7c1fdb1b748ef6e72b938ff7e8cb97058173eb40e5d9518cd0d"
+    },
+    {
+      "number": 9,
+      "ayahs": 129,
+      "sha256": "2f032a4b1e4b78bb40d3fb1b1ca062ba5a07b1cee9636b6e14394b1081f89352"
+    },
+    {
+      "number": 10,
+      "ayahs": 109,
+      "sha256": "62efb1304ee93ccd6808fb905f214a494a87cba40f21bef87b48ec27ffda0f90"
+    },
+    {
+      "number": 11,
+      "ayahs": 123,
+      "sha256": "793382c5b26a2969515b62e5104c65985abdc0eee63566119eab9de01abcbc5d"
+    },
+    {
+      "number": 12,
+      "ayahs": 111,
+      "sha256": "d7583f832b57ef95412a38f3e9c50528b29b846b03ba973d91550b8935dec975"
+    },
+    {
+      "number": 13,
+      "ayahs": 43,
+      "sha256": "a712996ca74d6f325db4ea8f1fbf062f11441431a08fc507efb9b505c6d83015"
+    },
+    {
+      "number": 14,
+      "ayahs": 52,
+      "sha256": "0e4473d12ce23e66cbc9bbf2c8f9ff4c94c913b956a6422d3d8aa7f0b3c6b60a"
+    },
+    {
+      "number": 15,
+      "ayahs": 99,
+      "sha256": "39442872f7a26522b1d58ca64764d9f5c577e186facb140f4e0b0ef3106f8a19"
+    },
+    {
+      "number": 16,
+      "ayahs": 128,
+      "sha256": "5ea4e499f7a399043f38743a7714f52c19ae238af01cf4c6dacd4c839e646ecd"
+    },
+    {
+      "number": 17,
+      "ayahs": 111,
+      "sha256": "f08cef9e3bcc4fddef70380128e2d8679f2ac8c5cdae16c70915f820ebea6390"
+    },
+    {
+      "number": 18,
+      "ayahs": 110,
+      "sha256": "8c6f35c482046d7543267bf1b2acd2626514bd0fa8c1b008ef156c4c61f4f1c2"
+    },
+    {
+      "number": 19,
+      "ayahs": 98,
+      "sha256": "11871f2cc819b9d4bc6220ad018413192b0b712c5e2e655c526033c8ad088681"
+    },
+    {
+      "number": 20,
+      "ayahs": 135,
+      "sha256": "29c711bbf9b2a252d424459283f2cd8abe1abacbe3462e0e310f3615b25db4a4"
+    },
+    {
+      "number": 21,
+      "ayahs": 112,
+      "sha256": "ca7464d8ef929073c4c502a7e52afd87f44a4eb091d716e85296fc1457da9f23"
+    },
+    {
+      "number": 22,
+      "ayahs": 78,
+      "sha256": "fbbf300fe99a4184885da6b6927aae6978214406a39921222eec34f6c5d5784e"
+    },
+    {
+      "number": 23,
+      "ayahs": 118,
+      "sha256": "8a758b4da17f7f85c14acb622e87a836f97691e38f28dfdab2765154e1980e68"
+    },
+    {
+      "number": 24,
+      "ayahs": 64,
+      "sha256": "79aa451a6b10ec17cc46336cbed837eb086b3202083d3ca15536f89bdfc77ddc"
+    },
+    {
+      "number": 25,
+      "ayahs": 77,
+      "sha256": "cc0b9de02099a3df29b2af52dd972c158c61f4ad80f23db5ba45918fb845ff4d"
+    },
+    {
+      "number": 26,
+      "ayahs": 227,
+      "sha256": "9ca19292f28352c7ed2a22a9c9f534e58233a5e1ad04c2b8d17a91178b1e1217"
+    },
+    {
+      "number": 27,
+      "ayahs": 93,
+      "sha256": "8bc607f8243fa47c1e2238d0efdca6acb9d51b6472bd4f2bb525d6aa22bcd573"
+    },
+    {
+      "number": 28,
+      "ayahs": 88,
+      "sha256": "918c1535a3690e08e51310f9e1ae4f2d2ab427a43a06585a0440a848bfd5b614"
+    },
+    {
+      "number": 29,
+      "ayahs": 69,
+      "sha256": "3549ba44c90fdef3e27854f8a7953825dac6398580866c215a4dec4ae0e9bdea"
+    },
+    {
+      "number": 30,
+      "ayahs": 60,
+      "sha256": "91fcbecf5482384a4d5acc00b544a697cde29b771bca20d7af82634353383f0f"
+    },
+    {
+      "number": 31,
+      "ayahs": 34,
+      "sha256": "5cd437b94ac2bfc26f3a32d94f75650d645448a99786dd0d87d5dca07fe0759b"
+    },
+    {
+      "number": 32,
+      "ayahs": 30,
+      "sha256": "3832544e91ab8fea0935306d6cf3f557b619600f086eb4279b1fb1da50e99613"
+    },
+    {
+      "number": 33,
+      "ayahs": 73,
+      "sha256": "ecbea56a70f295b1a609d28d2e66ad17a97a73c96ee7a247f734064da37cbba0"
+    },
+    {
+      "number": 34,
+      "ayahs": 54,
+      "sha256": "616daa2123e1f25c604d994e94672eef1e18c3b49aa11a15214da77a20b42711"
+    },
+    {
+      "number": 35,
+      "ayahs": 45,
+      "sha256": "b930f5e9a5e682c44b0acd2330f3d21d10150aa7aa15ada433e5c67acbcddc72"
+    },
+    {
+      "number": 36,
+      "ayahs": 83,
+      "sha256": "3a1735238cc6f1771e446bd31b95b224c11d42693fe485362104989dbdb178ce"
+    },
+    {
+      "number": 37,
+      "ayahs": 182,
+      "sha256": "bd335660c1ce7bbf365fcbbbe0bddad8446d579aa6f7b1806e7680c039d6de2e"
+    },
+    {
+      "number": 38,
+      "ayahs": 88,
+      "sha256": "23d9a955eef786afb62c32750f6273d88daabd1c9c4c10249225500fdf10a873"
+    },
+    {
+      "number": 39,
+      "ayahs": 75,
+      "sha256": "ed4c038b0ca0a4103624b239a21ddd6f0afd0025c2af031e2d26133fa269c05d"
+    },
+    {
+      "number": 40,
+      "ayahs": 85,
+      "sha256": "781f39db016bcaf15b2aac0e9c27be87a16454cdf399ca441d55d5576aceaa65"
+    },
+    {
+      "number": 41,
+      "ayahs": 54,
+      "sha256": "cde1d5abcca9fe8e7802998d6b917d2648086e4f8409044e50c3b076f2d217a3"
+    },
+    {
+      "number": 42,
+      "ayahs": 53,
+      "sha256": "a084fa24f85cba5bdf95144e2a23965017e14081070cdb11a1c5cd614d9bea01"
+    },
+    {
+      "number": 43,
+      "ayahs": 89,
+      "sha256": "edfe28d08f3745d82b054cc46304d95ff5f732814bfb787c015947dd825764dc"
+    },
+    {
+      "number": 44,
+      "ayahs": 59,
+      "sha256": "281d0c33bdc3bf616a1e9fc08133b7b36fc35fe165d66ea62969f0d9faca165b"
+    },
+    {
+      "number": 45,
+      "ayahs": 37,
+      "sha256": "b4c08da528b3073959ddd5d95a55ff706e3a1dc6bf099bdf614db94638b8dd8e"
+    },
+    {
+      "number": 46,
+      "ayahs": 35,
+      "sha256": "252b71177e4fb2579e1ff249a3bece6a55bf78d31f1759fa4aed82efdfc3b788"
+    },
+    {
+      "number": 47,
+      "ayahs": 38,
+      "sha256": "2285d8552257d1bcca6a323d90e8b8ee56952ce2b43db6c50389968745e41dd9"
+    },
+    {
+      "number": 48,
+      "ayahs": 29,
+      "sha256": "7989254bdee5615b6629c9247e4cf4bd29c24cb986f88a80a3fdaa1e4ff5c53e"
+    },
+    {
+      "number": 49,
+      "ayahs": 18,
+      "sha256": "fd541a1135b4e770fa520fcdc8d3eb315af2fbf24ba3cd83cf31d4afcd8d2425"
+    },
+    {
+      "number": 50,
+      "ayahs": 45,
+      "sha256": "d199e091be06277f3dcd7afa74d276963bf5fbe2775066cfa4dee344acec44f3"
+    },
+    {
+      "number": 51,
+      "ayahs": 60,
+      "sha256": "de72f92c1ede81a649e742ae148d22073d66e15ce5851a828e888a1a302eb8f6"
+    },
+    {
+      "number": 52,
+      "ayahs": 49,
+      "sha256": "c19d9317f3d56e5a2b65eeb8e33191cffb3de87afe69c529d748b3e966aa643f"
+    },
+    {
+      "number": 53,
+      "ayahs": 62,
+      "sha256": "7ce42551c563fb38432af963b4e2381d2e6b360fda64fec5cafef50117baf641"
+    },
+    {
+      "number": 54,
+      "ayahs": 55,
+      "sha256": "9f8e5ca7a34dccdad484f974af3f7144ee21c3c9ca7505e947368688178bc540"
+    },
+    {
+      "number": 55,
+      "ayahs": 78,
+      "sha256": "83a7aa1d8abdbfe45b34a143af5ec02b36bc30d41206b1996d3c90fd236f8b64"
+    },
+    {
+      "number": 56,
+      "ayahs": 96,
+      "sha256": "dca76c157b1f687434484e50203c5f76c9c8de044718bc24fff9e1a2767293a8"
+    },
+    {
+      "number": 57,
+      "ayahs": 29,
+      "sha256": "b6dec131de6f23cfca733f3f227c4433a731c67708cba7835c6c96723593fa10"
+    },
+    {
+      "number": 58,
+      "ayahs": 22,
+      "sha256": "7c6a3ce000cae3cdd5c33aefb992febb0efef7a5240cf3d4393837dbb4d9bae5"
+    },
+    {
+      "number": 59,
+      "ayahs": 24,
+      "sha256": "6323a08d7fc3e912f40d56b1122b0f04cbab8b44ea9a54e8a0ebb3243b2a2d4a"
+    },
+    {
+      "number": 60,
+      "ayahs": 13,
+      "sha256": "130fc4e28c874d700cf19475afbd8ee266a5f12fad3facacbec1a63032e59372"
+    },
+    {
+      "number": 61,
+      "ayahs": 14,
+      "sha256": "3d76e25ac0c72128caeea5baeb78a3cb5885fb1ecc7515aecf027f767737f0a3"
+    },
+    {
+      "number": 62,
+      "ayahs": 11,
+      "sha256": "a5b5e78cfd4901f71b9a8eab176bd45d31823d5cf3c1440b8e8a0db725fc31fd"
+    },
+    {
+      "number": 63,
+      "ayahs": 11,
+      "sha256": "bea80db13047c533a5f5e2a7773cad82a16bb86fac6fd9525f88a8f72fbcf78c"
+    },
+    {
+      "number": 64,
+      "ayahs": 18,
+      "sha256": "e7c189b2667cc787e3144aa3b85bb888ba95f2b290ce212cee388bcc468797e7"
+    },
+    {
+      "number": 65,
+      "ayahs": 12,
+      "sha256": "0aa1abd11c1b08b4f353694c3f5c78a0c132591d6fafa6d2c20c50d99acc7885"
+    },
+    {
+      "number": 66,
+      "ayahs": 12,
+      "sha256": "725c17feb565a3db2392456991ae8453f0a07694935de0f3c63852732feaa12f"
+    },
+    {
+      "number": 67,
+      "ayahs": 30,
+      "sha256": "914ae2524e4defb5d1ec5082f37333048e3d11949b0c2bc9ffb0778589bda8fc"
+    },
+    {
+      "number": 68,
+      "ayahs": 52,
+      "sha256": "0ffcdec11229b2460d29bb6bbebde11eb243d33a0d8029561bf4373500bd6667"
+    },
+    {
+      "number": 69,
+      "ayahs": 52,
+      "sha256": "8eee0bb18b35b34aaaffdf85257e418844d59962e23d188ac48e9e7e631c0bc4"
+    },
+    {
+      "number": 70,
+      "ayahs": 44,
+      "sha256": "67b2fc197991346254b55808cf9c9bb1b2b8841003d41f63a6acdcd74cbbb5de"
+    },
+    {
+      "number": 71,
+      "ayahs": 28,
+      "sha256": "9d6b09564a17c1901f71b52dc19d24ded837d755f7db34f282257cc8a41dfd9f"
+    },
+    {
+      "number": 72,
+      "ayahs": 28,
+      "sha256": "aab5abc3ea4e4bebdf9a39151aa87be7f7d07f1550224575e167976ed055529c"
+    },
+    {
+      "number": 73,
+      "ayahs": 20,
+      "sha256": "09e83968431aafe4ad8c20e6909f39f6f8186ec1d237bd6abf4b586eb09cbbc8"
+    },
+    {
+      "number": 74,
+      "ayahs": 56,
+      "sha256": "366743a6dc49f13eeb70cf5345c65b4f4d4c16099556ae6516ce08e8d933fe51"
+    },
+    {
+      "number": 75,
+      "ayahs": 40,
+      "sha256": "75aed920b5366ebf851386fd6e1a39064da191cce48073bcbafd115e7e63f672"
+    },
+    {
+      "number": 76,
+      "ayahs": 31,
+      "sha256": "8d0b72a19827c83433730a36c3fdeb5b02233776ca92d93b4471a0abf37439a7"
+    },
+    {
+      "number": 77,
+      "ayahs": 50,
+      "sha256": "a9d0a55b789676df0067cabf1ed2cd5436f95192380f11c1c5b42dd86978b51a"
+    },
+    {
+      "number": 78,
+      "ayahs": 40,
+      "sha256": "85d735aa5dc43c5121dc9aeca5f61da5498b5863122f04b09f29d28e42b3b44e"
+    },
+    {
+      "number": 79,
+      "ayahs": 46,
+      "sha256": "45fe930c2f7ea2477bf074cc11f826a2764a99272f934f5e04fafea273715f98"
+    },
+    {
+      "number": 80,
+      "ayahs": 42,
+      "sha256": "347fe4b79c88cd6863d2ff69d6d1a16c6a48b563c44708fd532e3008f24a96ee"
+    },
+    {
+      "number": 81,
+      "ayahs": 29,
+      "sha256": "63bedd83ccf51f0e481c966bbd460bb34e31eeb4081c9ed0e328b4e3159f24d9"
+    },
+    {
+      "number": 82,
+      "ayahs": 19,
+      "sha256": "e7c3e008f69be69587c0078ac39d98eb846843504acbcbb37fd471a7fdd28dc8"
+    },
+    {
+      "number": 83,
+      "ayahs": 36,
+      "sha256": "8431a6cc371e121f0b0c374645a855274179cfaa856ee30464d35b71fcbe89b1"
+    },
+    {
+      "number": 84,
+      "ayahs": 25,
+      "sha256": "9707fa51c8e8a7ca42e3632d633bc3dd4f4cc0f065583065c86dd87c258d548b"
+    },
+    {
+      "number": 85,
+      "ayahs": 22,
+      "sha256": "a1f91ade7cb35ade9bcffc5aed86ee9829687d7540207018d828e881e1620556"
+    },
+    {
+      "number": 86,
+      "ayahs": 17,
+      "sha256": "c89715ffc33d6e9f053c670cb23ce9293ec0eaa7018ea9492ed731683d40b0c0"
+    },
+    {
+      "number": 87,
+      "ayahs": 19,
+      "sha256": "fa0d4f6fe49d300eeffe4799593edf90c76112360721f7c5b316e912749bed66"
+    },
+    {
+      "number": 88,
+      "ayahs": 26,
+      "sha256": "ce7a1616800b4461170f77e608ce57b58f895f8fb4972b426dbf6ece16c29b9d"
+    },
+    {
+      "number": 89,
+      "ayahs": 30,
+      "sha256": "a94fe79c322e8a0e6666994d6ae7cee7d3ccc45e4ac8d5425e434fbf6af4e8a5"
+    },
+    {
+      "number": 90,
+      "ayahs": 20,
+      "sha256": "15d0343ca17cce154276ad5c43581e1f304c12ff207c55082522b3e2f494400e"
+    },
+    {
+      "number": 91,
+      "ayahs": 15,
+      "sha256": "4ac9ec733fd327cbae252bb8525c472d7f268510c27e4316338b2d8d78e32850"
+    },
+    {
+      "number": 92,
+      "ayahs": 21,
+      "sha256": "e9bb0ad92bf33ae9ec1770e81b9c86c47d919a29473fc9bb78a34a52878eae44"
+    },
+    {
+      "number": 93,
+      "ayahs": 11,
+      "sha256": "78720b2cd29b532932e852d49cbdacae27206fed2fbde403b7f5204b4f22075a"
+    },
+    {
+      "number": 94,
+      "ayahs": 8,
+      "sha256": "86ad83ed54d07b83ae0bcf10d6b47231b0f0fe505255c7b192c3cabc9d657c5d"
+    },
+    {
+      "number": 95,
+      "ayahs": 8,
+      "sha256": "d32d954f3a4df0083fcffb91bb4494052b72ba79363693236393fa85c1faba40"
+    },
+    {
+      "number": 96,
+      "ayahs": 19,
+      "sha256": "cc3f0e464d3b8aa60b49f2dadcb06cfd2a2853955578617bdc80023103a593dc"
+    },
+    {
+      "number": 97,
+      "ayahs": 5,
+      "sha256": "babfcb14d1d88393e137783bfc4c8172b98abeeb0cd5e06cdc0b079b4b144576"
+    },
+    {
+      "number": 98,
+      "ayahs": 8,
+      "sha256": "af611ea35147bf7d088c8a4f802cb22aaeb74849bf1237368e9de03eaa5bffda"
+    },
+    {
+      "number": 99,
+      "ayahs": 8,
+      "sha256": "38fe5828f185df8b5351fd49ccff1713f8d903b4d34c31ec16d1dc5cd52bb58f"
+    },
+    {
+      "number": 100,
+      "ayahs": 11,
+      "sha256": "fc6069822f74ca03d3569e720a9dc834a09124c8893ec969ba51b714f43f1550"
+    },
+    {
+      "number": 101,
+      "ayahs": 11,
+      "sha256": "39329e84d1597c58b377284f53aeacd0d36d58c55585801de45383a9b3eb19fc"
+    },
+    {
+      "number": 102,
+      "ayahs": 8,
+      "sha256": "81682a24d954135a91126caf7a237f1214d67af3ff5140b7281cb7bee8e9952b"
+    },
+    {
+      "number": 103,
+      "ayahs": 3,
+      "sha256": "4da1da8949265f80c32187f075f6430fc0b293cf8bac7685eb51f2bc0ffc82b5"
+    },
+    {
+      "number": 104,
+      "ayahs": 9,
+      "sha256": "a570f5e2168297e17c97f4560fb75ce91f5be291a8d4758bf5308793fc4a894a"
+    },
+    {
+      "number": 105,
+      "ayahs": 5,
+      "sha256": "ff600f1a007394f5c402baa632530e3591a6716013e1adbb9715211f25b71c23"
+    },
+    {
+      "number": 106,
+      "ayahs": 4,
+      "sha256": "079d334dc334cfc33d44af1d0c4dee785d7d4f00a50ae56e8d4625ecf20d6759"
+    },
+    {
+      "number": 107,
+      "ayahs": 7,
+      "sha256": "547a5f452c18695be18bd432463c22839ffc07734738c4bfb0a87b0462e82493"
+    },
+    {
+      "number": 108,
+      "ayahs": 3,
+      "sha256": "dbabd09ff8f6c9190aaf461b961d16e9e159969b8658839134a3e55165274b97"
+    },
+    {
+      "number": 109,
+      "ayahs": 6,
+      "sha256": "3b66c589e2104e159ddd7449054c4a8959c4d33c753eda4c1e3a118caa4d01ad"
+    },
+    {
+      "number": 110,
+      "ayahs": 3,
+      "sha256": "c2a18f65d019f23d2d73f7088bd04a5f24e0a28659db12b584bee727614fc357"
+    },
+    {
+      "number": 111,
+      "ayahs": 5,
+      "sha256": "40af3acf17a26654d966b525f47bebfe8a4cc6a3cbb7d36b0b7a924b3c494e1d"
+    },
+    {
+      "number": 112,
+      "ayahs": 4,
+      "sha256": "c29cb4f91d719bc58b7d6955d889ff15ed9bcdab38b571d571de1873350b75cc"
+    },
+    {
+      "number": 113,
+      "ayahs": 5,
+      "sha256": "8ed8ff8580d991238b5f64557200796ec2c55fec531053b0b246350f545227fd"
+    },
+    {
+      "number": 114,
+      "ayahs": 6,
+      "sha256": "9c029ae62cf749b0255b006f29c78e3582bfd3151a097881a30f21bb708e5a5d"
+    }
+  ]
+}

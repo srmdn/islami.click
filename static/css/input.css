@@ -69,6 +69,19 @@
   }
 }
 
+/* Live indicator keyframes live at top level (never inside @layer):
+   keyframes nested in a layer are silently dropped by some browsers,
+   which kills the animation with no fallback. */
+@keyframes live-ping {
+  0% { transform: scale(1); opacity: 0.8; }
+  75% { opacity: 0.25; }
+  100% { transform: scale(3); opacity: 0; }
+}
+@keyframes live-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.15; }
+}
+
 @layer base {
   .arabic {
     font-family: var(--font-arabic);
@@ -157,6 +170,21 @@
     animation: float 3s ease-in-out infinite;
   }
 
+  /* Live indicator: wide expanding ring + blinking core.
+     Keyframes are top-level (see above); classes stay layered. */
+  .animate-live-ping {
+    animation: live-ping 1.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+  .animate-live-blink {
+    animation: live-blink 1.2s ease-in-out infinite;
+  }
+  .live-dot {
+    box-shadow: 0 0 0 3px rgba(14, 92, 115, 0.18);
+  }
+  .dark .live-dot {
+    box-shadow: 0 0 0 3px rgba(131, 192, 204, 0.2);
+  }
+
   .coming-soon-pill {
     display: inline-flex;
     align-items: center;
@@ -191,10 +219,73 @@
     background: rgba(201, 168, 76, 0.25);
   }
 
+  /* htmx loading indicator: hidden until its request runs. Covers both
+     the indicator-as-target pattern (tafsir peek) and the descendant
+     pattern (doa load-more). */
+  .htmx-indicator {
+    display: none;
+  }
+  .htmx-indicator.htmx-request,
+  .htmx-request .htmx-indicator {
+    display: inline;
+  }
+
+  /* English tafsir body: structured paragraphs from the fetch allowlist.
+     Latin flow uses normal line-height (not the Arabic 2.2). */
+  .tafsir-body[lang="en"] p {
+    margin: 0 0 0.9em;
+  }
+  .tafsir-body[lang="en"] p:last-child {
+    margin-bottom: 0;
+  }
+  .tafsir-body[lang="en"] h2 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.5;
+    margin: 0 0 0.6em;
+    color: #1A2E35;
+  }
+  .dark .tafsir-body[lang="en"] h2 {
+    color: #EEE8DF;
+  }
+  /* Arabic quote paragraphs inside Latin tafsir: Amiri, RTL, roomy. */
+  .tafsir-body p.tafsir-ar {
+    font-family: var(--font-arabic);
+    font-size: 1.2rem;
+    line-height: 2.1;
+    text-align: right;
+  }
+
   /* Ornate Arabic parens: slightly larger to match ASCII paren height.
      Hug order comes from emission order (close-shape first), not CSS. */
   .paren-orn {
     font-size: 1.12em;
+  }
+
+  /* End-of-ayah marker: mushaf-style ring with Arabic-Indic digits,
+     flowing inline at the close of RTL verse text (like quran.com).
+     CSS ring keeps it font-independent. */
+  .ayah-end {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.9em;
+    height: 1.9em;
+    padding: 0 0.25em;
+    margin-inline-start: 0.35em;
+    border: 1.5px solid #C9A84C;
+    border-radius: 9999px;
+    font-family: var(--font-arabic);
+    font-size: 0.62em;
+    font-weight: 700;
+    line-height: 1;
+    color: #A88A38;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  .dark .ayah-end {
+    color: #C9A84C;
+    border-color: rgba(201, 168, 76, 0.55);
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {

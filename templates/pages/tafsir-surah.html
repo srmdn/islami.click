@@ -6,17 +6,29 @@
     <nav class="text-sm text-[#5C7A84] dark:text-[#7AAAB5] mb-6">
         <a href="/" class="hover:text-[#0E5C73] transition-colors">Beranda</a>
         <span class="mx-2">/</span>
-        <a href="/tafsir" class="hover:text-[#0E5C73] transition-colors">Tafsir Al-Muyassar</a>
+        <a href="/tafsir{{if ne .Edition.ID "muyassar"}}?edition={{.Edition.ID}}{{end}}" class="hover:text-[#0E5C73] transition-colors">{{.Edition.Title}}</a>
         <span class="mx-2">/</span>
         <span class="text-[#1A2E35] dark:text-[#EEE8DF]">{{.Surah.Name}}</span>
     </nav>
 
-    <div class="text-center mb-8">
+    <div class="text-center mb-6">
         <p class="font-arabic text-3xl leading-loose text-[#1A2E35] dark:text-white mb-2" dir="rtl">{{.Surah.ArabicName}}</p>
         <h1 class="text-xl font-semibold text-[#1A2E35] dark:text-[#EEE8DF] mb-1">Tafsir {{.Surah.Name}}</h1>
         <p class="text-[#5C7A84] dark:text-[#7AAAB5]">{{.Surah.Translation}} &middot; {{.Surah.AyahCount}} Ayat &middot; {{if eq .Surah.RevelationType "meccan"}}Makkiyah{{else}}Madaniyah{{end}}</p>
         <p class="mt-2 inline-flex items-center px-3 py-1 rounded-full bg-[#E6F4F8] dark:bg-[#0E3D4D] text-xs font-semibold text-[#0E5C73] dark:text-[#7AAAB5]">Halaman {{.Page}}</p>
     </div>
+
+    {{if .Editions}}
+    <div class="mb-8 flex flex-wrap justify-center gap-2" role="tablist" aria-label="Pilih kitab tafsir">
+        {{range .Editions}}
+        {{if eq .ID $.Edition.ID}}
+        <span role="tab" aria-selected="true" class="inline-flex items-center min-h-[44px] px-4 py-2 rounded-xl bg-[#0E5C73] text-[#FAF7F2] text-sm font-semibold">{{.Title}}</span>
+        {{else}}
+        <a role="tab" aria-selected="false" href="/tafsir/{{$.Surah.Number}}{{if ne .ID "muyassar"}}?edition={{.ID}}{{end}}" class="inline-flex items-center min-h-[44px] px-4 py-2 rounded-xl border border-[#E2D9CE] dark:border-[#1E4458] text-sm font-medium text-[#5C7A84] dark:text-[#7AAAB5] hover:border-[#0E5C73] dark:hover:border-[#0E5C73] hover:text-[#0E5C73] dark:hover:text-[#7AAAB5] transition-colors">{{.Title}}</a>
+        {{end}}
+        {{end}}
+    </div>
+    {{end}}
 
     {{if ne .Surah.Number 9}}
     <div class="text-center mb-10 pb-8 border-b border-[#E2D9CE] dark:border-[#1E4458]">
@@ -24,35 +36,50 @@
     </div>
     {{end}}
 
+    {{if .Ayahs}}
     <div class="space-y-8" aria-live="polite">
         {{range .Ayahs}}
         <div class="group" id="ayah-{{.Number}}">
-            <div class="flex items-start gap-4">
-                <span class="flex-shrink-0 w-8 h-8 rounded-full bg-[#E6F4F8] dark:bg-[#0E3D4D] flex items-center justify-center text-xs font-bold text-[#0E5C73] dark:text-[#7AAAB5] mt-1">{{.Number}}</span>
-                <div class="flex-1 min-w-0">
-                    <p class="font-arabic text-2xl leading-[2.4] text-[#1A2E35] dark:text-white mb-3" dir="rtl">{{.Arabic}}</p>
-                    <p class="text-[15px] leading-relaxed text-[#5C7A84] dark:text-[#7AAAB5] mb-4">{{.Translation}}</p>
-                    {{if .Tafsir}}
+            <div class="min-w-0">
+                <p class="font-arabic text-2xl leading-[2.4] text-[#1A2E35] dark:text-white mb-3" dir="rtl">{{.Arabic}} <span class="ayah-end">{{arabicDigits .Number}}</span></p>
+                <p class="text-[15px] leading-relaxed text-[#5C7A84] dark:text-[#7AAAB5] mb-1">{{.Translation}}</p>
+                <div class="mb-4" x-data>
+                        <button type="button" @click="tafsirShare($el)" data-share-title="Tafsir {{$.Surah.Name}} ayat {{.Number}}" data-share-text="Tafsir {{$.Surah.Name}} ayat {{.Number}} ({{$.Edition.Title}}) via islami.click" data-share-url="/tafsir/{{$.Surah.Number}}{{if or (ne $.Edition.ID "muyassar") (ne $.Page $.FirstPage)}}?{{if ne $.Edition.ID "muyassar"}}edition={{$.Edition.ID}}{{end}}{{if and (ne $.Edition.ID "muyassar") (ne $.Page $.FirstPage)}}&{{end}}{{if ne $.Page $.FirstPage}}page={{$.Page}}{{end}}{{end}}#ayah-{{.Number}}" class="inline-flex items-center gap-1.5 min-h-[44px] px-3 -ml-3 rounded-lg text-xs font-medium text-[#8AACB5] dark:text-[#5C7A84] hover:text-[#0E5C73] dark:hover:text-[#7AAAB5] hover:bg-[#E6F4F8] dark:hover:bg-[#0E3D4D] transition-colors" aria-label="Bagikan tafsir ayat {{.Number}}" aria-live="polite">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
+                            <span data-share-label>Bagikan</span>
+                        </button>
+                    </div>
+                    {{if and .Tafsir .TafsirFirst}}
                     <div class="rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] bg-[#FDFBF7] dark:bg-[#0E222B] p-4">
-                        <p class="text-xs font-semibold uppercase tracking-wide text-[#A88A38] dark:text-[#C9A84C] mb-2">Tafsir Al-Muyassar</p>
+                        <p class="text-xs font-semibold uppercase tracking-wide text-[#A88A38] dark:text-[#C9A84C] mb-2">{{$.Edition.Title}}{{if .TafsirRange}} &middot; Ayat {{.TafsirRange}}{{end}}</p>
+                        {{if eq $.Edition.Language "arabic"}}
                         <div class="tafsir-body font-arabic text-lg leading-[2.2] text-[#1A2E35] dark:text-[#EEE8DF]" dir="rtl">{{.Tafsir | tafsirHTML}}</div>
+                        {{else}}
+                        <div class="tafsir-body text-[15px] leading-relaxed text-[#1A2E35] dark:text-[#EEE8DF]" dir="ltr" lang="en">{{tafsirHTMLFor $.Edition.Language .Tafsir}}</div>
+                        {{end}}
                     </div>
                     {{end}}
-                </div>
             </div>
         </div>
         {{end}}
     </div>
+    {{else}}
+    <div class="rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] bg-white dark:bg-[#122E38] p-6 text-center">
+        <p class="font-medium text-[#1A2E35] dark:text-[#EEE8DF] mb-2">Tafsir {{.Edition.Title}} untuk surah ini belum tersedia.</p>
+        <p class="text-sm text-[#5C7A84] dark:text-[#7AAAB5] mb-4">Kami baru menayangkan sebagian surah untuk edisi ini. Sementara itu, baca Tafsir Al-Muyassar yang sudah lengkap 114 surah.</p>
+        <a href="/tafsir/{{.Surah.Number}}" class="inline-flex items-center min-h-[44px] px-5 py-2.5 bg-[#0E5C73] text-[#FAF7F2] rounded-xl hover:bg-[#0A4A5C] transition-colors text-sm font-medium">Baca Tafsir Al-Muyassar</a>
+    </div>
+    {{end}}
 
     <div class="mt-10 flex items-center justify-center gap-3">
         {{if gt .Page .FirstPage}}
-        <a href="/tafsir/{{.Surah.Number}}?page={{add .Page -1}}" class="inline-flex items-center gap-2 px-5 py-2.5 border border-[#E2D9CE] dark:border-[#1E4458] rounded-xl text-[#5C7A84] dark:text-[#7AAAB5] hover:border-[#0E5C73] dark:hover:border-[#0E5C73] hover:text-[#0E5C73] dark:hover:text-[#7AAAB5] transition-colors text-sm font-medium">
+        <a href="/tafsir/{{.Surah.Number}}?page={{add .Page -1}}{{if ne .Edition.ID "muyassar"}}&edition={{.Edition.ID}}{{end}}" class="inline-flex items-center gap-2 px-5 py-2.5 border border-[#E2D9CE] dark:border-[#1E4458] rounded-xl text-[#5C7A84] dark:text-[#7AAAB5] hover:border-[#0E5C73] dark:hover:border-[#0E5C73] hover:text-[#0E5C73] dark:hover:text-[#7AAAB5] transition-colors text-sm font-medium">
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
             Halaman sebelumnya
         </a>
         {{end}}
         {{if lt .Page .TotalPages}}
-        <a href="/tafsir/{{.Surah.Number}}?page={{add .Page 1}}" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#0E5C73] text-[#FAF7F2] rounded-xl hover:bg-[#0A4A5C] transition-colors text-sm font-medium">
+        <a href="/tafsir/{{.Surah.Number}}?page={{add .Page 1}}{{if ne .Edition.ID "muyassar"}}&edition={{.Edition.ID}}{{end}}" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#0E5C73] text-[#FAF7F2] rounded-xl hover:bg-[#0A4A5C] transition-colors text-sm font-medium">
             Halaman berikutnya
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -62,7 +89,7 @@
     <div class="mt-12 pt-8 border-t border-[#E2D9CE] dark:border-[#1E4458]">
         <div class="flex items-center justify-between gap-4">
             {{if .PrevSurah}}
-            <a href="/tafsir/{{.PrevSurah.Number}}" class="inline-flex items-center gap-2 px-5 py-2.5 border border-[#E2D9CE] dark:border-[#1E4458] rounded-xl text-[#5C7A84] dark:text-[#7AAAB5] hover:border-[#0E5C73] dark:hover:border-[#0E5C73] hover:text-[#0E5C73] dark:hover:text-[#7AAAB5] transition-colors">
+            <a href="/tafsir/{{.PrevSurah.Number}}{{if ne .Edition.ID "muyassar"}}?edition={{.Edition.ID}}{{end}}" class="inline-flex items-center gap-2 px-5 py-2.5 border border-[#E2D9CE] dark:border-[#1E4458] rounded-xl text-[#5C7A84] dark:text-[#7AAAB5] hover:border-[#0E5C73] dark:hover:border-[#0E5C73] hover:text-[#0E5C73] dark:hover:text-[#7AAAB5] transition-colors">
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
                 <div class="text-left">
                     <p class="text-xs text-[#8AACB5] dark:text-[#5C7A84]">Tafsir Sebelumnya</p>
@@ -74,7 +101,7 @@
             {{end}}
 
             {{if .NextSurah}}
-            <a href="/tafsir/{{.NextSurah.Number}}" class="inline-flex items-center gap-2 px-5 py-2.5 border border-[#E2D9CE] dark:border-[#1E4458] rounded-xl text-[#5C7A84] dark:text-[#7AAAB5] hover:border-[#0E5C73] dark:hover:border-[#0E5C73] hover:text-[#0E5C73] dark:hover:text-[#7AAAB5] transition-colors">
+            <a href="/tafsir/{{.NextSurah.Number}}{{if ne .Edition.ID "muyassar"}}?edition={{.Edition.ID}}{{end}}" class="inline-flex items-center gap-2 px-5 py-2.5 border border-[#E2D9CE] dark:border-[#1E4458] rounded-xl text-[#5C7A84] dark:text-[#7AAAB5] hover:border-[#0E5C73] dark:hover:border-[#0E5C73] hover:text-[#0E5C73] dark:hover:text-[#7AAAB5] transition-colors">
                 <div class="text-right">
                     <p class="text-xs text-[#8AACB5] dark:text-[#5C7A84]">Tafsir Berikutnya</p>
                     <p class="text-sm font-medium">{{.NextSurah.Name}}</p>
@@ -86,8 +113,63 @@
             {{end}}
         </div>
         <p class="mt-8 text-center text-xs leading-relaxed text-[#8AACB5] dark:text-[#5C7A84]">
-            Tafsir: At-Tafsir Al-Muyassar via Quran.com API. Terjemahan ayat mengikuti teks Al-Qur'an di islami.click.
+            {{.Attribution}}
         </p>
     </div>
 </div>
+<script>
+function tafsirShare(btn) {
+    var title = btn.getAttribute('data-share-title') || 'Tafsir';
+    var text = btn.getAttribute('data-share-text') || title;
+    var url = btn.getAttribute('data-share-url') || window.location.pathname;
+    var full = url.charAt(0) === '/' ? window.location.origin + url : url;
+    var label = btn.querySelector('[data-share-label]');
+    function done(msg) {
+        if (!label) return;
+        label.textContent = msg;
+        setTimeout(function() { label.textContent = 'Bagikan'; }, 2000);
+    }
+    function legacyCopy(s) {
+        try {
+            var ta = document.createElement('textarea');
+            ta.value = s;
+            ta.setAttribute('readonly', 'readonly');
+            ta.style.position = 'fixed';
+            ta.style.left = '-9999px';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            return true;
+        } catch (_) {
+            return false;
+        }
+    }
+    if (window.navigator && typeof window.navigator.share === 'function') {
+        window.navigator.share({title: title, text: text, url: full}).catch(function() {});
+        return;
+    }
+    var payload = text + ' ' + full;
+    function failed() {
+        done('Gagal menyalin');
+    }
+    if (window.navigator && window.navigator.clipboard && window.navigator.clipboard.writeText) {
+        window.navigator.clipboard.writeText(payload).then(function() {
+            done('Tersalin ✓');
+        }, function() {
+            if (legacyCopy(payload)) {
+                done('Tersalin ✓');
+            } else {
+                failed();
+            }
+        });
+        return;
+    }
+    if (legacyCopy(payload)) {
+        done('Tersalin ✓');
+    } else {
+        failed();
+    }
+}
+</script>
 {{end}}

@@ -31,7 +31,9 @@ func main() {
 		"add": func(a, b int) int { return a + b },
 		"hasPrefix": func(s, prefix string) bool { return strings.HasPrefix(s, prefix) },
 		"arabicHTML": handler.ArabicHTML,
+		"arabicDigits": handler.ArabicDigits,
 		"tafsirHTML": handler.TafsirHTML,
+		"tafsirHTMLFor": handler.TafsirHTMLFor,
 		"js": func(s string) template.JS {
 			encoded, _ := json.Marshal(s)
 			return template.JS(encoded)
@@ -54,6 +56,7 @@ func main() {
 		"quran-search.html",
 		"tafsir.html",
 		"tafsir-surah.html",
+		"tafsir-search.html",
 		"quiz.html",
 		"quiz-category.html",
 	}
@@ -98,6 +101,14 @@ func main() {
 		}
 		partialTmpls["quran-ayahs"] = tpl
 	}
+	{
+		tpl := template.New("tafsir-peek").Funcs(funcMap)
+		tpl, err := tpl.ParseFS(islamiclick.TemplateFS, "templates/partials/tafsir-peek.html")
+		if err != nil {
+			log.Fatalf("parse tafsir-peek: %v", err)
+		}
+		partialTmpls["tafsir-peek"] = tpl
+	}
 
 	h := handler.New(tmpls, partialTmpls, contentStore)
 
@@ -136,6 +147,7 @@ func main() {
 	http.HandleFunc("/quran/search", h.QuranSearch)
 	http.HandleFunc("/quran/", h.QuranSurah)
 	http.HandleFunc("/tafsir", h.Tafsir)
+	http.HandleFunc("/tafsir/search", h.TafsirSearch)
 	http.HandleFunc("/tafsir/", h.TafsirSurah)
 
 	http.HandleFunc("/quiz", h.QuizHome)

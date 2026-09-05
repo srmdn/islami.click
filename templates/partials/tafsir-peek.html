@@ -1,0 +1,30 @@
+{{define "tafsir-peek"}}
+<div class="rounded-2xl border border-[#E2D9CE] dark:border-[#1E4458] bg-[#FDFBF7] dark:bg-[#0E222B] p-4 mt-3">
+    {{if .Editions}}
+    <div class="mb-3 flex flex-wrap gap-2" role="tablist" aria-label="Pilih kitab tafsir">
+        {{range .Editions}}
+        {{if eq .ID $.Edition.ID}}
+        <span role="tab" aria-selected="true" class="inline-flex items-center min-h-[36px] px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#0E5C73] text-[#FAF7F2]">{{.Title}}</span>
+        {{else}}
+        <button type="button" role="tab" aria-selected="false"
+            hx-get="/quran/{{$.SurahNumber}}/{{$.AyahNumber}}/tafsir?edition={{.ID}}"
+            hx-target="#tafsir-peek-{{$.AyahNumber}}"
+            hx-swap="innerHTML"
+            class="inline-flex items-center min-h-[36px] px-3 py-1.5 rounded-lg text-xs font-medium text-[#5C7A84] dark:text-[#7AAAB5] border border-[#E2D9CE] dark:border-[#1E4458] hover:border-[#0E5C73] dark:hover:border-[#0E5C73] hover:text-[#0E5C73] dark:hover:text-[#7AAAB5] transition-colors">{{.Title}}</button>
+        {{end}}
+        {{end}}
+    </div>
+    {{end}}
+
+    <p class="text-xs font-semibold uppercase tracking-wide text-[#A88A38] dark:text-[#C9A84C] mb-2">{{.Edition.Title}}{{if .Range}} &middot; {{.Range}}{{end}}</p>
+    {{if eq .Edition.Language "arabic"}}
+    <div class="tafsir-body font-arabic text-lg leading-[2.2] text-[#1A2E35] dark:text-[#EEE8DF]" dir="rtl">{{.Tafsir | tafsirHTML}}</div>
+    {{else}}
+    <div class="tafsir-body text-[15px] leading-relaxed text-[#1A2E35] dark:text-[#EEE8DF]" dir="ltr" lang="en">{{tafsirHTMLFor .Edition.Language .Tafsir}}</div>
+    {{end}}
+    <a href="{{.URL}}" class="inline-flex items-center gap-1 mt-3 min-h-[44px] py-2 pr-2 text-xs font-semibold text-[#0E5C73] dark:text-[#7AAAB5] hover:underline underline-offset-4">
+        Buka tafsir lengkap
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+</div>
+{{end}}

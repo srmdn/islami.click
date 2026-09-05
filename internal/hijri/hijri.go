@@ -25,6 +25,9 @@ type Date struct {
 }
 
 func (h Date) ToGregorian() time.Time {
+	if start, ok := anchorStart(h.Year, h.Month); ok {
+		return start.AddDate(0, 0, h.Day-1)
+	}
 	jd := hijriToJDN(h.Year, h.Month, h.Day)
 	y, m, d := jdnToGregorian(jd)
 	return time.Date(y, time.Month(m), d, 0, 0, 0, 0, time.UTC)
@@ -38,6 +41,9 @@ func (h Date) FormatID() string {
 }
 
 func FromGregorian(t time.Time) Date {
+	if d, ok := fromAnchors(t); ok {
+		return d
+	}
 	jd := gregorianToJDN(t.Year(), int(t.Month()), t.Day())
 	y, m, d := jdnToHijri(jd)
 	return Date{Year: y, Month: m, Day: d}

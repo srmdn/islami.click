@@ -132,6 +132,10 @@ func (s *Store) SeedContent(ctx context.Context, contentFS embed.FS) error {
 		// Tafsir UPDATEs quran_ayahs rows, so it seeds after quran and its
 		// checksum folds in the quran checksum (a quran reseed clears ayahs).
 		{id: "tafsir-muyassar", path: "content/tafsir/manifest.json", order: 70, checksumExtra: quranChecksum, seed: seedTafsir},
+		// Ibn Kathir (English) seeds the same way from its own manifest dir.
+		// The manifest lists only fetched surahs, so pilot and full seeds
+		// share this entry; each new surah changes the checksum and reseeds.
+		{id: "tafsir-ibn-kathir-en", path: "content/tafsir-ibn-kathir-en/manifest.json", order: 71, checksumExtra: quranChecksum, seed: seedTafsirIbnKathirEn},
 	}
 
 	for _, col := range collections {

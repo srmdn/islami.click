@@ -56,11 +56,46 @@ func ornateParens(s string) string {
 	return b.String()
 }
 
+// arabicIndicDigits maps Latin digits to Arabic-Indic digits for
+// mushaf-style end-of-ayah markers.
+var arabicIndicDigits = [10]rune{'٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'}
+
+// ArabicDigits renders n with Arabic-Indic digits (e.g. 114 → ١١٤) for
+// end-of-ayah markers that flow inside RTL verse text, like quran.com.
+func ArabicDigits(n int) string {
+	if n == 0 {
+		return string(arabicIndicDigits[0])
+	}
+	neg := n < 0
+	if neg {
+		n = -n
+	}
+	var out []rune
+	for n > 0 {
+		out = append([]rune{arabicIndicDigits[n%10]}, out...)
+		n /= 10
+	}
+	if neg {
+		out = append([]rune{'-'}, out...)
+	}
+	return string(out)
+}
+
 // ArabicHTML escapes plain Arabic text and converts parenthesized runs to
 // ornate pairs, which stay symmetric in RTL context by construction.
 // Output carries no bidi control characters, so copy-paste stays clean.
 func ArabicHTML(s string) template.HTML {
 	return template.HTML(ornateParens(template.HTMLEscapeString(s)))
+}
+
+// TafsirHTMLFor renders already-sanitized tafsir HTML for one edition
+// language. Arabic editions get ornate parens (see ornateParens); Latin
+// editions pass through verbatim so English parentheses stay untouched.
+func TafsirHTMLFor(lang string, h template.HTML) template.HTML {
+	if lang == "arabic" {
+		return TafsirHTML(h)
+	}
+	return h
 }
 
 // TafsirHTML converts parenthesized runs in already-sanitized tafsir HTML
