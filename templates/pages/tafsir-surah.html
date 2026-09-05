@@ -40,12 +40,10 @@
     <div class="space-y-8" aria-live="polite">
         {{range .Ayahs}}
         <div class="group" id="ayah-{{.Number}}">
-            <div class="flex items-start gap-4">
-                <span class="flex-shrink-0 w-8 h-8 rounded-full bg-[#E6F4F8] dark:bg-[#0E3D4D] flex items-center justify-center text-xs font-bold text-[#0E5C73] dark:text-[#7AAAB5] mt-1">{{.Number}}</span>
-                <div class="flex-1 min-w-0">
-                    <p class="font-arabic text-2xl leading-[2.4] text-[#1A2E35] dark:text-white mb-3" dir="rtl">{{.Arabic}}</p>
-                    <p class="text-[15px] leading-relaxed text-[#5C7A84] dark:text-[#7AAAB5] mb-1">{{.Translation}}</p>
-                    <div class="mb-4" x-data>
+            <div class="min-w-0">
+                <p class="font-arabic text-2xl leading-[2.4] text-[#1A2E35] dark:text-white mb-3" dir="rtl">{{.Arabic}} <span class="ayah-end">{{arabicDigits .Number}}</span></p>
+                <p class="text-[15px] leading-relaxed text-[#5C7A84] dark:text-[#7AAAB5] mb-1">{{.Translation}}</p>
+                <div class="mb-4" x-data>
                         <button type="button" @click="tafsirShare($el)" data-share-title="Tafsir {{$.Surah.Name}} ayat {{.Number}}" data-share-text="Tafsir {{$.Surah.Name}} ayat {{.Number}} ({{$.Edition.Title}}) via islami.click" data-share-url="/tafsir/{{$.Surah.Number}}{{if or (ne $.Edition.ID "muyassar") (ne $.Page $.FirstPage)}}?{{if ne $.Edition.ID "muyassar"}}edition={{$.Edition.ID}}{{end}}{{if and (ne $.Edition.ID "muyassar") (ne $.Page $.FirstPage)}}&{{end}}{{if ne $.Page $.FirstPage}}page={{$.Page}}{{end}}{{end}}#ayah-{{.Number}}" class="inline-flex items-center gap-1.5 min-h-[44px] px-3 -ml-3 rounded-lg text-xs font-medium text-[#8AACB5] dark:text-[#5C7A84] hover:text-[#0E5C73] dark:hover:text-[#7AAAB5] hover:bg-[#E6F4F8] dark:hover:bg-[#0E3D4D] transition-colors" aria-label="Bagikan tafsir ayat {{.Number}}" aria-live="polite">
                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
                             <span data-share-label>Bagikan</span>
@@ -61,7 +59,6 @@
                         {{end}}
                     </div>
                     {{end}}
-                </div>
             </div>
         </div>
         {{end}}

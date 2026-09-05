@@ -31,6 +31,7 @@ func main() {
 		"add": func(a, b int) int { return a + b },
 		"hasPrefix": func(s, prefix string) bool { return strings.HasPrefix(s, prefix) },
 		"arabicHTML": handler.ArabicHTML,
+		"arabicDigits": handler.ArabicDigits,
 		"tafsirHTML": handler.TafsirHTML,
 		"tafsirHTMLFor": handler.TafsirHTMLFor,
 		"js": func(s string) template.JS {

@@ -96,3 +96,11 @@ func TestTafsirHTMLOrnatesAndStaysClean(t *testing.T) {
 	}
 	assertNoBidiControls(t, s, "tafsirHTML output")
 }
+
+func TestArabicDigits(t *testing.T) {
+	for n, want := range map[int]string{0: "٠", 1: "١", 7: "٧", 10: "١٠", 114: "١١٤", 6236: "٦٢٣٦"} {
+		if got := ArabicDigits(n); got != want {
+			t.Errorf("ArabicDigits(%d) = %q, want %q", n, got, want)
+		}
+	}
+}
