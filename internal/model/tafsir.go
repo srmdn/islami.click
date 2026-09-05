@@ -12,6 +12,18 @@ type TafsirAyah struct {
 	Tafsir      template.HTML `json:"tafsir"`
 }
 
+// TafsirEdition is one commentary book available per ayah
+// (e.g. Muyassar in Arabic, Ibn Kathir abridged in English).
+type TafsirEdition struct {
+	ID       string `json:"id"`
+	Slug     string `json:"slug"`
+	Title    string `json:"title"`
+	Author   string `json:"author"`
+	Language string `json:"language"`
+	Source   string `json:"source"`
+	Resource string `json:"resource"`
+}
+
 type TafsirIndexData struct {
 	Meta        PageMeta
 	Title       string

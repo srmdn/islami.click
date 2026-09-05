@@ -62,6 +62,96 @@ func TestTafsirSeedCoversAllAyahs(t *testing.T) {
 	}
 }
 
+func TestTafsirEditionsSeeded(t *testing.T) {
+	ctx := context.Background()
+	contentStore := openTafsirTestStore(t, ctx)
+
+	editions, err := contentStore.TafsirEditions(ctx)
+	if err != nil {
+		t.Fatalf("tafsir editions: %v", err)
+	}
+	byID := map[string]string{}
+	for _, e := range editions {
+		byID[e.ID] = e.Language
+		if e.Title == "" || e.Source == "" {
+			t.Fatalf("edition %s missing title/source", e.ID)
+		}
+	}
+	if byID["muyassar"] != "arabic" {
+		t.Fatalf("muyassar edition language = %q, want arabic", byID["muyassar"])
+	}
+	if byID["ibn-kathir-en"] != "english" {
+		t.Fatalf("ibn-kathir-en edition language = %q, want english", byID["ibn-kathir-en"])
+	}
+}
+
+func TestTafsirCoverageByEdition(t *testing.T) {
+	ctx := context.Background()
+	contentStore := openTafsirTestStore(t, ctx)
+
+	muyassar, err := contentStore.TafsirCoverageByEdition(ctx, "muyassar")
+	if err != nil {
+		t.Fatalf("muyassar coverage: %v", err)
+	}
+	total := 0
+	for _, n := range muyassar {
+		total += n
+	}
+	if total != 6236 {
+		t.Fatalf("muyassar total = %d, want 6236", total)
+	}
+
+	pilot, err := contentStore.TafsirCoverageByEdition(ctx, "ibn-kathir-en")
+	if err != nil {
+		t.Fatalf("ibn-kathir-en coverage: %v", err)
+	}
+	for surah, want := range map[int]int{112: 4, 113: 5, 114: 6} {
+		if pilot[surah] != want {
+			t.Fatalf("ibn-kathir-en surah %d coverage = %d, want %d", surah, pilot[surah], want)
+		}
+	}
+	if len(pilot) != 3 {
+		t.Fatalf("ibn-kathir-en surah count = %d, want 3 (pilot)", len(pilot))
+	}
+}
+
+func TestTafsirAyahsByEditionPage(t *testing.T) {
+	ctx := context.Background()
+	contentStore := openTafsirTestStore(t, ctx)
+
+	pages, err := contentStore.MushafPagesForSurah(ctx, 114)
+	if err != nil || len(pages) == 0 {
+		t.Fatalf("mushaf pages for 114: %v", err)
+	}
+
+	muyassar, err := contentStore.TafsirAyahsByEditionPage(ctx, "muyassar", 114, pages[0])
+	if err != nil {
+		t.Fatalf("muyassar ayahs: %v", err)
+	}
+	if len(muyassar) != 6 {
+		t.Fatalf("muyassar ayahs = %d, want 6", len(muyassar))
+	}
+
+	en, err := contentStore.TafsirAyahsByEditionPage(ctx, "ibn-kathir-en", 114, pages[0])
+	if err != nil {
+		t.Fatalf("ibn-kathir-en ayahs: %v", err)
+	}
+	if len(en) != 6 {
+		t.Fatalf("ibn-kathir-en ayahs = %d, want 6", len(en))
+	}
+	for i, a := range en {
+		if string(a.Tafsir) == "" {
+			t.Fatalf("ayah %d missing english tafsir", a.Number)
+		}
+		if string(a.Tafsir) == string(muyassar[i].Tafsir) {
+			t.Fatalf("ayah %d english text identical to muyassar (wrong edition?)", a.Number)
+		}
+		if tafsirTagRe.MatchString(stripAllowedTafsirMarks(string(a.Tafsir))) {
+			t.Fatalf("ayah %d english tafsir has unexpected html: %.80s", a.Number, string(a.Tafsir))
+		}
+	}
+}
+
 func TestTafsirAyahsByMushafPage(t *testing.T) {
 	ctx := context.Background()
 	contentStore := openTafsirTestStore(t, ctx)
