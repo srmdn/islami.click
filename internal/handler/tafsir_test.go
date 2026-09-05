@@ -115,7 +115,7 @@ func TestTafsirIndexEditionSwitcher(t *testing.T) {
 		t.Fatalf("status = %d, want 200", rec.Code)
 	}
 	body := rec.Body.String()
-	for _, want := range []string{"Ibn Kathir (Abridged)", "Tafsir Al-Muyassar", "?edition=ibn-kathir-en", "4/4 tafsir", "0/286 tafsir"} {
+	for _, want := range []string{"Ibn Kathir (Abridged)", "Tafsir Al-Muyassar", "?edition=ibn-kathir-en", "4/4 tafsir", "286/286 tafsir"} {
 		if !strings.Contains(body, want) {
 			t.Fatalf("english index missing %q", want)
 		}
@@ -163,7 +163,7 @@ func TestTafsirSurahEnglishRenders(t *testing.T) {
 	}
 }
 
-func TestTafsirSurahEnglishEmptyState(t *testing.T) {
+func TestTafsirSurahEnglishFullCoverage(t *testing.T) {
 	h := newTafsirTestHandler(t)
 
 	req := httptest.NewRequest(http.MethodGet, "/tafsir/1?edition=ibn-kathir-en", nil)
@@ -174,9 +174,14 @@ func TestTafsirSurahEnglishEmptyState(t *testing.T) {
 		t.Fatalf("status = %d, want 200", rec.Code)
 	}
 	body := rec.Body.String()
-	for _, want := range []string{"belum tersedia", `href="/tafsir/1"`, "Tafsir Berikutnya"} {
+	for _, want := range []string{`lang="en"`, "Ibn Kathir (Abridged)"} {
 		if !strings.Contains(body, want) {
-			t.Fatalf("empty-state page missing %q", want)
+			t.Fatalf("english surah page missing %q", want)
+		}
+	}
+	for _, bad := range []string{"belum tersedia", "﴾", "﴿"} {
+		if strings.Contains(body, bad) {
+			t.Fatalf("english surah page wrongly contains %q", bad)
 		}
 	}
 }

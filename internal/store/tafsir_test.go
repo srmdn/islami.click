@@ -105,17 +105,21 @@ func TestTafsirCoverageByEdition(t *testing.T) {
 		t.Fatalf("muyassar total = %d, want 6236", total)
 	}
 
-	pilot, err := contentStore.TafsirCoverageByEdition(ctx, "ibn-kathir-en")
+	full, err := contentStore.TafsirCoverageByEdition(ctx, "ibn-kathir-en")
 	if err != nil {
 		t.Fatalf("ibn-kathir-en coverage: %v", err)
 	}
-	for surah, want := range map[int]int{112: 4, 113: 5, 114: 6} {
-		if pilot[surah] != want {
-			t.Fatalf("ibn-kathir-en surah %d coverage = %d, want %d", surah, pilot[surah], want)
+	for surah, want := range map[int]int{1: 7, 2: 286, 112: 4, 113: 5, 114: 6} {
+		if full[surah] != want {
+			t.Fatalf("ibn-kathir-en surah %d coverage = %d, want %d", surah, full[surah], want)
 		}
 	}
-	if len(pilot) != 3 {
-		t.Fatalf("ibn-kathir-en surah count = %d, want 3 (pilot)", len(pilot))
+	totalEn := 0
+	for _, n := range full {
+		totalEn += n
+	}
+	if totalEn != 6236 {
+		t.Fatalf("ibn-kathir-en total = %d, want 6236", totalEn)
 	}
 }
 
