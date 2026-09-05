@@ -101,6 +101,14 @@ func main() {
 		}
 		partialTmpls["quran-ayahs"] = tpl
 	}
+	{
+		tpl := template.New("tafsir-peek").Funcs(funcMap)
+		tpl, err := tpl.ParseFS(islamiclick.TemplateFS, "templates/partials/tafsir-peek.html")
+		if err != nil {
+			log.Fatalf("parse tafsir-peek: %v", err)
+		}
+		partialTmpls["tafsir-peek"] = tpl
+	}
 
 	h := handler.New(tmpls, partialTmpls, contentStore)
 

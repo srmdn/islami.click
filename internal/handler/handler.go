@@ -282,6 +282,13 @@ func (h *Handler) QuranSurah(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Inline tafsir peek (/quran/{surah}/{ayah}/tafsir) shares the prefix
+	// route; invalid peek shapes fall through to surah parsing below.
+	if target, ok := parseTafsirPeek(path); ok {
+		h.serveTafsirPeek(w, r, target.surah, target.ayah)
+		return
+	}
+
 	surahNumber, err := strconv.Atoi(path)
 	if err != nil || surahNumber < 1 || surahNumber > 114 {
 		http.Error(w, "Surah tidak ditemukan", http.StatusNotFound)

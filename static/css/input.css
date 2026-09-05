@@ -219,6 +219,17 @@
     background: rgba(201, 168, 76, 0.25);
   }
 
+  /* htmx loading indicator: hidden until its request runs. Covers both
+     the indicator-as-target pattern (tafsir peek) and the descendant
+     pattern (doa load-more). */
+  .htmx-indicator {
+    display: none;
+  }
+  .htmx-indicator.htmx-request,
+  .htmx-request .htmx-indicator {
+    display: inline;
+  }
+
   /* English tafsir body: structured paragraphs from the fetch allowlist.
      Latin flow uses normal line-height (not the Arabic 2.2). */
   .tafsir-body[lang="en"] p {

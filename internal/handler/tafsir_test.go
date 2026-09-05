@@ -45,7 +45,7 @@ func newTafsirTestHandler(t *testing.T) *Handler {
 	}
 
 	tmpls := make(map[string]*template.Template)
-	for _, page := range []string{"tafsir.html", "tafsir-surah.html", "tafsir-search.html"} {
+	for _, page := range []string{"tafsir.html", "tafsir-surah.html", "tafsir-search.html", "quran-surah.html"} {
 		tpl := template.New(page).Funcs(funcMap)
 		tpl, err := tpl.ParseFS(islamiclick.TemplateFS,
 			"templates/layouts/base.html",
@@ -59,7 +59,17 @@ func newTafsirTestHandler(t *testing.T) *Handler {
 		tmpls[page] = tpl
 	}
 
-	return New(tmpls, nil, contentStore)
+	partialTmpls := make(map[string]*template.Template)
+	for _, partial := range []string{"quran-ayahs", "tafsir-peek"} {
+		tpl := template.New(partial).Funcs(funcMap)
+		tpl, err := tpl.ParseFS(islamiclick.TemplateFS, "templates/partials/"+partial+".html")
+		if err != nil {
+			t.Fatalf("parse %s: %v", partial, err)
+		}
+		partialTmpls[partial] = tpl
+	}
+
+	return New(tmpls, partialTmpls, contentStore)
 }
 
 func TestTafsirIndexRenders(t *testing.T) {
@@ -332,6 +342,104 @@ func TestTafsirSnippetStripsTagsAndMarks(t *testing.T) {
 		if strings.Contains(out, bad) {
 			t.Fatalf("snippet leaks tag %q: %q", bad, out)
 		}
+	}
+}
+
+func TestQuranTafsirPeekRenders(t *testing.T) {
+	h := newTafsirTestHandler(t)
+
+	req := httptest.NewRequest(http.MethodGet, "/quran/1/1/tafsir", nil)
+	rec := httptest.NewRecorder()
+	h.QuranSurah(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want 200", rec.Code)
+	}
+	body := rec.Body.String()
+	for _, want := range []string{"Tafsir Al-Muyassar", "tafsir-body", "Buka tafsir lengkap", `/tafsir/1?page=`, "#ayah-1"} {
+		if !strings.Contains(body, want) {
+			t.Fatalf("peek fragment missing %q", want)
+		}
+	}
+	// Fragment only: none of the full-page chrome may leak in.
+	for _, bad := range []string{"Murottal", "Beranda", "Surah Berikutnya"} {
+		if strings.Contains(body, bad) {
+			t.Fatalf("peek fragment leaks page chrome %q", bad)
+		}
+	}
+	for _, bad := range []string{"\u200E", "\u200F", "\u202A", "\u202B", "\u202C", "\u2066", "\u2067", "\u2069"} {
+		if strings.Contains(body, bad) {
+			t.Fatalf("peek leaks bidi control U+%04X", []rune(bad)[0])
+		}
+	}
+	if strings.Contains(body, "onerror=") || strings.Contains(body, "onclick=") {
+		t.Fatal("peek fragment contains suspicious inline handlers")
+	}
+}
+
+func TestQuranTafsirPeekNotFound(t *testing.T) {
+	h := newTafsirTestHandler(t)
+
+	for _, path := range []string{"/quran/1/99/tafsir", "/quran/115/1/tafsir"} {
+		req := httptest.NewRequest(http.MethodGet, path, nil)
+		rec := httptest.NewRecorder()
+		h.QuranSurah(rec, req)
+		if rec.Code != http.StatusNotFound {
+			t.Fatalf("%s status = %d, want 404", path, rec.Code)
+		}
+	}
+
+	// Existing surah route still intact beside the peek shape.
+	req := httptest.NewRequest(http.MethodGet, "/quran/2", nil)
+	rec := httptest.NewRecorder()
+	h.QuranSurah(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("/quran/2 status = %d, want 200", rec.Code)
+	}
+}
+
+func TestQuranSurahPeekEnhancement(t *testing.T) {
+	h := newTafsirTestHandler(t)
+
+	req := httptest.NewRequest(http.MethodGet, "/quran/114", nil)
+	rec := httptest.NewRecorder()
+	h.QuranSurah(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want 200", rec.Code)
+	}
+	body := rec.Body.String()
+	for _, want := range []string{
+		`x-data="{open:false}"`,
+		`hx-get="/quran/114/1/tafsir"`,
+		`hx-trigger="click once"`,
+		`hx-target="#tafsir-peek-1"`,
+		`aria-controls="tafsir-peek-1"`,
+		`:aria-expanded=`,
+		`x-show="open"`,
+		`Memuat tafsir…`,
+		// No-JS fallback stays a plain deep-link.
+		`href="/tafsir/114?page=`,
+	} {
+		if !strings.Contains(body, want) {
+			t.Fatalf("surah page missing peek wiring %q", want)
+		}
+	}
+}
+
+func TestQuranAyahsPartialPeekEnhancement(t *testing.T) {
+	h := newTafsirTestHandler(t)
+
+	req := httptest.NewRequest(http.MethodGet, "/quran/114", nil)
+	req.Header.Set("HX-Request", "true")
+	rec := httptest.NewRecorder()
+	h.QuranSurah(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want 200", rec.Code)
+	}
+	if body := rec.Body.String(); !strings.Contains(body, `hx-get="/quran/114/1/tafsir"`) {
+		t.Fatal("htmx ayah partial missing peek wiring")
 	}
 }
 

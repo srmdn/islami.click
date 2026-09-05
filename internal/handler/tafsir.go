@@ -361,6 +361,53 @@ func tafsirSearchURL(ctx context.Context, h *Handler, editionID string, r model.
 	return fmt.Sprintf("%s#ayah-%d", url, r.AyahNumber)
 }
 
+// tafsirPeekEdition is the single edition expanded inline under quran
+// ayahs. Muyassar is short per ayah, suiting a peek; the fragment links
+// out to the full surah page for other editions.
+const tafsirPeekEdition = "muyassar"
+
+// tafsirPeekTarget is a parsed /quran/{surah}/{ayah}/tafsir path.
+type tafsirPeekTarget struct {
+	surah int
+	ayah  int
+}
+
+// parseTafsirPeek matches peek paths so the existing "/quran/" prefix route
+// needs no mux changes. Anything else falls through to surah parsing.
+func parseTafsirPeek(path string) (tafsirPeekTarget, bool) {
+	parts := strings.Split(strings.Trim(path, "/"), "/")
+	if len(parts) != 3 || parts[2] != "tafsir" {
+		return tafsirPeekTarget{}, false
+	}
+	s, err1 := strconv.Atoi(parts[0])
+	a, err2 := strconv.Atoi(parts[1])
+	if err1 != nil || err2 != nil || s < 1 || s > 114 || a < 1 {
+		return tafsirPeekTarget{}, false
+	}
+	return tafsirPeekTarget{surah: s, ayah: a}, true
+}
+
+// serveTafsirPeek renders one ayah's Muyassar card as an htmx fragment.
+// The mushaf page comes from the ayah row itself, so the deep-link always
+// lands on the right page.
+func (h *Handler) serveTafsirPeek(w http.ResponseWriter, r *http.Request, surahNumber, ayahNumber int) {
+	t, err := h.contentStore.GetTafsirAyah(r.Context(), tafsirPeekEdition, surahNumber, ayahNumber)
+	if err != nil {
+		log.Printf("tafsir peek %d:%d: %v", surahNumber, ayahNumber, err)
+		http.Error(w, "Failed to load content", http.StatusInternalServerError)
+		return
+	}
+	if t == nil {
+		http.Error(w, "Ayat tidak ditemukan", http.StatusNotFound)
+		return
+	}
+	h.renderPartial(w, "tafsir-peek", model.TafsirPeekData{
+		AyahNumber: t.AyahNumber,
+		Tafsir:     template.HTML(t.Text),
+		URL:        fmt.Sprintf("/tafsir/%d?page=%d#ayah-%d", t.SurahNumber, t.Page, t.AyahNumber),
+	})
+}
+
 // tafsirSnippetWidth is the excerpt length (runes) shown per search hit.
 const tafsirSnippetWidth = 220
 

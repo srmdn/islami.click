@@ -88,3 +88,12 @@ type TafsirSearchData struct {
 	Editions    []TafsirEdition
 	Edition     TafsirEdition
 }
+
+// TafsirPeekData is the inline Muyassar card expanded under one quran ayah
+// via htmx: full per-ayah text plus the deep-link to the surah page for
+// other editions and sharing.
+type TafsirPeekData struct {
+	AyahNumber int
+	Tafsir     template.HTML
+	URL        string
+}
