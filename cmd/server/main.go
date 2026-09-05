@@ -56,6 +56,7 @@ func main() {
 		"quran-search.html",
 		"tafsir.html",
 		"tafsir-surah.html",
+		"tafsir-search.html",
 		"quiz.html",
 		"quiz-category.html",
 	}
@@ -138,6 +139,7 @@ func main() {
 	http.HandleFunc("/quran/search", h.QuranSearch)
 	http.HandleFunc("/quran/", h.QuranSurah)
 	http.HandleFunc("/tafsir", h.Tafsir)
+	http.HandleFunc("/tafsir/search", h.TafsirSearch)
 	http.HandleFunc("/tafsir/", h.TafsirSurah)
 
 	http.HandleFunc("/quiz", h.QuizHome)

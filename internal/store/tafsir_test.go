@@ -187,6 +187,134 @@ func TestTafsirAyahsByEditionPage(t *testing.T) {
 	}
 }
 
+func TestSearchTafsir(t *testing.T) {
+	ctx := context.Background()
+	contentStore := openTafsirTestStore(t, ctx)
+
+	en, err := contentStore.SearchTafsir(ctx, "ibn-kathir-en", "Which was revealed in Makkah", 50)
+	if err != nil {
+		t.Fatalf("search en tafsir: %v", err)
+	}
+	if len(en) == 0 {
+		t.Fatal("expected english hits for the surah-114 heading")
+	}
+	// SQLite LIKE is case-insensitive for ASCII, so compare folded.
+	foldedQuery := strings.ToLower("Which was revealed in Makkah")
+	for _, r := range en {
+		if r.EditionID != "ibn-kathir-en" {
+			t.Fatalf("hit edition = %q, want ibn-kathir-en", r.EditionID)
+		}
+		if r.Page <= 0 || r.SurahName == "" || r.Arabic == "" || r.Translation == "" || r.Text == "" {
+			t.Fatalf("hit %d:%d missing context fields", r.SurahNumber, r.AyahNumber)
+		}
+		if !strings.Contains(strings.ToLower(r.Text), foldedQuery) {
+			t.Fatalf("hit %d:%d text lacks query", r.SurahNumber, r.AyahNumber)
+		}
+	}
+	// The heading phrase above repeats on every ayah of every Makki
+	// surah (group text is stored per ayah), so limit 50 only exercises
+	// the field checks. Precision is checked below with a phrase unique
+	// to surah 114.
+	distinct, err := contentStore.SearchTafsir(ctx, "ibn-kathir-en", "lordship, sovereignty and divinity", 50)
+	if err != nil {
+		t.Fatalf("distinct search en tafsir: %v", err)
+	}
+	if len(distinct) != 6 {
+		t.Fatalf("distinct hits = %d, want 6 (all of surah 114)", len(distinct))
+	}
+	for i, r := range distinct {
+		if r.SurahNumber != 114 || r.AyahNumber != i+1 {
+			t.Fatalf("distinct hit %d: got %d:%d, want 114:%d", i, r.SurahNumber, r.AyahNumber, i+1)
+		}
+		if r.Page <= 0 {
+			t.Fatalf("distinct hit 114:%d missing page", r.AyahNumber)
+		}
+	}
+
+	ar, err := contentStore.SearchTafsir(ctx, "muyassar", "الألوهية والعبودية", 50)
+	if err != nil {
+		t.Fatalf("search ar tafsir: %v", err)
+	}
+	foundKursi := false
+	for _, r := range ar {
+		if r.SurahNumber == 2 && r.AyahNumber == 255 {
+			foundKursi = true
+		}
+	}
+	if !foundKursi {
+		t.Fatal("expected a 2:255 hit for the Muyassar kursi phrase")
+	}
+
+	capped, err := contentStore.SearchTafsir(ctx, "muyassar", "الله", 5)
+	if err != nil {
+		t.Fatalf("capped search: %v", err)
+	}
+	if len(capped) != 5 {
+		t.Fatalf("capped hits = %d, want 5", len(capped))
+	}
+
+	none, err := contentStore.SearchTafsir(ctx, "nope", "الله", 10)
+	if err != nil {
+		t.Fatalf("unknown edition search: %v", err)
+	}
+	if len(none) != 0 {
+		t.Fatalf("unknown edition hits = %d, want 0", len(none))
+	}
+}
+
+func TestGetTafsirAyah(t *testing.T) {
+	ctx := context.Background()
+	contentStore := openTafsirTestStore(t, ctx)
+
+	r, err := contentStore.GetTafsirAyah(ctx, "muyassar", 2, 255)
+	if err != nil {
+		t.Fatalf("get tafsir ayah: %v", err)
+	}
+	if r == nil {
+		t.Fatal("expected 2:255 Muyassar text, got nil")
+	}
+	if r.SurahNumber != 2 || r.AyahNumber != 255 || r.Page <= 0 {
+		t.Fatalf("got %d:%d page %d", r.SurahNumber, r.AyahNumber, r.Page)
+	}
+	if r.Arabic == "" || r.Translation == "" || r.Text == "" {
+		t.Fatal("2:255 missing arabic/translation/text")
+	}
+
+	miss, err := contentStore.GetTafsirAyah(ctx, "muyassar", 114, 7)
+	if err != nil {
+		t.Fatalf("get missing ayah: %v", err)
+	}
+	if miss != nil {
+		t.Fatal("expected nil for 114:7, got a row")
+	}
+
+	missEdition, err := contentStore.GetTafsirAyah(ctx, "nope", 1, 1)
+	if err != nil {
+		t.Fatalf("get unknown edition: %v", err)
+	}
+	if missEdition != nil {
+		t.Fatal("expected nil for unknown edition, got a row")
+	}
+}
+
+func TestTafsirHeadByEdition(t *testing.T) {
+	ctx := context.Background()
+	contentStore := openTafsirTestStore(t, ctx)
+
+	head, err := contentStore.TafsirHeadByEdition(ctx, "ibn-kathir-en", 114, 3)
+	if err != nil {
+		t.Fatalf("tafsir head: %v", err)
+	}
+	if len(head) != 3 {
+		t.Fatalf("head rows = %d, want 3", len(head))
+	}
+	for i, r := range head {
+		if r.AyahNumber != i+1 || r.Text == "" || r.Page <= 0 {
+			t.Fatalf("head row %d: ayah=%d page=%d empty=%v", i, r.AyahNumber, r.Page, r.Text == "")
+		}
+	}
+}
+
 func TestTafsirAyahsByMushafPage(t *testing.T) {
 	ctx := context.Background()
 	contentStore := openTafsirTestStore(t, ctx)

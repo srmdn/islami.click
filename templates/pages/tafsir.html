@@ -14,6 +14,24 @@
         <p class="text-[#5C7A84] dark:text-[#7AAAB5] leading-relaxed">{{.Description}}</p>
     </div>
 
+    <form action="/tafsir/search" method="get" class="mb-8">
+        {{if ne .Edition.ID "muyassar"}}<input type="hidden" name="edition" value="{{.Edition.ID}}">{{end}}
+        <div class="flex gap-3">
+            <input
+                type="text"
+                name="q"
+                placeholder="Cari penjelasan..."
+                class="flex-1 px-4 py-3 bg-white dark:bg-[#122E38] border border-[#E2D9CE] dark:border-[#1E4458] rounded-xl text-[#1A2E35] dark:text-[#EEE8DF] placeholder-[#8AACB5] focus:outline-none focus:border-[#0E5C73] dark:focus:border-[#0E5C73] transition-colors"
+            >
+            <button
+                type="submit"
+                class="px-6 py-3 bg-[#0E5C73] text-[#FAF7F2] font-semibold rounded-xl hover:bg-[#0A4A5C] transition-colors"
+            >
+                Cari
+            </button>
+        </div>
+    </form>
+
     {{if .Editions}}
     <div class="mb-8 flex flex-wrap gap-2" role="tablist" aria-label="Pilih kitab tafsir">
         {{range .Editions}}

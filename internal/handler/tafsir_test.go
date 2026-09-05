@@ -6,9 +6,11 @@ import (
 	"html/template"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"path/filepath"
 	"strings"
 	"testing"
+	"unicode/utf8"
 
 	islamiclick "github.com/srmdn/islami.click"
 	"github.com/srmdn/islami.click/internal/store"
@@ -43,7 +45,7 @@ func newTafsirTestHandler(t *testing.T) *Handler {
 	}
 
 	tmpls := make(map[string]*template.Template)
-	for _, page := range []string{"tafsir.html", "tafsir-surah.html"} {
+	for _, page := range []string{"tafsir.html", "tafsir-surah.html", "tafsir-search.html"} {
 		tpl := template.New(page).Funcs(funcMap)
 		tpl, err := tpl.ParseFS(islamiclick.TemplateFS,
 			"templates/layouts/base.html",
@@ -201,5 +203,145 @@ func TestTafsirSurahNotFound(t *testing.T) {
 		if rec.Code != http.StatusNotFound {
 			t.Fatalf("%s status = %d, want 404", path, rec.Code)
 		}
+	}
+}
+
+func TestTafsirSearchRendersForm(t *testing.T) {
+	h := newTafsirTestHandler(t)
+
+	req := httptest.NewRequest(http.MethodGet, "/tafsir/search", nil)
+	rec := httptest.NewRecorder()
+	h.TafsirSearch(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want 200", rec.Code)
+	}
+	body := rec.Body.String()
+	for _, want := range []string{"Pencarian Tafsir", `action="/tafsir/search"`, "Pilih kitab tafsir", "Ibn Kathir (Abridged)", "Cari penjelasan..."} {
+		if !strings.Contains(body, want) {
+			t.Fatalf("search page missing %q", want)
+		}
+	}
+	if strings.Contains(body, "penjelasan ditemukan") {
+		t.Fatal("empty query must not render a result count")
+	}
+}
+
+func TestTafsirSearchFindsEnglish(t *testing.T) {
+	h := newTafsirTestHandler(t)
+
+	// "dangling clot" avoids standalone glue words: the shared reference
+	// grammar eats "to" as surah 110 ("Pertolongan"), a pre-existing
+	// /quran/search quirk, so multi-word EN queries with "to" resolve oddly.
+	req := httptest.NewRequest(http.MethodGet, "/tafsir/search?edition=ibn-kathir-en&q="+url.QueryEscape("dangling clot"), nil)
+	rec := httptest.NewRecorder()
+	h.TafsirSearch(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want 200", rec.Code)
+	}
+	body := rec.Body.String()
+	for _, want := range []string{`lang="en"`, `<mark class="tafsir-key">`, `/tafsir/96`, `edition=ibn-kathir-en`, "penjelasan ditemukan"} {
+		if !strings.Contains(body, want) {
+			t.Fatalf("english search missing %q", want)
+		}
+	}
+	for _, bad := range []string{"<h2>", "﴾", "﴿"} {
+		if strings.Contains(body, bad) {
+			t.Fatalf("english snippet leaks %q", bad)
+		}
+	}
+}
+
+func TestTafsirSearchDirectReference(t *testing.T) {
+	h := newTafsirTestHandler(t)
+
+	req := httptest.NewRequest(http.MethodGet, "/tafsir/search?edition=ibn-kathir-en&q="+url.QueryEscape("114:1"), nil)
+	rec := httptest.NewRecorder()
+	h.TafsirSearch(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want 200", rec.Code)
+	}
+	if body := rec.Body.String(); !strings.Contains(body, `/tafsir/114?edition=ibn-kathir-en#ayah-1`) {
+		t.Fatal("direct reference 114:1 should deep-link without a page param on the single-page surah")
+	}
+}
+
+func TestTafsirSearchArabicFindsKursi(t *testing.T) {
+	h := newTafsirTestHandler(t)
+
+	req := httptest.NewRequest(http.MethodGet, "/tafsir/search?q="+url.QueryEscape("الألوهية"), nil)
+	rec := httptest.NewRecorder()
+	h.TafsirSearch(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want 200", rec.Code)
+	}
+	body := rec.Body.String()
+	for _, want := range []string{"/tafsir/2?page=", "#ayah-255", `<mark class="tafsir-key">`, `dir="rtl"`} {
+		if !strings.Contains(body, want) {
+			t.Fatalf("arabic search missing %q", want)
+		}
+	}
+	if !utf8.ValidString(body) {
+		t.Fatal("arabic search page is not valid UTF-8")
+	}
+}
+
+func TestTafsirSearchUnknownEditionFallsBack(t *testing.T) {
+	h := newTafsirTestHandler(t)
+
+	req := httptest.NewRequest(http.MethodGet, "/tafsir/search?edition=nope&q="+url.QueryEscape("الألوهية"), nil)
+	rec := httptest.NewRecorder()
+	h.TafsirSearch(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want 200", rec.Code)
+	}
+	if body := rec.Body.String(); !strings.Contains(body, "Tafsir Al-Muyassar") {
+		t.Fatal("unknown edition should fall back to Muyassar")
+	}
+}
+
+func TestTafsirSnippetStripsTagsAndMarks(t *testing.T) {
+	raw := `<h2>Which was revealed in Makkah</h2><p>In the Name of Allah.</p>`
+	out := string(tafsirSnippet(raw, "makkah"))
+	if !strings.Contains(out, `<mark class="tafsir-key">Makkah</mark>`) {
+		t.Fatalf("snippet missing highlight: %q", out)
+	}
+	for _, bad := range []string{"<h2>", "</h2>", "<p>", "</p>"} {
+		if strings.Contains(out, bad) {
+			t.Fatalf("snippet leaks tag %q: %q", bad, out)
+		}
+	}
+}
+
+func TestTafsirSnippetCentersAndTruncates(t *testing.T) {
+	raw := strings.Repeat("kata ", 200) + "TARGET" + strings.Repeat(" kata", 200)
+	out := string(tafsirSnippet(raw, "target"))
+	if !strings.HasPrefix(out, "… ") || !strings.HasSuffix(out, " …") {
+		t.Fatalf("long snippet must truncate both ends: %.60q…", out)
+	}
+	if !strings.Contains(out, `<mark class="tafsir-key">TARGET</mark>`) {
+		t.Fatalf("snippet must center on the match: %.120q", out)
+	}
+	if n := len([]rune(out)); n > tafsirSnippetWidth+64 {
+		t.Fatalf("snippet too long: %d runes", n)
+	}
+}
+
+func TestTafsirSnippetEscapesStrayMarkup(t *testing.T) {
+	// Tags are stripped before windowing, so a bare "<" that forms no
+	// tag must survive as escaped text instead.
+	out := string(tafsirSnippet("iman 5 < 7 kuat", "kuat"))
+	if strings.Contains(out, "< 7") {
+		t.Fatalf("snippet leaks raw markup: %q", out)
+	}
+	if !strings.Contains(out, "&lt;") {
+		t.Fatalf("snippet must escape stray markup: %q", out)
+	}
+	if !strings.Contains(out, `<mark class="tafsir-key">kuat</mark>`) {
+		t.Fatalf("snippet missing highlight: %q", out)
 	}
 }

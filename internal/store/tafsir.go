@@ -158,6 +158,107 @@ func (s *Store) TafsirAyahsByEditionPage(ctx context.Context, editionID string, 
 	return ayahs, nil
 }
 
+// SearchTafsir returns ayahs whose edition commentary contains the query,
+// oldest surah first, capped at limit. Only the tafsir text is matched —
+// verse Arabic and translation ride along as display context. Callers build
+// display snippets because stored commentary carries HTML.
+func (s *Store) SearchTafsir(ctx context.Context, editionID, query string, limit int) ([]model.TafsirSearchResult, error) {
+	if limit <= 0 {
+		limit = 50
+	}
+	searchTerm := "%" + query + "%"
+
+	rows, err := s.db.QueryContext(ctx, `
+		SELECT s.number, s.name_latin, a.ayah_number, a.page, a.text_arabic, a.translation, t.text
+		FROM tafsir_texts t
+		JOIN quran_ayahs a
+		  ON a.surah_number = t.surah_number
+		 AND a.ayah_number = t.ayah_number
+		JOIN quran_surahs s ON s.number = t.surah_number
+		WHERE t.edition_id = ? AND t.text LIKE ?
+		ORDER BY s.number, a.ayah_number
+		LIMIT ?
+	`, editionID, searchTerm, limit)
+	if err != nil {
+		return nil, fmt.Errorf("search %s tafsir: %w", editionID, err)
+	}
+	defer rows.Close()
+
+	var results []model.TafsirSearchResult
+	for rows.Next() {
+		var r model.TafsirSearchResult
+		if err := rows.Scan(&r.SurahNumber, &r.SurahName, &r.AyahNumber, &r.Page, &r.Arabic, &r.Translation, &r.Text); err != nil {
+			return nil, fmt.Errorf("scan tafsir search result: %w", err)
+		}
+		r.EditionID = editionID
+		results = append(results, r)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("iterate tafsir search results: %w", err)
+	}
+	return results, nil
+}
+
+// GetTafsirAyah returns one ayah with its edition commentary, or nil when
+// the edition has no text for that address.
+func (s *Store) GetTafsirAyah(ctx context.Context, editionID string, surahNumber, ayahNumber int) (*model.TafsirSearchResult, error) {
+	var r model.TafsirSearchResult
+	err := s.db.QueryRowContext(ctx, `
+		SELECT s.number, s.name_latin, a.ayah_number, a.page, a.text_arabic, a.translation, t.text
+		FROM tafsir_texts t
+		JOIN quran_ayahs a
+		  ON a.surah_number = t.surah_number
+		 AND a.ayah_number = t.ayah_number
+		JOIN quran_surahs s ON s.number = t.surah_number
+		WHERE t.edition_id = ? AND t.surah_number = ? AND t.ayah_number = ?
+	`, editionID, surahNumber, ayahNumber).Scan(&r.SurahNumber, &r.SurahName, &r.AyahNumber, &r.Page, &r.Arabic, &r.Translation, &r.Text)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, nil
+		}
+		return nil, fmt.Errorf("get %s tafsir %d:%d: %w", editionID, surahNumber, ayahNumber, err)
+	}
+	r.EditionID = editionID
+	return &r, nil
+}
+
+// TafsirHeadByEdition returns the first limit ayahs of a surah with one
+// edition's commentary, backing surah-name search hits.
+func (s *Store) TafsirHeadByEdition(ctx context.Context, editionID string, surahNumber, limit int) ([]model.TafsirSearchResult, error) {
+	if limit <= 0 {
+		limit = 3
+	}
+	rows, err := s.db.QueryContext(ctx, `
+		SELECT s.number, s.name_latin, a.ayah_number, a.page, a.text_arabic, a.translation, t.text
+		FROM tafsir_texts t
+		JOIN quran_ayahs a
+		  ON a.surah_number = t.surah_number
+		 AND a.ayah_number = t.ayah_number
+		JOIN quran_surahs s ON s.number = t.surah_number
+		WHERE t.edition_id = ? AND t.surah_number = ?
+		ORDER BY a.ayah_number
+		LIMIT ?
+	`, editionID, surahNumber, limit)
+	if err != nil {
+		return nil, fmt.Errorf("read %s tafsir head for surah %d: %w", editionID, surahNumber, err)
+	}
+	defer rows.Close()
+
+	var results []model.TafsirSearchResult
+	for rows.Next() {
+		var r model.TafsirSearchResult
+		if err := rows.Scan(&r.SurahNumber, &r.SurahName, &r.AyahNumber, &r.Page, &r.Arabic, &r.Translation, &r.Text); err != nil {
+			return nil, fmt.Errorf("scan tafsir head: %w", err)
+		}
+		r.EditionID = editionID
+		results = append(results, r)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("iterate tafsir head for surah %d: %w", surahNumber, err)
+	}
+	return results, nil
+}
+
 // groupIdenticalTafsir folds runs of consecutive ayahs carrying byte-identical
 // commentary into one card: the first ayah renders it with a "1–6" style
 // range label, the rest render verse text only. Sources like the Quran.com

@@ -59,3 +59,32 @@ type TafsirSurahData struct {
 	Editions    []TafsirEdition
 	Edition     TafsirEdition
 }
+
+// TafsirSearchResult is one ayah whose edition commentary matched a query,
+// with verse context plus the mushaf page and deep-link needed to jump to
+// the ayah card on the surah page.
+type TafsirSearchResult struct {
+	SurahNumber int
+	SurahName   string
+	AyahNumber  int
+	Page        int
+	Arabic      string
+	Translation string
+	// Text is the raw edition commentary (HTML); never rendered directly.
+	// Templates use Snippet instead.
+	Text      string
+	Snippet   template.HTML
+	EditionID string
+	URL       string
+}
+
+type TafsirSearchData struct {
+	Meta        PageMeta
+	Title       string
+	Description string
+	Query       string
+	Results     []TafsirSearchResult
+	ResultCount int
+	Editions    []TafsirEdition
+	Edition     TafsirEdition
+}
