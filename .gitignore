@@ -17,8 +17,8 @@
 # Generated CSS
 static/css/out.css
 
-# Reference docs (local only)
-docs/ref/
+# Design + reference docs (local only, not cloned)
+docs/
 
 # OS
 .DS_Store

@@ -41,7 +41,7 @@ deploy/                   — nginx + systemd configs
 
 ## Frontend design rules
 
-Full design system: `docs/ISLAMICLICK-DESIGN.md`
+Full design system: `docs/ISLAMICLICK-DESIGN.md` (local-only copy, gitignored — absent from fresh clones)
 
 Key rules:
 - Warm ivory canvas (`#FAF7F2` light, `#0C1E26` dark), deep teal primary (`#0E5C73`), warm gold accent (`#C9A84C`)
