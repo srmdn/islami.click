@@ -39,9 +39,19 @@ go build -o islami.click ./cmd/server
 
 **`/hisab`** — Hijri ↔ Masehi date converter with full calendar grid. Bidirectional conversion, important Islamic dates (Tahun Baru Islam, Asyura, Awal Ramadhan, Idul Fitri, Hari Arafah, Idul Adha), next event countdown, Hijriyah/Masehi month toggle, and Jumat (Friday) highlight.
 
-**`/quran`** — Quran reader with per-surah browsing, Madinah mushaf pagination, smart search, and audio recitation.
+**`/quran`** — Quran reader with per-surah browsing, Madinah mushaf pagination, smart search, audio recitation, and inline tafsir peek per ayah.
+
+**`/tafsir`** — Tafsir reader with two editions (Al-Muyassar in Arabic, abridged Ibn Kathir in English), per-edition coverage, full-text search, and shareable per-ayah deep links.
 
 **`/quiz`** — Quiz Islami: 8 categories (Aqidah, Rukun Islam, Al-Qur'an, Hadits, Sirah, Fiqh, Sejarah Islam, Akhlak), 3 difficulty levels (Basic 10 q, Intermediate/Advanced 15 q each), 30-second timer per question, time-bonus scoring (10 pts correct + up to 10 pts speed bonus), answer explanations, and a shared SQLite leaderboard per category and difficulty.
+
+## Tafsir detail
+
+**Multi-edition reader** — `/tafsir` lists all 114 surahs with per-edition commentary coverage. `/tafsir/:surah` renders verse Arabic, Indonesian translation, and commentary side by side with mushaf pagination. Edition switcher (`?edition=`), share-per-ayah deep links, and mushaf-style inline ayah markers.
+
+**Search** (`/tafsir/search`) — Same reference grammar as Quran search (`2:255`, surah names); matches commentary text plus verse Arabic and Indonesian translation. Query-centered excerpts with keyword highlight.
+
+**Inline peek** — Every ayah on `/quran/:surah` has a "Baca tafsir" control that expands the commentary inline via htmx (a plain deep-link without JS). The peek card offers an edition switcher and links out to the full reader.
 
 ## Quran detail
 
@@ -58,20 +68,21 @@ go build -o islami.click ./cmd/server
 ```
 cmd/server/main.go         entrypoint, router
 internal/handler/          HTTP handlers per feature
-internal/model/            domain types (dhikr, doa, shalat, hisab, hijri)
+internal/model/            domain types (dhikr, doa, shalat, hisab, hijri, tafsir)
 internal/store/            SQLite queries
 internal/hijri/            Hijri ↔ Gregorian date conversion
 migrations/               SQL migration files
 templates/layouts/        base HTML layout
-templates/pages/          per-page templates
-templates/partials/       shared fragments (header, footer, shalat-mini, doa-more)
+templates/pages/          per-page templates (incl. tafsir reader + search)
+templates/partials/       shared fragments (header, footer, shalat-mini, doa-more, tafsir-peek)
 static/css/               Tailwind input + compiled output
 static/js/                vendored htmx, Alpine.js
 static/fonts/             self-hosted Arabic fonts (Amiri)
 static/favicon.svg        SVG favicon (Rub el Hizb star)
-content/                  JSON data (almatsurat, doa-harian, ayat-doa-ruqyah, quran-surahs, quran-pages)
-scripts/                  One-off utilities (fetch-quran, fetch-quran-pages)
-deploy/                   nginx + systemd configs
+static/images/            OG/social preview image
+content/                  JSON data (almatsurat, doa, quran, tafsir editions, prayer cities)
+scripts/                  One-off utilities (fetch-quran, fetch-tafsir, fetch-prayer-cities)
+deploy/                   nginx + systemd configs (placeholders — real values live on the VPS)
 ```
 
 ## Content rules
