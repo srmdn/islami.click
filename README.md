@@ -4,7 +4,7 @@ Islamic content hub for Indonesian Muslims.
 
 ## Stack
 
-Go + html/template for server-side rendering. htmx for partial updates. Alpine.js for client-side reactivity. Tailwind CSS v4 via standalone CLI binary — no Node, no npm, no build pipeline. SQLite via `modernc.org/sqlite` for content storage. Deploy target: Ubuntu 24.04 VPS, nginx, systemd.
+Go + html/template for server-side rendering. htmx for partial updates. Alpine.js for client-side reactivity. Tailwind CSS v4 via standalone CLI binary — no Node, no npm, no build pipeline. SQLite via `modernc.org/sqlite` for content storage.
 
 ## Run locally
 
@@ -25,11 +25,11 @@ go build -o islami.click ./cmd/server
 
 ## Features
 
-**`/`** — Landing page with Bismillah hero, feature cards, prayer times widget.
+**`/`** — Landing page with headline, daily Hijri date, prayer-times widget, and feature cards.
 
 **`/almatsurat`** — Wazifah Sugro and Kubro with tap-to-count per dhikr and visual progress bars. Progress resets on page reload. Adhkar sourced from Al-Ma'tsurat by [Hasan Al-Banna](https://id.wikipedia.org/wiki/Hasan_al-Banna).
 
-**`/doa`** — 23 curated du'a across 7 categories plus ayat ruqyah. Source filter (Al-Qur'an / Hadits), category filter, full-text search, accordion, and load-more pagination.
+**`/doa`** — 23 curated du'a across 9 categories plus ayat ruqyah. Source filter (Al-Qur'an / Hadits), category filter, full-text search, accordion, and load-more pagination.
 
 **`/shalat`** — Prayer times with SQLite caching. Serves from cache after first daily fetch per city; falls back to stale cache if Aladhan API is down. Method=20 (Kemenag Indonesia), city picker, Hijri date, next-prayer highlight, mini widget for homepage. ±1–3 min variance from official Kemenag schedules.
 
@@ -37,7 +37,7 @@ go build -o islami.click ./cmd/server
 
 **`/kiblat`** — Qibla direction compass using device geolocation.
 
-**`/hisab`** — Hijri ↔ Masehi date converter with full calendar grid. Bidirectional conversion, important Islamic dates (Tahun Baru Islam, Asyura, Awal Ramadhan, Idul Fitri, Hari Arafah, Idul Adha), next event countdown, Hijriyah/Masehi month toggle, and Jumat (Friday) highlight.
+**`/hisab`** — Hijri ↔ Masehi date converter with full calendar grid. Bidirectional conversion, important Islamic dates (Tahun Baru Islam, Asyura, Awal Ramadhan, Idul Fitri, Hari Arafah, Idul Adha), next Islamic event display, Hijriyah/Masehi month toggle, and Jumat (Friday) highlight.
 
 **`/quran`** — Quran reader with per-surah browsing, Madinah mushaf pagination, smart search, audio recitation, and inline tafsir peek per ayah.
 
@@ -55,9 +55,9 @@ go build -o islami.click ./cmd/server
 
 ## Quran detail
 
-**Per-surah browsing** — `/quran` lists all 114 surahs with Arabic name, revelation type (Makkiyah/Madaniyah), and ayah count. `/quran/:surah` renders the surah with Arabic text (Madinah mushaf) and Indonesian translation (Kemenag).
+**Per-surah browsing** — `/quran` lists all 114 surahs with Arabic name, revelation type (Makkiyah/Madaniyah), and ayah count. `/quran/:surah` renders the surah with Arabic text (Madinah mushaf) and Indonesian translation.
 
-**Mushaf pagination** — Ayahs are paginated by real Madinah mushaf page numbers, not arbitrary chunk sizes. Data sourced from quran.com API v4. htmx "Muat ayat berikutnya" loads the next mushaf page inline.
+**Mushaf pagination** — Ayahs are paginated by real Madinah mushaf page numbers, not arbitrary chunk sizes. Quran text and translation sourced from the quran-json dataset. htmx "Muat ayat berikutnya" loads the next mushaf page inline.
 
 **Smart search** (`/quran/search`) — Four search strategies: direct references (`5:7`, `QS 36:1`), natural language (`ayat 7 al maidah`, `surah al baqarah ayat 255`), surah name lookup (`ar rahman`, `yasin`), and content search (`الحمد لله`, `segumpal darah`). Surah name normalization handles hyphens, apostrophes, and Indonesian translations.
 
@@ -91,4 +91,4 @@ Arabic text is never auto-generated. All adhkar, du'a, and Quranic content must 
 
 ## What's not here
 
-No React, no Vue, no Vite, no Webpack. No Docker. No managed hosting. The Go binary is compiled and deployed directly to a VPS behind nginx.
+No React, no Vue, no Vite, no Webpack. No Docker. No managed hosting.
